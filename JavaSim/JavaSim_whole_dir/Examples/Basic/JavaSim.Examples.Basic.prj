@@ -1,0 +1,15 @@
+sun.jws.version.1
+sun.jws.classpath=/home/nmcl/JavaSim/classes
+sun.jws.classname=Main.class
+sun.jws.arguments=-breaks
+sun.jws.type=standalone
+sun.jws.options=-g
+sun.jws.files=List
+Arrivals.java
+Breaks.java
+Job.java
+Machine.java
+MachineShop.java
+Main.java
+Queue.java
+EndOfList
