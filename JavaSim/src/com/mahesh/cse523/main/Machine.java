@@ -7,13 +7,18 @@ import arjuna.JavaSim.Simulation.SimulationException;
 
 public class Machine extends SimulationProcess
 {
-    
-public Machine (double mean)
+	private ExponentialStream STime;
+	private boolean operational;
+	private boolean working;
+	private Packets currentPacket;
+	private Queue packetsQ;
+public Machine (Queue queue, double mean)
     {
 	STime = new ExponentialStream(mean);
 	operational = true;
 	working = false;
 	currentPacket = null;
+	packetsQ=queue;
     }
 
 public void run ()
@@ -24,14 +29,14 @@ public void run ()
 	{
 	    working = true;
 
-	    while (!SimpleServer.PacketsQ.IsEmpty())
+	    while (!packetsQ.IsEmpty())
 	    {
 		ActiveStart = CurrentTime();
-		SimpleServer.CheckFreq++;
+//		CCNRouter.CheckFreq++;
 
-		SimpleServer.PacketssInQueue += SimpleServer.PacketsQ.QueueSize();
-		currentPacket = SimpleServer.PacketsQ.Dequeue();
-		
+	//	CCNRouter.PacketssInQueue += CCNRouter.PacketsQ.QueueSize();
+		currentPacket = packetsQ.Dequeue();
+		System.out.println("got following packet->"+currentPacket.getPacketId());
 		try
 		{
 		    Hold(ServiceTime());
@@ -44,8 +49,8 @@ public void run ()
 		}
 
 		ActiveEnd = CurrentTime();
-		SimpleServer.MachineActiveTime += ActiveEnd - ActiveStart;
-		SimpleServer.ProcessedPackets++;
+		//CCNRouter.MachineActiveTime += ActiveEnd - ActiveStart;
+		//CCNRouter.ProcessedPackets++;
 
 		/*
 		 * Introduce this new method because we usually rely upon
@@ -99,9 +104,5 @@ public double ServiceTime ()
 	}
     }
 
-private ExponentialStream STime;
-private boolean operational;
-private boolean working;
-private Packets currentPacket;
 
 };

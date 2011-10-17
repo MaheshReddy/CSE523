@@ -1,6 +1,8 @@
 package com.mahesh.cse523.main;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
+
 public class Queue
 {
     
@@ -32,6 +34,7 @@ public Packets Dequeue () throws NoSuchElementException
 	head = head.next;
 
 	length--;
+	queueLengthStatistics.addValue(length);
 
 	return ptr.work;
     }
@@ -52,7 +55,7 @@ public void Enqueue (Packets toadd)
 	{
 	    while (ptr.next != null)
 		ptr = ptr.next;
-
+	    
 	    ptr.next = new List();
 	    ptr = ptr.next;
 	}
@@ -60,10 +63,21 @@ public void Enqueue (Packets toadd)
 	ptr.next = null;
 	ptr.work = toadd;
 	length++;
+	queueLengthStatistics.addValue(length);
+	TotalPackets++;
+	PacketssInQueue++;
     }
 
 private List head;
 private long length;
+public long TotalPackets = 0;
+public long ProcessedPackets = 0;
+public  long PacketssInQueue = 0;
+public  long averageQueueTime = 0;
+
+// Statics Variables
+private DescriptiveStatistics queueLengthStatistics = new DescriptiveStatistics();
+
     
 };
 
