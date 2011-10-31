@@ -44,6 +44,8 @@ public void run ()
 			Packets packets = new Packets(nodeSelecter.nextInt(gridSize),
 					packetIdGenerator.nextInt(100000000),
 					SimulationTypes.SIMULATION_PACKETS_INTEREST);
+			System.out.println("Packet generated");
+			SimulationController.packetsGenerated++;
 	}
     }
 
