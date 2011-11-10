@@ -4,10 +4,14 @@ import arjuna.JavaSim.Distributions.*;
 import java.util.Random;
 
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
+
 import arjuna.JavaSim.Simulation.SimulationException;
 
 public class Arrivals extends SimulationProcess
 {
+	static final Logger log = Logger.getLogger(Arrivals.class);
 	private ExponentialStream InterArrivalTime;
 	private Integer gridSize = 0;
 	private Random nodeSelecter;
@@ -42,10 +46,11 @@ public void run ()
 	    }
 	    
 			Packets packets = new Packets(nodeSelecter.nextInt(gridSize),
-					packetIdGenerator.nextInt(100000000),
-					SimulationTypes.SIMULATION_PACKETS_INTEREST);
-			System.out.println("Packet generated");
-			SimulationController.packetsGenerated++;
+					SimulationTypes.SIMULATION_PACKETS_INTEREST,1);
+			packets.setDataPacketId(PacketDistributions.getNextDataPacketID());
+			packets.activate();
+			log.info("Packet generated ");
+			
 	}
     }
 

@@ -45,11 +45,11 @@ public class Test_Machine {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		Grid.createMeshGrid(4);
+		Grid.createMeshGrid();
 		pit = new HashMap<Integer,List<Integer>>();
 		queue = new CCNQueue();
 		for(int i=0;i<4;i++)
-			queue.add(new Packets(i,0,SimulationTypes.SIMULATION_PACKETS_INTEREST));
+			queue.add(new Packets(i,SimulationTypes.SIMULATION_PACKETS_INTEREST,1));
 		//test_obj = new Machine(queue, pit, 0,0);
 		
 			

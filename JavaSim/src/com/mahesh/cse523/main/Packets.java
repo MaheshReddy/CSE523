@@ -1,35 +1,74 @@
 package com.mahesh.cse523.main;
+import org.apache.log4j.Logger;
+
 import arjuna.JavaSim.Simulation.*;
 
 public class Packets
 {
+	static final Logger log = Logger.getLogger(Packets.class);
+	private static Integer currenPacketId=0;
 	private double ResponseTime;
 	private double ArrivalTime;
 	private Integer packetId = 0;
 	private Integer sourceNode = -1;
+	/**
+	 * Id of the data packet this interest packet is interested in.
+	 */
+	private Integer dataPacketId=0;
 	
+	/*
+	 * gives the size of the packet. Set using setters and getters.
+	 */
+	private Integer sizeOfPacket = 1;
 	private SimulationTypes packetType;
 
-	
 
-	public Packets (Integer nodeId, Integer packetid, SimulationTypes packettype)
+
+	/**
+	 * 
+	 * This is a constructor of a packet. It takes following param and sets them.
+	 * @param nodeId If its Interest Packet than this determines the source of
+	 * 		   of the Interest Packet. When we are flooding we change the source
+	 * 			of the Interest Packet to the node that is flooding.
+	 * 		   else if a packet is of type Data Packet then nodeId represents the node which owns this data packet.
+	 * @param packettype Type of the packet.
+	 */
+	public Packets (Integer nodeId, SimulationTypes packettype,Integer size)
 	{
-		boolean empty = false;
-		setPacketId(packetid);
+		setPacketId(getCurrenPacketId());
 		setPacketType(packettype);
 		setSourceNode(nodeId);
-		
-		System.out.println("node id = "+nodeId+" packet id ="+ packetId);
+		setSizeOfPacket(size);
+		log.info("node id = "+nodeId+" packet id ="+ packetId);
 
 		ResponseTime = 0.0;
 		ArrivalTime = Scheduler.CurrentTime();
-		CCNRouter router = Grid.getRouter(nodeId);
+	}
+	/**
+	 *  Activates packet. It performs necessary action on the packet. Depending on the packet type.
+	 *  @author contra
+	 *  TODO Also accept a parameter on what to do.
+	 */
+	public void activate()
+	{
+		if(SimulationTypes.SIMULATION_PACKETS_INTEREST == getPacketType())
+			interestPacketHandler();
+		else
+			log.info("Not activation method specified or found");
+
+	}
+	
+	
+	private void interestPacketHandler()
+	{
+		log.info("Handling Interest Packet"+this.toString());
+		CCNRouter router = Grid.getRouter(getSourceNode());
 		CCNQueue packetsQ = router.getPacketsQ();
 		Machine m = router.getM();
-		empty = packetsQ.isEmpty();
+		boolean empty = packetsQ.isEmpty();
 		packetsQ.add(this);
 		//CCNRouter.TotalPackets++;
-
+		
 		if (empty && !m.Processing() && m.IsOperational())
 		{
 			try
@@ -43,11 +82,13 @@ public class Packets
 			{
 			}
 		}
+
 	}
 
 	public void finished ()
 	{
 		ResponseTime = Scheduler.CurrentTime() - ArrivalTime;
+		SimulationController.incrementPacketsProcessed();
 		//CCNRouter.TotalResponseTime += ResponseTime;	
 	}
 	public Integer getPacketId() {
@@ -82,5 +123,29 @@ public class Packets
 		return str;
 		
 	}
+/*
+ * Returns the size of packet.
+ */
+	public Integer getSizeOfPacket() {
+		return sizeOfPacket;
+	}
+	/*
+	 * Sets the size of the packet. 
+	 */
+	public void setSizeOfPacket(Integer sizeOfPacket) {
+		this.sizeOfPacket = sizeOfPacket;
+	}
 
+	public Integer getDataPacketId() {
+		return dataPacketId;
+	}
+	public void setDataPacketId(Integer dataPacketId) {
+		this.dataPacketId = dataPacketId;
+	}
+	public static synchronized Integer getCurrenPacketId() {
+		return currenPacketId++;
+	}
+	public static synchronized void setCurrenPacketId(Integer currenPacketId) {
+		Packets.currenPacketId = currenPacketId;
+	}
 };

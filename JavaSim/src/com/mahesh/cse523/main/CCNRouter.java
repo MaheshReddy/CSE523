@@ -5,13 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CCNRouter extends SimulationProcess
+public class CCNRouter
 {
 	private  Machine M = null;
 	private  CCNQueue PacketsQ = null;
 	private int serverId = 0;
 	Map<Integer,List<Integer>> PIT=null;
-
+	private CCNCache localCache = null;
+	private CCNCache globalCache = null;
 
 	
 	public CCNRouter (int i)
@@ -20,6 +21,9 @@ public class CCNRouter extends SimulationProcess
 		PIT = new HashMap<Integer,List<Integer>>();
 		M = new Machine(PacketsQ,PIT,i,8);
 		serverId=i;
+		
+		localCache = new CCNCache();
+		globalCache = new CCNCache();
 		
 	}
 	public CCNRouter()
@@ -66,6 +70,19 @@ public class CCNRouter extends SimulationProcess
 	}
 	public void setPIT(Map<Integer, List<Integer>> pIT) {
 		PIT = pIT;
+	}
+	
+	public CCNCache getLocalCache() {
+		return localCache;
+	}
+	public void setLocalCache(CCNCache localCache) {
+		this.localCache = localCache;
+	}
+	public CCNCache getGlobalCache() {
+		return globalCache;
+	}
+	public void setGlobalCache(CCNCache globalCache) {
+		this.globalCache = globalCache;
 	}
 
 };

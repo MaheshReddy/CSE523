@@ -27,7 +27,7 @@ public class Test_Grid {
 	Grid Test_grid = null;
 	@Before
 	public void setUp() throws Exception {
-		Grid.createMeshGrid(4);
+		Grid.createMeshGrid();
 		
 	}
 

@@ -26,13 +26,11 @@ public class Grid
 		adjacencyList.add(innerHash);
 	}
 
-	/*public  Grid (SimulationTypes gridType,int size)
+	public static  void createTopology (SimulationTypes gridType)
 	{
-		gridSize = size;
-		routerList = new CCNRouter[size];
 		if (SimulationTypes.SIMULATION_GRID_MESH == gridType)
-			createMeshGrid(size);
-	}*/
+			createMeshGrid();
+	}
 
 
 	public static boolean isConnected(Integer node1, Integer node2) {
@@ -55,14 +53,13 @@ public class Grid
 			return adjacency;
 	}
 	
-	static public void createMeshGrid(int size)
+	static public void createMeshGrid()
 	{
-		gridSize = size;
-		routerList = new CCNRouter[size];
-		for(int i=0;i<size;i++)
+		routerList = new CCNRouter[getGridSize()];
+		for(int i=0;i<getGridSize();i++)
 		{
 			routerList[i]=new CCNRouter(i);
-			for(int j=0;j<size;j++)
+			for(int j=0;j<getGridSize();j++)
 				if(i!=j)
 					addEdge(i,j,1);
 		}

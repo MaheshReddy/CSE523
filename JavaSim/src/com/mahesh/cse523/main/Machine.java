@@ -10,10 +10,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import arjuna.JavaSim.Simulation.SimulationException;
 
 public class Machine extends SimulationProcess
 {
+	static final Logger log = Logger.getLogger(Machine.class);
 	private ExponentialStream STime;
 	private boolean operational;
 	private boolean working;
@@ -45,7 +48,7 @@ public class Machine extends SimulationProcess
 				//	CCNRouter.PacketssInQueue += CCNRouter.PacketsQ.QueueSize();
 				currentPacket = (Packets) packetsQ.remove();
 				
-				System.out.println("got following packet->"+currentPacket.getPacketId());
+				log.info("Processing  packet "+currentPacket.toString());
 				if(currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_INTEREST)
 					interestPacketsHandler(currentPacket);
 				try
@@ -80,9 +83,18 @@ public class Machine extends SimulationProcess
 			}
 		}
 	}
-
+	/**
+	 * Interest Packet handler for the machine. It first searches in Machine caches. If it fails then adds it to PIT. 
+	 * Then looks in Forwarding Table
+	 * if successful forwards the Interest packet to that node. If it fails then floods all the neighbouring nodes. 
+	 * @param curPacket
+	 */
 	public void interestPacketsHandler(Packets curPacket)
 	{
+		log.info("Machine Interest packet handler"+curPacket.toString());
+		
+		Packets data_packet = getDataPacketfromCache(curPacket.getDataPacketId());
+		
 		List<Integer> pitEntry = pit.get(curPacket.getPacketId());
 		if(pitEntry == null) // I havent seen this packet so I need to flood it
 		{
@@ -93,6 +105,11 @@ public class Machine extends SimulationProcess
 		pit.put(curPacket.getPacketId(), pitEntry);
 	}
 	
+	private Packets getDataPacketfromCache(Integer packetId)
+	{
+		Packets dataPacket = get
+		return null;
+	}
 	public void floodInterestPacket(Packets curPacket)
 	{
 		LinkedHashSet<HashMap<Integer, Integer>> adjList= Grid.getAdjacencyList(id);
@@ -120,6 +137,7 @@ public class Machine extends SimulationProcess
 			}
 		}
 	}
+	
 	public void Broken ()
 	{
 		operational = false;
