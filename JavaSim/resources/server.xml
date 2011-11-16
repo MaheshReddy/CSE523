@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+      xsi:schemaLocation="http://www.springframework.org/schema/context 
+         http://www.springframework.org/schema/context/spring-context-3.1.xsd
+      http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+<!-- 
+   <bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+      <property name="connectionFactory" ref="connectionFactory"/>
+      <property name="destination" ref="queue"/>
+      <property name="concurrentConsumers" value="3"/>
+      <property name="messageListener" ref="componentServer"/>
+   </bean>
+    -->
+    <context:property-placeholder location="classpath:activemq.properties" />	
+
+   <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+      <property name="brokerURL" value="${activemq.url}"/>
+   </bean>
+
+   <bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
+      <constructor-arg value="ComponentServer.in"/>
+   </bean>
+
+   <bean id="messageListener" class="com.ca.seawolf.componentServer.ComponentServer"/>
+   
+   <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+   <property name="connectionFactory" ref="connectionFactory"/>
+   <property name="destination" ref="queue"/>
+   <property name="concurrentConsumers" value="10"/>
+   <property name="messageListener" ref="messageListener"/>
+   </bean>
+
+</beans>

@@ -1,0 +1,707 @@
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =0
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =1
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =2
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =3
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =4
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =5
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =6
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =7
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =8
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =9
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =10
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =11
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 11 NodeId: 1 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =12
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 12 NodeId: 1 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =13
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 13 NodeId: 3 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =14
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 14 NodeId: 2 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =15
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 15 NodeId: 4 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =16
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 16 NodeId: 3 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =17
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 17 NodeId: 0 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =18
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 18 NodeId: 1 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =19
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 19 NodeId: 2 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =20
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 20 NodeId: 1 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =21
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 21 NodeId: 3 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =22
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 22 NodeId: 0 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =23
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 23 NodeId: 0 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =24
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 24 NodeId: 0 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =25
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 25 NodeId: 0 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =26
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 26 NodeId: 2 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =27
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 27 NodeId: 4 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =28
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 28 NodeId: 2 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =29
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 29 NodeId: 1 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =30
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 30 NodeId: 4 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =31
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 31 NodeId: 4 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =32
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 32 NodeId: 1 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =33
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 33 NodeId: 3 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =34
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 34 NodeId: 3 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =35
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 35 NodeId: 0 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =36
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 36 NodeId: 1 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =37
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 37 NodeId: 4 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =38
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 38 NodeId: 2 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =39
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 39 NodeId: 0 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =40
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 40 NodeId: 0 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =41
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 41 NodeId: 2 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =42
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 42 NodeId: 3 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =43
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 43 NodeId: 0 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =44
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 44 NodeId: 0 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =45
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 45 NodeId: 0 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =46
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 46 NodeId: 2 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =47
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 47 NodeId: 2 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =48
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 48 NodeId: 1 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =49
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 49 NodeId: 3 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =50
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 50 NodeId: 4 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =51
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 51 NodeId: 3 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =52
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 52 NodeId: 2 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =53
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 53 NodeId: 0 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =54
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 54 NodeId: 0 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =55
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 55 NodeId: 4 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =56
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 56 NodeId: 4 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =57
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 57 NodeId: 2 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =58
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 58 NodeId: 1 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =59
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 59 NodeId: 3 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =60
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 60 NodeId: 3 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =61
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 61 NodeId: 2 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =62
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 62 NodeId: 3 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =63
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 63 NodeId: 1 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =64
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 64 NodeId: 2 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =65
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 65 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =66
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 66 NodeId: 1 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =67
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 67 NodeId: 1 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =68
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 68 NodeId: 1 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =69
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 69 NodeId: 4 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =70
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 70 NodeId: 4 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =71
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 71 NodeId: 1 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =72
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 72 NodeId: 1 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =73
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 73 NodeId: 1 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =74
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 74 NodeId: 0 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =75
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 75 NodeId: 0 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =76
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 76 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =77
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 77 NodeId: 1 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =78
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 78 NodeId: 4 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =79
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 79 NodeId: 0 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =80
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 80 NodeId: 0 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =81
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 81 NodeId: 1 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =82
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 82 NodeId: 1 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =83
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 83 NodeId: 4 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =84
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 84 NodeId: 1 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =85
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 85 NodeId: 1 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =86
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 86 NodeId: 0 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =87
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 87 NodeId: 2 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =88
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 88 NodeId: 2 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =89
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 89 NodeId: 2 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =90
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 90 NodeId: 1 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =91
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 91 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =92
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 92 NodeId: 3 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =93
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 93 NodeId: 3 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =94
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 94 NodeId: 4 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =95
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 95 NodeId: 0 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =96
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 96 NodeId: 0 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =97
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 97 NodeId: 1 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =98
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 98 NodeId: 2 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =99
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 99 NodeId: 4 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =100
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 100 NodeId: 4 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =101
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 101 NodeId: 1 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =102
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 102 NodeId: 1 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =103
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 103 NodeId: 4 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =104
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 104 NodeId: 2 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =105
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 105 NodeId: 2 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =106
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 106 NodeId: 2 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =107
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 107 NodeId: 3 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =108
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 108 NodeId: 1 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =109
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 109 NodeId: 2 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =110
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 110 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =111
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 111 NodeId: 4 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =112
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 112 NodeId: 2 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =113
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 113 NodeId: 3 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =114
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 114 NodeId: 3 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =115
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 115 NodeId: 2 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =116
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 116 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =117
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 117 NodeId: 1 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =118
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 118 NodeId: 3 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =119
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 119 NodeId: 2 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =120
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 120 NodeId: 3 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =121
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 121 NodeId: 0 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =122
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 122 NodeId: 3 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =123
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 123 NodeId: 4 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =124
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 124 NodeId: 4 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =125
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 125 NodeId: 4 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =126
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 126 NodeId: 4 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =127
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 127 NodeId: 1 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =128
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 128 NodeId: 4 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =129
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 129 NodeId: 4 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =130
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 130 NodeId: 4 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =131
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 131 NodeId: 3 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =132
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 132 NodeId: 4 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =133
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 133 NodeId: 2 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =134
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 134 NodeId: 3 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =135
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 135 NodeId: 0 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =136
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 136 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =137
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 137 NodeId: 2 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =138
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 138 NodeId: 2 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =139
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 139 NodeId: 4 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =140
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 140 NodeId: 3 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =141
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 141 NodeId: 3 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =142
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 142 NodeId: 1 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =143
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 143 NodeId: 0 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =144
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 144 NodeId: 3 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =145
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 145 NodeId: 3 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =146
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 146 NodeId: 0 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =147
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 147 NodeId: 1 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =148
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 148 NodeId: 1 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =149
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 149 NodeId: 3 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =150
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 150 NodeId: 3 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =151
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 151 NodeId: 4 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =152
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 152 NodeId: 2 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =153
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 153 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =154
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 154 NodeId: 2 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =155
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 155 NodeId: 0 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =156
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 156 NodeId: 4 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =157
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 157 NodeId: 0 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =158
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 158 NodeId: 4 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =159
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 159 NodeId: 2 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =160
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 160 NodeId: 4 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =161
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 161 NodeId: 4 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =162
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 162 NodeId: 1 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =163
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 163 NodeId: 4 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =164
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 164 NodeId: 1 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =165
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 165 NodeId: 3 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =166
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 166 NodeId: 0 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =167
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 167 NodeId: 3 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =168
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 168 NodeId: 4 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =169
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 169 NodeId: 4 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =170
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 170 NodeId: 2 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =171
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 171 NodeId: 1 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =172
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 172 NodeId: 0 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =173
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 173 NodeId: 2 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =174
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 174 NodeId: 1 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =175
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 175 NodeId: 2 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =176
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 176 NodeId: 0 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =177
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 177 NodeId: 3 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =178
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 178 NodeId: 2 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =179
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 179 NodeId: 0 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =180
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 180 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =181
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 181 NodeId: 4 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =182
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 182 NodeId: 2 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =183
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 183 NodeId: 0 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =184
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 184 NodeId: 1 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =185
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 185 NodeId: 3 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =186
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 186 NodeId: 2 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =187
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 187 NodeId: 2 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =188
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 188 NodeId: 3 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =189
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 189 NodeId: 3 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =190
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 190 NodeId: 1 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =191
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 191 NodeId: 2 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =192
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 192 NodeId: 0 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =193
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 193 NodeId: 2 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =194
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 194 NodeId: 1 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =195
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 195 NodeId: 3 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =196
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 196 NodeId: 4 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =197
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 197 NodeId: 1 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =198
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 198 NodeId: 0 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =199
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 199 NodeId: 0 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =200
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 200 NodeId: 1 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =201
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 201 NodeId: 2 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =202
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 202 NodeId: 3 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =203
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 203 NodeId: 1 dataPacket:7 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =204
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 204 NodeId: 0 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =205
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 205 NodeId: 1 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =206
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 206 NodeId: 4 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =207
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 207 NodeId: 2 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =208
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 208 NodeId: 2 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =209
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 209 NodeId: 4 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =210
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 210 NodeId: 4 dataPacket:5 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =211
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 211 NodeId: 1 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =212
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 212 NodeId: 4 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =213
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 213 NodeId: 1 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =214
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 214 NodeId: 3 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =215
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 215 NodeId: 3 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =216
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 216 NodeId: 2 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =217
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 217 NodeId: 1 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =218
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 218 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =219
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 219 NodeId: 3 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =220
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 220 NodeId: 2 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =221
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 221 NodeId: 1 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =222
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 222 NodeId: 1 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =223
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 223 NodeId: 0 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =224
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 224 NodeId: 4 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =225
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 225 NodeId: 0 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =226
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 226 NodeId: 1 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =227
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 227 NodeId: 3 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =228
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 228 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =229
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 229 NodeId: 1 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =230
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 230 NodeId: 3 dataPacket:0 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =231
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 231 NodeId: 3 dataPacket:3 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =232
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 232 NodeId: 3 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =233
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 233 NodeId: 1 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =234
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 234 NodeId: 4 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =235
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 235 NodeId: 1 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =236
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 236 NodeId: 3 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 0 packet id =237
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 237 NodeId: 0 dataPacket:4 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 2 packet id =238
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 238 NodeId: 2 dataPacket:9 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 1 packet id =239
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 239 NodeId: 1 dataPacket:6 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 4 packet id =240
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 240 NodeId: 4 dataPacket:8 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =241
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 241 NodeId: 3 dataPacket:1 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+
+2011-11-15 23:42:05:425 Packets [INFO] node id = 3 packet id =242
+2011-11-15 23:42:05:425 Packets [INFO] Handling Interest PacketPacket{PacketId: 242 NodeId: 3 dataPacket:2 size:1 PacketType:SIMULATION_PACKETS_INTEREST}
+

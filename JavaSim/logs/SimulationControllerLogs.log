@@ -1,0 +1,108 @@
+2011-11-15 23:42:05:425 SimulationController [INFO] Done with simulation
+2011-11-15 23:42:05:425 SimulationController [INFO] Final Router configrations--------->
+2011-11-15 23:42:05:425 SimulationController [INFO] CCNRouter{ Id:0 
+Queue:Queue{[]}
+ PIT:{}
+ ForwardingTable{1=1, 2=2, 3=3, 4=4, 6=1, 7=2, 8=3, 9=4}
+GlobalCache:Cache{ nodeId:0 size:400
+Cache:{9=Packet{PacketId: 9 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 7=Packet{PacketId: 7 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 6=Packet{PacketId: 6 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 8=Packet{PacketId: 8 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 1=Packet{PacketId: 1 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 3=Packet{PacketId: 3 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 2=Packet{PacketId: 2 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 4=Packet{PacketId: 4 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+
+LocalCache:Cache{ nodeId:0 size:150
+Cache:{10=Packet{PacketId: 10 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 5=Packet{PacketId: 5 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 0=Packet{PacketId: 0 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+}
+
+2011-11-15 23:42:05:425 SimulationController [INFO] CCNRouter{ Id:1 
+Queue:Queue{[]}
+ PIT:{}
+ ForwardingTable{0=0, 2=2, 3=3, 4=4, 5=0, 7=2, 8=3, 9=4}
+GlobalCache:Cache{ nodeId:1 size:400
+Cache:{5=Packet{PacketId: 5 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 7=Packet{PacketId: 7 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 3=Packet{PacketId: 3 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 8=Packet{PacketId: 8 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 4=Packet{PacketId: 4 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 0=Packet{PacketId: 0 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 2=Packet{PacketId: 2 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 9=Packet{PacketId: 9 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+
+LocalCache:Cache{ nodeId:1 size:100
+Cache:{1=Packet{PacketId: 1 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 6=Packet{PacketId: 6 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+}
+
+2011-11-15 23:42:05:425 SimulationController [INFO] CCNRouter{ Id:2 
+Queue:Queue{[]}
+ PIT:{}
+ ForwardingTable{0=0, 1=1, 3=3, 4=4, 5=0, 6=1, 8=3, 9=4}
+GlobalCache:Cache{ nodeId:2 size:400
+Cache:{4=Packet{PacketId: 4 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 1=Packet{PacketId: 1 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 0=Packet{PacketId: 0 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 3=Packet{PacketId: 3 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 5=Packet{PacketId: 5 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 6=Packet{PacketId: 6 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 8=Packet{PacketId: 8 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 9=Packet{PacketId: 9 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+
+LocalCache:Cache{ nodeId:2 size:100
+Cache:{7=Packet{PacketId: 7 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 2=Packet{PacketId: 2 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+}
+
+2011-11-15 23:42:05:425 SimulationController [INFO] CCNRouter{ Id:3 
+Queue:Queue{[]}
+ PIT:{}
+ ForwardingTable{0=0, 1=1, 2=2, 4=4, 5=0, 6=1, 7=2, 9=4}
+GlobalCache:Cache{ nodeId:3 size:400
+Cache:{5=Packet{PacketId: 5 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 7=Packet{PacketId: 7 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 6=Packet{PacketId: 6 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 9=Packet{PacketId: 9 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 0=Packet{PacketId: 0 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 4=Packet{PacketId: 4 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 1=Packet{PacketId: 1 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 2=Packet{PacketId: 2 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+
+LocalCache:Cache{ nodeId:3 size:100
+Cache:{3=Packet{PacketId: 3 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 8=Packet{PacketId: 8 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+}
+
+2011-11-15 23:42:05:425 SimulationController [INFO] CCNRouter{ Id:4 
+Queue:Queue{[]}
+ PIT:{}
+ ForwardingTable{0=0, 1=1, 2=2, 3=3, 5=0, 6=1, 7=2, 8=3}
+GlobalCache:Cache{ nodeId:4 size:400
+Cache:{7=Packet{PacketId: 7 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 0=Packet{PacketId: 0 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 3=Packet{PacketId: 3 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 2=Packet{PacketId: 2 NodeId: 2 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 5=Packet{PacketId: 5 NodeId: 0 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 1=Packet{PacketId: 1 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 6=Packet{PacketId: 6 NodeId: 1 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 8=Packet{PacketId: 8 NodeId: 3 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+
+LocalCache:Cache{ nodeId:4 size:100
+Cache:{9=Packet{PacketId: 9 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+, 4=Packet{PacketId: 4 NodeId: 4 dataPacket:0 size:50 PacketType:SIMULATION_PACKETS_DATA}
+}}
+}
+
