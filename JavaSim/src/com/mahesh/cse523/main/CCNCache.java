@@ -28,14 +28,17 @@ public class CCNCache  {
 	 */
 	private Integer sizeOfCache;
 	
+	private int nodeId;
 	
 	private float hashTableLoadFactor = 0.75f;
 	/**
 	 * Constructor of CCNCache which intilizes cache and sets maxsize to be
 	 * 1000 and current size to zero.
+	 * @param id 
 	 */
-	public CCNCache()
+	public CCNCache(int id)
 	{
+		setNodeId(id);
 		setMaxSize(10000);
 		setSizeOfCache(0);
 		setMaxEntries(10000);
@@ -88,6 +91,13 @@ public class CCNCache  {
 		return cache.containsKey(packet.getPacketId());
 	}
 	
+	@Override
+	public String toString()
+	{
+		String str;
+		str = "Cache{ nodeId:"+getNodeId()+ " size:"+getSizeOfCache()+ "\nCache:"+cache.toString()+"}\n";
+		return str;
+	}
 	public Packets getaPacketFromCache(Integer pacektId)
 	{
 		return cache.get(pacektId);
@@ -110,5 +120,11 @@ public class CCNCache  {
 	}
 	public void setMaxEntries(Integer maxEntries) {
 		this.maxEntries = maxEntries;
+	}
+	public int getNodeId() {
+		return nodeId;
+	}
+	public void setNodeId(int nodeId) {
+		this.nodeId = nodeId;
 	}
 }

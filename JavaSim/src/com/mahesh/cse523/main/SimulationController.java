@@ -15,8 +15,8 @@ public class SimulationController extends SimulationProcess
 public SimulationController ()
     {
 	// Create the grid first
-	setNoDataPackets(100);
-    setNoNodes(4);
+	setNoDataPackets(10);
+    setNoNodes(5);
 	Grid.createTopology(gridType);
 	PacketDistributions.distributeContent();
     }
@@ -39,15 +39,18 @@ public void run ()
 
 	    Scheduler.startSimulation();
 
-	    while (packetsGenerated < 5)
+	    while (getPacketsGenerated() < 500)
 	    { 
+	    //System.out.println(packetsGenerated);
 		Hold(1);
 	    }
 	    Scheduler.stopSimulation();
 	    log.info("Done with simulation");
-
+	    log.info("Final Router configrations--------->");
+	    for(int i=0;i<Grid.getGridSize();i++)
+	    	log.info(Grid.getRouter(i));
 	    A.terminate();
-    
+	    SimulationProcess.mainResume();
 	}
 	catch (SimulationException e)
 	{
@@ -89,6 +92,14 @@ public void setGridType(SimulationTypes gridType) {
 public synchronized static void incrementPacketsProcessed()
 {
 	packetsGenerated++;
+}
+
+public static long getPacketsGenerated() {
+	return packetsGenerated;
+}
+
+public static void setPacketsGenerated(long packetsGenerated) {
+	SimulationController.packetsGenerated = packetsGenerated;
 }
     
 };

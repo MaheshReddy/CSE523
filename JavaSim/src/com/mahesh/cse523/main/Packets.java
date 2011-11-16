@@ -3,23 +3,22 @@ import org.apache.log4j.Logger;
 
 import arjuna.JavaSim.Simulation.*;
 
-public class Packets
+public class Packets implements Cloneable
 {
 	static final Logger log = Logger.getLogger(Packets.class);
 	private static Integer currenPacketId=0;
 	private double ResponseTime;
 	private double ArrivalTime;
-	private Integer packetId = 0;
-	private Integer sourceNode = -1;
+	private int packetId = 0;
+	private int sourceNode = -1;
 	/**
 	 * Id of the data packet this interest packet is interested in.
 	 */
-	private Integer dataPacketId=0;
-	
+	private int dataPacketId=0;
 	/*
 	 * gives the size of the packet. Set using setters and getters.
 	 */
-	private Integer sizeOfPacket = 1;
+	private int sizeOfPacket = 1;
 	private SimulationTypes packetType;
 
 
@@ -44,6 +43,10 @@ public class Packets
 		ResponseTime = 0.0;
 		ArrivalTime = Scheduler.CurrentTime();
 	}
+	public Packets(Packets pac)
+	{
+		
+	}
 	/**
 	 *  Activates packet. It performs necessary action on the packet. Depending on the packet type.
 	 *  @author contra
@@ -64,25 +67,10 @@ public class Packets
 		log.info("Handling Interest Packet"+this.toString());
 		CCNRouter router = Grid.getRouter(getSourceNode());
 		CCNQueue packetsQ = router.getPacketsQ();
-		Machine m = router.getM();
 		boolean empty = packetsQ.isEmpty();
-		packetsQ.add(this);
+		packetsQ.add(this); //Note: Router activation is done when we add the packet to the queue by the queue
 		//CCNRouter.TotalPackets++;
-		
-		if (empty && !m.Processing() && m.IsOperational())
-		{
-			try
-			{
-				m.Activate();
-			}
-			catch (SimulationException e)
-			{
-			}
-			catch (RestartException e)
-			{
-			}
-		}
-
+		//router.Activate();
 	}
 
 	public void finished ()
@@ -91,6 +79,7 @@ public class Packets
 		SimulationController.incrementPacketsProcessed();
 		//CCNRouter.TotalResponseTime += ResponseTime;	
 	}
+	
 	public Integer getPacketId() {
 		return packetId;
 	}
@@ -113,15 +102,30 @@ public class Packets
 	public void setSourceNode(Integer sourceNode) {
 		this.sourceNode = sourceNode;
 	}
+	/**
+	 * Overriding toString method
+	 */
 	@Override
 	public String toString()
 	{
 		String str = new String();
-		str = "PacketId->"+packetId.toString()+"\t";
-		str = str+"NodeId->"+getSourceNode().toString()+"\t";
-		str=str+"PacketType->"+getPacketType().toString()+"\n";
+		str = "Packet{PacketId: "+Integer.toString(packetId)+" NodeId: "+getSourceNode().toString()+" dataPacket:"+getDataPacketId()
+		+" size:"+getSizeOfPacket()+" PacketType:"+getPacketType().toString()+"}\n";
 		return str;
 		
+	}
+	@Override
+	public Object clone()
+	{
+		try
+		{
+			return super.clone();
+			
+		}
+		catch(CloneNotSupportedException e)
+		{
+			throw new Error("Got clone not support Exception in Packets class");
+		}
 	}
 /*
  * Returns the size of packet.
@@ -148,4 +152,5 @@ public class Packets
 	public static synchronized void setCurrenPacketId(Integer currenPacketId) {
 		Packets.currenPacketId = currenPacketId;
 	}
+	
 };

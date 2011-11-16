@@ -21,7 +21,6 @@ import org.junit.internal.runners.statements.Fail;
 import com.mahesh.cse523.main.CCNQueue;
 import com.mahesh.cse523.main.CCNRouter;
 import com.mahesh.cse523.main.Grid;
-import com.mahesh.cse523.main.Machine;
 import com.mahesh.cse523.main.Packets;
 import com.mahesh.cse523.main.SimulationTypes;
 
@@ -34,7 +33,6 @@ public class Test_Machine {
 	private Logger log;
 	private CCNQueue queue = null;
 	HashMap<Integer,List<Integer>> pit = null;
-	Machine test_obj =null;
 	Grid Test_grid = null;
 	CCNRouter test_rtr = null;
 	Packets test_pac = null;
@@ -47,7 +45,7 @@ public class Test_Machine {
 	public void setUp() throws Exception {
 		Grid.createMeshGrid();
 		pit = new HashMap<Integer,List<Integer>>();
-		queue = new CCNQueue();
+		queue = new CCNQueue(0);
 		for(int i=0;i<4;i++)
 			queue.add(new Packets(i,SimulationTypes.SIMULATION_PACKETS_INTEREST,1));
 		//test_obj = new Machine(queue, pit, 0,0);
@@ -67,7 +65,7 @@ public class Test_Machine {
 		Integer routerId = test_pac.getPacketId();
 		System.out.println("Current Packetis "+test_pac.toString());
 		test_rtr = Grid.getRouter(routerId);
-		test_rtr.getM().interestPacketsHandler(test_pac);
+		test_rtr.interestPacketsHandler(test_pac);
 		// now this has to be present in PIT table of all the adjacent nodes
 	    test_adjList = Grid.getAdjacencyList(routerId);
 		Iterator<HashMap<Integer,Integer>>  itr = test_adjList.iterator();
@@ -93,7 +91,7 @@ public class Test_Machine {
 			  Integer rtrId = node.keySet().iterator().next();
 			  CCNRouter rtr = Grid.getRouter(rtrId);
 			  Packets pac = (Packets) rtr.getPacketsQ().remove();
-			  rtr.getM().interestPacketsHandler(pac);
+			  rtr.interestPacketsHandler(pac);
 			// Now just check if all the PIT have entries for this packet and their queues are empty
 			 if(!rtr.isPresentInPit(pac.getPacketId()))
 				 fail("Not present in PIT of "+rtrId.toString());
