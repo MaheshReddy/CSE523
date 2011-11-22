@@ -6,17 +6,35 @@ import arjuna.JavaSim.Simulation.*;
 
 import arjuna.JavaSim.Simulation.SimulationException;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 public class SimulationController extends SimulationProcess
 {
 	static final Logger log = Logger.getLogger(SimulationController.class);;
 	public static long packetsGenerated = 0;
+	public static long maxSimulatedPackets = 0;
 	private SimulationTypes gridType = SimulationTypes.SIMULATION_GRID_MESH;
 
 public SimulationController ()
     {
 	// Create the grid first
-	setNoDataPackets(10);
-    setNoNodes(5);
+	Properties prop = new Properties();
+	try {
+		prop.load(ClassLoader.getSystemResourceAsStream("ccn.properties"));
+		setNoDataPackets(Integer.parseInt(prop.getProperty("ccn.no.datapackets")));
+		setNoNodes(Integer.parseInt(prop.getProperty("ccn.no.nodes")));
+		setMaxSimulatedPackets(Integer.parseInt(prop.getProperty("ccn.no.simulationPackets")));
+		Packets.setDataDumpFile(prop.getProperty("dumpfile.packets"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		log.info("Couldn't load properties file using default values");
+		setNoDataPackets(10);
+	    setNoNodes(5);
+	    setMaxSimulatedPackets(500);
+		e.printStackTrace();
+	}
+	
 	Grid.createTopology(gridType);
 	PacketDistributions.distributeContent();
     }
@@ -39,7 +57,7 @@ public void run ()
 
 	    Scheduler.startSimulation();
 
-	    while (getPacketsGenerated() < 500)
+	    while (getPacketsGenerated() < getMaxSimulatedPackets())
 	    { 
 	    //System.out.println(packetsGenerated);
 		Hold(1);
@@ -100,6 +118,14 @@ public static long getPacketsGenerated() {
 
 public static void setPacketsGenerated(long packetsGenerated) {
 	SimulationController.packetsGenerated = packetsGenerated;
+}
+
+public static long getMaxSimulatedPackets() {
+	return maxSimulatedPackets;
+}
+
+public static void setMaxSimulatedPackets(long maxSimulatedPackets) {
+	SimulationController.maxSimulatedPackets = maxSimulatedPackets;
 }
     
 };

@@ -5,7 +5,11 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 public class CCNCache  {
+	
+	Logger log = Logger.getLogger(CCNCache.class);
 	/**
 	 * Cache element of CCNCache. Its a object which implements Map Interface.
 	 * We have provided functions to insert, query and remove from this cache. 

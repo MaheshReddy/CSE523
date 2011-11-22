@@ -22,6 +22,7 @@ public class PacketDistributions {
 			Packets pack = new Packets(j % noNodes, SimulationTypes.SIMULATION_PACKETS_DATA, 50);
 				CCNRouter router = Grid.getRouter(j % noNodes);
 				CCNCache routerLocalCache = router.getLocalCache();
+				pack.setLocality(true);
 				routerLocalCache.addToCache(pack);
 		}
 	}

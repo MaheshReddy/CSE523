@@ -1,3 +1,4 @@
+
 package com.mahesh.cse523.main;
 import arjuna.JavaSim.Simulation.*;
 import arjuna.JavaSim.Distributions.*;
@@ -22,14 +23,34 @@ public class CCNRouter extends SimulationProcess
 	private boolean working;
 	private Packets currentPacket;
 	private CCNQueue packetsQ;
+	/**
+	 * Pending Interest Table is a map of Interest Id and as list of Integers representing routerId's of interested nodes.
+	 */
 	Map<Integer, List<Integer>> pit = null;
 	/**
 	 * forwarding table is a map of <DataPacketId,NodeId>
 	 */
 	Map<Integer,Integer> forwardingTable = null;
+	/**
+	 * Routers Unique Id
+	 */
 	private int routerId = 0;
+	/**
+	 * Routers localCache. Its own Cache
+	 */
 	private CCNCache localCache = null;
+	/**
+	 * Cache to store the data objects it recieved from other routers.
+	 */
 	private CCNCache globalCache = null;
+	
+	/**
+	 * List of interest packets served. Before serving an Interest packet we check with this list first to make sure 
+	 * we haven't served it already.
+	 * TODO Implementing this list in a very naive way for now, need to think of more efficient way of handling this
+	 */
+	
+	private List<Integer> interestsServed = null;
 	
 	public CCNRouter (int id)
 	{
@@ -40,9 +61,11 @@ public class CCNRouter extends SimulationProcess
 		packetsQ = new CCNQueue(id);
 		pit = new HashMap<Integer,List<Integer>>();
 		forwardingTable = new HashMap<Integer,Integer>();
+		interestsServed = new ArrayList<Integer>();
 		setRouterId(id);
 		localCache = new CCNCache(id);
 		globalCache = new CCNCache(id);
+		globalCache.setMaxSize(100);
 	}
 
 	public void run ()
@@ -56,6 +79,7 @@ public class CCNRouter extends SimulationProcess
 				CurrentTime();
 
 				//	CCNRouter.PacketssInQueue += CCNRouter.PacketsQ.QueueSize();
+				log.info("Start");
 				log.info(toString());
 				currentPacket = (Packets) packetsQ.remove();
 				log.info("Processing  packet "+currentPacket.toString());
@@ -64,6 +88,7 @@ public class CCNRouter extends SimulationProcess
 				else if (currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_DATA)
 					dataPacketsHandler(currentPacket);
 				log.info(toString());
+				log.info("End");
 				try
 				{
 					Hold(ServiceTime());
@@ -82,7 +107,7 @@ public class CCNRouter extends SimulationProcess
 				 * the destructor of the object to do the work in C++.
 				 */
 
-				currentPacket.finished();
+				//currentPacket.finished();
 			}
 
 			working = false;
@@ -105,11 +130,14 @@ public class CCNRouter extends SimulationProcess
 	 */
 	public void dataPacketsHandler(Packets curPacket)
 	{
+		// I got this data packet so setting its locality to false
+		curPacket.setLocality(false);
 		log.info("In Data packet handler");
 		List<Integer> pitEntry = pit.get(curPacket.getPacketId()); 
 		if(pitEntry == null) // I havent seen this packet so discard it
 		{
 			log.info("No entry in pit table ignoring");
+			curPacket.finished("NO_PIT");
 			return;
 		}
 		Iterator<Integer> itr = pitEntry.iterator();
@@ -118,8 +146,9 @@ public class CCNRouter extends SimulationProcess
 			Integer rid = itr.next();
 			if(rid != getRouterId()) // if its not my id than send
 			{
-				CCNRouter rtr = Grid.getRouter(rid);
-				rtr.getPacketsQ().add(curPacket);
+				//CCNRouter rtr = Grid.getRouter(rid);
+				//rtr.getPacketsQ().add(curPacket);
+				sendPacket(curPacket, rid);
 			}
 		}
 		// Now remove the entry 
@@ -129,7 +158,8 @@ public class CCNRouter extends SimulationProcess
 		getGlobalCache().addToCache(curPacket);
 		//adding entry to forwarding table
 		log.info("Adding a entry on forwarding table");
-		getForwardingTable().put(curPacket.getPacketId(), curPacket.getSourceNode());
+		
+		getForwardingTable().put(curPacket.getPacketId(), curPacket.getPrevHop());
 	}
 	/**
 	 * Interest Packet handler for the machine. It first searches in Machine caches. If it fails then adds it to PIT. 
@@ -139,46 +169,59 @@ public class CCNRouter extends SimulationProcess
 	 */
 	public void interestPacketsHandler(Packets curPacket)
 	{
+		if (isInterestServed(curPacket.getPacketId()))
+		{
+			curPacket.finished("ALREADY_SERVED");
+			log.info("Already served interest packet:"+ curPacket.getPacketId());
+			return;
+		}
 		log.info("Machine Interest packet handler"+curPacket.toString());
+		addToInterestServed(curPacket.getPacketId());
 		Boolean newInPit = false;
-		Packets data_packet = getDataPacketfromCache(curPacket.getDataPacketId());
+		Packets data_packet = getDataPacketfromCache(curPacket.getRefPacketId());
 		if(data_packet != null)
 		{
-			if(getRouterId() != curPacket.getSourceNode()) // send the data packet only if the interest packer is not from me.
-			{
-				log.info("Sending data packet to nodeId:"+Integer.toString(curPacket.getSourceNode()));
-			CCNRouter rtr = Grid.getRouter(curPacket.getSourceNode());
-			rtr.getPacketsQ().add(data_packet);
-			}
-			else
-				log.info("Interest packet from my node for this data,so suppressing");
+				log.info("Sending data packet to nodeId:"+Integer.toString(curPacket.getPrevHop()));
+				//Chaning the reference of the data packet to the interest packet, after sendPacket should change back to -1
+				data_packet.setRefPacketId(curPacket.getPacketId());
+				sendPacket(data_packet, curPacket.getPrevHop());
+				data_packet.setRefPacketId(-1);
+				curPacket.finished("SENT_DATA_PACKET");
+			//CCNRouter rtr = Grid.getRouter(curPacket.getPrevHop());
+			//rtr.getPacketsQ().add(data_packet);
 			return;
 		}
 		log.info("Inserting into pit table");
-		List<Integer> pitEntry = pit.get(curPacket.getDataPacketId());
+		List<Integer> pitEntry = pit.get(curPacket.getRefPacketId());
 		if(pitEntry == null) // I havent seen this packet so I need to flood it
 		{
 			log.info("New entry in pit table");
 			pitEntry = new ArrayList<Integer>();
 			newInPit=true;
 		}
-		if(!pitEntry.contains(curPacket.getSourceNode()))
+		
+		if(!pitEntry.contains(curPacket.getPrevHop()))
 		{
-			pitEntry.add(curPacket.getSourceNode());
-			pit.put(curPacket.getDataPacketId(), pitEntry);
+			pitEntry.add(curPacket.getPrevHop());
+			pit.put(curPacket.getRefPacketId(), pitEntry);
 		}
+		
 		log.info("Current Pit table-> "+pit);
-		Integer rid = getForwardingTableEntry(curPacket.getDataPacketId());
+		Integer rid = getForwardingTableEntry(curPacket.getRefPacketId());
 		if(rid!=null)
 		{
 			log.info("Forwarding table hit sending to"+ rid);
-			CCNRouter router = Grid.getRouter(rid);
-			router.getPacketsQ().add(curPacket);
+			sendPacket(curPacket, rid);
+			curPacket.finished("FIB_ENTRY");
+			//CCNRouter router = Grid.getRouter(rid);
+			//router.getPacketsQ().add(curPacket);
 		}
 		else // oh god !! the flooding devil
 		{
 			if(newInPit) // its new in pit so flood
 				floodInterestPacket(curPacket);
+			else
+				curPacket.finished("PIT_ENTRY");
 		}
 		
 	}
@@ -216,27 +259,56 @@ public class CCNRouter extends SimulationProcess
 		return null;
 		
 	}
+	
+	/**
+	 * Floods packet on the all the interfaces of this router, except on the node from which this packet came from.
+	 * @param curPacket Packet to be flooded.
+	 */
 	public void floodInterestPacket(Packets curPacket)
 	{
 		LinkedHashSet<HashMap<Integer, Integer>> adjList= Grid.getAdjacencyList(getRouterId());
 		Iterator<HashMap<Integer,Integer>> itr = adjList.iterator();
 		log.info("Flooding the packet to {");
-		Integer srcNode = curPacket.getSourceNode(); // getting the source Node 
-		curPacket.setSourceNode(getRouterId()); // setting the source id as my Id before flooding it to my good neighbors
+
+		int srcNode = curPacket.getPrevHop(); // getting the previous hop of the packet. so as not to flood to same node. 
+		
+		Boolean flag=true;
 		while(itr.hasNext())
 		{
 			HashMap<Integer,Integer> adjNode = (HashMap<Integer, Integer>) itr.next();
 			Integer nodeId = adjNode.keySet().iterator().next();
 			if(nodeId != srcNode) // we shouldn't flood the interest packet to same node where it came from
 			{
-			CCNRouter adjRouter = Grid.getRouter(nodeId);
-			adjRouter.getPacketsQ().addLast(curPacket);
-			log.info(" nodeId:"+nodeId+":sourceId:"+curPacket.getSourceNode());
+				if(!flag) // We need to reset the counter of new interest packets but the original one should retain it hop count
+					curPacket.setNoOfHops(0);
+				else
+					flag=false;
+				sendPacket(curPacket, nodeId);
 			}
 		}
 		log.info("}");
 	}
 	
+	
+	/**
+	 * This functin puts the packet in the destination Router's queue. But makes necessary changes to the packet before putting it.
+	 */
+	public void sendPacket(Packets curPacket,final Integer nodeId)
+	{
+		if(nodeId != -1)
+		{
+		curPacket.setPrevHop(getRouterId()); // setting the source id as my Id before flooding it to my good neighbors
+		curPacket.incrHops();
+		CCNRouter adjRouter = Grid.getRouter(nodeId);
+		adjRouter.getPacketsQ().addLast(curPacket);
+		log.info("Sending packet to nodeId:"+nodeId);
+		}
+		else
+		{
+			curPacket.finished("DEST_NODE");
+			log.info("Packet Destined to my node,so suppressing");
+		}
+	}
 	
 	@Override
 	public void Activate()
@@ -299,8 +371,8 @@ public class CCNRouter extends SimulationProcess
 	public String toString()
 	{
 		String str;
-		str = "CCNRouter{ Id:"+getRouterId()+ " \nQueue:"+ getPacketsQ().toString()+"\n PIT:"+getPIT().toString()+"\n ForwardingTable"+
-		getForwardingTable().toString()+"\nGlobalCache:"+getGlobalCache().toString()+"\nLocalCache:"+getLocalCache().toString()+"}\n";
+		str = "CCNRouter\n{ Id:"+getRouterId()+ " \nQueue:"+ getPacketsQ().toString()+"\n PIT:"+getPIT().toString()+"\n ForwardingTable"+
+		getForwardingTable().toString()+"\n interestServedTable"+interestsServed.toString()+"\nGlobalCache:"+getGlobalCache().toString()+"\nLocalCache:"+getLocalCache().toString()+"}\n";
 		return str;
 	}
 	public CCNQueue getPacketsQ() {
@@ -356,6 +428,23 @@ public class CCNRouter extends SimulationProcess
 
 	public void setForwardingTable(Map<Integer, Integer> forwardingTable) {
 		this.forwardingTable = forwardingTable;
+	}
+
+	/**
+	 * Searches the interestServed list.
+	 * @param id
+	 * @return
+	 */
+	public boolean isInterestServed(int id) {
+		return interestsServed.contains(id);
+	}
+	/**
+	 * Adds to the interestServed Table.
+	 * @param id
+	 */
+
+	public void addToInterestServed(int id) {
+		this.interestsServed.add(id);
 	}
 
 

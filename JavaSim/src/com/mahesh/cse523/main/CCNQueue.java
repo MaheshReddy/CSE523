@@ -29,7 +29,9 @@ public CCNQueue (int id)
  {
 	 //log.info("Addindg in last" + packet.toString()+" to queue");
 	 //Need to use clone as we don't want future changes made to same packet.
-	 queue.addLast((Packets)packet.clone());
+	 Packets pacToadd = (Packets)packet.clone();
+	 pacToadd.setCurNode(getNodeId()); // Updating the curnode of the packet
+	 queue.addLast(pacToadd);
 	 //log.info("Current Queue " + queue);
 	// Calling router activate every time  a packet is added to its queue. to make sure its on the scheduling queue 
 	 CCNRouter rtr = Grid.getRouter(getNodeId());

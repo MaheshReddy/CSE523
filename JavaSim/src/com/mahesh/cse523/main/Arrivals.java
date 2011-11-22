@@ -47,7 +47,7 @@ public void run ()
 	    
 			Packets packets = new Packets(nodeSelecter.nextInt(gridSize),
 					SimulationTypes.SIMULATION_PACKETS_INTEREST,1);
-			packets.setDataPacketId(PacketDistributions.getNextDataPacketID());
+			packets.setRefPacketId(PacketDistributions.getNextDataPacketID());
 			packets.activate();
 			log.info("Packet generated ");
 			
