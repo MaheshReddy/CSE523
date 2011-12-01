@@ -1,7 +1,6 @@
 package com.mahesh.cse523.main;
 import java.util.LinkedList;
 import java.util.List;
-import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.apache.log4j.Logger;
 
 public class CCNQueue 
@@ -80,8 +79,6 @@ public CCNQueue (int id)
 	 return str;
  }
  
-// Statics Variables
-private DescriptiveStatistics queueLengthStatistics = new DescriptiveStatistics();
 
 public Integer getMaxSize() {
 	return maxSize;
