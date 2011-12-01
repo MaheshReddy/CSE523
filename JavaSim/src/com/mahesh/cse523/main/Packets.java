@@ -80,6 +80,17 @@ public class Packets implements Cloneable
 	 */
 	private boolean local;
 	/**
+	 * Indicates if the packet is still alive or isdead. This parameter is used to denote the state of the packet before dumping its statistics.
+	 *
+	 */
+	private boolean alive;
+	
+	/**
+	 * Denotes the cause of suppression. Used while dumping the the packet. Its is set by passing the cause of suppression to 
+	 * finished method.
+	 */
+	private SimulationTypes causeOfSupr;
+	/**
 	 * 
 	 * This is a constructor of a packet. It takes following param and sets them.
 	 * @param nodeId If its Interest Packet than this determines the source of
@@ -96,6 +107,8 @@ public class Packets implements Cloneable
 		setRefPacketId(-1);
 		setOriginNode(nodeId);
 		setSizeOfPacket(size);
+		setAlive(true);
+		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
 		log.info("node id = "+nodeId+" packet id ="+ packetId);
 
 		ResponseTime = 0.0;
@@ -134,10 +147,16 @@ public class Packets implements Cloneable
 	 * 
 	 */
 
-	public void finished(String cause)
+	public void finished(SimulationTypes cause)
 	{
 		ResponseTime = Scheduler.CurrentTime() - ArrivalTime;
 		SimulationController.incrementPacketsProcessed();
+		setCauseOfSupr(cause);
+		setAlive(false);
+		dumpStatistics();
+	}
+	public void dumpStatistics()
+	{
 		try {
 			@SuppressWarnings("unused")
 			Writer fs = new BufferedWriter(new FileWriter("dump/packetsDump.txt",true));
@@ -156,7 +175,8 @@ public class Packets implements Cloneable
 				str.append(" 1");
 			else
 				str.append(" 0");
-			str.append(" "+cause);
+			str.append(" "+ Integer.toString(getCauseOfSupr().ordinal()) );
+			str.append(" "+ Integer.toBinaryString((isAlive())?1:0));
 			str.append('\n');
 			fs.write(str.toString());
 			fs.close();
@@ -277,6 +297,18 @@ public class Packets implements Cloneable
 	}
 	public void setLocality(boolean locality) {
 		this.local = locality;
+	}
+	public boolean isAlive() {
+		return alive;
+	}
+	public void setAlive(boolean alive) {
+		this.alive = alive;
+	}
+	public SimulationTypes getCauseOfSupr() {
+		return causeOfSupr;
+	}
+	public void setCauseOfSupr(SimulationTypes causeOfSupr) {
+		this.causeOfSupr = causeOfSupr;
 	}
 	
 };

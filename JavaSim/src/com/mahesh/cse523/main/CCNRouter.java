@@ -137,10 +137,16 @@ public class CCNRouter extends SimulationProcess
 		if(pitEntry == null) // I havent seen this packet so discard it
 		{
 			log.info("No entry in pit table ignoring");
-			curPacket.finished("NO_PIT");
+			curPacket.finished(SimulationTypes.SUPRESSION_NO_PIT);
 			return;
 		}
-		Iterator<Integer> itr = pitEntry.iterator();
+		// If the current node is not present in the PIT table list dump the packet as live packet and set the hop counts to zero.
+		if(!(pitEntry.contains(-1)))
+		{
+			curPacket.dumpStatistics();
+			curPacket.setNoOfHops(0);
+		}
+       Iterator<Integer> itr = pitEntry.iterator();
 		while(itr.hasNext())
 		{
 			Integer rid = itr.next();
@@ -171,7 +177,7 @@ public class CCNRouter extends SimulationProcess
 	{
 		if (isInterestServed(curPacket.getPacketId()))
 		{
-			curPacket.finished("ALREADY_SERVED");
+			curPacket.finished(SimulationTypes.SUPRESSION_ALREADY_SERVED);
 			log.info("Already served interest packet:"+ curPacket.getPacketId());
 			return;
 		}
@@ -186,7 +192,7 @@ public class CCNRouter extends SimulationProcess
 				data_packet.setRefPacketId(curPacket.getPacketId());
 				sendPacket(data_packet, curPacket.getPrevHop());
 				data_packet.setRefPacketId(-1);
-				curPacket.finished("SENT_DATA_PACKET");
+				curPacket.finished(SimulationTypes.SUPRESSION_SENT_DATA_PACKET);
 			//CCNRouter rtr = Grid.getRouter(curPacket.getPrevHop());
 			//rtr.getPacketsQ().add(data_packet);
 			return;
@@ -212,7 +218,7 @@ public class CCNRouter extends SimulationProcess
 		{
 			log.info("Forwarding table hit sending to"+ rid);
 			sendPacket(curPacket, rid);
-			curPacket.finished("FIB_ENTRY");
+			curPacket.finished(SimulationTypes.SUPRESSION_FIB_ENTRY);
 			//CCNRouter router = Grid.getRouter(rid);
 			//router.getPacketsQ().add(curPacket);
 		}
@@ -221,7 +227,7 @@ public class CCNRouter extends SimulationProcess
 			if(newInPit) // its new in pit so flood
 				floodInterestPacket(curPacket);
 			else
-				curPacket.finished("PIT_ENTRY");
+				curPacket.finished(SimulationTypes.SUPRESSION_PIT_ENTRY);
 		}
 		
 	}
@@ -272,19 +278,15 @@ public class CCNRouter extends SimulationProcess
 
 		int srcNode = curPacket.getPrevHop(); // getting the previous hop of the packet. so as not to flood to same node. 
 		
-		Boolean flag=true;
+		//While flooding the interest packet. Just dump the curent packet as a live packet and set all the hop count to zero.
+		curPacket.dumpStatistics();
+		curPacket.setNoOfHops(0);
 		while(itr.hasNext())
 		{
 			HashMap<Integer,Integer> adjNode = (HashMap<Integer, Integer>) itr.next();
 			Integer nodeId = adjNode.keySet().iterator().next();
 			if(nodeId != srcNode) // we shouldn't flood the interest packet to same node where it came from
-			{
-				if(!flag) // We need to reset the counter of new interest packets but the original one should retain it hop count
-					curPacket.setNoOfHops(0);
-				else
-					flag=false;
 				sendPacket(curPacket, nodeId);
-			}
 		}
 		log.info("}");
 	}
@@ -305,7 +307,7 @@ public class CCNRouter extends SimulationProcess
 		}
 		else
 		{
-			curPacket.finished("DEST_NODE");
+			curPacket.finished(SimulationTypes.SUPRESSION_DEST_NODE);
 			log.info("Packet Destined to my node,so suppressing");
 		}
 	}

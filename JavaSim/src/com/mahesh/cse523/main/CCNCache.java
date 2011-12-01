@@ -31,7 +31,9 @@ public class CCNCache  {
 	 * This gives the current size of cache
 	 */
 	private Integer sizeOfCache;
-	
+	/**
+	 * Id of the node owning this Cache.
+	 */
 	private int nodeId;
 	
 	private float hashTableLoadFactor = 0.75f;
@@ -57,6 +59,8 @@ public class CCNCache  {
 	 */
 	public void addToCache(Packets packet)
 	{
+		//While adding to cache change the origin node of the packet to this node.
+		packet.setOriginNode(getNodeId());
 		if(getSizeOfCache() + packet.getSizeOfPacket() < getMaxSize())
 		{
 			cache.put(packet.getPacketId(), packet); // just put the packet upand return
