@@ -49,6 +49,11 @@ public class CCNRouter extends SimulationProcess
 	private CCNCache globalCache = null;
 	
 	/**
+	 * Couter to distinguish vairous log entries of this router.
+	 */
+	private int logCounter = 0;
+	
+	/**
 	 * List of interest packets served. Before serving an Interest packet we check with this list first to make sure 
 	 * we haven't served it already.
 	 * TODO Implementing this list in a very naive way for now, need to think of more efficient way of handling this
@@ -83,7 +88,8 @@ public class CCNRouter extends SimulationProcess
 				CurrentTime();
 
 				//	CCNRouter.PacketssInQueue += CCNRouter.PacketsQ.QueueSize();
-				log.info("Start");
+				int ctr= getLogCounter();
+				log.info("Start Processing of Router:"+getRouterId()+" Iteration:"+ctr+"\n");
 				log.info(toString());
 				currentPacket = (Packets) packetsQ.remove();
 				log.info("Processing  packet "+currentPacket.toString());
@@ -92,7 +98,7 @@ public class CCNRouter extends SimulationProcess
 				else if (currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_DATA)
 					dataPacketsHandler(currentPacket);
 				log.info(toString());
-				log.info("End");
+				log.info("Ending Processing of Router:"+getRouterId()+" Iteration:"+ctr+"#########################################################\n");
 				try
 				{
 					Hold(ServiceTime());
@@ -377,7 +383,7 @@ public class CCNRouter extends SimulationProcess
 	public String toString()
 	{
 		String str;
-		str = "CCNRouter\n{ Id:"+getRouterId()+ " \nQueue:"+ getPacketsQ().toString()+"\n PIT:"+getPIT().toString()+"\n ForwardingTable"+
+		str = "CCNRouter\n{ Id:"+getRouterId()+ " \n"+ getPacketsQ().toString()+"\n PIT:"+getPIT().toString()+"\n ForwardingTable"+
 		getForwardingTable().toString()+"\n interestServedTable"+interestsServed.toString()+"\nGlobalCache:"+getGlobalCache().toString()+"\nLocalCache:"+getLocalCache().toString()+"}\n";
 		return str;
 	}
@@ -451,6 +457,16 @@ public class CCNRouter extends SimulationProcess
 
 	public void addToInterestServed(int id) {
 		this.interestsServed.add(id);
+	}
+
+	public int getLogCounter()
+	{
+		logCounter=logCounter+1;
+		return logCounter;
+	}
+
+	public void setLogCounter(int logCounter) {
+		this.logCounter = logCounter;
 	}
 
 

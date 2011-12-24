@@ -105,7 +105,7 @@ public class CCNCache  {
 	public String toString()
 	{
 		String str;
-		str = "Cache{ nodeId:"+getNodeId()+ " size:"+getSizeOfCache()+ "\nCache:"+cache.toString()+"}\n";
+		str = "{ nodeId:"+getNodeId()+ " size:"+getSizeOfCache()+ "\nCache:"+cache.toString()+"}\n";
 		return str;
 	}
 	public Packets getaPacketFromCache(Integer pacektId)
