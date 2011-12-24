@@ -1,4 +1,4 @@
-package com.mahesh.cse523.main;
+package com.simulator.controller;
 
 public enum SimulationTypes {
 	SIMULATION_NOT_APPLICABLE,

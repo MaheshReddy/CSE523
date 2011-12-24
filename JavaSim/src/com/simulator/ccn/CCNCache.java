@@ -1,4 +1,4 @@
-package com.mahesh.cse523.main;
+package com.simulator.ccn;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
+import com.simulator.packets.Packets;
 
 public class CCNCache  {
 	

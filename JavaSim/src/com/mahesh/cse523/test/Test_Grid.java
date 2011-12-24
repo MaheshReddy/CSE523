@@ -12,8 +12,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.mahesh.cse523.main.Grid;
-import com.mahesh.cse523.main.SimulationTypes;
+import com.simulator.controller.SimulationTypes;
+import com.simulator.topology.Grid;
 
 /**
  * @author mahesh
@@ -39,7 +39,7 @@ public class Test_Grid {
 	}
 
 	/**
-	 * Test method for {@link com.mahesh.cse523.main.Grid#isConnected(java.lang.Integer, java.lang.Integer)}.
+	 * Test method for {@link com.simulator.topology.Grid#isConnected(java.lang.Integer, java.lang.Integer)}.
 	 */
 	@Test
 	public final void testIsConnected() {

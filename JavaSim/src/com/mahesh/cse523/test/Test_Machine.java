@@ -18,11 +18,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.runners.statements.Fail;
 
-import com.mahesh.cse523.main.CCNQueue;
-import com.mahesh.cse523.main.CCNRouter;
-import com.mahesh.cse523.main.Grid;
-import com.mahesh.cse523.main.Packets;
-import com.mahesh.cse523.main.SimulationTypes;
+import com.simulator.ccn.CCNQueue;
+import com.simulator.ccn.CCNRouter;
+import com.simulator.controller.SimulationTypes;
+import com.simulator.packets.Packets;
+import com.simulator.topology.Grid;
 
 /**
  * @author mahesh
