@@ -18,10 +18,13 @@ import java.util.Properties;
 public class SimulationController extends SimulationProcess
 {
 	static final Logger log = Logger.getLogger(SimulationController.class);;
-	public static long packetsGenerated = 0;
+	private static long packetsGenerated = 0;
 	public static long maxSimulatedPackets = 0;
 	private SimulationTypes gridType = SimulationTypes.SIMULATION_GRID_BRITE;
-
+    /**
+     * Reads "ccn.properties" file and sets the corresponding simulation parameters.
+     * @throws Exception
+     */
 	public SimulationController () throws Exception
 	{
 		// Create the grid first
@@ -59,15 +62,16 @@ public class SimulationController extends SimulationProcess
 	{
 		try
 		{
+			log.info("Starting Simulation -- Config\n Grid Size:"+Grid.getGridSize());
 			Arrivals A = new Arrivals(8);
 			A.Activate();
 
 			Scheduler.startSimulation();
 
-			while (getPacketsGenerated() < getMaxSimulatedPackets())
+			while (Packets.getCurrenPacketId() < getMaxSimulatedPackets())
 			{ 
-				//System.out.println(packetsGenerated);
-				Hold(1);
+				System.out.println(getPacketsGenerated()+" "+getMaxSimulatedPackets());
+				Hold(10);
 			}
 			Scheduler.stopSimulation();
 			log.info("Done with simulation");
@@ -116,15 +120,11 @@ public class SimulationController extends SimulationProcess
 
 	public synchronized static void incrementPacketsProcessed()
 	{
-		packetsGenerated++;
+		packetsGenerated=packetsGenerated+1;
 	}
 
 	public static long getPacketsGenerated() {
 		return packetsGenerated;
-	}
-
-	public static void setPacketsGenerated(long packetsGenerated) {
-		SimulationController.packetsGenerated = packetsGenerated;
 	}
 
 	public static long getMaxSimulatedPackets() {

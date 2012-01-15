@@ -27,13 +27,18 @@ public CCNQueue (int id)
 		maxSize = 10000;
     }
 
+/**
+ * Add a packet to end of the queue. 
+ * @param packet
+ */
  public void addLast(Packets packet)
  {
 	 //log.info("Addindg in last" + packet.toString()+" to queue");
 	 //Need to use clone as we don't want future changes made to same packet.
-	 Packets pacToadd = (Packets)packet.clone();
-	 pacToadd.setCurNode(getNodeId()); // Updating the curnode of the packet
-	 queue.addLast(pacToadd);
+	 //pacToadd.setPacketId(Packets.getCurrenPacketId());
+	 packet.setCurNode(getNodeId()); // Updating the curnode of the packet
+	 //pacToadd.setSourcePacketId(packet.getPacketId());
+	 queue.addLast(packet);
 	 //log.info("Current Queue " + queue);
 	// Calling router activate every time  a packet is added to its queue. to make sure its on the scheduling queue 
 	 CCNRouter rtr = Grid.getRouter(getNodeId());
@@ -54,13 +59,7 @@ public CCNQueue (int id)
 	 return packet;
  }
  
- public void add(Packets packet)
- {
-	 //log.info("Adding" + packet.toString()+" to queue");
-	 addLast(packet);
-	 
- }
- 
+
  public boolean contains(Packets packet)
  {
 	return queue.contains(packet);

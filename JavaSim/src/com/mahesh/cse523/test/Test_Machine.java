@@ -47,7 +47,7 @@ public class Test_Machine {
 		pit = new HashMap<Integer,List<Integer>>();
 		queue = new CCNQueue(0);
 		for(int i=0;i<4;i++)
-			queue.add(new Packets(i,SimulationTypes.SIMULATION_PACKETS_INTEREST,1));
+			queue.addLast(new Packets(i,SimulationTypes.SIMULATION_PACKETS_INTEREST,1));
 		//test_obj = new Machine(queue, pit, 0,0);
 		
 			

@@ -153,7 +153,7 @@ public class CCNRouter extends SimulationProcess
 		// If the current node is not present in the PIT table list dump the packet as live packet and set the hop counts to zero.
 		if(!(pitEntry.contains(-1)))
 		{
-			curPacket.dumpStatistics();
+			Packets.dumpStatistics(curPacket);
 			curPacket.setNoOfHops(0);
 		}
        Iterator<Integer> itr = pitEntry.iterator();
@@ -164,7 +164,8 @@ public class CCNRouter extends SimulationProcess
 			{
 				//CCNRouter rtr = Grid.getRouter(rid);
 				//rtr.getPacketsQ().add(curPacket);
-				sendPacket(curPacket, rid);
+				Packets clonePac = (Packets) curPacket.clone();
+				sendPacket(clonePac, rid);
 			}
 		}
 		// Now remove the entry 
@@ -199,8 +200,8 @@ public class CCNRouter extends SimulationProcess
 		{
 				log.info("Sending data packet to nodeId:"+Integer.toString(curPacket.getPrevHop()));
 				//Chaning the reference of the data packet to the interest packet, after sendPacket should change back to -1
-				data_packet.setRefPacketId(curPacket.getPacketId());
-				sendPacket(data_packet, curPacket.getPrevHop());
+				data_packet.setRefPacketId(curPacket.getSourcePacketId());
+				sendPacket((Packets) data_packet.clone(), curPacket.getPrevHop());
 				data_packet.setRefPacketId(-1);
 				curPacket.finished(SimulationTypes.SUPRESSION_SENT_DATA_PACKET);
 			//CCNRouter rtr = Grid.getRouter(curPacket.getPrevHop());
@@ -289,14 +290,19 @@ public class CCNRouter extends SimulationProcess
 		int srcNode = curPacket.getPrevHop(); // getting the previous hop of the packet. so as not to flood to same node. 
 		
 		//While flooding the interest packet. Just dump the curent packet as a live packet and set all the hop count to zero.
-		curPacket.dumpStatistics();
+		Packets.dumpStatistics(curPacket);
 		curPacket.setNoOfHops(0);
 		while(itr.hasNext())
 		{
 			HashMap<Integer,Integer> adjNode = (HashMap<Integer, Integer>) itr.next();
 			Integer nodeId = adjNode.keySet().iterator().next();
+			
 			if(nodeId != srcNode) // we shouldn't flood the interest packet to same node where it came from
-				sendPacket(curPacket, nodeId);
+			{
+				Packets pacToadd = (Packets)curPacket.clone();
+				 //pacToadd.setPacketId(Packets.getCurrenPacketId());
+				sendPacket(pacToadd, nodeId);
+			}
 		}
 		log.info("}");
 	}
@@ -304,6 +310,7 @@ public class CCNRouter extends SimulationProcess
 	
 	/**
 	 * This functin puts the packet in the destination Router's queue. But makes necessary changes to the packet before putting it.
+	 * 
 	 */
 	public void sendPacket(Packets curPacket,final Integer nodeId)
 	{
@@ -330,7 +337,7 @@ public class CCNRouter extends SimulationProcess
 			//log.info("Activating Router");
 			try
 			{
-				super.Activate();
+				super.ActivateDelay(0.0001);
 			}
 			catch (SimulationException e)
 			{

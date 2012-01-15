@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Formatter;
 
 import org.apache.log4j.Logger;
 
@@ -39,6 +40,10 @@ public class Packets implements Cloneable
 	 * Id of this packet instance.
 	 */
 	private int packetId = 0;
+	/**
+	 * Source Packet Id only makes sence when the packet is a clone. And this represents the packetid of the source packet.
+	 */
+	private int sourcePacketId = 0;
 	
 	/**
 	 * Node id of the previous hop from where the packet came.
@@ -97,6 +102,11 @@ public class Packets implements Cloneable
 	 * finished method.
 	 */
 	private SimulationTypes causeOfSupr;
+	
+	/**
+	 * Comma seperated list of nodes traversed by this packet. Only used of debugging purpose.
+	 */
+	private String pathTravelled;
 	/**
 	 * 
 	 * This is a constructor of a packet. It takes following param and sets them.
@@ -105,10 +115,15 @@ public class Packets implements Cloneable
 	 * 			of the Interest Packet to the node that is flooding.
 	 * 		   else if a packet is of type Data Packet then nodeId represents the node which owns this data packet.
 	 * @param packettype Type of the packet.
+	 * Notes:
+	 * When a packet is created 
+	 * We get a unique Id from a static packet Id generator and assign it to PacketId. We also assign the same Id of sourceId since we
+	 * are creating the packet here.
 	 */
 	public Packets (Integer nodeId, SimulationTypes packettype,Integer size)
 	{
 		setPacketId(getCurrenPacketId());
+		setSourcePacketId(getPacketId());
 		setPacketType(packettype);
 		setPrevHop(-1);
 		setRefPacketId(-1);
@@ -145,46 +160,58 @@ public class Packets implements Cloneable
 		log.info("Handling Interest Packet"+this.toString());
 		CCNRouter router = Grid.getRouter(getOriginNode());
 		CCNQueue packetsQ = router.getPacketsQ();
-		packetsQ.add(this); //Note: Router activation is done when we add the packet to the queue by the queue
+		packetsQ.addLast(this); //Note: Router activation is done when we add the packet to the queue by the queue
 		//CCNRouter.TotalPackets++;
 		//router.Activate();
 	}
 	
 	/**
-	 * 
+	 * This function is called when the Packet is about to Die.
+	 * Various scenarious when a packet can die are
+	 * 1. When there is No entry in pit table for this data packet.
+	 * 2. Already served interest packet
+	 * 3. Statisfying the interest packet by sending the 
+	 *    corresponding data packet.
+	 * 4. When there is a hit in forwarding table.
+	 * 5. When there is already an entry in PIT table.  
 	 */
 
 	public void finished(SimulationTypes cause)
 	{
 		ResponseTime = Scheduler.CurrentTime() - ArrivalTime;
-		SimulationController.incrementPacketsProcessed();
 		setCauseOfSupr(cause);
 		setAlive(false);
-		dumpStatistics();
+		dumpStatistics(this);
+		log.info("Finished Packetid:"+getPacketId());
+		SimulationController.incrementPacketsProcessed();
 	}
-	public void dumpStatistics()
+	
+	public synchronized static void dumpStatistics(Packets curPacket)
 	{
 		try {
 			@SuppressWarnings("unused")
 			Writer fs = new BufferedWriter(new FileWriter("dump/packetsDump.txt",true));
-			StringBuilder str = new StringBuilder();
-			if(SimulationTypes.SIMULATION_PACKETS_DATA == getPacketType())
-				str.append('d');
+			StringBuilder str1 = new StringBuilder();
+			Formatter str = new Formatter(str1);
+			if(SimulationTypes.SIMULATION_PACKETS_DATA == curPacket.getPacketType())
+				str.format("d");
 			else 
-				str.append('i');
-			str.append(" "+Double.toString(SimulationProcess.CurrentTime()));
-			str.append(" "+getPacketId());
-			str.append(" "+getOriginNode());
-			str.append(" "+getCurNode());
-			str.append(" "+getRefPacketId());
-			str.append(" "+getNoOfHops());
-			if(isLocal())
-				str.append(" 1");
+				str.format("i");
+			str.format(" TIME:%(,2.4f",SimulationProcess.CurrentTime());
+			str.format(" PAC_ID:%2d",curPacket.getPacketId());
+			//str.format(" SRCPACK_ID:%2d",curPacket.getSourcePacketId());
+			str.format(" ORGIN_NODE:%2d",curPacket.getOriginNode());
+			str.format(" CUR_NODE:%2d",curPacket.getCurNode());
+			str.format(" REFPAC_ID:%2d",curPacket.getRefPacketId());
+			str.format(" PREV_HOP_ID:%2d",curPacket.getPrevHop());
+			str.format(" NO_HOPS:%2d",curPacket.getNoOfHops());
+			if(curPacket.isLocal())
+				str.format(" LOCAL:1");
 			else
-				str.append(" 0");
-			str.append(" "+ Integer.toString(getCauseOfSupr().ordinal()) );
-			str.append(" "+ Integer.toBinaryString((isAlive())?1:0));
-			str.append('\n');
+				str.format(" LOCAL:0");
+			str.format(" CAUES:%s",Integer.toString(curPacket.getCauseOfSupr().ordinal()) );
+			str.format(" ALIVE:"+ Integer.toBinaryString((curPacket.isAlive())?1:0));
+			str.format("\n");
 			fs.write(str.toString());
 			fs.close();
 		}catch (IOException e) {
@@ -235,8 +262,9 @@ public class Packets implements Cloneable
 	{
 		try
 		{
-			return super.clone();
-			
+			Packets clonedPacket = (Packets) super.clone();
+			//clonedPacket.pathTravelled = new String(this.getPathTravelled());
+			return clonedPacket;
 		}
 		catch(CloneNotSupportedException e)
 		{
@@ -316,6 +344,18 @@ public class Packets implements Cloneable
 	}
 	public void setCauseOfSupr(SimulationTypes causeOfSupr) {
 		this.causeOfSupr = causeOfSupr;
+	}
+	public int getSourcePacketId() {
+		return sourcePacketId;
+	}
+	public void setSourcePacketId(int sourcePacketId) {
+		this.sourcePacketId = sourcePacketId;
+	}
+	public String getPathTravelled() {
+		return pathTravelled;
+	}
+	public void setPathTravelled(int node) {
+		pathTravelled.concat(","+Integer.toString(node, 10));
 	}
 	
 };
