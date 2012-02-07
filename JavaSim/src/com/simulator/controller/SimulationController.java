@@ -2,6 +2,8 @@ package com.simulator.controller;
 
 import org.apache.log4j.Logger;
 
+import com.simulator.ccn.CCNRouter;
+import com.simulator.ccn.TransmitPackets;
 import com.simulator.distributions.Arrivals;
 import com.simulator.distributions.PacketDistributions;
 import com.simulator.packets.Packets;
@@ -36,6 +38,10 @@ public class SimulationController extends SimulationProcess
 			setMaxSimulatedPackets(Integer.parseInt(prop.getProperty("ccn.no.simulationPackets")));
 			Packets.setDataDumpFile(prop.getProperty("dumpfile.packets"));
 			setGridType(SimulationTypes.valueOf(prop.getProperty("ccn.topology")));
+			CCNRouter.setProcDelay(Double.parseDouble(prop.getProperty("ccn.delay.processing")));
+			TransmitPackets.setTransDelay(Double.parseDouble(prop.getProperty("ccn.delay.transmitting")));
+			Arrivals.setArvDelay(Double.parseDouble(prop.getProperty("ccn.delay.arrivals")));
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			log.info("Couldn't load properties file using default values");
@@ -63,7 +69,7 @@ public class SimulationController extends SimulationProcess
 		try
 		{
 			log.info("Starting Simulation -- Config\n Grid Size:"+Grid.getGridSize());
-			Arrivals A = new Arrivals(8);
+			Arrivals A = new Arrivals(Arrivals.getArvDelay());
 			A.Activate();
 
 			Scheduler.startSimulation();

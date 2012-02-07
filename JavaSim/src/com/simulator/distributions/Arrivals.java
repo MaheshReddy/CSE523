@@ -20,6 +20,7 @@ public class Arrivals extends SimulationProcess
 	private Integer gridSize = 0;
 	private Random nodeSelecter;
 	private Random packetIdGenerator;
+	private static double arvDelay;
 	
 public Arrivals (double mean)
     {
@@ -63,6 +64,16 @@ public int getHostId()
 	
 	return 0;
 	
+}
+
+
+public static double getArvDelay() {
+	return arvDelay;
+}
+
+
+public static void setArvDelay(double arvDelay) {
+	Arrivals.arvDelay = arvDelay;
 }
 
     

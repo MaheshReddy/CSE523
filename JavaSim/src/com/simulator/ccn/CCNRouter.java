@@ -27,6 +27,7 @@ public class CCNRouter extends SimulationProcess
 	private boolean working;
 	private Packets currentPacket;
 	private CCNQueue packetsQ;
+	private static double procDelay;
 	/**
 	 * Pending Interest Table is a map of Interest Id and as list of Integers representing routerId's of interested nodes.
 	 */
@@ -93,15 +94,9 @@ public class CCNRouter extends SimulationProcess
 				log.info(toString());
 				currentPacket = (Packets) packetsQ.remove();
 				log.info("Processing  packet "+currentPacket.toString());
-				if(currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_INTEREST)
-					interestPacketsHandler(currentPacket);
-				else if (currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_DATA)
-					dataPacketsHandler(currentPacket);
-				log.info(toString());
-				log.info("Ending Processing of Router:"+getRouterId()+" Iteration:"+ctr+"#########################################################\n");
 				try
 				{
-					Hold(ServiceTime());
+					Hold(getProcDelay());
 				}
 				catch (SimulationException e)
 				{
@@ -109,6 +104,13 @@ public class CCNRouter extends SimulationProcess
 				catch (RestartException e)
 				{
 				}
+				if(currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_INTEREST)
+					interestPacketsHandler(currentPacket);
+				else if (currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_DATA)
+					dataPacketsHandler(currentPacket);
+				log.info(toString());
+				log.info("Ending Processing of Router:"+getRouterId()+" Iteration:"+ctr+"#########################################################\n");
+				
 
 				CurrentTime();
 
@@ -154,7 +156,7 @@ public class CCNRouter extends SimulationProcess
 		if(!(pitEntry.contains(-1)))
 		{
 			Packets.dumpStatistics(curPacket);
-			curPacket.setNoOfHops(0);
+			//curPacket.setNoOfHops(0);
 		}
        Iterator<Integer> itr = pitEntry.iterator();
 		while(itr.hasNext())
@@ -235,10 +237,10 @@ public class CCNRouter extends SimulationProcess
 		}
 		else // oh god !! the flooding devil
 		{
-			if(newInPit) // its new in pit so flood
-				floodInterestPacket(curPacket);
-			else
-				curPacket.finished(SimulationTypes.SUPRESSION_PIT_ENTRY);
+			//if(newInPit) // its new in pit so flood
+			floodInterestPacket(curPacket);
+			//else
+				//curPacket.finished(SimulationTypes.SUPRESSION_PIT_ENTRY);
 		}
 		
 	}
@@ -291,7 +293,7 @@ public class CCNRouter extends SimulationProcess
 		
 		//While flooding the interest packet. Just dump the curent packet as a live packet and set all the hop count to zero.
 		Packets.dumpStatistics(curPacket);
-		curPacket.setNoOfHops(0);
+		//curPacket.setNoOfHops(0);
 		while(itr.hasNext())
 		{
 			HashMap<Integer,Integer> adjNode = (HashMap<Integer, Integer>) itr.next();
@@ -309,8 +311,8 @@ public class CCNRouter extends SimulationProcess
 	
 	
 	/**
-	 * This functin puts the packet in the destination Router's queue. But makes necessary changes to the packet before putting it.
-	 * 
+	 * This function puts the packet in the destination Router's queue. But makes necessary changes to the packet before putting it.
+	 * It creates a new SimulationProcess TransmitPackets and adds transmission delay to it.
 	 */
 	public void sendPacket(Packets curPacket,final Integer nodeId)
 	{
@@ -318,8 +320,16 @@ public class CCNRouter extends SimulationProcess
 		{
 		curPacket.setPrevHop(getRouterId()); // setting the source id as my Id before flooding it to my good neighbors
 		curPacket.incrHops();
-		CCNRouter adjRouter = Grid.getRouter(nodeId);
-		adjRouter.getPacketsQ().addLast(curPacket);
+		TransmitPackets trans = new TransmitPackets(curPacket,nodeId);
+		try {
+			trans.ActivateDelay(TransmitPackets.getTransDelay());
+		} catch (SimulationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RestartException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		log.info("Sending packet to nodeId:"+nodeId);
 		}
 		else
@@ -337,7 +347,10 @@ public class CCNRouter extends SimulationProcess
 			//log.info("Activating Router");
 			try
 			{
-				super.ActivateDelay(0.0001);
+				//super.ActivateDelay(0.0001);
+				//This statement has been changed to an immediate activate(), and a "transmission delay" of 0.001 added in the floodInterestPacket() method above
+				//super.ActivateDelay(0.01);
+				super.Activate();
 			}
 			catch (SimulationException e)
 			{
@@ -474,6 +487,14 @@ public class CCNRouter extends SimulationProcess
 
 	public void setLogCounter(int logCounter) {
 		this.logCounter = logCounter;
+	}
+
+	public static double getProcDelay() {
+		return procDelay;
+	}
+
+	public static void setProcDelay(double procDelay) {
+		CCNRouter.procDelay = procDelay;
 	}
 
 
