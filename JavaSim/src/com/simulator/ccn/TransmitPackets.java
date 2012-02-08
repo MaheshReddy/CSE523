@@ -11,6 +11,11 @@ import com.simulator.topology.Grid;
 
 import arjuna.JavaSim.Simulation.*;;
 
+/* The following class implements the logic of transmitting a packet. It is always called before sending a packet with a
+ * delay, which represents the transmission delay. It is immediately terminated after implementing transmission which is
+ * to simply add the packet into the queue of the destination node. The delay is implemented by calling this class with explicit
+ * delay.
+ * */
 public class TransmitPackets extends SimulationProcess {
 	
 	Packets curPacket;
@@ -25,20 +30,10 @@ public class TransmitPackets extends SimulationProcess {
 	
 	public void run() {
 		
-		//try {
-			//This statement simulates a "transmission delay"
-			//Hold(0.01);
-			log.info("Sending packet id:"+curPacket.getPacketId()+"Srcnode:"+curPacket.getCurNode()+" DstNode:"+dstNode.getRouterId());
-			dstNode.getPacketsQ().addLast(curPacket);
-			 //pacToadd.setPacketId(Packets.getCurrenPacketId());
-			//node.sendPacket(pacToadd, sendNode);
-			this.terminate();
-		//}
-		//catch (SimulationException e) {
-			//log.info("Exception "+ e.toString());
-		//}
-		//catch (RestartException e) {
-			//log.info("Exception "+ e.toString());
+		log.info("Sending packet id:"+curPacket.getPacketId()+"Srcnode:"+curPacket.getCurNode()+" DstNode:"+dstNode.getRouterId());
+		dstNode.getPacketsQ().addLast(curPacket);
+
+		this.terminate();		
     }
 
 	public static double getTransDelay() {

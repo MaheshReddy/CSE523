@@ -19,11 +19,13 @@ import com.simulator.topology.Grid;
 
 import arjuna.JavaSim.Simulation.SimulationException;
 
-public class CCNRouter extends SimulationProcess
-{
+/* This class is a SimulationProcess, hence, it will get scheduled in JavaSim Scheduler. The main function is that when it is 
+ * scheduled to be picked, then the CCNRouter object selected will process a packet from its queue. 
+ * */
+public class CCNRouter extends SimulationProcess {
+	
 	static final Logger log = Logger.getLogger(CCNRouter.class);
 	private ExponentialStream STime;
-	private boolean operational;
 	private boolean working;
 	private Packets currentPacket;
 	private CCNQueue packetsQ;
@@ -50,7 +52,7 @@ public class CCNRouter extends SimulationProcess
 	private CCNCache globalCache = null;
 	
 	/**
-	 * Couter to distinguish vairous log entries of this router.
+	 * Counter to distinguish various log entries of this router.
 	 */
 	private int logCounter = 0;
 	
@@ -62,10 +64,9 @@ public class CCNRouter extends SimulationProcess
 	
 	private List<Integer> interestsServed = null;
 	
-	public CCNRouter (int id)
-	{
+	public CCNRouter (int id) {
+		
 		STime = new ExponentialStream(8);
-		operational = true;
 		working = false;
 		currentPacket = null;
 		packetsQ = new CCNQueue(id);
@@ -77,60 +78,67 @@ public class CCNRouter extends SimulationProcess
 		globalCache = new CCNCache(id);
 		globalCache.setMaxSize(100);
 	}
-
-	public void run ()
-	{
-		for (;;)
-		{
+	
+	/* The CCNRouter is a SimulationProcess, and is scheduled by JavaSim Scheduler. The following method is called when 
+	 * the JavaSim scheduler selects a CCNRouter object from its queue. The CCNRouter removes a packet from its queue, 
+	 * and processes it accordingly. 
+	 * */
+	public void run () {
+		
+		for (;;) {
+			
 			working = true;
 
-			while (!packetsQ.isEmpty())
-			{
+			while (!packetsQ.isEmpty())	{
+				
 				CurrentTime();
 
-				//	CCNRouter.PacketssInQueue += CCNRouter.PacketsQ.QueueSize();
 				int ctr= getLogCounter();
+				
 				log.info("Start Processing of Router:"+getRouterId()+" Iteration:"+ctr+"\n");
 				log.info(toString());
+				
 				currentPacket = (Packets) packetsQ.remove();
 				log.info("Processing  packet "+currentPacket.toString());
-				try
-				{
+				
+				/* Records the time at which the packet was removed from the queue */
+				Packets.dumpStatistics(currentPacket, "DEQUEUE");
+				
+				/* 
+				 * "Hold(getProcDelay())" represents the processing delay for a packet before the result of that
+				 *  processing is reflected in the methods interestpackethandler() and datapackethandler()
+				 */
+				
+				try	{
 					Hold(getProcDelay());
-				}
-				catch (SimulationException e)
-				{
-				}
-				catch (RestartException e)
-				{
-				}
+				} 
+				catch (SimulationException e) {}
+				catch (RestartException e) {}
+				
+				/* Records the time at which the packet has been processed */
+				Packets.dumpStatistics(currentPacket, "PROCSED");	
+				
+				/* The packet will be processed according to its packet type */
 				if(currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_INTEREST)
 					interestPacketsHandler(currentPacket);
 				else if (currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_DATA)
 					dataPacketsHandler(currentPacket);
+				
 				log.info(toString());
 				log.info("Ending Processing of Router:"+getRouterId()+" Iteration:"+ctr+"#########################################################\n");
 				
-
 				CurrentTime();
-
-				/*
-				 * Introduce this new method because we usually rely upon
-				 * the destructor of the object to do the work in C++.
-				 */
-
-				//currentPacket.finished();
 			}
 
 			working = false;
 
-			try
-			{
+			/* In case the CCNRouter objects queue is empty, then we suspend the CCNRouter using "Cancel()". When it will have 
+			 * packets in its queue, it will be activated and placed in the scheduler again. 
+			 * */
+			try	{
 				Cancel();
 			}
-			catch (RestartException e)
-			{
-			}
+			catch (RestartException e) {}
 		}
 	}
 	/**
@@ -140,42 +148,53 @@ public class CCNRouter extends SimulationProcess
 	 * After that it deletes the pit entry.
 	 * @param curPackets the data packet
 	 */
-	public void dataPacketsHandler(Packets curPacket)
-	{
+	public void dataPacketsHandler(Packets curPacket) {
+		
 		// I got this data packet so setting its locality to false
 		curPacket.setLocality(false);
 		log.info("In Data packet handler");
 		List<Integer> pitEntry = pit.get(curPacket.getPacketId()); 
-		if(pitEntry == null) // I havent seen this packet so discard it
-		{
+		
+		/* I havent seen this packet so discard it */
+		if(pitEntry == null) {
+			
 			log.info("No entry in pit table ignoring");
 			curPacket.finished(SimulationTypes.SUPRESSION_NO_PIT);
 			return;
 		}
-		// If the current node is not present in the PIT table list dump the packet as live packet and set the hop counts to zero.
-		if(!(pitEntry.contains(-1)))
-		{
-			Packets.dumpStatistics(curPacket);
+		
+		/* If the current node is not present in the PIT table list dump the packet as live packet and set the hop counts 
+		 * to zero.
+		 * */
+		if(!(pitEntry.contains(-1))) {
+			//Packets.dumpStatistics(curPacket);
 			//curPacket.setNoOfHops(0);
 		}
-       Iterator<Integer> itr = pitEntry.iterator();
-		while(itr.hasNext())
-		{
+		
+		
+		/* The following code is used to flood data packets over all the interfaces in PIT entry for this object */
+		Iterator<Integer> itr = pitEntry.iterator();		
+		while(itr.hasNext()) {
+			
 			Integer rid = itr.next();
-			if(rid != getRouterId()) // if its not my id than send
-			{
-				//CCNRouter rtr = Grid.getRouter(rid);
-				//rtr.getPacketsQ().add(curPacket);
+			
+			/* We shouldn't flood the interest packet to same node where it came from */
+			if(rid != getRouterId()) {
+				
 				Packets clonePac = (Packets) curPacket.clone();
 				sendPacket(clonePac, rid);
 			}
 		}
-		// Now remove the entry 
+		
+		/* Now remove the entry */ 
 		pit.remove(curPacket.getPacketId());
-		//add the data packet into my global cache
+		
+		/* add the data packet into my global cache */
 		log.info("Adding to global cache");
+		
 		getGlobalCache().addToCache(curPacket);
-		//adding entry to forwarding table
+		
+		/* adding entry to forwarding table */
 		log.info("Adding a entry on forwarding table");
 		
 		getForwardingTable().put(curPacket.getPacketId(), curPacket.getPrevHop());
@@ -186,71 +205,89 @@ public class CCNRouter extends SimulationProcess
 	 * if successful forwards the Interest packet to that node. If it fails then floods all the neighbouring nodes. 
 	 * @param curPacket
 	 */
-	public void interestPacketsHandler(Packets curPacket)
-	{
-		if (isInterestServed(curPacket.getPacketId()))
-		{
+	public void interestPacketsHandler(Packets curPacket) {
+		
+		/* The following code is to suppress the interest packets that have already been served */
+		if (isInterestServed(curPacket.getPacketId())) {
+			
 			curPacket.finished(SimulationTypes.SUPRESSION_ALREADY_SERVED);
 			log.info("Already served interest packet:"+ curPacket.getPacketId());
 			return;
 		}
+		
 		log.info("Machine Interest packet handler"+curPacket.toString());
+		
+		/* Add the interest packet into the list of served interest packets. It will assist in achieving the step above, which
+		 * is to suppress interest packets already served 
+		 * */
 		addToInterestServed(curPacket.getPacketId());
+		
 		Boolean newInPit = false;
+		
+		/* The following code is called when the interest is satisfied from: (a) the Local Cache, which means, the object originally 
+		 * resides on this CCNRouter; or (b) the Global Cache or the content store of CCN */
 		Packets data_packet = getDataPacketfromCache(curPacket.getRefPacketId());
-		if(data_packet != null)
-		{
-				log.info("Sending data packet to nodeId:"+Integer.toString(curPacket.getPrevHop()));
-				//Chaning the reference of the data packet to the interest packet, after sendPacket should change back to -1
-				data_packet.setRefPacketId(curPacket.getSourcePacketId());
-				sendPacket((Packets) data_packet.clone(), curPacket.getPrevHop());
-				data_packet.setRefPacketId(-1);
-				curPacket.finished(SimulationTypes.SUPRESSION_SENT_DATA_PACKET);
-			//CCNRouter rtr = Grid.getRouter(curPacket.getPrevHop());
-			//rtr.getPacketsQ().add(data_packet);
+		if(data_packet != null) {
+			
+			/* Create a data packet in reply of the interest packet, and place it in the trace file */
+			Packets.dumpStatistics(data_packet, "CRTDPRD");
+			log.info("Sending data packet to nodeId:"+Integer.toString(curPacket.getPrevHop()));
+			
+			/* Changing the reference of the data packet to the interest packet, after sendPacket should change back to -1 */
+			data_packet.setRefPacketId(curPacket.getSourcePacketId());
+			
+			sendPacket((Packets) data_packet.clone(), curPacket.getPrevHop());
+			
+			data_packet.setRefPacketId(-1);
+			curPacket.finished(SimulationTypes.SUPRESSION_SENT_DATA_PACKET);
 			return;
 		}
+		
 		log.info("Inserting into pit table");
 		List<Integer> pitEntry = pit.get(curPacket.getRefPacketId());
-		if(pitEntry == null) // I havent seen this packet so I need to flood it
-		{
+		
+		/* I havent seen this packet so I need to create a new PIT entry for this objectID */
+		if(pitEntry == null) {
 			log.info("New entry in pit table");
 			pitEntry = new ArrayList<Integer>();
 			newInPit=true;
 		}
 		
-		if(!pitEntry.contains(curPacket.getPrevHop()))
-		{
+		/* The following code differentiates between when a source node (first node) is requesting for an object as compared
+		 * to when the interest request is at intermediate nodes, in which case, they will have a previous node. The node 
+		 * requesting will not have a previous hop as the request will stop there. Moreover, it will not have to forward the
+		 * data packet any further.
+		 *  */
+		if(!pitEntry.contains(curPacket.getPrevHop())) {
+			
 			pitEntry.add(curPacket.getPrevHop());
 			pit.put(curPacket.getRefPacketId(), pitEntry);
 		}
 		
 		log.info("Current Pit table-> "+pit);
+		
+		/* If we have a FIB match, then we will not flood the packet. We will simply help it along the FIB entry. If not then
+		 * we will flood the packet 
+		 * */
 		Integer rid = getForwardingTableEntry(curPacket.getRefPacketId());
-		if(rid!=null)
-		{
+		if(rid!=null) {
+			
 			log.info("Forwarding table hit sending to"+ rid);
 			sendPacket(curPacket, rid);
-			curPacket.finished(SimulationTypes.SUPRESSION_FIB_ENTRY);
-			//CCNRouter router = Grid.getRouter(rid);
-			//router.getPacketsQ().add(curPacket);
+			curPacket.finished(SimulationTypes.SUPRESSION_FIB_ENTRY);			
 		}
-		else // oh god !! the flooding devil
-		{
-			//if(newInPit) // its new in pit so flood
-			floodInterestPacket(curPacket);
-			//else
-				//curPacket.finished(SimulationTypes.SUPRESSION_PIT_ENTRY);
-		}
-		
+		/* oh god !! the flooding devil */
+		else {
+			floodInterestPacket(curPacket);			
+		}	
 	}
 	/**
 	 * gets the forwardingTableEntry for this packetid.
 	 * @param packetId
 	 * @return
 	 */
-	private Integer getForwardingTableEntry(Integer packetId)
-	{
+	private Integer getForwardingTableEntry(Integer packetId) {
+		
 		return forwardingTable.get(packetId);
 	}
 	/**
@@ -258,136 +295,116 @@ public class CCNRouter extends SimulationProcess
 	 * @param packetId Id if the datapacket
 	 * @return data packet
 	 */
-	private Packets getDataPacketfromCache(Integer packetId)
-	{
+	private Packets getDataPacketfromCache(Integer packetId) {
+		
 		Packets packet = localCache.getaPacketFromCache(packetId);
-		if(packet != null)
-		{
+		if(packet != null) {
+			
 			log.info("Hit in local cache "+packet.toString());
 			return packet;
 		}
 		
 		packet = globalCache.getaPacketFromCache(packetId);
 
-		if(packet != null)
-		{
+		if(packet != null) {
+			
 			log.info("Hit in Global cache "+packet.toString());
 			return packet;
 		}
-		log.info("cache miss ");
-		return null;
 		
+		log.info("cache miss ");
+		return null;		
 	}
 	
 	/**
 	 * Floods packet on the all the interfaces of this router, except on the node from which this packet came from.
 	 * @param curPacket Packet to be flooded.
 	 */
-	public void floodInterestPacket(Packets curPacket)
-	{
+	public void floodInterestPacket(Packets curPacket) {
+		
 		LinkedHashSet<HashMap<Integer, Integer>> adjList= Grid.getAdjacencyList(getRouterId());
 		Iterator<HashMap<Integer,Integer>> itr = adjList.iterator();
 		log.info("Flooding the packet to {");
 
-		int srcNode = curPacket.getPrevHop(); // getting the previous hop of the packet. so as not to flood to same node. 
+		/* Getting the previous node of the packet so as not to flood to same node */ 
+		int srcNode = curPacket.getPrevHop(); 
 		
-		//While flooding the interest packet. Just dump the curent packet as a live packet and set all the hop count to zero.
-		Packets.dumpStatistics(curPacket);
-		//curPacket.setNoOfHops(0);
-		while(itr.hasNext())
-		{
+		/* The following code is used to send packets to all the neighbors of a node */
+		while(itr.hasNext()) {
+			
 			HashMap<Integer,Integer> adjNode = (HashMap<Integer, Integer>) itr.next();
 			Integer nodeId = adjNode.keySet().iterator().next();
 			
-			if(nodeId != srcNode) // we shouldn't flood the interest packet to same node where it came from
-			{
+			 /* We shouldn't flood the interest packet to same node where it came from */
+			if(nodeId != srcNode) {
+				
 				Packets pacToadd = (Packets)curPacket.clone();
-				 //pacToadd.setPacketId(Packets.getCurrenPacketId());
 				sendPacket(pacToadd, nodeId);
 			}
 		}
 		log.info("}");
-	}
-	
+	}	
 	
 	/**
 	 * This function puts the packet in the destination Router's queue. But makes necessary changes to the packet before putting it.
 	 * It creates a new SimulationProcess TransmitPackets and adds transmission delay to it.
 	 */
-	public void sendPacket(Packets curPacket,final Integer nodeId)
-	{
-		if(nodeId != -1)
-		{
-		curPacket.setPrevHop(getRouterId()); // setting the source id as my Id before flooding it to my good neighbors
-		curPacket.incrHops();
-		TransmitPackets trans = new TransmitPackets(curPacket,nodeId);
-		try {
-			trans.ActivateDelay(TransmitPackets.getTransDelay());
-		} catch (SimulationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RestartException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void sendPacket(Packets curPacket,final Integer nodeId) {
+		
+		if(nodeId != -1) {
+			
+			/* setting the source id as my Id before flooding it to my good neighbors */
+			curPacket.setPrevHop(getRouterId()); 
+			curPacket.incrHops();
+			
+			TransmitPackets trans = new TransmitPackets(curPacket,nodeId);
+			
+			try {
+				trans.ActivateDelay(TransmitPackets.getTransDelay());
+			} 
+			catch (SimulationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			catch (RestartException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			log.info("Sending packet to nodeId:"+nodeId);
 		}
-		log.info("Sending packet to nodeId:"+nodeId);
-		}
-		else
-		{
+		else {
+			
 			curPacket.finished(SimulationTypes.SUPRESSION_DEST_NODE);
 			log.info("Packet Destined to my node,so suppressing");
 		}
 	}
 	
 	@Override
-	public void Activate()
-	{
-		if (!getPacketsQ().isEmpty() && !Processing())
-		{
-			//log.info("Activating Router");
-			try
-			{
-				//super.ActivateDelay(0.0001);
-				//This statement has been changed to an immediate activate(), and a "transmission delay" of 0.001 added in the floodInterestPacket() method above
-				//super.ActivateDelay(0.01);
+	/* I am not sure if this function is even needed. Moreover, the two functions following it seem unnecessary */
+	public void Activate() {
+		
+		if (!getPacketsQ().isEmpty() && !Processing()) {
+			
+			try {				
 				super.Activate();
 			}
-			catch (SimulationException e)
-			{
+			catch (SimulationException e) {
 				log.info("Exception "+ e.toString());
 			}
-			catch (RestartException e)
-			{
+			catch (RestartException e) {
 				log.info("Exception "+ e.toString());
 			}
 		}
 		else
 			log.info("Not activating "+getPacketsQ().isEmpty()+Processing());
-	}
+	}	
 	
-	
-	public void Broken ()
-	{
-		operational = false;
-	}
-
-	public void Fixed ()
-	{
-		operational = true;
-	}
-
-	public boolean IsOperational ()
-	{
-		return operational;
-	}
-
-	public boolean Processing ()
-	{
+	public boolean Processing () {
 		return working;
 	}
 
-	public double ServiceTime ()
-	{
+	public double ServiceTime () {
 		try
 		{
 			return STime.getNumber();
@@ -398,45 +415,51 @@ public class CCNRouter extends SimulationProcess
 		}
 	}
 
-	
 	@Override
-	public String toString()
-	{
+	public String toString() {
+		
 		String str;
 		str = "CCNRouter\n{ Id:"+getRouterId()+ " \n"+ getPacketsQ().toString()+"\n PIT:"+getPIT().toString()+"\n ForwardingTable"+
 		getForwardingTable().toString()+"\n interestServedTable"+interestsServed.toString()+"\nGlobalCache:"+getGlobalCache().toString()+"\nLocalCache:"+getLocalCache().toString()+"}\n";
 		return str;
 	}
+	
 	public CCNQueue getPacketsQ() {
 		return packetsQ;
 	}
+	
 	public void setPacketsQ(CCNQueue packetsQ) {
 		packetsQ = packetsQ;
 	}
+	
 	public int getRouterId() {
 		return routerId;
 	}
+	
 	public void setRouterId(int routerId) {
 		this.routerId = routerId;
 	}
-	public boolean isPresentInPit(Integer packetId)
-	{
+	
+	public boolean isPresentInPit(Integer packetId) {
+		
 		if(pit.containsKey(packetId))
 			return true;
 		else
 			return false;
 	}
 	
-	public boolean isPresentInQueue(Packets packet)
-	{
+	public boolean isPresentInQueue(Packets packet) {
+		
 	    if(packetsQ.contains(packet))
 	    	return true;
 	    else
 	    	return false;
 	}
+	
 	public Map<Integer, List<Integer>> getPIT() {
 		return pit;
 	}
+	
 	public void setPIT(Map<Integer, List<Integer>> pIT) {
 		pit = pIT;
 	}
@@ -444,12 +467,15 @@ public class CCNRouter extends SimulationProcess
 	public CCNCache getLocalCache() {
 		return localCache;
 	}
+	
 	public void setLocalCache(CCNCache localCache) {
 		this.localCache = localCache;
 	}
+	
 	public CCNCache getGlobalCache() {
 		return globalCache;
 	}
+	
 	public void setGlobalCache(CCNCache globalCache) {
 		this.globalCache = globalCache;
 	}
@@ -479,8 +505,8 @@ public class CCNRouter extends SimulationProcess
 		this.interestsServed.add(id);
 	}
 
-	public int getLogCounter()
-	{
+	public int getLogCounter() {
+		
 		logCounter=logCounter+1;
 		return logCounter;
 	}
@@ -496,6 +522,4 @@ public class CCNRouter extends SimulationProcess
 	public static void setProcDelay(double procDelay) {
 		CCNRouter.procDelay = procDelay;
 	}
-
-
 };

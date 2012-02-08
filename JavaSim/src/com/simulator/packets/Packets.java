@@ -19,8 +19,12 @@ import com.simulator.topology.Grid;
 
 import arjuna.JavaSim.Simulation.*;
 
-public class Packets implements Cloneable
-{
+/* The following class is the Packet class which records information of each individual packet. Notice that it is not a 
+ * SimulationProcess, but a simple class. It serves to three important tasks: (1) adds newly created interest packets into the queue of
+ * requesting nodes; (b) it activates these requesting nodes; (c) it collects the statistics for each packet
+ *  */
+public class Packets implements Cloneable {
+	
 	static final Logger log = Logger.getLogger(Packets.class);
 	/**
 	 * This is global counter for packetId's. When ever you want to generate a packet ig call the getter of this var.
@@ -83,7 +87,7 @@ public class Packets implements Cloneable
 
 	private int noOfHops=0;
 	/**
-	 * Statstics dump file
+	 * Statistics dump file
 	 */
 	private static String dataDumpFile="packetsDump.txt";
 	/**
@@ -120,8 +124,8 @@ public class Packets implements Cloneable
 	 * We get a unique Id from a static packet Id generator and assign it to PacketId. We also assign the same Id of sourceId since we
 	 * are creating the packet here.
 	 */
-	public Packets (Integer nodeId, SimulationTypes packettype,Integer size)
-	{
+	public Packets (Integer nodeId, SimulationTypes packettype,Integer size) {
+		
 		setPacketId(getCurrenPacketId());
 		setSourcePacketId(getPacketId());
 		setPacketType(packettype);
@@ -136,33 +140,34 @@ public class Packets implements Cloneable
 		ResponseTime = 0.0;
 		ArrivalTime = Scheduler.CurrentTime();
 	}
-	public Packets(Packets pac)
-	{
-		
-	}
+	public Packets(Packets pac)	{}
+	
 	/**
 	 *  Activates packet. It performs necessary action on the packet. Depending on the packet type.
 	 *  @author contra
 	 *  TODO Also accept a parameter on what to do.
 	 */
-	public void activate()
-	{
+	
+	/* This method name is confusing. It does not need to be activate() as this method is pre-defined thread method */
+	public void activate() {
+		
 		if(SimulationTypes.SIMULATION_PACKETS_INTEREST == getPacketType())
 			interestPacketHandler();
 		else
 			log.info("Not activation method specified or found");
-
 	}
 	
-	
-	private void interestPacketHandler()
-	{
+	/* This method adds packets into the source node queue */
+	private void interestPacketHandler() {
+		
 		log.info("Handling Interest Packet"+this.toString());
 		CCNRouter router = Grid.getRouter(getOriginNode());
 		CCNQueue packetsQ = router.getPacketsQ();
-		packetsQ.addLast(this); //Note: Router activation is done when we add the packet to the queue by the queue
-		//CCNRouter.TotalPackets++;
-		//router.Activate();
+		
+		/* CCNRouter is activated (put in the JavaSim's scheduler queue) when we add the packet to the queue in the last statement
+		 * of the following method in CCNQueue
+		 *  */
+		packetsQ.addLast(this); 		
 	}
 	
 	/**
@@ -176,51 +181,112 @@ public class Packets implements Cloneable
 	 * 5. When there is already an entry in PIT table.  
 	 */
 
-	public void finished(SimulationTypes cause)
-	{
+	/* Called when a packet is being terminated */
+	public void finished(SimulationTypes cause)	{
+		
 		ResponseTime = Scheduler.CurrentTime() - ArrivalTime;
+		
+		/* The following statement is setting the cause of why the packet is being terminated */
 		setCauseOfSupr(cause);
 		setAlive(false);
-		dumpStatistics(this);
+				
+		/* Recording this instance in the trace file */
+		dumpStatistics(this, "DESTROY");
+		
 		log.info("Finished Packetid:"+getPacketId());
 		SimulationController.incrementPacketsProcessed();
 	}
 	
-	public synchronized static void dumpStatistics(Packets curPacket)
-	{
+	/* This method is for creating the trace file */
+	public synchronized static void dumpStatistics(Packets curPacket, String status) {
+		
 		try {
 			@SuppressWarnings("unused")
-			Writer fs = new BufferedWriter(new FileWriter("dump/packetsDump.txt",true));
+			
+			Writer fs = new BufferedWriter(new FileWriter(dataDumpFile,true));
 			StringBuilder str1 = new StringBuilder();
 			Formatter str = new Formatter(str1);
+			
 			if(SimulationTypes.SIMULATION_PACKETS_DATA == curPacket.getPacketType())
 				str.format("d");
 			else 
 				str.format("i");
+			
+			str.format(" STATUS:%s", status);
 			str.format(" TIME:%(,2.4f",SimulationProcess.CurrentTime());
 			str.format(" PAC_ID:%2d",curPacket.getPacketId());
 			//str.format(" SRCPACK_ID:%2d",curPacket.getSourcePacketId());
-			str.format(" ORGIN_NODE:%2d",curPacket.getOriginNode());
+			str.format(" SRC_NODE:%2d",curPacket.getOriginNode());
+			str.format(" PRV_NODE:%2d",curPacket.getPrevHop());
 			str.format(" CUR_NODE:%2d",curPacket.getCurNode());
 			str.format(" REFPAC_ID:%2d",curPacket.getRefPacketId());
-			str.format(" PREV_HOP_ID:%2d",curPacket.getPrevHop());
-			str.format(" NO_HOPS:%2d",curPacket.getNoOfHops());
+			str.format(" CAUSESUP:(%s)", (curPacket.getCauseOfSupr().toString()));
+			str.format(" HOPS:%d",curPacket.getNoOfHops());
+									
 			if(curPacket.isLocal())
-				str.format(" LOCAL:1");
+				str.format(" LCLCache");
 			else
-				str.format(" LOCAL:0");
-			str.format(" CAUES:%s",Integer.toString(curPacket.getCauseOfSupr().ordinal()) );
-			str.format(" ALIVE:"+ Integer.toBinaryString((curPacket.isAlive())?1:0));
+				str.format(" GBLCache");
+			
+			str.format(" DEAD/ALIVE:"+ Integer.toBinaryString((curPacket.isAlive())?1:0));
 			str.format("\n");
 			fs.write(str.toString());
 			fs.close();
-		}catch (IOException e) {
+			
+			collectTrace (curPacket, status);
+		}
+		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 	}
 	
+	/* This method is for used to create a trace file without any "headings". It is used by the "ManipulateTrace" class */
+	public synchronized static void collectTrace (Packets curPacket, String status)	{
+		
+		try {
+			@SuppressWarnings("unused")
+			
+			Writer fs = new BufferedWriter(new FileWriter("dump/trace.txt",true));
+			StringBuilder str1 = new StringBuilder();
+			Formatter str = new Formatter(str1);
+			
+			if(SimulationTypes.SIMULATION_PACKETS_DATA == curPacket.getPacketType())
+				str.format("d");
+			else 
+				str.format("i");
+			
+			str.format(" %s", status);
+			str.format(" %(,2.4f",SimulationProcess.CurrentTime());
+			str.format(" %d",curPacket.getPacketId());
+			//str.format(" SRCPACK_ID:%2d",curPacket.getSourcePacketId());
+			str.format(" %d",curPacket.getOriginNode());
+			str.format(" %d",curPacket.getCurNode());
+			str.format(" %d",curPacket.getPrevHop());
+			str.format(" %d",curPacket.getRefPacketId());
+			//str.format(" CAUSESUP: %s",Integer.toString(curPacket.getCauseOfSupr().ordinal()) );
+			str.format(" %s", (curPacket.getCauseOfSupr().toString()));
+			str.format(" %d",curPacket.getNoOfHops());
+			
+			if(curPacket.isLocal())
+				str.format(" LCLCache");
+			else
+				str.format(" GBLCache");
+			
+			if(Integer.toBinaryString((curPacket.isAlive())?1:0).compareTo("1") == 0)
+				str.format(" ALIVE");
+			else
+				str.format(" DEAD");	
+			
+			str.format("\n");
+			fs.write(str.toString());
+			fs.close();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
 	
 	public Integer getPacketId() {
 		return packetId;
@@ -248,38 +314,38 @@ public class Packets implements Cloneable
 	 * Overriding toString method
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
+		
 		String str = new String();
 		str = "Packet{PacketId: "+Integer.toString(packetId)+" PrevHop: "+getPrevHop().toString()+" No. Of hops:"+getNoOfHops()
 		       +" CurrentNode"+getCurNode()+" OriginNode:"+getOriginNode()+" dataPacket:"+getRefPacketId()
 		+" size:"+getSizeOfPacket()+" PacketType:"+getPacketType().toString()+"}\n";
-		return str;
-		
+		return str;		
 	}
 	@Override
-	public Object clone()
-	{
-		try
-		{
+	public Object clone() {
+		
+		try	{
+			
 			Packets clonedPacket = (Packets) super.clone();
 			//clonedPacket.pathTravelled = new String(this.getPathTravelled());
 			return clonedPacket;
 		}
-		catch(CloneNotSupportedException e)
-		{
+		catch(CloneNotSupportedException e)	{
 			throw new Error("Got clone not support Exception in Packets class");
 		}
 	}
-/*
- * Returns the size of packet.
- */
+	
+	/*
+	 * Returns the size of packet.
+	 * */
 	public Integer getSizeOfPacket() {
 		return sizeOfPacket;
 	}
+	
 	/*
 	 * Sets the size of the packet. 
-	 */
+	 * */
 	public void setSizeOfPacket(Integer sizeOfPacket) {
 		this.sizeOfPacket = sizeOfPacket;
 	}
@@ -287,75 +353,95 @@ public class Packets implements Cloneable
 	public Integer getRefPacketId() {
 		return refPacketId;
 	}
+	
 	public void setRefPacketId(Integer dataPacketId) {
 		this.refPacketId = dataPacketId;
 	}
+	
 	public static synchronized Integer getCurrenPacketId() {
 		return currenPacketId++;
 	}
+	
 	public static synchronized void setCurrenPacketId(Integer currenPacketId) {
 		Packets.currenPacketId = currenPacketId;
 	}
+	
 	public int getOriginNode() {
 		return originNode;
 	}
+	
 	public void setOriginNode(int originNode) {
 		this.originNode = originNode;
 	}
+	
 	public int getNoOfHops() {
 		return noOfHops;
 	}
+	
 	public void setNoOfHops(int noOfHops) {
 		this.noOfHops = noOfHops;
 	}
+	
 	/**
 	 * Increments number of hops by one
 	 */
-	public void incrHops()
-	{
+	public void incrHops() {
 		setNoOfHops(getNoOfHops()+1);
 	}
+	
 	public static String getDataDumpFile() {
 		return dataDumpFile;
 	}
+	
 	public static void setDataDumpFile(String dataDumpFile) {
 		Packets.dataDumpFile = dataDumpFile;
 	}
+	
 	public int getCurNode() {
 		return curNode;
 	}
+	
 	public void setCurNode(int curNode) {
 		this.curNode = curNode;
 	}
+	
 	public boolean isLocal() {
 		return local;
 	}
+	
 	public void setLocality(boolean locality) {
 		this.local = locality;
 	}
+	
 	public boolean isAlive() {
 		return alive;
 	}
+	
 	public void setAlive(boolean alive) {
 		this.alive = alive;
 	}
+	
 	public SimulationTypes getCauseOfSupr() {
 		return causeOfSupr;
 	}
+	
 	public void setCauseOfSupr(SimulationTypes causeOfSupr) {
 		this.causeOfSupr = causeOfSupr;
 	}
+	
 	public int getSourcePacketId() {
 		return sourcePacketId;
 	}
+	
 	public void setSourcePacketId(int sourcePacketId) {
 		this.sourcePacketId = sourcePacketId;
 	}
+	
 	public String getPathTravelled() {
 		return pathTravelled;
 	}
+	
 	public void setPathTravelled(int node) {
 		pathTravelled.concat(","+Integer.toString(node, 10));
-	}
-	
+	}	
 };

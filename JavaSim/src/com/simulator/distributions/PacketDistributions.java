@@ -18,10 +18,10 @@ public class PacketDistributions {
 	static Integer noDataPackets;
 	/**
 	 * Distributes the contents across all the nodes. 
-	 * TODO this is just a very simple distribution function need to write a more suitable disribution function. 
+	 * TODO this is just a very simple distribution function need to write a more suitable distribution function. 
 	 */
-	public static void distributeContent()
-	{
+	public static void distributeContent() {
+		
 		Integer noNodes = Grid.getGridSize();
 		for(int i=0,j=0;i<=getNoDataPackets();i++,j++)
 		{
@@ -37,11 +37,17 @@ public class PacketDistributions {
 	 * TODO as of now just returns a random value between maxPacketId and minPacketId
 	 * @return
 	 */
-	public static Integer getNextDataPacketID()
-	{
-		Random rand = new Random();
+	
+	/* 
+	 * We are not using the following function anymore. It might not be needed anymore. This functionality is achieved in
+	 * Arrivals.java using the PacketIDGenerator.
+	 *  */
+	public static Integer getNextDataPacketID() {
+		
+		Random rand = new Random(6);
 		return rand.nextInt(getNoDataPackets());
 	}
+	
 	public static Integer getNoDataPackets() {
 		return noDataPackets;
 	}
