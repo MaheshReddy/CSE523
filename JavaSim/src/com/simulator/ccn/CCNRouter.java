@@ -106,7 +106,7 @@ public class CCNRouter extends SimulationProcess {
 				
 				/* 
 				 * "Hold(getProcDelay())" represents the processing delay for a packet before the result of that
-				 *  processing is reflected in the methods interestpackethandler() and datapackethandler()
+				 *  processing is reflected in the methods "interestpackethandler()" and "datapackethandler()"
 				 */
 				
 				try	{
@@ -202,7 +202,7 @@ public class CCNRouter extends SimulationProcess {
 	/**
 	 * Interest Packet handler for the machine. It first searches in Machine caches. If it fails then adds it to PIT. 
 	 * Then looks in Forwarding Table
-	 * if successful forwards the Interest packet to that node. If it fails then floods all the neighbouring nodes. 
+	 * if successful forwards the Interest packet to that node. If it fails then floods all the neighboring nodes. 
 	 * @param curPacket
 	 */
 	public void interestPacketsHandler(Packets curPacket) {
@@ -229,12 +229,13 @@ public class CCNRouter extends SimulationProcess {
 		Packets data_packet = getDataPacketfromCache(curPacket.getRefPacketId());
 		if(data_packet != null) {
 			
-			/* Create a data packet in reply of the interest packet, and place it in the trace file */
-			Packets.dumpStatistics(data_packet, "CRTDPRD");
 			log.info("Sending data packet to nodeId:"+Integer.toString(curPacket.getPrevHop()));
 			
 			/* Changing the reference of the data packet to the interest packet, after sendPacket should change back to -1 */
 			data_packet.setRefPacketId(curPacket.getSourcePacketId());
+			
+			/* Create a data packet in reply of the interest packet, and place it in the trace file */
+			Packets.dumpStatistics(data_packet, "CRTDPRD");			
 			
 			sendPacket((Packets) data_packet.clone(), curPacket.getPrevHop());
 			
@@ -246,7 +247,7 @@ public class CCNRouter extends SimulationProcess {
 		log.info("Inserting into pit table");
 		List<Integer> pitEntry = pit.get(curPacket.getRefPacketId());
 		
-		/* I havent seen this packet so I need to create a new PIT entry for this objectID */
+		/* I havn't seen this packet so I need to create a new PIT entry for this objectID */
 		if(pitEntry == null) {
 			log.info("New entry in pit table");
 			pitEntry = new ArrayList<Integer>();
