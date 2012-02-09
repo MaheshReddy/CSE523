@@ -41,7 +41,7 @@ public class TraceRecord {
 	}
 	
 	public String toVerifyShortestPath(){
-		return " TIMESTMP:" + " PCKSTATUS:" + this.getPacketStatus() + this.getTimeStamp() + " PKTID:" + this.getPacketID() + " OBJID/PKTID:" + this.getRequestedObjectID() + " SRCND:" + this.getSourceNode() + " CURRNDE:" + this.getCurrentNode() + " HOPS:(" + this.getNumOfHops();
+		return " TIMESTMP:" + this.getTimeStamp() + " PCKSTATUS:" + this.getPacketStatus() + " PKTID:" + this.getPacketID() + " OBJID/PKTID:" + this.getRequestedObjectID() + " SRCND:" + this.getSourceNode() + " CURRNDE:" + this.getCurrentNode() + " HOPS:(" + this.getNumOfHops();
 	}
 
 	void setPacketType (String temp) {		
