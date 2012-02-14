@@ -109,7 +109,7 @@ public class ManipulateTrace {
 					fs5.write((trace.get(count)).toVerifyShortestPath() + " " + shortestpath.shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()]  + ") Result:EXPECTED\n");
 				}
 				else {
-					fs5.write((trace.get(count)).toVerifyShortestPath() + " " + shortestpath.shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()]  + ") Result:NOT OPTIMAL\n");
+					fs5.write((trace.get(count)).toVerifyShortestPath() + " " + shortestpath.shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()]  + ") Result:NOT OPTIMAL\n");					
 				}
 			}	
 			fs5.close();
