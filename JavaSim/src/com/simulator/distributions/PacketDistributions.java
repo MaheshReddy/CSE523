@@ -16,6 +16,8 @@ import com.simulator.topology.Grid;
  */
 public class PacketDistributions {
 	static Integer noDataPackets;
+	static int dataPacketSize;
+	
 	/**
 	 * Distributes the contents across all the nodes. 
 	 * TODO this is just a very simple distribution function need to write a more suitable distribution function. 
@@ -25,7 +27,7 @@ public class PacketDistributions {
 		Integer noNodes = Grid.getGridSize();
 		for(int i=0,j=0;i<=getNoDataPackets();i++,j++)
 		{
-			Packets pack = new Packets(j % noNodes, SimulationTypes.SIMULATION_PACKETS_DATA, 50);
+			Packets pack = new Packets(j % noNodes, SimulationTypes.SIMULATION_PACKETS_DATA, dataPacketSize);
 				CCNRouter router = Grid.getRouter(j % noNodes);
 				CCNCache routerLocalCache = router.getLocalCache();
 				pack.setLocality(true);
@@ -54,5 +56,13 @@ public class PacketDistributions {
 
 	public static void setnoDataPackets(Integer noDataPackets) {
 		PacketDistributions.noDataPackets = noDataPackets;
+	}	
+	
+	public static int getDataPacketSize() {
+		return dataPacketSize;
+	}
+
+	public static void setDataPacketSize(int tempDataPacketSize) {
+		PacketDistributions.dataPacketSize = tempDataPacketSize;
 	}	
 }
