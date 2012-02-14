@@ -49,14 +49,17 @@ public class SimulationController extends SimulationProcess {
 			
 			prop.load(ClassLoader.getSystemResourceAsStream("ccn.properties"));
 			setNoDataPackets(Integer.parseInt(prop.getProperty("ccn.no.datapackets")));
+			PacketDistributions.setDataPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.datapackets")));
+			Arrivals.setInterestPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.interestpackets")));
 			setNoNodes(Integer.parseInt(prop.getProperty("ccn.no.nodes")));
-			setMaxSimulatedPackets(Integer.parseInt(prop.getProperty("ccn.no.simulationPackets")));
+			setMaxSimulatedPackets(Integer.parseInt(prop.getProperty("ccn.no.simulationpackets")));
 			setHoldTerminationVerification(Integer.parseInt(prop.getProperty("ccn.termination.verification")));
 			Packets.setDataDumpFile(prop.getProperty("dumpfile.packets"));
 			setGridType(SimulationTypes.valueOf(prop.getProperty("ccn.topology")));
 			CCNRouter.setProcDelay(Double.parseDouble(prop.getProperty("ccn.delay.processing")));
 			TransmitPackets.setTransDelay(Double.parseDouble(prop.getProperty("ccn.delay.transmitting")));
-			Arrivals.setArvDelay(Double.parseDouble(prop.getProperty("ccn.delay.arrivals")));			
+			Arrivals.setArvDelay(Double.parseDouble(prop.getProperty("ccn.delay.arrivals")));	
+			CCNRouter.setPitTimeOut(Double.parseDouble(prop.getProperty("ccn.pit.timeout")));
 		} 
 		catch (IOException e) {
 			
