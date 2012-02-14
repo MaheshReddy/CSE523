@@ -22,6 +22,7 @@ import arjuna.JavaSim.Simulation.SimulationException;
 public class Arrivals extends SimulationProcess {
 	
 	static final Logger log = Logger.getLogger(Arrivals.class);
+	static int interestPacketSize = 0;
 	private ExponentialStream InterArrivalTime;
 	private Integer gridSize = 0;
 	private Random nodeSelecter;
@@ -57,7 +58,7 @@ public class Arrivals extends SimulationProcess {
 		    catch (IOException e) {}
 		    
 			/* The following statement will randomly choose a source node for the interest packet */
-			Packets packets = new Packets(nodeSelecter.nextInt(gridSize), SimulationTypes.SIMULATION_PACKETS_INTEREST,1);
+			Packets packets = new Packets(nodeSelecter.nextInt(gridSize), SimulationTypes.SIMULATION_PACKETS_INTEREST, interestPacketSize);
 			
 			/* The following statement will randomly choose the data/object which is being request with the interest packet */
 			packets.setRefPacketId(packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets()));
@@ -87,4 +88,12 @@ public class Arrivals extends SimulationProcess {
 	public static void setArvDelay(double arvDelay) {
 		Arrivals.arvDelay = arvDelay;
 	}    
+	
+	public static void setInterestPacketSize(int tempIntPacketSize) {
+		Arrivals.interestPacketSize = tempIntPacketSize;
+	} 
+	
+	public static int getInterestPacketSize() {
+		return interestPacketSize;
+	}
 };
