@@ -89,7 +89,7 @@ public class Packets implements Cloneable {
 	/**
 	 * Statistics dump file
 	 */
-	private static String dataDumpFile="packetsDump.txt";
+	private static String dataDumpFile="dump/packetsDump.txt";
 	/**
 	 * Only meaningful for data packets. 0 means belongs to global cache and 1 means belongs to local cache.
 	 * TODO as of now adding very naive way of setting local. Please revisit when have time.
@@ -124,7 +124,7 @@ public class Packets implements Cloneable {
 	 * We get a unique Id from a static packet Id generator and assign it to PacketId. We also assign the same Id of sourceId since we
 	 * are creating the packet here.
 	 */
-	public Packets (Integer nodeId, SimulationTypes packettype,Integer size) {
+	public Packets (Integer nodeId, SimulationTypes packettype, int size) {
 		
 		setPacketId(getCurrenPacketId());
 		setSourcePacketId(getPacketId());
@@ -339,16 +339,18 @@ public class Packets implements Cloneable {
 	/*
 	 * Returns the size of packet.
 	 * */
-	public Integer getSizeOfPacket() {
+	public int getSizeOfPacket() {
 		return sizeOfPacket;
 	}
+
 	
 	/*
 	 * Sets the size of the packet. 
 	 * */
 	public void setSizeOfPacket(Integer sizeOfPacket) {
-		this.sizeOfPacket = sizeOfPacket;
+		sizeOfPacket = sizeOfPacket;
 	}
+	
 
 	public Integer getRefPacketId() {
 		return refPacketId;
