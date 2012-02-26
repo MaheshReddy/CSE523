@@ -3,11 +3,16 @@ import arjuna.JavaSim.Simulation.*;
 import arjuna.JavaSim.Distributions.*;
 import java.util.Random;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import org.apache.log4j.Logger;
 
-import com.simulator.controller.SimulationTypes;
+import com.simulator.controller.SimulationController;
+import com.simulator.enums.SimulationTypes;
+import com.simulator.packets.InterestPacket;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 
@@ -28,11 +33,19 @@ public class Arrivals extends SimulationProcess {
 	private Random nodeSelecter;
 	private Random packetIdGenerator;
 	private static double arvDelay;
-	
+	private static String workload=null;
+	boolean simStatus = false;
+	/**
+	 * Buffered Reader for reading workload.all file for GlobeTraff 
+	 */
+	private static BufferedReader rdr = null;
+
 	public Arrivals (double mean) {
 		
 		InterArrivalTime = new ExponentialStream(mean);
 		gridSize = Grid.getGridSize();
+		
+		rdr = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getWorkload())));
 		
 		/* At present, we are using seeds for testing purposes. However, eventually, we will remove them in the production 
 		 * mode. 
@@ -58,11 +71,32 @@ public class Arrivals extends SimulationProcess {
 		    catch (IOException e) {}
 		    
 			/* The following statement will randomly choose a source node for the interest packet */
-			Packets packets = new Packets(nodeSelecter.nextInt(gridSize), SimulationTypes.SIMULATION_PACKETS_INTEREST, interestPacketSize);
+			Packets packets = new InterestPacket(nodeSelecter.nextInt(gridSize), interestPacketSize);
+					
+			/*
+			 * Now we have to parse next line from workload.all and assign the refpacket id for this interest packet.
+			 * If we have reached EOF just end this thread thus controller thread which is waiting on this 
+			 * notified.
+			 */
+			String line = null;
+			try {
+				line = rdr.readLine();
 			
-			/* The following statement will randomly choose the data/object which is being request with the interest packet */
-			packets.setRefPacketId(packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets()));
-			
+			if(line != null)
+			{
+				String [] words = line.split("\\s+");
+				packets.setRefPacketId(Integer.parseInt(words[1]));
+			}
+			else{
+				rdr.close();
+				setSimStatus(true);
+				System.out.println("Done with Arrivals");
+				return;
+			}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			/* 
 			 * The following code records the creation of the interest packet 
 			 * */			
@@ -95,5 +129,21 @@ public class Arrivals extends SimulationProcess {
 	
 	public static int getInterestPacketSize() {
 		return interestPacketSize;
+	}
+
+	public static String getWorkload() {
+		return workload;
+	}
+
+	public static void setWorkload(String workload) {
+		Arrivals.workload = workload;
+	}
+
+	public synchronized boolean isSimStatus() {
+		return simStatus;
+	}
+
+	public void setSimStatus(boolean simStatus) {
+		this.simStatus = simStatus;
 	}
 };

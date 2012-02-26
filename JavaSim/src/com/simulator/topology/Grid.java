@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 
 import com.simulator.ccn.CCNRouter;
+import com.simulator.enums.SimulationTypes;
 
 public class Grid 
 {

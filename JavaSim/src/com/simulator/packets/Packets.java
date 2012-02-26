@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationController;
-import com.simulator.controller.SimulationTypes;
+import com.simulator.enums.SimulationTypes;
 import com.simulator.topology.Grid;
 
 import arjuna.JavaSim.Simulation.*;
@@ -111,37 +111,10 @@ public class Packets implements Cloneable {
 	 * Comma seperated list of nodes traversed by this packet. Only used of debugging purpose.
 	 */
 	private String pathTravelled;
-	/**
-	 * 
-	 * This is a constructor of a packet. It takes following param and sets them.
-	 * @param nodeId If its Interest Packet than this determines the source of
-	 * 		   of the Interest Packet. When we are flooding we change the source
-	 * 			of the Interest Packet to the node that is flooding.
-	 * 		   else if a packet is of type Data Packet then nodeId represents the node which owns this data packet.
-	 * @param packettype Type of the packet.
-	 * Notes:
-	 * When a packet is created 
-	 * We get a unique Id from a static packet Id generator and assign it to PacketId. We also assign the same Id of sourceId since we
-	 * are creating the packet here.
-	 */
-	public Packets (Integer nodeId, SimulationTypes packettype, int size) {
-		
-		setPacketId(getCurrenPacketId());
-		setSourcePacketId(getPacketId());
-		setPacketType(packettype);
-		setPrevHop(-1);
-		setRefPacketId(-1);
-		setOriginNode(nodeId);
-		setSizeOfPacket(size);
-		setAlive(true);
-		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
-		log.info("node id = "+nodeId+" packet id ="+ packetId);
-
-		ResponseTime = 0.0;
-		ArrivalTime = Scheduler.CurrentTime();
-	}
+	
 	public Packets(Packets pac)	{}
 	
+	public Packets(){}
 	/**
 	 *  Activates packet. It performs necessary action on the packet. Depending on the packet type.
 	 *  @author contra
@@ -348,7 +321,7 @@ public class Packets implements Cloneable {
 	 * Sets the size of the packet. 
 	 * */
 	public void setSizeOfPacket(Integer sizeOfPacket) {
-		sizeOfPacket = sizeOfPacket;
+		this.sizeOfPacket = sizeOfPacket;
 	}
 	
 

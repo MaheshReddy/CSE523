@@ -16,8 +16,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.simulator.controller.SimulationTypes;
 import com.simulator.distributions.PacketDistributions;
+import com.simulator.enums.SimulationTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 import com.simulator.trace.ReadTraceFile;
@@ -568,7 +568,7 @@ public class CCNRouter extends SimulationProcess {
 	}
 	
 	public void setPacketsQ(CCNQueue packetsQ) {
-		packetsQ = packetsQ;
+		packetsQ = this.packetsQ;
 	}
 	
 	public int getRouterId() {

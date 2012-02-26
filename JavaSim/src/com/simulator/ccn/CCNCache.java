@@ -63,15 +63,18 @@ public class CCNCache  {
 		
 		//While adding to cache change the origin node of the packet to this node.
 		packet.setOriginNode(getNodeId());
-		if(getSizeOfCache() + packet.getSizeOfPacket() < getMaxSize()) {
+		//if(getSizeOfCache() + packet.getSizeOfPacket() < getMaxSize()) {
 			
 			cache.put(packet.getPacketId(), packet); // just put the packet up and return
 			setSizeOfCache(getSizeOfCache()+packet.getSizeOfPacket());
 			return;
-		}
+		//}
+		
 		// this is the else part where we need to free up memory
+		/*
+		 //TODO Need to fix Freeing up cache.
 		Iterator<Integer> itr = cache.keySet().iterator(); // This iterator gives me a LRU sorted list.
-		while(getSizeOfCache() + packet.getSizeOfPacket() > getMaxSize()) {
+		//while(getSizeOfCache() + packet.getSizeOfPacket() > getMaxSize()) {
 			
 			Integer key = (Integer) itr.next();
 			setSizeOfCache(getSizeOfCache() - cache.get(key).getSizeOfPacket());
@@ -81,7 +84,7 @@ public class CCNCache  {
 		cache.put(packet.getPacketId(), packet); // just put the packet and return
 		setSizeOfCache(getSizeOfCache()+packet.getSizeOfPacket());	
 		
-		return;
+		return;*/
 	}
 	/**
 	 * Removes a packet from the cache. and update the size of the cache. 
