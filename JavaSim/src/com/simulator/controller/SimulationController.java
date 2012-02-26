@@ -127,7 +127,10 @@ public class SimulationController extends SimulationProcess {
 			 * For now using a workaround of using a flag to indicate end of simulation.
 			 */
 				while(!A.isSimStatus())
-					Hold(100);
+				{
+					Hold(10);
+					System.out.println(A.isSimStatus());
+				}
 			/* Stops the simulation */
 			Scheduler.stopSimulation();
 			

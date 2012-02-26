@@ -91,7 +91,6 @@ public class Arrivals extends SimulationProcess {
 				rdr.close();
 				setSimStatus(true);
 				System.out.println("Done with Arrivals");
-				return;
 			}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
