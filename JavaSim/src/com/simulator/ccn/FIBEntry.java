@@ -17,6 +17,21 @@ public class FIBEntry {
 		hops = tempHops;		
 	}
 	
+	public boolean equals(Object o) {
+		
+	    if (o == this)
+	        return true;
+	    if (!(o instanceof FIBEntry))
+	        return false;
+	    
+	    FIBEntry pn = (FIBEntry)o;	    
+	    return pn.destinationNode == destinationNode;
+	}
+	
+	public int hashCode() {
+	    return destinationNode;
+	}
+	
 	public void setDestinationNode (int temp) {
 		destinationNode = temp;
 	}
