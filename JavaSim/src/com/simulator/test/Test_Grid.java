@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.mahesh.cse523.test;
+package com.simulator.test;
 
 import static org.junit.Assert.*;
 
