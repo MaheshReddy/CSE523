@@ -10,7 +10,7 @@ import com.simulator.topology.Grid;
 
 /**
  * This class handles all the distribution functions of the this CCN simulation.
- * It generates data based on the required distribution and sets the scenario accordinly.
+ * It generates data based on the required distribution and sets the scenario accordingly.
  * @author contra
  *
  */
@@ -27,7 +27,7 @@ public class PacketDistributions {
 		Integer noNodes = Grid.getGridSize();
 		for(int i=0,j=0;i<=getNoDataPackets();i++,j++)
 		{
-			Packets pack = new Packets(j % noNodes, SimulationTypes.SIMULATION_PACKETS_DATA, dataPacketSize);
+			Packets pack = new Packets(j % noNodes, SimulationTypes.SIMULATION_PACKETS_DATA, dataPacketSize, 0);
 				CCNRouter router = Grid.getRouter(j % noNodes);
 				CCNCache routerLocalCache = router.getLocalCache();
 				pack.setLocality(true);
