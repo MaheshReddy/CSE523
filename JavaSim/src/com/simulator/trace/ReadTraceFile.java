@@ -41,6 +41,7 @@ public class ReadTraceFile {
 			temp.setPacketStatus(scanTraceRecord.next());
 			temp.setTimeStamp(scanTraceRecord.nextFloat());
 			temp.setPacketID(scanTraceRecord.nextInt());
+			temp.setSegmentID(scanTraceRecord.nextInt());
 			temp.setSourceNode(scanTraceRecord.nextInt());
 			temp.setCurrentNode(scanTraceRecord.nextInt());
 			temp.setPreviousNode(scanTraceRecord.nextInt());
@@ -81,6 +82,7 @@ public class ReadTraceFile {
 			temp.setPacketStatus(scanTraceRecord.next());
 			temp.setTimeStamp(scanTraceRecord.nextFloat());
 			temp.setPacketID(scanTraceRecord.nextInt());
+			temp.setSegmentID(scanTraceRecord.nextInt());
 			temp.setSourceNode(scanTraceRecord.nextInt());
 			temp.setCurrentNode(scanTraceRecord.nextInt());
 			temp.setPreviousNode(scanTraceRecord.nextInt());
@@ -122,6 +124,7 @@ public class ReadTraceFile {
 			temp.setPacketStatus(scanTraceRecord.next());
 			temp.setTimeStamp(scanTraceRecord.nextFloat());
 			temp.setPacketID(scanTraceRecord.nextInt());
+			temp.setSegmentID(scanTraceRecord.nextInt());
 			temp.setSourceNode(scanTraceRecord.nextInt());
 			temp.setCurrentNode(scanTraceRecord.nextInt());
 			temp.setPreviousNode(scanTraceRecord.nextInt());
@@ -163,8 +166,14 @@ public class ReadTraceFile {
 	                		return 1;
 	                	else if (p1.getNumOfHops() < p2.getNumOfHops())
 	                		return -1;
-	                	else
-	                		return 0;
+	                	else {	                		           	
+	                        	if(p1.getSegmentID() > p2.getSegmentID())
+	                        		return 1;
+	                        	else if (p1.getSegmentID() < p2.getSegmentID())
+	                        		return -1;
+	                        	else 
+	                        		return 0;	                		
+	                	}               		
 	                }
                 }		                	                
             }
@@ -187,19 +196,25 @@ public class ReadTraceFile {
                 	return 1;
                 else if (p1.getPacketID() < p2.getPacketID())
                 	return -1;
-                else {
-                	if(p1.getTimeStamp() > p2.getTimeStamp())
+                else {                	
+                	if(p1.getSegmentID() > p2.getSegmentID())
                 		return 1;
-                	else if (p1.getTimeStamp() < p2.getTimeStamp())
+                	else if (p1.getSegmentID() < p2.getSegmentID())
                 		return -1;
-                	else {
-	                	if(p1.getNumOfHops() > p2.getNumOfHops())
+                	else {                	
+	                	if(p1.getTimeStamp() > p2.getTimeStamp())
 	                		return 1;
-	                	else if (p1.getNumOfHops() < p2.getNumOfHops())
+	                	else if (p1.getTimeStamp() < p2.getTimeStamp())
 	                		return -1;
-	                	else
-	                		return 0;
-	                }
+	                	else {
+		                	if(p1.getNumOfHops() > p2.getNumOfHops())
+		                		return 1;
+		                	else if (p1.getNumOfHops() < p2.getNumOfHops())
+		                		return -1;
+		                	else
+		                		return 0;
+		                }
+                	}
                 }		                	                
             }
  
@@ -221,20 +236,26 @@ public class ReadTraceFile {
                 	return 1;
                 else if (p1.getRequestedObjectID() < p2.getRequestedObjectID())
                 	return -1;
-                else {
-                	if(p1.getTimeStamp() > p2.getTimeStamp())
+                else {                	
+                	if(p1.getSegmentID() > p2.getSegmentID())
                 		return 1;
-                	else if (p1.getTimeStamp() < p2.getTimeStamp())
+                	else if (p1.getSegmentID() < p2.getSegmentID())
                 		return -1;
-                	else {
-	                	if(p1.getNumOfHops() > p2.getNumOfHops())
+                    else {
+	                	if(p1.getTimeStamp() > p2.getTimeStamp())
 	                		return 1;
-	                	else if (p1.getNumOfHops() < p2.getNumOfHops())
+	                	else if (p1.getTimeStamp() < p2.getTimeStamp())
 	                		return -1;
-	                	else
-	                		return 0;
+	                	else {
+		                	if(p1.getNumOfHops() > p2.getNumOfHops())
+		                		return 1;
+		                	else if (p1.getNumOfHops() < p2.getNumOfHops())
+		                		return -1;
+		                	else
+		                		return 0;
+		                }
 	                }
-                }		                	                
+                }
             }
  
         });
