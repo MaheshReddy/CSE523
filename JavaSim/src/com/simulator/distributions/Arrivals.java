@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
+import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
@@ -27,11 +28,11 @@ public class Arrivals extends SimulationProcess {
 	private Integer gridSize = 0;
 	private Random nodeSelecter;
 	private Random packetIdGenerator;
-	private static double arvDelay;
+	private static double loadImpact;
 	
-	public Arrivals (double mean) {
+	public Arrivals () {
 		
-		InterArrivalTime = new ExponentialStream(mean);
+		InterArrivalTime = new ExponentialStream(loadImpact);
 		gridSize = Grid.getGridSize();
 		
 		/* At present, we are using seeds for testing purposes. However, eventually, we will remove them in the production 
@@ -56,22 +57,43 @@ public class Arrivals extends SimulationProcess {
 			catch (SimulationException e) {}			
 			catch (RestartException e) {}			
 		    catch (IOException e) {}
-		    
-			/* The following statement will randomly choose a source node for the interest packet */
-			Packets packets = new Packets(nodeSelecter.nextInt(gridSize), SimulationTypes.SIMULATION_PACKETS_INTEREST, interestPacketSize);
-			
-			/* The following statement will randomly choose the data/object which is being request with the interest packet */
-			packets.setRefPacketId(packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets()));
 			
 			/* 
-			 * The following code records the creation of the interest packet 
-			 * */			
-			Packets.dumpStatistics(packets, "CREATED");			
+			 * TODO: Calculate how many interest packets will we generate for this object. We divide the object size by segment size
+			 * Presently, we assume this value to give us two interest packets per object 
+			 * */
 			
-			/* The following statement moves the program control the Packet class, where this interest packet is added into
-			 * the source nodes queue 
-			 */			
-			packets.activate();
+			int objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
+			int srcNode = nodeSelecter.nextInt(gridSize);
+			
+			/* 
+			 * This is not inside the for loop because we want to generate the same packet number for all the packets. Notice they are using
+			 * different constructors. The packets created in the for loop are using the same packetID created with the first packet 
+			 * */
+			Packets firstPacket = new Packets(srcNode, SimulationTypes.SIMULATION_PACKETS_INTEREST, interestPacketSize, 1);
+			firstPacket.setRefPacketId(objectID);
+			Packets.dumpStatistics(firstPacket, "CREATED");
+			firstPacket.activate();
+			
+			int packetID = firstPacket.getPacketId();
+			
+		    for (int i = 2; i <= 2; i++) {
+				/* The following statement will randomly choose a source node for the interest packet */
+				Packets otherPackets = new Packets(srcNode, SimulationTypes.SIMULATION_PACKETS_INTEREST, interestPacketSize, packetID, i);
+				
+				/* The following statement will randomly choose the data/object which is being request with the interest packet */
+				otherPackets.setRefPacketId(objectID);
+				
+				/* 
+				 * The following code records the creation of the interest packet 
+				 * */			
+				Packets.dumpStatistics(otherPackets, "CREATED");			
+				
+				/* The following statement moves the program control the Packet class, where this interest packet is added into
+				 * the source nodes queue 
+				 */			
+				otherPackets.activate();
+		    }
 			
 			log.info("Packet generated ");				
 		}
@@ -81,12 +103,12 @@ public class Arrivals extends SimulationProcess {
 		return 0;	
 	}
 	
-	public static double getArvDelay() {
-		return arvDelay;
+	public static double getLoadImpact () {
+		return loadImpact;
 	}
 	
-	public static void setArvDelay(double arvDelay) {
-		Arrivals.arvDelay = arvDelay;
+	public static void setLoadImpact(double tempLoadImpact) {
+		Arrivals.loadImpact = tempLoadImpact;
 	}    
 	
 	public static void setInterestPacketSize(int tempIntPacketSize) {
