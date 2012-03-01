@@ -17,6 +17,22 @@ public class PITEntry {
 		createdAtTime = tempTime;		
 	}
 	
+	public boolean equals(Object o) {
+		
+	    if (o == this)
+	        return true;
+	    if (!(o instanceof PITEntry))
+	        return false;
+	    
+	    PITEntry pn = (PITEntry)o;
+	    return pn.outgoingInterface == outgoingInterface;
+	}
+	
+	public int hashCode() {
+	    return outgoingInterface;
+	}
+	
+	
 	public void setOutgoingInterface (int temp) {
 		outgoingInterface = temp;
 	}
