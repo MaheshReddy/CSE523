@@ -44,8 +44,14 @@ public class Packets implements Cloneable {
 	 * Id of this packet instance.
 	 */
 	private int packetId = 0;
+	
 	/**
-	 * Source Packet Id only makes sence when the packet is a clone. And this represents the packetid of the source packet.
+	 * SegmentId of this packet instance.
+	 */
+	private int segmentId = 0;
+	
+	/**
+	 * Source Packet Id only makes sense when the packet is a clone. And this represents the packetid of the source packet.
 	 */
 	private int sourcePacketId = 0;
 	
@@ -124,9 +130,10 @@ public class Packets implements Cloneable {
 	 * We get a unique Id from a static packet Id generator and assign it to PacketId. We also assign the same Id of sourceId since we
 	 * are creating the packet here.
 	 */
-	public Packets (Integer nodeId, SimulationTypes packettype, int size) {
+	public Packets (Integer nodeId, SimulationTypes packettype, int size, int segId) {
 		
 		setPacketId(getCurrenPacketId());
+		setSegmentId (segId);
 		setSourcePacketId(getPacketId());
 		setPacketType(packettype);
 		setPrevHop(-1);
@@ -140,6 +147,25 @@ public class Packets implements Cloneable {
 		ResponseTime = 0.0;
 		ArrivalTime = Scheduler.CurrentTime();
 	}
+	
+	public Packets (Integer nodeId, SimulationTypes packettype, int size, int packId, int segId) {
+		
+		setPacketId(packId);
+		setSegmentId (segId);
+		setSourcePacketId(getPacketId());
+		setPacketType(packettype);
+		setPrevHop(-1);
+		setRefPacketId(-1);
+		setOriginNode(nodeId);
+		setSizeOfPacket(size);
+		setAlive(true);
+		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
+		log.info("node id = "+nodeId+" packet id ="+ packetId);
+
+		ResponseTime = 0.0;
+		ArrivalTime = Scheduler.CurrentTime();
+	}
+	
 	public Packets(Packets pac)	{}
 	
 	/**
@@ -172,7 +198,7 @@ public class Packets implements Cloneable {
 	
 	/**
 	 * This function is called when the Packet is about to Die.
-	 * Various scenarious when a packet can die are
+	 * Various scenarios when a packet can die are
 	 * 1. When there is No entry in pit table for this data packet.
 	 * 2. Already served interest packet
 	 * 3. Statisfying the interest packet by sending the 
@@ -207,28 +233,30 @@ public class Packets implements Cloneable {
 			StringBuilder str1 = new StringBuilder();
 			Formatter str = new Formatter(str1);
 			
+			str.format("%(,2.4f\t",SimulationProcess.CurrentTime());
+			
 			if(SimulationTypes.SIMULATION_PACKETS_DATA == curPacket.getPacketType())
-				str.format("d");
+				str.format("d\t");
 			else 
-				str.format("i");
+				str.format("i\t");	
 			
-			str.format(" STATUS:%s", status);
-			str.format(" TIME:%(,2.4f",SimulationProcess.CurrentTime());
-			str.format(" PAC_ID:%2d",curPacket.getPacketId());
+			str.format("id:%2d\t",curPacket.getPacketId());
+			str.format("seg:%2d\t",curPacket.getSegmentId());
+			str.format("status=%s\t", status);
+			str.format("object/interest=%2d\t",curPacket.getRefPacketId());
+			str.format("curr=%2d\t",curPacket.getCurNode());
+			str.format("prev:%2d\t",curPacket.getPrevHop());
+			str.format("src:%2d\t",curPacket.getOriginNode());
 			//str.format(" SRCPACK_ID:%2d",curPacket.getSourcePacketId());
-			str.format(" SRC_NODE:%2d",curPacket.getOriginNode());
-			str.format(" PRV_NODE:%2d",curPacket.getPrevHop());
-			str.format(" CUR_NODE:%2d",curPacket.getCurNode());
-			str.format(" REFPAC_ID:%2d",curPacket.getRefPacketId());
-			str.format(" CAUSESUP:(%s)", (curPacket.getCauseOfSupr().toString()));
-			str.format(" HOPS:%d",curPacket.getNoOfHops());
-									
+			str.format("hops=%d\t",curPacket.getNoOfHops());
+			str.format("dead/alive="+ Integer.toBinaryString((curPacket.isAlive())?1:0) + "\t");
+			str.format("%s\t", (curPacket.getCauseOfSupr().toString()));
+												
 			if(curPacket.isLocal())
-				str.format(" LCLCache");
+				str.format("lcache");
 			else
-				str.format(" GBLCache");
-			
-			str.format(" DEAD/ALIVE:"+ Integer.toBinaryString((curPacket.isAlive())?1:0));
+				str.format("gcache");
+						
 			str.format("\n");
 			fs.write(str.toString());
 			fs.close();
@@ -259,6 +287,7 @@ public class Packets implements Cloneable {
 			str.format(" %s", status);
 			str.format(" %(,2.4f",SimulationProcess.CurrentTime());
 			str.format(" %d",curPacket.getPacketId());
+			str.format(" %d",curPacket.getSegmentId());
 			//str.format(" SRCPACK_ID:%2d",curPacket.getSourcePacketId());
 			str.format(" %d",curPacket.getOriginNode());
 			str.format(" %d",curPacket.getCurNode());
@@ -269,14 +298,14 @@ public class Packets implements Cloneable {
 			str.format(" %d",curPacket.getNoOfHops());
 			
 			if(curPacket.isLocal())
-				str.format(" LCLCache");
+				str.format(" lcache");
 			else
-				str.format(" GBLCache");
+				str.format(" gcache");
 			
 			if(Integer.toBinaryString((curPacket.isAlive())?1:0).compareTo("1") == 0)
-				str.format(" ALIVE");
+				str.format(" alive");
 			else
-				str.format(" DEAD");	
+				str.format(" dead");	
 			
 			str.format("\n");
 			fs.write(str.toString());
@@ -294,6 +323,14 @@ public class Packets implements Cloneable {
 
 	public void setPacketId(Integer packetId) {
 		this.packetId = packetId;
+	}
+	
+	public Integer getSegmentId() {
+		return segmentId;
+	}
+
+	public void setSegmentId(Integer segId) {
+		this.segmentId = segId;
 	}
 
 	public SimulationTypes getPacketType() {
