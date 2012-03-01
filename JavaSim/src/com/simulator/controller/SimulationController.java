@@ -58,7 +58,7 @@ public class SimulationController extends SimulationProcess {
 			setGridType(SimulationTypes.valueOf(prop.getProperty("ccn.topology")));
 			CCNRouter.setProcDelay(Double.parseDouble(prop.getProperty("ccn.delay.processing")));
 			TransmitPackets.setTransDelay(Double.parseDouble(prop.getProperty("ccn.delay.transmitting")));
-			Arrivals.setArvDelay(Double.parseDouble(prop.getProperty("ccn.delay.arrivals")));	
+			Arrivals.setLoadImpact(Double.parseDouble(prop.getProperty("ccn.load.impact")));	
 			CCNRouter.setPitTimeOut(Double.parseDouble(prop.getProperty("ccn.pit.timeout")));
 		} 
 		catch (IOException e) {
@@ -102,7 +102,7 @@ public class SimulationController extends SimulationProcess {
 			 * Arrivals object is created along with setting of the frequency with which it will be reinvoked again, and again ..
 			 * Moreover, the first interest packet is created. 
 			 * */
-			Arrivals A = new Arrivals(Arrivals.getArvDelay());
+			Arrivals A = new Arrivals();
 			
 			/* The following call will place the Arrival object onto the JavaSim scheduler's queue. */
 			A.Activate();
@@ -208,7 +208,7 @@ public class SimulationController extends SimulationProcess {
 			return;
 		}
 		
-		/* Standard call made as it is a requirement of JavaSim. It is essentiallly to suspend the main thread, and pass on
+		/* Standard call made as it is a requirement of JavaSim. It is essentially to suspend the main thread, and pass on
 		 * execution to the other threads executing the simulation (Read JavaSim manual for further clarification)
 		 *  */
 		ctrl.Await();
