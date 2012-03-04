@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 
 import com.simulator.ccn.CCNRouter;
+import com.simulator.enums.GridTypes;
 import com.simulator.enums.SimulationTypes;
 
 public class Grid 
@@ -29,11 +30,11 @@ public class Grid
 		adjacencyList.add(innerHash);
 	}
 
-	public static void createTopology (SimulationTypes gridType) throws Exception
+	public static void createTopology (GridTypes gridType) throws Exception
 	{
-		if (SimulationTypes.SIMULATION_GRID_MESH == gridType)
+		if (GridTypes.SIMULATION_GRID_MESH == gridType)
 			createMeshGrid();
-		else if (SimulationTypes.SIMULATION_GRID_BRITE == gridType) {
+		else if (GridTypes.SIMULATION_GRID_BRITE == gridType) {
 			createBriteTopology();
 		}
 		else

@@ -7,6 +7,7 @@ import com.simulator.ccn.CCNRouter;
 import com.simulator.ccn.TransmitPackets;
 import com.simulator.distributions.Arrivals;
 import com.simulator.distributions.PacketDistributions;
+import com.simulator.enums.GridTypes;
 import com.simulator.enums.SimulationTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
@@ -36,7 +37,7 @@ public class SimulationController extends SimulationProcess {
 	public static long maxSimulatedPackets = 0;
 	private static int cacheSize;
 	
-	private SimulationTypes gridType = SimulationTypes.SIMULATION_GRID_BRITE;
+	private GridTypes gridType = GridTypes.SIMULATION_GRID_BRITE;
 
 	private static SimulationTypes distributionType = SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT;
 	private static SimulationTypes cacheType = SimulationTypes.SIMULATION_UNLIMITED_CACHESIZE;
@@ -71,7 +72,7 @@ public class SimulationController extends SimulationProcess {
 			
 			Packets.setDataDumpFile(prop.getProperty("dumpfile.packets"));
 			
-			setGridType(SimulationTypes.valueOf(prop.getProperty("ccn.topology")));
+			setGridType(GridTypes.valueOf(prop.getProperty("ccn.topology")));
 			
 
 			setDistributionType (SimulationTypes.valueOf(prop.getProperty("ccn.object.distribution")));
@@ -143,7 +144,7 @@ public class SimulationController extends SimulationProcess {
 			 * For now using a workaround of using a flag to indicate end of simulation.
 			 */
 			while(!A.isSimStatus())	{
-				Hold(10);
+				Hold(100);
 				//System.out.println(A.isSimStatus());
 			}
 			
@@ -201,11 +202,11 @@ public class SimulationController extends SimulationProcess {
 		Grid.setGridSize(noNodes);
 	}
 
-	public SimulationTypes getGridType() {
+	public GridTypes getGridType() {
 		return gridType;
 	}
 
-	public void setGridType(SimulationTypes gridType) {
+	public void setGridType(GridTypes gridType) {
 		this.gridType = gridType;
 	}
 	

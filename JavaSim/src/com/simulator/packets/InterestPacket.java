@@ -8,7 +8,9 @@ import arjuna.JavaSim.Simulation.Scheduler;
 
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
+import com.simulator.enums.PacketsType;
 import com.simulator.enums.SimulationTypes;
+import com.simulator.enums.SupressionTypes;
 import com.simulator.topology.Grid;
 
 /* The following class is the Packet class which records information of each individual packet. Notice that it is not a 
@@ -51,13 +53,13 @@ public class InterestPacket extends Packets implements Cloneable{
 		setPacketId(getCurrenPacketId());
 		setSegmentId(segId);
 		setSourcePacketId(getPacketId());
-		setPacketType(SimulationTypes.SIMULATION_PACKETS_INTEREST);
+		setPacketType(PacketsType.PACKET_TYPE_INTEREST);
 		setPrevHop(-1);
 		setRefPacketId(-1);
 		setOriginNode(nodeId);
 		setSizeOfPacket(size);
 		setAlive(true);
-		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
+		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 		log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 	}
 
