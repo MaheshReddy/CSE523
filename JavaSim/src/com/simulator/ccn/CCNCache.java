@@ -63,13 +63,14 @@ public class CCNCache  {
 	 * @param packet the packet to be inserted in to the cache
 	 */
 	public void addToCache(Packets packet) {
-		
+
 		InterestEntry dataObject = new InterestEntry (packet.getPacketId(), packet.getSegmentId());
 		
 		/* While adding to cache change the origin node of the packet to this node
 		 * How will we know where was the object originally placed? */
 		packet.setOriginNode(getNodeId());
 	
+
 		/* It will put if there is space, otherwise, it will create space, and place the entry */
 		cache.put(dataObject, packet);	
 	}

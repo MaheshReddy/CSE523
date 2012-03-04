@@ -28,15 +28,19 @@ public class PacketDistributions {
 	static final Logger log = Logger.getLogger(PacketDistributions.class);
 	
 	static Integer noDataPackets;
+
 	static int dataPacketSize;	
+
 	private static String allDocs = null;
 	
 	private static Random nodeSelecter = new Random(5);
 	
 	/**
-	 * Distributes the contents across all the nodes. 
-	 * TODO this is just a very simple distribution function need to write a more suitable distribution function. 
+	 *  distributeContentGlobeTraffic distributes the content from doc.all produced by globe traffic tool into various nodes of the topology.
+	 *  //TODO currently randomly choosing a node to distribute content need to review this.
+	 * @throws IOException 
 	 */
+
 	
 	public static void distributeContent (SimulationTypes distType) throws Exception 
 	{
@@ -80,7 +84,7 @@ public class PacketDistributions {
 		while((line = rd.readLine())!=null)	{
 			
 			Integer rtrId = nodeSelecter.nextInt(Grid.getGridSize());
-			DataPacket pac = new DataPacket(line,rtrId);
+			DataPacket pac = new DataPacket(line,rtrId,0);
 			CCNRouter router = Grid.getRouter(rtrId);
 			CCNCache routerLocalCache = router.getLocalCache();
 			pac.setLocality(true);

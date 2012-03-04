@@ -37,9 +37,11 @@ public class SimulationController extends SimulationProcess {
 	private static int cacheSize;
 	
 	private SimulationTypes gridType = SimulationTypes.SIMULATION_GRID_BRITE;
+
 	private static SimulationTypes distributionType = SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT;
 	private static SimulationTypes cacheType = SimulationTypes.SIMULATION_UNLIMITED_CACHESIZE;
 	private static SimulationTypes debugging = SimulationTypes.SIMULATION_DEBUGGING_ON;
+
 
 	
     /**
@@ -59,10 +61,10 @@ public class SimulationController extends SimulationProcess {
 			
 			PacketDistributions.setDataPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.datapackets")));
 			
-			Arrivals.setInterestPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.interestpackets")));
-			
+			Arrivals.setInterestPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.interestpackets")));			
+
 			Arrivals.setSegmentSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.segment")));
-			
+
 			setNoNodes(Integer.parseInt(prop.getProperty("ccn.no.nodes")));
 			
 			setMaxSimulatedPackets(Integer.parseInt(prop.getProperty("ccn.no.simulationpackets")));
@@ -71,6 +73,7 @@ public class SimulationController extends SimulationProcess {
 			
 			setGridType(SimulationTypes.valueOf(prop.getProperty("ccn.topology")));
 			
+
 			setDistributionType (SimulationTypes.valueOf(prop.getProperty("ccn.object.distribution")));
 			
 			setDebugging (SimulationTypes.valueOf(prop.getProperty("ccn.debgging")));
@@ -107,6 +110,7 @@ public class SimulationController extends SimulationProcess {
 		/* The following function will distributed the objects amongst various nodes based on docs.all file of
 		 * Globe Traffic.  
 		 * */
+
 		PacketDistributions.distributeContent(distributionType);
 	}
 	/* The following method is called after the constructor. It will create an object of the Arrivals class which is responsible
@@ -129,7 +133,6 @@ public class SimulationController extends SimulationProcess {
 
 			/* The simulation is started, and JavaSim scheduler comes to life */
 			Scheduler.startSimulation();
-
 			
 			/**
 			 //TODO
@@ -144,6 +147,19 @@ public class SimulationController extends SimulationProcess {
 				//System.out.println(A.isSimStatus());
 			}
 			
+			/**
+			 //TODO
+			 * Joining this thread to Arrivals Thread. By doing this we are blocking this thread till finished execution.
+			 * Intial Hold is necessary to as to make Arrivals thread run.
+			 */
+			/**
+			 * For now using a workaround of using a flag to indicate end of simulation.
+			 */
+				while(!A.isSimStatus())
+				{
+					Hold(10);
+					System.out.println(A.isSimStatus());
+				}
 			/* Stops the simulation */
 			Scheduler.stopSimulation();
 			

@@ -20,8 +20,13 @@ import com.simulator.topology.Grid;
 import arjuna.JavaSim.Simulation.*;
 
 /* The following class is the Packet class which records information of each individual packet. Notice that it is not a 
- * SimulationProcess, but a simple class. It serves to three important tasks: (1) adds newly created interest packets into the queue of
- * requesting nodes; (b) it activates these requesting nodes; (c) it collects the statistics for each packet
+ * SimulationProcess, but a simple class. It serves to three important tasks: 
+ * (1) adds newly created interest packets into the queue of requesting nodes; 
+ * (b) it activates these requesting nodes; 
+ * (c) it collects the statistics for each packet
+ *  NOTE:
+ *  Important Note while adding elements to this class make sure you add only basic data types (i.e like int,char etc) , if you have to add Complext data types
+ *  please make sure to edit clone() method of packets so that it works properly.
  *  */
 public class Packets implements Cloneable {
 	
@@ -112,7 +117,7 @@ public class Packets implements Cloneable {
 	 * finished method.
 	 */
 	private SimulationTypes causeOfSupr;
-	
+
 	/**
 	 * Comma separated list of nodes traversed by this packet. Only used of debugging purpose.
 	 */
@@ -169,6 +174,7 @@ public class Packets implements Cloneable {
 
 	
 	public Packets(Packets pac)	{}
+
 	
 	public Packets(){}
 	/**
@@ -177,27 +183,6 @@ public class Packets implements Cloneable {
 	 *  TODO Also accept a parameter on what to do.
 	 */
 	
-	/* This method name is confusing. It does not need to be activate() as this method is pre-defined thread method */
-	public void activate() {
-		
-		if(SimulationTypes.SIMULATION_PACKETS_INTEREST == getPacketType())
-			interestPacketHandler();
-		else
-			log.info("Not activation method specified or found");
-	}
-	
-	/* This method adds packets into the source node queue */
-	private void interestPacketHandler() {
-		
-		log.info("Handling Interest Packet"+this.toString());
-		CCNRouter router = Grid.getRouter(getOriginNode());
-		CCNQueue packetsQ = router.getPacketsQ();
-		
-		/* CCNRouter is activated (put in the JavaSim's scheduler queue) when we add the packet to the queue in the last statement
-		 * of the following method in CCNQueue
-		 *  */
-		packetsQ.addLast(this); 		
-	}
 	
 	/**
 	 * This function is called when the Packet is about to Die.
@@ -479,12 +464,4 @@ public class Packets implements Cloneable {
 	public void setSourcePacketId(int sourcePacketId) {
 		this.sourcePacketId = sourcePacketId;
 	}
-	
-	public String getPathTravelled() {
-		return pathTravelled;
-	}
-	
-	public void setPathTravelled(int node) {
-		pathTravelled.concat(","+Integer.toString(node, 10));
-	}	
 };

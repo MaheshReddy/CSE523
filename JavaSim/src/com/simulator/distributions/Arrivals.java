@@ -137,7 +137,7 @@ public class Arrivals extends SimulationProcess {
 			Packets firstPacket = new InterestPacket(srcNode, interestPacketSize, 1);
 			firstPacket.setRefPacketId(objectID);	
 			Packets.dumpStatistics(firstPacket, "CREATED");
-			firstPacket.activate();		
+			((InterestPacket)firstPacket).activate();		
 			
 			countInterestPackets++;
 			
@@ -160,7 +160,7 @@ public class Arrivals extends SimulationProcess {
 					/* The following statement moves the program control the Packet class, where this interest packet is added into
 					 * the source nodes queue 
 					 */			
-					otherPackets.activate();
+					((InterestPacket)otherPackets).activate();
 			    }
 			}			
 			log.info("Packet generated ");				
