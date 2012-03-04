@@ -19,7 +19,9 @@ import org.apache.log4j.Logger;
 import com.simulator.controller.SimulationController;
 
 import com.simulator.distributions.PacketDistributions;
+import com.simulator.enums.PacketsType;
 import com.simulator.enums.SimulationTypes;
+import com.simulator.enums.SupressionTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 import com.simulator.trace.ReadTraceFile;
@@ -133,9 +135,9 @@ public class CCNRouter extends SimulationProcess {
 				Packets.dumpStatistics(currentPacket, "PROCSED");	
 				
 				/* The packet will be processed according to its packet type */
-				if(currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_INTEREST)
+				if(currentPacket.getPacketType() == PacketsType.PACKET_TYPE_INTEREST)
 					interestPacketsHandler(currentPacket);
-				else if (currentPacket.getPacketType() == SimulationTypes.SIMULATION_PACKETS_DATA)
+				else if (currentPacket.getPacketType() == PacketsType.PACKET_TYPE_INTEREST)
 					dataPacketsHandler(currentPacket);
 				
 				log.info(toString());
@@ -194,7 +196,7 @@ public class CCNRouter extends SimulationProcess {
 		if(pitEntry == null) {
 			
 			log.info("No entry in pit table ignoring");
-			curPacket.finished(SimulationTypes.SUPRESSION_NO_PIT);
+			curPacket.finished(SupressionTypes.SUPRESSION_NO_PIT);
 			return;
 		}
 		
@@ -369,7 +371,7 @@ public class CCNRouter extends SimulationProcess {
 		/* The following code is to suppress the interest packets that have already been served */
 		if (isInterestServed(interest)) {
 			
-			curPacket.finished(SimulationTypes.SUPRESSION_ALREADY_SERVED);
+			curPacket.finished(SupressionTypes.SUPRESSION_ALREADY_SERVED);
 			log.info("Already served interest packet "+ curPacket.getPacketId() + " with segment ID " + curPacket.getSegmentId());
 			return;
 		}
@@ -404,7 +406,7 @@ public class CCNRouter extends SimulationProcess {
 			
 			data_packet.setRefPacketId(-1);
 			data_packet.setSegmentId(0);
-			curPacket.finished(SimulationTypes.SUPRESSION_SENT_DATA_PACKET);
+			curPacket.finished(SupressionTypes.SUPRESSION_SENT_DATA_PACKET);
 			return;
 		}
 		
@@ -440,7 +442,7 @@ public class CCNRouter extends SimulationProcess {
 			 /* Questions for Mahesh: Why do we want to destroy this packet ? Why are we not cloning Packet before transmitting it? */
 			log.info("Forwarding table hit sending to"+ rid.getDestinationNode());
 			sendPacket((Packets)curPacket.clone(), rid.getDestinationNode());
-			curPacket.finished(SimulationTypes.SUPPRESS_FLOODING_FIB_HIT);			
+			curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);			
 		}
 		/* oh god !! the flooding devil */
 		else {
@@ -544,7 +546,7 @@ public class CCNRouter extends SimulationProcess {
 		}
 		else {
 			
-			curPacket.finished(SimulationTypes.SUPRESSION_DEST_NODE);
+			curPacket.finished(SupressionTypes.SUPRESSION_DEST_NODE);
 			log.info("Packet Destined to my node,so suppressing");
 		}
 	}

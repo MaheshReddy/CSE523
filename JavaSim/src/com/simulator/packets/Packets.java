@@ -14,7 +14,9 @@ import org.apache.log4j.Logger;
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationController;
+import com.simulator.enums.PacketsType;
 import com.simulator.enums.SimulationTypes;
+import com.simulator.enums.SupressionTypes;
 import com.simulator.topology.Grid;
 
 import arjuna.JavaSim.Simulation.*;
@@ -90,7 +92,7 @@ public class Packets implements Cloneable {
 	/**
 	 * Type of the packet.
 	 */
-	private SimulationTypes packetType;
+	private PacketsType packetType;
 	
 	/**
 	 * Number of hops 
@@ -116,61 +118,7 @@ public class Packets implements Cloneable {
 	 * Denotes the cause of suppression. Used while dumping the the packet. Its is set by passing the cause of suppression to 
 	 * finished method.
 	 */
-	private SimulationTypes causeOfSupr;
-
-	/**
-	 * Comma separated list of nodes traversed by this packet. Only used of debugging purpose.
-	 */
-	private String pathTravelled;
-
-	/**
-	 * 
-	 * This is a constructor of a packet. It takes following param and sets them.
-	 * @param nodeId If its Interest Packet than this determines the source of
-	 * 		   of the Interest Packet. When we are flooding we change the source
-	 * 			of the Interest Packet to the node that is flooding.
-	 * 		   else if a packet is of type Data Packet then nodeId represents the node which owns this data packet.
-	 * @param packettype Type of the packet.
-	 * Notes:
-	 * When a packet is created 
-	 * We get a unique Id from a static packet Id generator and assign it to PacketId. We also assign the same Id of sourceId since we
-	 * are creating the packet here.
-	 */
-	public Packets (Integer nodeId, SimulationTypes packettype, int size, int segId) {
-		
-		setPacketId(getCurrenPacketId());
-		setSegmentId (segId);
-		setSourcePacketId(getPacketId());
-		setPacketType(packettype);
-		setPrevHop(-1);
-		setRefPacketId(-1);
-		setOriginNode(nodeId);
-		setSizeOfPacket(size);
-		setAlive(true);
-		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
-		log.info("node id = "+nodeId+" packet id ="+ packetId);
-
-		ResponseTime = 0.0;
-		ArrivalTime = Scheduler.CurrentTime();
-	}
-	
-	public Packets (Integer nodeId, SimulationTypes packettype, int size, int packId, int segId) {
-		
-		setPacketId(packId);
-		setSegmentId (segId);
-		setSourcePacketId(getPacketId());
-		setPacketType(packettype);
-		setPrevHop(-1);
-		setRefPacketId(-1);
-		setOriginNode(nodeId);
-		setSizeOfPacket(size);
-		setAlive(true);
-		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
-		log.info("node id = "+nodeId+" packet id ="+ packetId);
-
-		ResponseTime = 0.0;
-		ArrivalTime = Scheduler.CurrentTime();
-	}
+	private SupressionTypes causeOfSupr;
 
 	
 	public Packets(Packets pac)	{}
@@ -196,7 +144,7 @@ public class Packets implements Cloneable {
 	 */
 
 	/* Called when a packet is being terminated */
-	public void finished(SimulationTypes cause)	{
+	public void finished(SupressionTypes cause)	{
 		
 		ResponseTime = Scheduler.CurrentTime() - ArrivalTime;
 		
@@ -223,7 +171,7 @@ public class Packets implements Cloneable {
 			
 			str.format("%(,2.4f",SimulationProcess.CurrentTime());
 			
-			if(SimulationTypes.SIMULATION_PACKETS_DATA == curPacket.getPacketType())
+			if(PacketsType.PACKET_TYPE_DATA == curPacket.getPacketType())
 				str.format(" d");
 			else 
 				str.format(" i");
@@ -274,7 +222,7 @@ public class Packets implements Cloneable {
 			
 			str.format("%(,2.4f\t",SimulationProcess.CurrentTime());
 			
-			if(SimulationTypes.SIMULATION_PACKETS_DATA == curPacket.getPacketType())
+			if(PacketsType.PACKET_TYPE_DATA == curPacket.getPacketType())
 				str.format("d\t");
 			else 
 				str.format("i\t");	
@@ -322,11 +270,11 @@ public class Packets implements Cloneable {
 		this.segmentId = segId;
 	}
 
-	public SimulationTypes getPacketType() {
+	public PacketsType getPacketType() {
 		return packetType;
 	}
 
-	public void setPacketType(SimulationTypes packetType) {
+	public void setPacketType(PacketsType packetType) {
 		this.packetType = packetType;
 	}
 	public Integer getPrevHop() {
@@ -449,11 +397,11 @@ public class Packets implements Cloneable {
 		this.alive = alive;
 	}
 	
-	public SimulationTypes getCauseOfSupr() {
+	public SupressionTypes getCauseOfSupr() {
 		return causeOfSupr;
 	}
 	
-	public void setCauseOfSupr(SimulationTypes causeOfSupr) {
+	public void setCauseOfSupr(SupressionTypes causeOfSupr) {
 		this.causeOfSupr = causeOfSupr;
 	}
 	

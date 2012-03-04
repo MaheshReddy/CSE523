@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 import arjuna.JavaSim.Simulation.Scheduler;
 
 import com.simulator.enums.DataPacketsApplTypes;
+import com.simulator.enums.PacketsType;
 import com.simulator.enums.SimulationTypes;
+import com.simulator.enums.SupressionTypes;
 
 
 /* *
@@ -41,13 +43,13 @@ public class DataPacket extends Packets implements Cloneable {
 		setPacketId(getCurrenPacketId());
 		setSourcePacketId(getPacketId());
 		setSegmentId (0);
-		setPacketType(SimulationTypes.SIMULATION_PACKETS_DATA);
+		setPacketType(PacketsType.PACKET_TYPE_DATA);
 		setPrevHop(-1);
 		setRefPacketId(-1);
 		setOriginNode(nodeId);
 		setSizeOfPacket(size);
 		setAlive(true);
-		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
+		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 		log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 	}
 	/**
@@ -69,12 +71,12 @@ public class DataPacket extends Packets implements Cloneable {
 		setApplType(DataPacketsApplTypes.values()[Integer.parseInt(words[3])]);
 		setSizeOfPacket(Integer.parseInt(words[2]));
 		setSourcePacketId(getPacketId());
-		setPacketType(SimulationTypes.SIMULATION_PACKETS_DATA);
+		setPacketType(PacketsType.PACKET_TYPE_DATA);
 		setPrevHop(-1);
 		setRefPacketId(-1);
 		setOriginNode(nodeId);
 		setAlive(true);
-		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
+		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 		log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 
 		setSegmentId (segId);

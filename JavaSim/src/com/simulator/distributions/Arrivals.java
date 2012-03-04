@@ -134,10 +134,10 @@ public class Arrivals extends SimulationProcess {
 			 * This is not inside the for loop because we want to generate the same packet number for all the packets. 
 			 * The packets created in the for loop are cloned, hence use the same packetID created with the first packet 
 			 * */
-			Packets firstPacket = new InterestPacket(srcNode, interestPacketSize, 1);
+			InterestPacket firstPacket = new InterestPacket(srcNode, interestPacketSize, 1);
 			firstPacket.setRefPacketId(objectID);	
 			Packets.dumpStatistics(firstPacket, "CREATED");
-			((InterestPacket)firstPacket).activate();		
+			firstPacket.activate();		
 			
 			countInterestPackets++;
 			
@@ -148,7 +148,7 @@ public class Arrivals extends SimulationProcess {
 				for (int i = 2; i <= (int)numberOfIntPacks; i++) {
 					/* The following statement will randomly choose a source node for the interest packet */
 					
-			    	Packets otherPackets = (Packets) firstPacket.clone();
+			    	InterestPacket otherPackets = (InterestPacket) firstPacket.clone();
 			    	otherPackets.setSegmentId(i);  	
 			    	otherPackets.setCurNode(-1);
 					
@@ -160,7 +160,7 @@ public class Arrivals extends SimulationProcess {
 					/* The following statement moves the program control the Packet class, where this interest packet is added into
 					 * the source nodes queue 
 					 */			
-					((InterestPacket)otherPackets).activate();
+					otherPackets.activate();
 			    }
 			}			
 			log.info("Packet generated ");				

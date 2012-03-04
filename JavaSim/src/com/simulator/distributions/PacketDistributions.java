@@ -61,7 +61,8 @@ public class PacketDistributions {
 		Integer noNodes = Grid.getGridSize();
 		for(int i=0,j=0;i<=getNoDataPackets();i++,j++) {
 			
-			Packets pack = new Packets(j % noNodes, SimulationTypes.SIMULATION_PACKETS_DATA, dataPacketSize, 0);
+			DataPacket pack = new DataPacket(j % noNodes, dataPacketSize);
+			pack.setSegmentId(0);
 			CCNRouter router = Grid.getRouter(j % noNodes);
 			CCNCache routerLocalCache = router.getLocalCache();
 			pack.setLocality(true);
