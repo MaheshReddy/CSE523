@@ -40,6 +40,7 @@ public class DataPacket extends Packets implements Cloneable {
 		
 		setPacketId(getCurrenPacketId());
 		setSourcePacketId(getPacketId());
+		setSegmentId (0);
 		setPacketType(SimulationTypes.SIMULATION_PACKETS_DATA);
 		setPrevHop(-1);
 		setRefPacketId(-1);
