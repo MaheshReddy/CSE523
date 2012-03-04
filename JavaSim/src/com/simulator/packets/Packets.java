@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationController;
-import com.simulator.controller.SimulationTypes;
+import com.simulator.enums.SimulationTypes;
 import com.simulator.topology.Grid;
 
 import arjuna.JavaSim.Simulation.*;
@@ -114,9 +114,10 @@ public class Packets implements Cloneable {
 	private SimulationTypes causeOfSupr;
 	
 	/**
-	 * Comma seperated list of nodes traversed by this packet. Only used of debugging purpose.
+	 * Comma separated list of nodes traversed by this packet. Only used of debugging purpose.
 	 */
 	private String pathTravelled;
+
 	/**
 	 * 
 	 * This is a constructor of a packet. It takes following param and sets them.
@@ -165,9 +166,11 @@ public class Packets implements Cloneable {
 		ResponseTime = 0.0;
 		ArrivalTime = Scheduler.CurrentTime();
 	}
+
 	
 	public Packets(Packets pac)	{}
 	
+	public Packets(){}
 	/**
 	 *  Activates packet. It performs necessary action on the packet. Depending on the packet type.
 	 *  @author contra
@@ -233,6 +236,57 @@ public class Packets implements Cloneable {
 			StringBuilder str1 = new StringBuilder();
 			Formatter str = new Formatter(str1);
 			
+			str.format("%(,2.4f",SimulationProcess.CurrentTime());
+			
+			if(SimulationTypes.SIMULATION_PACKETS_DATA == curPacket.getPacketType())
+				str.format(" d");
+			else 
+				str.format(" i");
+			
+			str.format(" %d",curPacket.getPacketId());
+			str.format(" %d",curPacket.getSegmentId());
+			str.format(" %s", status);
+			str.format(" %d",curPacket.getRefPacketId());
+			str.format(" %d",curPacket.getCurNode());
+			str.format(" %d",curPacket.getPrevHop());
+			str.format(" %d",curPacket.getOriginNode());
+			str.format(" %d",curPacket.getNoOfHops());
+			
+			if(Integer.toBinaryString((curPacket.isAlive())?1:0).compareTo("1") == 0)
+				str.format(" alive");
+			else
+				str.format(" dead");
+			
+			str.format(" %s", (curPacket.getCauseOfSupr().toString()));
+			
+			if(curPacket.isLocal())
+				str.format(" lcache");
+			else
+				str.format(" gcache");
+			
+			str.format("\n");
+			fs.write(str.toString());
+			fs.close();			
+			
+			if (SimulationController.getDebugging() == SimulationTypes.SIMULATION_DEBUGGING_ON)
+				collectTrace (curPacket, status);
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
+	/* This method is for used to create a trace file without any "headings". It is used by the "ManipulateTrace" class */
+	public synchronized static void collectTrace (Packets curPacket, String status)	{
+		
+		try {
+			@SuppressWarnings("unused")
+			
+			Writer fs = new BufferedWriter(new FileWriter("dump/readableTrace.txt",true));
+			StringBuilder str1 = new StringBuilder();
+			Formatter str = new Formatter(str1);
+			
 			str.format("%(,2.4f\t",SimulationProcess.CurrentTime());
 			
 			if(SimulationTypes.SIMULATION_PACKETS_DATA == curPacket.getPacketType())
@@ -259,57 +313,7 @@ public class Packets implements Cloneable {
 						
 			str.format("\n");
 			fs.write(str.toString());
-			fs.close();
-			
-			collectTrace (curPacket, status);
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-	}
-	
-	/* This method is for used to create a trace file without any "headings". It is used by the "ManipulateTrace" class */
-	public synchronized static void collectTrace (Packets curPacket, String status)	{
-		
-		try {
-			@SuppressWarnings("unused")
-			
-			Writer fs = new BufferedWriter(new FileWriter("dump/trace.txt",true));
-			StringBuilder str1 = new StringBuilder();
-			Formatter str = new Formatter(str1);
-			
-			if(SimulationTypes.SIMULATION_PACKETS_DATA == curPacket.getPacketType())
-				str.format("d");
-			else 
-				str.format("i");
-			
-			str.format(" %s", status);
-			str.format(" %(,2.4f",SimulationProcess.CurrentTime());
-			str.format(" %d",curPacket.getPacketId());
-			str.format(" %d",curPacket.getSegmentId());
-			//str.format(" SRCPACK_ID:%2d",curPacket.getSourcePacketId());
-			str.format(" %d",curPacket.getOriginNode());
-			str.format(" %d",curPacket.getCurNode());
-			str.format(" %d",curPacket.getPrevHop());
-			str.format(" %d",curPacket.getRefPacketId());
-			//str.format(" CAUSESUP: %s",Integer.toString(curPacket.getCauseOfSupr().ordinal()) );
-			str.format(" %s", (curPacket.getCauseOfSupr().toString()));
-			str.format(" %d",curPacket.getNoOfHops());
-			
-			if(curPacket.isLocal())
-				str.format(" lcache");
-			else
-				str.format(" gcache");
-			
-			if(Integer.toBinaryString((curPacket.isAlive())?1:0).compareTo("1") == 0)
-				str.format(" alive");
-			else
-				str.format(" dead");	
-			
-			str.format("\n");
-			fs.write(str.toString());
-			fs.close();
+			fs.close();			
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -385,7 +389,7 @@ public class Packets implements Cloneable {
 	 * Sets the size of the packet. 
 	 * */
 	public void setSizeOfPacket(Integer sizeOfPacket) {
-		sizeOfPacket = sizeOfPacket;
+		this.sizeOfPacket = sizeOfPacket;
 	}
 	
 

@@ -36,20 +36,21 @@ public class ReadTraceFile {
 						
 			Scanner scanTraceRecord = new Scanner (aLine);
 			TraceRecord temp = new TraceRecord();
-				
-			temp.setPacketType(scanTraceRecord.next());
-			temp.setPacketStatus(scanTraceRecord.next());
+			
 			temp.setTimeStamp(scanTraceRecord.nextFloat());
+			temp.setPacketType(scanTraceRecord.next());
 			temp.setPacketID(scanTraceRecord.nextInt());
 			temp.setSegmentID(scanTraceRecord.nextInt());
-			temp.setSourceNode(scanTraceRecord.nextInt());
-			temp.setCurrentNode(scanTraceRecord.nextInt());
-			temp.setPreviousNode(scanTraceRecord.nextInt());
+			temp.setPacketStatus(scanTraceRecord.next());
 			temp.setRequestedObjectID(scanTraceRecord.nextInt());
-			temp.setCauseOfSuprression(scanTraceRecord.next());
+			temp.setCurrentNode(scanTraceRecord.nextInt());
+			temp.setPreviousNode(scanTraceRecord.nextInt());			
+			temp.setSourceNode(scanTraceRecord.nextInt());
 			temp.setNumOfHops(scanTraceRecord.nextInt());
-			temp.setLocalOrGlobalCache(scanTraceRecord.next());
 			temp.setDeadOrAlive(scanTraceRecord.next());
+			temp.setCauseOfSuprression(scanTraceRecord.next());
+			temp.setLocalOrGlobalCache(scanTraceRecord.next());
+			
 			
 			trace.add(temp);
 						
@@ -78,19 +79,19 @@ public class ReadTraceFile {
 			
 			/* Extracting Node Configuration from "Nodes" string onwards in the Text file */
 			
-			temp.setPacketType(scanTraceRecord.next());
-			temp.setPacketStatus(scanTraceRecord.next());
 			temp.setTimeStamp(scanTraceRecord.nextFloat());
+			temp.setPacketType(scanTraceRecord.next());
 			temp.setPacketID(scanTraceRecord.nextInt());
 			temp.setSegmentID(scanTraceRecord.nextInt());
-			temp.setSourceNode(scanTraceRecord.nextInt());
-			temp.setCurrentNode(scanTraceRecord.nextInt());
-			temp.setPreviousNode(scanTraceRecord.nextInt());
+			temp.setPacketStatus(scanTraceRecord.next());
 			temp.setRequestedObjectID(scanTraceRecord.nextInt());
-			temp.setCauseOfSuprression(scanTraceRecord.next());
+			temp.setCurrentNode(scanTraceRecord.nextInt());
+			temp.setPreviousNode(scanTraceRecord.nextInt());			
+			temp.setSourceNode(scanTraceRecord.nextInt());
 			temp.setNumOfHops(scanTraceRecord.nextInt());
-			temp.setLocalOrGlobalCache(scanTraceRecord.next());
 			temp.setDeadOrAlive(scanTraceRecord.next());
+			temp.setCauseOfSuprression(scanTraceRecord.next());
+			temp.setLocalOrGlobalCache(scanTraceRecord.next());
 			
 			if (tempCSuppr.compareTo(temp.getCauseOfSuprression()) == 0){
 				trace.add(temp);
@@ -120,19 +121,19 @@ public class ReadTraceFile {
 			
 			/* Extracting Node Configuration from "Nodes" string onwards in the Text file */
 			
-			temp.setPacketType(scanTraceRecord.next());
-			temp.setPacketStatus(scanTraceRecord.next());
 			temp.setTimeStamp(scanTraceRecord.nextFloat());
+			temp.setPacketType(scanTraceRecord.next());
 			temp.setPacketID(scanTraceRecord.nextInt());
 			temp.setSegmentID(scanTraceRecord.nextInt());
-			temp.setSourceNode(scanTraceRecord.nextInt());
-			temp.setCurrentNode(scanTraceRecord.nextInt());
-			temp.setPreviousNode(scanTraceRecord.nextInt());
+			temp.setPacketStatus(scanTraceRecord.next());
 			temp.setRequestedObjectID(scanTraceRecord.nextInt());
-			temp.setCauseOfSuprression(scanTraceRecord.next());
+			temp.setCurrentNode(scanTraceRecord.nextInt());
+			temp.setPreviousNode(scanTraceRecord.nextInt());			
+			temp.setSourceNode(scanTraceRecord.nextInt());
 			temp.setNumOfHops(scanTraceRecord.nextInt());
-			temp.setLocalOrGlobalCache(scanTraceRecord.next());
 			temp.setDeadOrAlive(scanTraceRecord.next());
+			temp.setCauseOfSuprression(scanTraceRecord.next());
+			temp.setLocalOrGlobalCache(scanTraceRecord.next());
 			
 			if (tempPacketType.compareTo(temp.getPacketType()) == 0){
 				trace.add(temp);

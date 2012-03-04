@@ -16,8 +16,9 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.simulator.controller.SimulationTypes;
+import com.simulator.controller.SimulationController;
 import com.simulator.distributions.PacketDistributions;
+import com.simulator.enums.SimulationTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 import com.simulator.trace.ReadTraceFile;
@@ -82,11 +83,13 @@ public class CCNRouter extends SimulationProcess {
 		forwardingTable = new HashMap<Integer, FIBEntry>(200);
 		interestsServed = new ArrayList<InterestEntry>();
 		setRouterId(id);
-		localCache = new CCNCache(id, 100, true);
-		globalCache = new CCNCache(id, 10, false);
 		
-		/* We need to be very careful with this value. If it is smaller than we will not have an ideal cache which will not have
-		 * the contents it has seen in the past*/		
+		/* The localCache will always be of unlimited size */
+		localCache = new CCNCache(id, 100, true);
+		
+		/* The globalCache will be based on the value passed in "ccn.properties" file. The size will be effective in case the cache
+		 * is of a limited size */
+		globalCache = new CCNCache(id, SimulationController.getCacheSize(), SimulationController.cacheType());	
 	}
 	
 	/* The CCNRouter is a SimulationProcess, and is scheduled by JavaSim Scheduler. The following method is called when 
@@ -214,13 +217,16 @@ public class CCNRouter extends SimulationProcess {
 			
 			try {
 				
-				Writer fs1 = new BufferedWriter(new FileWriter("dump/PITExpiration.txt",true));
-				fs1.write("AT Router: " + this.getRouterId() + "\n");
-				fs1.write("Start of Data Handler function \nTime: " + CCNRouter.CurrentTime() + "\n");
-				fs1.write("Processing Interest packet #: " + curPacket.getRefPacketId() + "\n");
-				fs1.write("Processing Data packet #: " + curPacket.getPacketId() + "\n");
-				fs1.write("PIT Entry: Outgoing Interface is " + rid.getoutgoingInterface() + "\n");
-				fs1.write("PIT Entry: Entry was created at " + rid.getCreatedAtTime() + "\n");	
+				/* Used for debugging purposes 
+				 *	Writer fs1 = new BufferedWriter(new FileWriter("dump/PITExpiration.txt",true));
+					fs1.write("AT Router: " + this.getRouterId() + "\n");
+					fs1.write("Start of Data Handler function \nTime: " + CCNRouter.CurrentTime() + "\n");
+					fs1.write("Processing Interest packet #: " + curPacket.getRefPacketId() + "\n");
+					fs1.write("Processing Data packet #: " + curPacket.getPacketId() + "\n");
+					fs1.write("PIT Entry: Outgoing Interface is " + rid.getoutgoingInterface() + "\n");
+					fs1.write("PIT Entry: Entry was created at " + rid.getCreatedAtTime() + "\n");	
+				 * */
+				
 				
 				
 				/* We are traversing and removing the expired entries from PIT table. The pitTimeOut is a parameterized value taken from
@@ -228,13 +234,17 @@ public class CCNRouter extends SimulationProcess {
 				 * */
 				if ((SimulationProcess.CurrentTime() - rid.getCreatedAtTime()) >= pitTimeOut) {
 					stalledPITEntries.remove();
-					fs1.write("\nEntry Removed at " + SimulationProcess.CurrentTime() + "\n");					
+					/* Used for debugging purposes 
+					 *	fs1.write("\nEntry Removed at " + SimulationProcess.CurrentTime() + "\n"); 
+					 */										
 				}
 				
-				fs1.write("\n\n\n");
-				fs1.close();
+				/* Used for debugging purposes
+				 *  fs1.write("\n\n\n");				
+					fs1.close();
+				 */				
 			}				
-			catch (IOException e){}
+			catch (Exception e){}
 		}
 		
 		/* The following code is used to flood data packets over all the interfaces in PIT entry for this object */
@@ -284,14 +294,17 @@ public class CCNRouter extends SimulationProcess {
 			
 			try {
 				
-				Writer fs1 = new BufferedWriter(new FileWriter("dump/FIBEntryHopcountVerfication.txt",true));
-				fs1.write("AT Router: " + this.getRouterId() + "\n");
-				fs1.write("Current Time: " + CCNRouter.CurrentTime() + "\n");
-				fs1.write("Processing Interest packet #: " + curPacket.getRefPacketId() + "\n");
-				fs1.write("Processing Data packet #: " + curPacket.getPacketId() + "\n");
+				/* Used for debugging purposes
+				*	Writer fs1 = new BufferedWriter(new FileWriter("dump/FIBEntryHopcountVerfication.txt",true));
+					fs1.write("AT Router: " + this.getRouterId() + "\n");
+					fs1.write("Current Time: " + CCNRouter.CurrentTime() + "\n");
+					fs1.write("Processing Interest packet #: " + curPacket.getRefPacketId() + "\n");
+					fs1.write("Processing Data packet #: " + curPacket.getPacketId() + "\n");
+					
+					fs1.write("Current number of hops in FIB: " + getForwardingTableEntry(curPacket.getPacketId()).getHops() + "\n");
+					fs1.write("Current number of hops in Packet: " + curPacket.getNoOfHops() + "\n");
+				 */
 				
-				fs1.write("Current number of hops in FIB: " + getForwardingTableEntry(curPacket.getPacketId()).getHops() + "\n");
-				fs1.write("Current number of hops in Packet: " + curPacket.getNoOfHops() + "\n");
 				
 				/* The following code will print to the file whenever a FIB entry is changed because of hop count */
 				if (getForwardingTableEntry(curPacket.getPacketId()).getHops() > curPacket.getNoOfHops()) {
@@ -305,14 +318,20 @@ public class CCNRouter extends SimulationProcess {
 					
 					getForwardingTable().put(curPacket.getPacketId(), temp);
 					
-					fs1.write("FIB updated: " + curPacket.getNoOfHops() + "\n");
-					fs1.write("New number of hops in FIB: " + getForwardingTableEntry(curPacket.getPacketId()).getHops() + "\n");					
+					/* Used for debugging purposes
+					 * 	fs1.write("FIB updated: " + curPacket.getNoOfHops() + "\n");
+						fs1.write("New number of hops in FIB: " + getForwardingTableEntry(curPacket.getPacketId()).getHops() + "\n");
+					 */
+										
 				}
 				
-				fs1.write("\n\n");
-				fs1.close();
+				/* Used for debugging purposes
+				 * 	fs1.write("\n\n");
+					fs1.close();
+				 */
+				
 			}
-			catch (IOException e) {}
+			catch (Exception e) {}
 		}
 		
 		/* If there is no FIB entry for the object, then we create a new FIB entry for it */
@@ -365,7 +384,10 @@ public class CCNRouter extends SimulationProcess {
 		
 		/* The following code is called when the interest is satisfied from: (a) the Local Cache, which means, the object originally 
 		 * resides on this CCNRouter; or (b) the Global Cache also known as the content store of CCN */
-		Packets data_packet = getDataPacketfromCache(curPacket.getRefPacketId());
+		
+		InterestEntry dataObject = new InterestEntry (curPacket.getRefPacketId(), curPacket.getSegmentId());		
+		Packets data_packet = getDataPacketfromCache(dataObject);
+		
 		if(data_packet != null) {
 			
 			log.info("Sending data packet to nodeId:"+Integer.toString(curPacket.getPrevHop()));
@@ -438,16 +460,19 @@ public class CCNRouter extends SimulationProcess {
 	 * @param packetId Id if the data packet
 	 * @return data packet
 	 */
-	private Packets getDataPacketfromCache(Integer packetId) {
+	private Packets getDataPacketfromCache(InterestEntry dataObject) {
 		
-		Packets packet = localCache.get(packetId);
+		InterestEntry localDataObject = new InterestEntry (dataObject.getInterestID(), 0);
+		
+		Packets packet = localCache.get(localDataObject);
+	
 		if(packet != null) {
 			
 			log.info("Hit in local cache "+packet.toString());
 			return packet;
 		}
 		
-		packet = globalCache.get(packetId);
+		packet = globalCache.get(dataObject);
 
 		if(packet != null) {
 			
@@ -572,7 +597,7 @@ public class CCNRouter extends SimulationProcess {
 	}
 	
 	public void setPacketsQ(CCNQueue packetsQ) {
-		packetsQ = packetsQ;
+		packetsQ = this.packetsQ;
 	}
 	
 	public int getRouterId() {

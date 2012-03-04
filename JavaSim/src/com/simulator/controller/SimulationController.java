@@ -7,9 +7,9 @@ import com.simulator.ccn.CCNRouter;
 import com.simulator.ccn.TransmitPackets;
 import com.simulator.distributions.Arrivals;
 import com.simulator.distributions.PacketDistributions;
+import com.simulator.enums.SimulationTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
-import com.simulator.topology.SimulationTypes;
 import com.simulator.trace.*;
 
 import arjuna.JavaSim.Simulation.*;
@@ -34,8 +34,14 @@ public class SimulationController extends SimulationProcess {
 	static final Logger log = Logger.getLogger(SimulationController.class);;
 	private static long packetsGenerated = 0;
 	public static long maxSimulatedPackets = 0;
-	public static int holdTerminationVerification = 0;
+	private static int cacheSize;
+	
 	private SimulationTypes gridType = SimulationTypes.SIMULATION_GRID_BRITE;
+	private static SimulationTypes distributionType = SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT;
+	private static SimulationTypes cacheType = SimulationTypes.SIMULATION_UNLIMITED_CACHESIZE;
+	private static SimulationTypes debugging = SimulationTypes.SIMULATION_DEBUGGING_ON;
+
+	
     /**
      * Reads "ccn.properties" file and sets the corresponding simulation parameters.
      * @throws Exception
@@ -48,18 +54,42 @@ public class SimulationController extends SimulationProcess {
 		try {
 			
 			prop.load(ClassLoader.getSystemResourceAsStream("ccn.properties"));
+			
 			setNoDataPackets(Integer.parseInt(prop.getProperty("ccn.no.datapackets")));
+			
 			PacketDistributions.setDataPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.datapackets")));
+			
 			Arrivals.setInterestPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.interestpackets")));
+			
+			Arrivals.setSegmentSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.segment")));
+			
 			setNoNodes(Integer.parseInt(prop.getProperty("ccn.no.nodes")));
+			
 			setMaxSimulatedPackets(Integer.parseInt(prop.getProperty("ccn.no.simulationpackets")));
-			setHoldTerminationVerification(Integer.parseInt(prop.getProperty("ccn.termination.verification")));
+			
 			Packets.setDataDumpFile(prop.getProperty("dumpfile.packets"));
+			
 			setGridType(SimulationTypes.valueOf(prop.getProperty("ccn.topology")));
+			
+			setDistributionType (SimulationTypes.valueOf(prop.getProperty("ccn.object.distribution")));
+			
+			setDebugging (SimulationTypes.valueOf(prop.getProperty("ccn.debgging")));
+			
+			setCacheType (SimulationTypes.valueOf(prop.getProperty("ccn.cachesize.type")));
+			
+			setCacheSize(Integer.parseInt(prop.getProperty("ccn.cache.size")));
+			
 			CCNRouter.setProcDelay(Double.parseDouble(prop.getProperty("ccn.delay.processing")));
+			
 			TransmitPackets.setTransDelay(Double.parseDouble(prop.getProperty("ccn.delay.transmitting")));
+
 			Arrivals.setLoadImpact(Double.parseDouble(prop.getProperty("ccn.load.impact")));	
+
 			CCNRouter.setPitTimeOut(Double.parseDouble(prop.getProperty("ccn.pit.timeout")));
+			
+			PacketDistributions.setAllDocs(prop.getProperty("ccn.globeTraff.alldocs"));
+			
+			Arrivals.setWorkload(prop.getProperty("ccn.globeTraff.workload"));
 		} 
 		catch (IOException e) {
 			
@@ -74,21 +104,11 @@ public class SimulationController extends SimulationProcess {
 		/* The following method will create the appropriate topology based on the choice provided in the ccn.properties file */
 		Grid.createTopology(gridType);
 		
-		/* The following function will distributed the objects amongst various nodes based on some distribution. Presently,
-		 * this is normal distribution among all the nodes 
+		/* The following function will distributed the objects amongst various nodes based on docs.all file of
+		 * Globe Traffic.  
 		 * */
-		PacketDistributions.distributeContent();
+		PacketDistributions.distributeContent(distributionType);
 	}
-
-	public SimulationController(Integer noDataPackets,Integer noNodes) throws Exception	{
-		
-		setNoDataPackets(noDataPackets);
-		setNoNodes(noNodes);
-		setHoldTerminationVerification (10);
-		Grid.createTopology(gridType);
-		PacketDistributions.distributeContent();
-	}
-	
 	/* The following method is called after the constructor. It will create an object of the Arrivals class which is responsible
 	 * to generate interest packets based on the frequency provided in ccn.properties 
 	 * */
@@ -110,14 +130,18 @@ public class SimulationController extends SimulationProcess {
 			/* The simulation is started, and JavaSim scheduler comes to life */
 			Scheduler.startSimulation();
 
-			/* The termination condition. It will be checked according to the value provided in ccn.properties. The larger the 
-			 * value, the longer will the simulation last. We are not planning on an exact point of termination for this 
-			 * simulation 
-			 * */
-			while (Packets.getCurrenPacketId() < getMaxSimulatedPackets()) {
-				
-				System.out.println(getPacketsGenerated()+" "+getMaxSimulatedPackets());
-				Hold(holdTerminationVerification);
+			
+			/**
+			 //TODO
+			 * Joining this thread to Arrivals Thread. By doing this we are blocking this thread till finished execution.
+			 * Initial Hold is necessary to as to make Arrivals thread run.
+			 */
+			/**
+			 * For now using a workaround of using a flag to indicate end of simulation.
+			 */
+			while(!A.isSimStatus())	{
+				Hold(10);
+				//System.out.println(A.isSimStatus());
 			}
 			
 			/* Stops the simulation */
@@ -168,6 +192,38 @@ public class SimulationController extends SimulationProcess {
 	public void setGridType(SimulationTypes gridType) {
 		this.gridType = gridType;
 	}
+	
+	public static SimulationTypes getDistributionType() {
+		return distributionType;
+	}
+
+	public static void setDistributionType(SimulationTypes distType) {
+		SimulationController.distributionType = distType;
+	}
+	
+	public static SimulationTypes getDebugging() {
+		return debugging;
+	}
+
+	public static void setDebugging(SimulationTypes debugging) {
+		SimulationController.debugging = debugging;
+	}
+	
+	public static void setCacheType(SimulationTypes cacheType) {
+		SimulationController.cacheType = cacheType;
+	}
+	
+	public static SimulationTypes getCacheType() {
+		return cacheType;
+	}
+	
+	public static void setCacheSize (int cacheSize) {
+		SimulationController.cacheSize = cacheSize;
+	}
+	
+	public static int getCacheSize () {
+		return cacheSize;
+	}
 
 	public synchronized static void incrementPacketsProcessed() {
 		packetsGenerated=packetsGenerated+1;
@@ -185,12 +241,13 @@ public class SimulationController extends SimulationProcess {
 		SimulationController.maxSimulatedPackets = maxSimulatedPackets;
 	}
 	
-	public static void setHoldTerminationVerification (int holdTerminationVerification) {
-		SimulationController.holdTerminationVerification = holdTerminationVerification;
-	}
-	
-	public static int getHoldTerminationVerification () {
-		return holdTerminationVerification;
+	public static boolean cacheType() {
+		
+		if (getCacheType() == SimulationTypes.SIMULATION_UNLIMITED_CACHESIZE) {
+			return true;
+		}
+		
+		return false;		
 	}
 	
 	public static void main (String[] args) {
@@ -216,7 +273,9 @@ public class SimulationController extends SimulationProcess {
 		/* The following is a user-defined class which helps to categorize the trace file. It assists in verifying the trace
 		 * file.
 		 * */
-		ManipulateTrace m = new ManipulateTrace ("dump/trace.txt");
+		if (ctrl.getDebugging() == SimulationTypes.SIMULATION_DEBUGGING_ON) {
+			ManipulateTrace m = new ManipulateTrace (Packets.getDataDumpFile());
+		}
 		
 		System.out.println("Done simulation exiting");
 		System.exit(0);

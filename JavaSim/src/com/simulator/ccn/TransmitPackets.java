@@ -1,9 +1,5 @@
 package com.simulator.ccn;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-
 import org.apache.log4j.Logger;
 
 import com.simulator.packets.Packets;

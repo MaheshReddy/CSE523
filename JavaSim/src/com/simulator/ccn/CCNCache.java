@@ -20,7 +20,7 @@ public class CCNCache  {
 	 * We have provided functions to insert, query and remove from this cache. 
 	 * As of now we implement a LRU cache. 
 	 */
-	private Map<Integer, Packets> cache;
+	private Map<InterestEntry, Packets> cache;
 	
 	/**
 	 * This denotes the maximum entries and size in the cache. 
@@ -48,11 +48,11 @@ public class CCNCache  {
 		Integer hashTableSize = (int) Math.ceil(getCacheSize() / hashTableLoadFactor) +1 ;
 		
 		if (unlimitedSizeCache) {
-			cache = new LinkedHashMap<Integer, Packets>(hashTableSize,hashTableLoadFactor,true);
+			cache = new LinkedHashMap<InterestEntry, Packets>(hashTableSize,hashTableLoadFactor,true);
 		}
 		else {
-			cache = new LinkedHashMap<Integer, Packets>(hashTableSize,hashTableLoadFactor,true) {
-		      @Override protected boolean removeEldestEntry (Map.Entry<Integer,Packets> eldest) {
+			cache = new LinkedHashMap<InterestEntry, Packets>(hashTableSize,hashTableLoadFactor,true) {
+		      @Override protected boolean removeEldestEntry (Map.Entry<InterestEntry,Packets> eldest) {
 		         return size() > CCNCache.this.cacheSize; }};
 		}
 	}
@@ -64,11 +64,14 @@ public class CCNCache  {
 	 */
 	public void addToCache(Packets packet) {
 		
-		/* While adding to cache change the origin node of the packet to this node */
-		packet.setOriginNode(getNodeId());
+		InterestEntry dataObject = new InterestEntry (packet.getPacketId(), packet.getSegmentId());
 		
+		/* While adding to cache change the origin node of the packet to this node
+		 * How will we know where was the object originally placed? */
+		packet.setOriginNode(getNodeId());
+	
 		/* It will put if there is space, otherwise, it will create space, and place the entry */
-		cache.put(packet.getPacketId(), packet); 	
+		cache.put(dataObject, packet);	
 	}
 	
 	/**
@@ -77,7 +80,7 @@ public class CCNCache  {
 	* @param key the key whose associated value is to be returned.
 	* @return    the value associated to this key, or null if no value with this key exists in the cache.
 	*/
-	public synchronized Packets get (Integer key) {
+	public synchronized Packets get (InterestEntry key) {
 	   return cache.get(key); }
 	
 	/**
@@ -88,7 +91,7 @@ public class CCNCache  {
 	* @param key    the key with which the specified value is to be associated.
 	* @param value  a value to be associated with the specified key.
 	*/
-	public synchronized void put (Integer key, Packets value) {
+	public synchronized void put (InterestEntry key, Packets value) {
 	   cache.put (key, value); }
 	
 	/**
@@ -108,8 +111,8 @@ public class CCNCache  {
 	* Returns a <code>Collection</code> that contains a copy of all cache entries.
 	* @return a <code>Collection</code> with a copy of the cache content.
 	*/
-	public synchronized Collection<Map.Entry<Integer,Packets>> getAll() {
-	   return new ArrayList<Map.Entry<Integer,Packets>>(cache.entrySet()); }
+	public synchronized Collection<Map.Entry<InterestEntry,Packets>> getAll() {
+	   return new ArrayList<Map.Entry<InterestEntry,Packets>>(cache.entrySet()); }
 	
 	public boolean isPresentInCache(Packets entry) {
 		return cache.containsKey(entry.getPacketId());

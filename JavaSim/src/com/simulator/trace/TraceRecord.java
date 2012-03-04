@@ -38,7 +38,7 @@ public class TraceRecord {
 	}
 	
 	public String toString(){
-		return this.getTimeStamp() + "\t" + this.getPacketType() + "\tid=" + this.getPacketID() + "\tseg=" + this.getSegmentID() + "\tstatus=" + this.getPacketStatus() + "\tOBJID/PKTID=" + this.getRequestedObjectID() + "\tcurr=" + this.getCurrentNode() + "\tprev=" + this.getPreviousNode() + "\tsrc=" + this.getSourceNode() + "hops=" + this.getNumOfHops() + "\t" + this.getDeadOrAlive() + "\t" + this.getCauseOfSuprression() + "\t" + this.getLocalOrGlobalCache() + "\n";
+		return this.getTimeStamp() + "\t" + this.getPacketType() + "\tid=" + this.getPacketID() + "\tseg=" + this.getSegmentID() + "\tstatus=" + this.getPacketStatus() + "\tOBJID/PKTID=" + this.getRequestedObjectID() + "\tcurr=" + this.getCurrentNode() + "\tprev=" + this.getPreviousNode() + "\tsrc=" + this.getSourceNode() + "\thops=" + this.getNumOfHops() + "\t" + this.getDeadOrAlive() + "\t" + this.getCauseOfSuprression() + "\t" + this.getLocalOrGlobalCache() + "\n";
 	}
 	
 	public String toVerifyShortestPath(){
