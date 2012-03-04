@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import com.simulator.controller.SimulationController;
 import com.simulator.enums.SimulationTypes;
 import com.simulator.packets.InterestPacket;
+import com.simulator.ccn.CCNRouter;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 
@@ -32,7 +33,6 @@ public class Arrivals extends SimulationProcess {
 	private Integer gridSize = 0;
 	private Random nodeSelecter;
 	private Random packetIdGenerator;
-	private static double arvDelay;
 	private static String workload=null;
 	boolean simStatus = false;
 	/**
@@ -40,9 +40,11 @@ public class Arrivals extends SimulationProcess {
 	 */
 	private static BufferedReader rdr = null;
 
-	public Arrivals (double mean) {
+	private static double loadImpact;
+	
+	public Arrivals () {
 		
-		InterArrivalTime = new ExponentialStream(mean);
+		InterArrivalTime = new ExponentialStream(loadImpact);
 		gridSize = Grid.getGridSize();
 		
 		rdr = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getWorkload())));
@@ -71,7 +73,7 @@ public class Arrivals extends SimulationProcess {
 		    catch (IOException e) {}
 		    
 			/* The following statement will randomly choose a source node for the interest packet */
-			Packets packets = new InterestPacket(nodeSelecter.nextInt(gridSize), interestPacketSize);
+		    InterestPacket firstPacket = new InterestPacket(nodeSelecter.nextInt(gridSize), interestPacketSize,1);
 					
 			/*
 			 * Now we have to parse next line from workload.all and assign the refpacket id for this interest packet.
@@ -82,10 +84,16 @@ public class Arrivals extends SimulationProcess {
 			try {
 				line = rdr.readLine();
 			
+			/* 
+			 * TODO: Calculate how many interest packets will we generate for this object. We divide the object size by segment size
+			 * Presently, we assume this value to give us two interest packets per object 
+			 * */
+			
+			
 			if(line != null)
 			{
 				String [] words = line.split("\\s+");
-				packets.setRefPacketId(Integer.parseInt(words[1]));
+				firstPacket.setRefPacketId(Integer.parseInt(words[1]));
 			}
 			else{
 				rdr.close();
@@ -97,14 +105,29 @@ public class Arrivals extends SimulationProcess {
 				e.printStackTrace();
 			}
 			/* 
-			 * The following code records the creation of the interest packet 
-			 * */			
-			Packets.dumpStatistics(packets, "CREATED");			
+			 * This is not inside the for loop because we want to generate the same packet number for all the packets. Notice they are using
+			 * different constructors. The packets created in the for loop are using the same packetID created with the first packet 
+			 * */
+			Packets.dumpStatistics(firstPacket, "CREATED");
+			firstPacket.activate();
 			
-			/* The following statement moves the program control the Packet class, where this interest packet is added into
-			 * the source nodes queue 
-			 */			
-			packets.activate();
+			
+		    for (int i = 2; i <= 2; i++) {
+				/* The following statement will randomly choose a source node for the interest packet */
+				InterestPacket otherPackets = (InterestPacket) firstPacket.clone();
+				
+				/* The following statement will randomly choose the data/object which is being request with the interest packet */
+				otherPackets.setSegmentId(i);
+				/* 
+				 * The following code records the creation of the interest packet 
+				 * */			
+				Packets.dumpStatistics(otherPackets, "CREATED");			
+				
+				/* The following statement moves the program control the Packet class, where this interest packet is added into
+				 * the source nodes queue 
+				 */			
+				otherPackets.activate();
+		    }
 			
 			log.info("Packet generated ");				
 		}
@@ -114,12 +137,12 @@ public class Arrivals extends SimulationProcess {
 		return 0;	
 	}
 	
-	public static double getArvDelay() {
-		return arvDelay;
+	public static double getLoadImpact () {
+		return loadImpact;
 	}
 	
-	public static void setArvDelay(double arvDelay) {
-		Arrivals.arvDelay = arvDelay;
+	public static void setLoadImpact(double tempLoadImpact) {
+		Arrivals.loadImpact = tempLoadImpact;
 	}    
 	
 	public static void setInterestPacketSize(int tempIntPacketSize) {

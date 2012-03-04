@@ -1,5 +1,5 @@
-
 package com.simulator.ccn;
+
 import arjuna.JavaSim.Simulation.*;
 import arjuna.JavaSim.Distributions.*;
 
@@ -41,7 +41,7 @@ public class CCNRouter extends SimulationProcess {
 	/**
 	 * Pending Interest Table is a map of Interest Id and as list of Integers representing routerId's of interested nodes.
 	 */
-	Map<Integer, List<PITEntry>> pit = null;
+	Map<InterestEntry, List<PITEntry>> pit = null;
 	/**
 	 * forwarding table is a map of <DataPacketId,NodeId>
 	 */
@@ -70,7 +70,7 @@ public class CCNRouter extends SimulationProcess {
 	 * TODO Implementing this list in a very naive way for now, need to think of more efficient way of handling this
 	 */
 	
-	private List<Integer> interestsServed = null;
+	private List<InterestEntry> interestsServed = null;
 	
 	public CCNRouter (int id) {
 		
@@ -78,19 +78,15 @@ public class CCNRouter extends SimulationProcess {
 		working = false;
 		currentPacket = null;
 		packetsQ = new CCNQueue(id);
-		pit = new HashMap<Integer,List<PITEntry>>();
+		pit = new HashMap<InterestEntry,List<PITEntry>>();
 		forwardingTable = new HashMap<Integer, FIBEntry>(200);
-		interestsServed = new ArrayList<Integer>();
+		interestsServed = new ArrayList<InterestEntry>();
 		setRouterId(id);
-		localCache = new CCNCache(id);
-		globalCache = new CCNCache(id);
+		localCache = new CCNCache(id, 100, true);
+		globalCache = new CCNCache(id, 10, false);
 		
 		/* We need to be very careful with this value. If it is smaller than we will not have an ideal cache which will not have
-		 * the contents it has seen in the past*/
-		
-		globalCache.setMaxSize(PacketDistributions.getDataPacketSize() * PacketDistributions.getNoDataPackets() * 100);
-		//localCache.setMaxSize (10000);
-		
+		 * the contents it has seen in the past*/		
 	}
 	
 	/* The CCNRouter is a SimulationProcess, and is scheduled by JavaSim Scheduler. The following method is called when 
@@ -183,10 +179,12 @@ public class CCNRouter extends SimulationProcess {
 		}
 		*/
 		
+		InterestEntry interest = new InterestEntry (curPacket.getRefPacketId(), curPacket.getSegmentId());
+		
 		/* I got this data packet so setting its locality to false */
 		curPacket.setLocality(false);
 		log.info("In Data packet handler");
-		List<PITEntry> pitEntry = pit.get(curPacket.getPacketId()); 
+		List<PITEntry> pitEntry = pit.get(interest); 
 		
 		/* I havn't seen this packet so discard it */
 		if(pitEntry == null) {
@@ -254,7 +252,7 @@ public class CCNRouter extends SimulationProcess {
 		}		
 		
 		/* Now remove the entry */ 
-		pit.remove(curPacket.getPacketId());			
+		pit.remove(interest);			
 		
 		/* The following swapping before entering into the Global cache is because of a more logical entry relevant to "(PCKSTATUS:CRTDPRD)" 
 		 * in the trace file 
@@ -269,7 +267,7 @@ public class CCNRouter extends SimulationProcess {
 		log.info("Adding to global cache");	
 		
 		/* Cache is a Map <Integer, Packet> object, hence, we do not have to check for duplicate values */
-		getGlobalCache().addToCache((Packets)curPacket.clone());
+		getGlobalCache().addToCache((Packets)curPacket.clone());		
 		
 		curPacket.setCurNode(tempCurr); 
 		curPacket.setPrevHop(tempPreHop);
@@ -346,11 +344,13 @@ public class CCNRouter extends SimulationProcess {
 	 */
 	public void interestPacketsHandler(Packets curPacket) {
 		
+		InterestEntry interest = new InterestEntry (curPacket.getPacketId(), curPacket.getSegmentId());
+		
 		/* The following code is to suppress the interest packets that have already been served */
-		if (isInterestServed(curPacket.getPacketId())) {
+		if (isInterestServed(interest)) {
 			
 			curPacket.finished(SimulationTypes.SUPRESSION_ALREADY_SERVED);
-			log.info("Already served interest packet:"+ curPacket.getPacketId());
+			log.info("Already served interest packet "+ curPacket.getPacketId() + " with segment ID " + curPacket.getSegmentId());
 			return;
 		}
 		
@@ -359,7 +359,7 @@ public class CCNRouter extends SimulationProcess {
 		/* Add the interest packet into the list of served interest packets. It will assist in achieving the step above, which
 		 * is to suppress interest packets already served 
 		 * */
-		addToInterestServed(curPacket.getPacketId());
+		addToInterestServed(interest);
 		
 		Boolean newInPit = false;
 		
@@ -372,6 +372,7 @@ public class CCNRouter extends SimulationProcess {
 			
 			/* Changing the reference of the data packet to the interest packet, after sendPacket should change back to -1 */
 			data_packet.setRefPacketId(curPacket.getSourcePacketId());
+			data_packet.setSegmentId(curPacket.getSegmentId());
 			
 			/* Create a data packet in reply of the interest packet, and place it in the trace file */
 			Packets.dumpStatistics(data_packet, "CRTDPRD");			
@@ -379,28 +380,31 @@ public class CCNRouter extends SimulationProcess {
 			sendPacket((Packets) data_packet.clone(), curPacket.getPrevHop());
 			
 			data_packet.setRefPacketId(-1);
+			data_packet.setSegmentId(0);
 			curPacket.finished(SimulationTypes.SUPRESSION_SENT_DATA_PACKET);
 			return;
 		}
 		
 		log.info("Inserting into pit table");
-		List<PITEntry> pitEntry = pit.get(curPacket.getRefPacketId());
+		List<PITEntry> pitEntry = pit.get(interest);
 		
 		/* I havn't seen this packet so I need to create a new PIT entry for this objectID */
 		if(pitEntry == null) {
 			log.info("New entry in pit table");
 			pitEntry = new ArrayList<PITEntry>();
 			newInPit=true;
-		}
+		}		
 		
 		/* 
 		 * This step is to avoid duplicate entries in the PITEntry list. If node on previous hop has been already present in the 
 		 * PITEntry list then there is no reason to enter a duplicate entry 
 		 *  */
+		
+		/* TODO: I am confused about the parameter for the contains method. Shouldn't it be a PITEntry object? */
 		if(!pitEntry.contains(curPacket.getPrevHop())) {
 						
 			pitEntry.add(new PITEntry (curPacket.getPrevHop(), SimulationProcess.CurrentTime()));
-			pit.put(curPacket.getRefPacketId(), pitEntry);
+			pit.put(interest, pitEntry);
 		}
 		
 		log.info("Current Pit table-> "+pit);
@@ -436,14 +440,14 @@ public class CCNRouter extends SimulationProcess {
 	 */
 	private Packets getDataPacketfromCache(Integer packetId) {
 		
-		Packets packet = localCache.getaPacketFromCache(packetId);
+		Packets packet = localCache.get(packetId);
 		if(packet != null) {
 			
 			log.info("Hit in local cache "+packet.toString());
 			return packet;
 		}
 		
-		packet = globalCache.getaPacketFromCache(packetId);
+		packet = globalCache.get(packetId);
 
 		if(packet != null) {
 			
@@ -595,12 +599,12 @@ public class CCNRouter extends SimulationProcess {
 	    	return false;
 	}
 	
-	public Map<Integer, List<PITEntry>> getPIT() {
+	public Map<InterestEntry, List<PITEntry>> getPIT() {
 		return pit;
 	}
 	
-	public void setPIT(Map<Integer, List<PITEntry>> pIT) {
-		pit = pIT;
+	public void setPIT(Map<InterestEntry, List<PITEntry>> tempPit) {
+		pit = tempPit;
 	}
 	
 	public CCNCache getLocalCache() {
@@ -632,16 +636,16 @@ public class CCNRouter extends SimulationProcess {
 	 * @param id
 	 * @return
 	 */
-	public boolean isInterestServed(int id) {
-		return interestsServed.contains(id);
+	public boolean isInterestServed(InterestEntry temp) {		
+		return interestsServed.contains(temp);
 	}
 	/**
 	 * Adds to the interestServed Table.
 	 * @param id
 	 */
 
-	public void addToInterestServed(int id) {
-		this.interestsServed.add(id);
+	public void addToInterestServed(InterestEntry temp) {
+		this.interestsServed.add(temp);
 	}
 
 	public int getLogCounter() {

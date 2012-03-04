@@ -11,47 +11,34 @@ import com.simulator.enums.SimulationTypes;
 
 /* *
  * This is class for DataPacket for CCN networks it extends Pakcets Class. It has constructors for GlobeTraffic Generator. 
+ * NOTE:
+ *  Important Note while adding elements to this class make sure you add only basic data types (i.e like int,char etc) , if you have to add Complex data types
+ *  please make sure to edit clone() method of packets so that it works properly.
 **/
 public class DataPacket extends Packets implements Cloneable {
 	
 	private DataPacketsApplTypes applType;
+	
+	static final Logger log = Logger.getLogger(DataPacket.class);
+	
 	private int popularity;
+	
 	/**
 	 * 
-	 * This is a constructor of a packet. It takes following param and sets them.
-	 * @param nodeId If its Interest Packet than this determines the source of
-	 * 		   of the Interest Packet. When we are flooding we change the source
-	 * 			of the Interest Packet to the node that is flooding.
-	 * 		   else if a packet is of type Data Packet then nodeId represents the node which owns this data packet.
-	 * @param packettype Type of the packet.
+	 * Constructor for DataPacket which parses a line from Doc.all from GlobeTraffic and sets the properties accordinly.
+	 * @param line line from docs.all file
+	 * @param nodeId node to which this packet is assigned.
 	 * Notes:
 	 * When a packet is created 
 	 * We get a unique Id from a static packet Id generator and assign it to PacketId. We also assign the same Id of sourceId since we
 	 * are creating the packet here.
 	 */
-	public DataPacket(Integer nodeId, int size) {
-		
-		setPacketId(getCurrenPacketId());
-		setSourcePacketId(getPacketId());
-		setPacketType(SimulationTypes.SIMULATION_PACKETS_DATA);
-		setPrevHop(-1);
-		setRefPacketId(-1);
-		setOriginNode(nodeId);
-		setSizeOfPacket(size);
-		setAlive(true);
-		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
-		log.info("node id = "+nodeId+" packet id ="+ getPacketId());
-	}
-	/**
-	 * Constructor for DataPacket which parses a line from Doc.all from GlobeTraffic and sets the properties accordinly.
-	 * @param line line from docs.all file
-	 * @param nodeId node to which this packet is assigned.
-	 */
-	public DataPacket(String line,int nodeId)
+
+	public DataPacket(String line,int nodeId,int segId)
 	{
 		String [] words = line.split("\\s+");
-		System.out.println(nodeId);
-		System.out.println(words[0]+":"+Integer.parseInt(words[2]));
+
+		setSegmentId (segId);
 		setPacketId(Integer.parseInt(words[0]));
 		setPopularity(Integer.parseInt(words[1]));
 		setApplType(DataPacketsApplTypes.values()[Integer.parseInt(words[3])]);
@@ -64,10 +51,18 @@ public class DataPacket extends Packets implements Cloneable {
 		setAlive(true);
 		setCauseOfSupr(SimulationTypes.SIMULATION_NOT_APPLICABLE);
 		log.info("node id = "+nodeId+" packet id ="+ getPacketId());
-
+		setSegmentId (segId);
 		//super(1,SimulationTypes.SIMULATION_PACKETS_DATA,2);
 	}
-	static final Logger log = Logger.getLogger(DataPacket.class);
+	
+
+	@Override
+	public Object clone() {
+		
+		InterestPacket clonedPacket = (InterestPacket) super.clone();
+		//clonedPacket.pathTravelled = new String(this.getPathTravelled());
+		return clonedPacket;
+	}
 	public DataPacketsApplTypes getApplType() {
 		return applType;
 	}

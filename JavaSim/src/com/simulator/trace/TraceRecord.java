@@ -6,6 +6,7 @@ public class TraceRecord {
 	String packetStatus;
 	float timeStamp;
 	int packetID;
+	int segmentID;
 	int sourceNode;
 	int currentNode;
 	int previousNode;
@@ -15,13 +16,13 @@ public class TraceRecord {
 	String localOrGlobalCache = null;
 	String deadOrAlive = null;
 
-
 	TraceRecord () {
 		
 		String packetType = null;
 		String packetStatus = null;
 		float timeStamp = 0;
 		int packetID = 0;
+		int segmentID = 0;
 		int sourceNode = 0;
 		int currentNode = 0;
 		int previousNode = 0;
@@ -37,11 +38,11 @@ public class TraceRecord {
 	}
 	
 	public String toString(){
-		return "PKTType:" + this.getPacketType() + " PCKSTATUS:" + this.getPacketStatus() + " TIMESTMP:" + this.getTimeStamp() + " PKTID:" + this.getPacketID() + " OBJID/PKTID:" + this.getRequestedObjectID() + " SRCND:" + this.getSourceNode() + " PREVNDE:" + this.getPreviousNode() + " CURRNDE:" + this.getCurrentNode() + " HOPS:" + this.getNumOfHops() + " " + this.getCauseOfSuprression() + " " + this.getLocalOrGlobalCache() + " " + this.getDeadOrAlive() + "\n";
+		return this.getTimeStamp() + "\t" + this.getPacketType() + "\tid=" + this.getPacketID() + "\tseg=" + this.getSegmentID() + "\tstatus=" + this.getPacketStatus() + "\tOBJID/PKTID=" + this.getRequestedObjectID() + "\tcurr=" + this.getCurrentNode() + "\tprev=" + this.getPreviousNode() + "\tsrc=" + this.getSourceNode() + "hops=" + this.getNumOfHops() + "\t" + this.getDeadOrAlive() + "\t" + this.getCauseOfSuprression() + "\t" + this.getLocalOrGlobalCache() + "\n";
 	}
 	
 	public String toVerifyShortestPath(){
-		return " TIMESTMP:" + this.getTimeStamp() + " PCKSTATUS:" + this.getPacketStatus() + " PKTID:" + this.getPacketID() + " OBJID/PKTID:" + this.getRequestedObjectID() + " SRCND:" + this.getSourceNode() + " CURRNDE:" + this.getCurrentNode() + " HOPS:(" + this.getNumOfHops();
+		return this.getTimeStamp() + "\tstatus=" + this.getPacketStatus() + "\tid=" + this.getPacketID() + "\tseg=" + this.getSegmentID() + "\tobject/interst=" + this.getRequestedObjectID() + "\tsrc=" + this.getSourceNode() + "\tcurr" + this.getCurrentNode() + "\thops:(" + this.getNumOfHops();
 	}
 
 	void setPacketType (String temp) {		
@@ -58,6 +59,10 @@ public class TraceRecord {
 	
 	void setPacketID (int temp) {		
 		packetID = temp;
+	}
+	
+	void setSegmentID (int temp) {		
+		segmentID = temp;
 	}
 	
 	void setSourceNode (int temp) {		
@@ -106,6 +111,10 @@ public class TraceRecord {
 	
 	int getPacketID () {		
 		return packetID;
+	}
+	
+	int getSegmentID () {		
+		return segmentID;
 	}
 	
 	int getSourceNode () {		

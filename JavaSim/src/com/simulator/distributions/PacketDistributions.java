@@ -20,7 +20,7 @@ import com.simulator.topology.Grid;
 
 /**
  * This class handles all the distribution functions of the this CCN simulation.
- * It generates data based on the required distribution and sets the scenario accordinly.
+ * It generates data based on the required distribution and sets the scenario accordingly.
  * @author contra
  *
  */
@@ -32,23 +32,7 @@ public class PacketDistributions {
 	private static String allDocs = null;
 	
 	private static Random nodeSelecter = new Random(5);
-	/**
-	 * Distributes the contents across all the nodes. 
-	 * TODO this is just a very simple distribution function need to write a more suitable distribution function. 
-	 
-	public static void distributeContent() {
-		
-		Integer noNodes = Grid.getGridSize();
-		for(int i=0,j=0;i<=getNoDataPackets();i++,j++)
-		{
-			Packets pack = new DataPacket(j % noNodes,dataPacketSize);
-				CCNRouter router = Grid.getRouter(j % noNodes);
-				CCNCache routerLocalCache = router.getLocalCache();
-				pack.setLocality(true);
-				routerLocalCache.addToCache(pack);
-		}
-	}
-	*/
+	
 	/**
 	 *  distributeContentGlobeTraffic distributes the content from doc.all produced by globe traffic tool into various nodes of the topology.
 	 *  //TODO currently randomly choosing a node to distribute content need to review this.
@@ -56,14 +40,12 @@ public class PacketDistributions {
 	 */
 	public static void distributeContentGlobeTraffic() throws IOException
 	{
-		//FileReader inReader = new FileReader(new File(ClassLoader.getSystemResource(getAllDocs()).toURI()));
-		//InputStreamReader inReader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs()));
 		BufferedReader rd = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs())));
 		String line;
 		while((line = rd.readLine())!=null)
 		{
 			Integer rtrId = nodeSelecter.nextInt(Grid.getGridSize());
-			DataPacket pac = new DataPacket(line,rtrId);
+			DataPacket pac = new DataPacket(line,rtrId,1);
 			CCNRouter router = Grid.getRouter(rtrId);
 			CCNCache routerLocalCache = router.getLocalCache();
 			pac.setLocality(true);

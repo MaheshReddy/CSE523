@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
 
+import com.simulator.djikstra.Djikstra;
 import com.simulator.topology.Edge;
 import com.simulator.topology.Grid;
 import com.simulator.topology.Node;
@@ -17,7 +18,11 @@ public class ManipulateTrace {
 	
 		ArrayList <TraceRecord> trace = null;
 		
-		ShortestPathRoutingTable shortestpath = new ShortestPathRoutingTable();
+		/* The following call will create the shortest path to all the nodes in the given topology. This information will be used to verify if the 
+		 * interest packets are taking the correct path */
+		Djikstra.computeShortestPaths();
+		
+		int [][] shortestPathTable = Djikstra.getShortestPathTable();
 		
 		try {
 			
@@ -45,6 +50,7 @@ public class ManipulateTrace {
 			 * Write the sorted ArrayList into the file
 			 * */
 			trace.clear();
+			file.readAllTraceRecords();
 			
 			/* Sort by packet ID, timestamp, and number of hops*/
 			file.sortPacketIDTimeStampNumOfHops();
@@ -102,14 +108,14 @@ public class ManipulateTrace {
 
 			for (int count = 0; count < trace.size(); count++) {
 				//(trace.get(count)).printTraceRecord();
-				if (shortestpath.shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()] > (trace.get(count)).numOfHops) {
-					fs5.write((trace.get(count)).toVerifyShortestPath() + " " + shortestpath.shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()]  + ") Result:SAVED " + (shortestpath.shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()] - (trace.get(count)).numOfHops) + " HOPS\n");
+				if (shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()] > (trace.get(count)).numOfHops) {
+					fs5.write((trace.get(count)).toVerifyShortestPath() + " " + shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()]  + ") result:saved " + (shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()] - (trace.get(count)).numOfHops) + " HOPS\n");
 				}
-				else if (shortestpath.shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()] == (trace.get(count)).numOfHops) {
-					fs5.write((trace.get(count)).toVerifyShortestPath() + " " + shortestpath.shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()]  + ") Result:EXPECTED\n");
+				else if (shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()] == (trace.get(count)).numOfHops) {
+					fs5.write((trace.get(count)).toVerifyShortestPath() + " " + shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()]  + ") result:expected\n");
 				}
 				else {
-					fs5.write((trace.get(count)).toVerifyShortestPath() + " " + shortestpath.shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()]  + ") Result:NOT OPTIMAL\n");					
+					fs5.write((trace.get(count)).toVerifyShortestPath() + " " + shortestPathTable [(trace.get(count)).sourceNode][(trace.get(count)).getRequestedObjectID() % Grid.getGridSize()]  + ") result:not optimal\n");					
 				}
 			}	
 			fs5.close();

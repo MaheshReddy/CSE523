@@ -1,17 +1,20 @@
 package com.simulator.ccn;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Collection;
 import java.util.Map;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
 import com.simulator.packets.Packets;
 
+
+
 public class CCNCache  {
 	
 	Logger log = Logger.getLogger(CCNCache.class);
+	
 	/**
 	 * Cache element of CCNCache. Its a object which implements Map Interface.
 	 * We have provided functions to insert, query and remove from this cache. 
@@ -20,19 +23,13 @@ public class CCNCache  {
 	private Map<Integer, Packets> cache;
 	
 	/**
-	 * This is the max size up to which this cache can grow. 
-	 * Before doing any inserts we check if the resultant cache size is bigger
-	 * than this limit we do a employ a replacement strategy to free up sapce. 
+	 * This denotes the maximum entries and size in the cache. 
+	 * The cache will not have more than these number of entries.Before 
+	 * doing any inserts we check if the resultant cache size is bigger
+	 * than this limit so we employ a replacement strategy to free up space. 
 	 */
-	private Integer maxSize;
-	/**
-	 * This denotes the maximum entries in a cache.
-	 */
-	private Integer maxEntries;
-	/** 
-	 * This gives the current size of cache
-	 */
-	private Integer sizeOfCache;
+	 private Integer cacheSize;
+	
 	/**
 	 * Id of the node owning this Cache.
 	 */
@@ -44,14 +41,20 @@ public class CCNCache  {
 	 * 1000 and current size to zero.
 	 * @param id 
 	 */
-	public CCNCache(int id)	{
+	public CCNCache(int id, int size, boolean unlimitedSizeCache)	{
 		
-		setNodeId(id);
-		setMaxSize(100000);
-		setSizeOfCache(0);
-		setMaxEntries(10000);
-		Integer hashTableSize = (int) Math.ceil(getMaxEntries() / hashTableLoadFactor) +1 ;
-		cache = new LinkedHashMap<Integer,Packets>(hashTableSize,hashTableLoadFactor,true);
+		setNodeId(id);		
+		setCacheSize(size);
+		Integer hashTableSize = (int) Math.ceil(getCacheSize() / hashTableLoadFactor) +1 ;
+		
+		if (unlimitedSizeCache) {
+			cache = new LinkedHashMap<Integer, Packets>(hashTableSize,hashTableLoadFactor,true);
+		}
+		else {
+			cache = new LinkedHashMap<Integer, Packets>(hashTableSize,hashTableLoadFactor,true) {
+		      @Override protected boolean removeEldestEntry (Map.Entry<Integer,Packets> eldest) {
+		         return size() > CCNCache.this.cacheSize; }};
+		}
 	}
 	/**
 	 * Adds a packet to the cache. First checks if the packet size can fit into
@@ -61,82 +64,70 @@ public class CCNCache  {
 	 */
 	public void addToCache(Packets packet) {
 		
-		//While adding to cache change the origin node of the packet to this node.
-		packet.setOriginNode(getNodeId());
-		//if(getSizeOfCache() + packet.getSizeOfPacket() < getMaxSize()) {
-			
-			cache.put(packet.getPacketId(), packet); // just put the packet up and return
-			setSizeOfCache(getSizeOfCache()+packet.getSizeOfPacket());
-			return;
-		//}
-		
-		// this is the else part where we need to free up memory
-		/*
-		 //TODO Need to fix Freeing up cache.
-		Iterator<Integer> itr = cache.keySet().iterator(); // This iterator gives me a LRU sorted list.
-		//while(getSizeOfCache() + packet.getSizeOfPacket() > getMaxSize()) {
-			
-			Integer key = (Integer) itr.next();
-			setSizeOfCache(getSizeOfCache() - cache.get(key).getSizeOfPacket());
-			cache.remove(key);
-		}
-
-		cache.put(packet.getPacketId(), packet); // just put the packet and return
-		setSizeOfCache(getSizeOfCache()+packet.getSizeOfPacket());	
-		
-		return;*/
-	}
-	/**
-	 * Removes a packet from the cache. and update the size of the cache. 
-	 * @param packet
-	 */
-	public void removeFromCache(Packets packet) {
-		
-		if(cache.containsKey(packet.getPacketId()))	{
-			cache.remove(packet.getPacketId());
-			setSizeOfCache(getSizeOfCache() - packet.getSizeOfPacket());
-		}
-		
-		return;
+		/* While adding to cache change the origin node of the packet to this node */
+		packet.setOriginNode(getNodeId());		
+		/* It will put if there is space, otherwise, it will create space, and place the entry */
+		cache.put(packet.getPacketId(), packet); 	
 	}
 	
-	public boolean isPresentInCache(Packets packet) {
-		return cache.containsKey(packet.getPacketId());
+	/**
+	* Retrieves an entry from the cache.<br>
+	* The retrieved entry becomes the MRU (most recently used) entry.
+	* @param key the key whose associated value is to be returned.
+	* @return    the value associated to this key, or null if no value with this key exists in the cache.
+	*/
+	public synchronized Packets get (Integer key) {
+	   return cache.get(key); }
+	
+	/**
+	* Adds an entry to this cache.
+	* The new entry becomes the MRU (most recently used) entry.
+	* If an entry with the specified key already exists in the cache, it is replaced by the new entry.
+	* If the cache is full, the LRU (least recently used) entry is removed from the cache.
+	* @param key    the key with which the specified value is to be associated.
+	* @param value  a value to be associated with the specified key.
+	*/
+	public synchronized void put (Integer key, Packets value) {
+	   cache.put (key, value); }
+	
+	/**
+	* Clears the cache.
+	*/
+	public synchronized void clear() {
+	   cache.clear(); }
+	
+	/**
+	* Returns the number of used entries in the cache.
+	* @return the number of entries currently in the cache.
+	*/
+	public synchronized int usedEntries() {
+	   return cache.size(); }
+	
+	/**
+	* Returns a <code>Collection</code> that contains a copy of all cache entries.
+	* @return a <code>Collection</code> with a copy of the cache content.
+	*/
+	public synchronized Collection<Map.Entry<Integer,Packets>> getAll() {
+	   return new ArrayList<Map.Entry<Integer,Packets>>(cache.entrySet()); }
+	
+	public boolean isPresentInCache(Packets entry) {
+		return cache.containsKey(entry.getPacketId());
 	}
 	
 	@Override
 	public String toString() {
 		
 		String str;
-		str = "{ nodeId:"+getNodeId()+ " size:"+getSizeOfCache()+ "\nCache:"+cache.toString()+"}\n";
+		str = "{ nodeId:"+getNodeId()+ " size:"+usedEntries()+ "\nCache:"+cache.toString()+"}\n";
 		return str;
 	}
 	
-	public Packets getaPacketFromCache(Integer pacektId) {
-		return cache.get(pacektId);
+	public Integer getCacheSize() {
+		return cacheSize;
 	}
 	
-	public Integer getMaxSize() {
-		return maxSize;
-	}
-	public void setMaxSize(Integer maxSize) {
-		this.maxSize = maxSize;
-	}
-
-	public Integer getSizeOfCache() {
-		return sizeOfCache;
-	}
-	
-	public void setSizeOfCache(Integer sizeOfCache) {
-		this.sizeOfCache = sizeOfCache;
-	}
-	
-	public Integer getMaxEntries() {
-		return maxEntries;
-	}
-	
-	public void setMaxEntries(Integer maxEntries) {
-		this.maxEntries = maxEntries;
+	public void setCacheSize(Integer tempSize) {
+		this.cacheSize = tempSize;
 	}
 	
 	public int getNodeId() {
