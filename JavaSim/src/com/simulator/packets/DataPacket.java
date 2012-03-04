@@ -84,7 +84,7 @@ public class DataPacket extends Packets implements Cloneable {
 	@Override
 	public Object clone() {
 		
-		InterestPacket clonedPacket = (InterestPacket) super.clone();
+		DataPacket clonedPacket = (DataPacket) super.clone();
 		//clonedPacket.pathTravelled = new String(this.getPathTravelled());
 		return clonedPacket;
 	}
