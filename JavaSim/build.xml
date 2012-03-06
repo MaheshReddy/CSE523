@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Simulation For CCN">
+<property environment="env"/>
+<property name="debuglevel" value="source,lines,vars"/>	
+<target name="create_run_jar" >
+        <jar destfile="Deploy/CCNSimulator.jar">
+            <fileset dir="./classes"/>
+        </jar>
+    	<delete dir="./classes"/>
+</target>
+
+<target name="clean">
+	        <delete dir="./classes"/>
+</target>
+
+<target name="compile_java">
+		<mkdir dir="./classes"/>
+		<javac debug="true" debuglevel="${debuglevel}" destdir="./classes" srcdir="src">
+		           <classpath refid="compile.classpath.libs"/>
+		</javac>
+</target>
+
+<path id="compile.classpath.libs">
+	
+	<fileset dir="./lib">
+            <include name="*.jar" />
+	</fileset>
+	<pathelement location="resources"/>
+	<fileset dir="./Deploy">
+		<include name="*.jar"/>
+	</fileset>
+</path>
+</project>
