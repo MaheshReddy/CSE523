@@ -137,7 +137,7 @@ public class CCNRouter extends SimulationProcess {
 				/* The packet will be processed according to its packet type */
 				if(currentPacket.getPacketType() == PacketsType.PACKET_TYPE_INTEREST)
 					interestPacketsHandler(currentPacket);
-				else if (currentPacket.getPacketType() == PacketsType.PACKET_TYPE_INTEREST)
+				else if (currentPacket.getPacketType() == PacketsType.PACKET_TYPE_DATA)
 					dataPacketsHandler(currentPacket);
 				
 				log.info(toString());
