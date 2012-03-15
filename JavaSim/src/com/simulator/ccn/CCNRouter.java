@@ -185,12 +185,12 @@ public class CCNRouter extends SimulationProcess {
 		}
 		*/
 		
-		InterestEntry interest = new InterestEntry (curPacket.getRefPacketId(), curPacket.getSegmentId());
+		InterestEntry dataObject = new InterestEntry (curPacket.getPacketId(), curPacket.getSegmentId());
 		
 		/* I got this data packet so setting its locality to false */
 		curPacket.setLocality(false);
 		log.info("In Data packet handler");
-		List<PITEntry> pitEntry = pit.get(interest); 
+		List<PITEntry> pitEntry = pit.get(dataObject); 
 		
 		/* I havn't seen this packet so discard it */
 		if(pitEntry == null) {
@@ -265,7 +265,7 @@ public class CCNRouter extends SimulationProcess {
 		}		
 		
 		/* Now remove the entry */ 
-		pit.remove(interest);			
+		pit.remove(dataObject);			
 		
 		/* The following swapping before entering into the Global cache is because of a more logical entry relevant to "(PCKSTATUS:CRTDPRD)" 
 		 * in the trace file 
@@ -411,7 +411,7 @@ public class CCNRouter extends SimulationProcess {
 		}
 		
 		log.info("Inserting into pit table");
-		List<PITEntry> pitEntry = pit.get(interest);
+		List<PITEntry> pitEntry = pit.get(dataObject);
 		
 		/* I havn't seen this packet so I need to create a new PIT entry for this objectID */
 		if(pitEntry == null) {
@@ -429,7 +429,7 @@ public class CCNRouter extends SimulationProcess {
 		if(!pitEntry.contains(curPacket.getPrevHop())) {
 						
 			pitEntry.add(new PITEntry (curPacket.getPrevHop(), SimulationProcess.CurrentTime()));
-			pit.put(interest, pitEntry);
+			pit.put(dataObject, pitEntry);
 		}
 		
 		log.info("Current Pit table-> "+pit);
