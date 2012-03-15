@@ -17,8 +17,11 @@ import arjuna.JavaSim.Simulation.*;
 
 import arjuna.JavaSim.Simulation.SimulationException;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 import java.util.Properties;
 
 /*
@@ -37,13 +40,15 @@ public class SimulationController extends SimulationProcess {
 	public static long maxSimulatedPackets = 0;
 	private static int cacheSize;
 	
+	private static int hold = 0;
+	
 	private GridTypes gridType = GridTypes.SIMULATION_GRID_BRITE;
 
 	private static SimulationTypes distributionType = SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT;
 	private static SimulationTypes cacheType = SimulationTypes.SIMULATION_UNLIMITED_CACHESIZE;
 	private static SimulationTypes debugging = SimulationTypes.SIMULATION_DEBUGGING_ON;
 
-
+	public static Writer fs = null;
 	
     /**
      * Reads "ccn.properties" file and sets the corresponding simulation parameters.
@@ -57,6 +62,8 @@ public class SimulationController extends SimulationProcess {
 		try {
 			
 			prop.load(ClassLoader.getSystemResourceAsStream("ccn.properties"));
+			
+			setHold(Integer.parseInt(prop.getProperty("ccn.hold.time")));
 			
 			setNoDataPackets(Integer.parseInt(prop.getProperty("ccn.no.datapackets")));
 			
@@ -72,8 +79,7 @@ public class SimulationController extends SimulationProcess {
 			
 			Packets.setDataDumpFile(prop.getProperty("dumpfile.packets"));
 			
-			setGridType(GridTypes.valueOf(prop.getProperty("ccn.topology")));
-			
+			setGridType(GridTypes.valueOf(prop.getProperty("ccn.topology")));			
 
 			setDistributionType (SimulationTypes.valueOf(prop.getProperty("ccn.object.distribution")));
 			
@@ -113,6 +119,8 @@ public class SimulationController extends SimulationProcess {
 		 * */
 
 		PacketDistributions.distributeContent(distributionType);
+		
+		fs = new BufferedWriter(new FileWriter(Packets.getDataDumpFile(),true));
 	}
 	/* The following method is called after the constructor. It will create an object of the Arrivals class which is responsible
 	 * to generate interest packets based on the frequency provided in ccn.properties 
@@ -144,7 +152,7 @@ public class SimulationController extends SimulationProcess {
 			 * For now using a workaround of using a flag to indicate end of simulation.
 			 */
 			while(!A.isSimStatus())	{
-				Hold(100);
+				Hold(SimulationController.getHold());
 				//System.out.println(A.isSimStatus());
 			}
 			
@@ -156,13 +164,11 @@ public class SimulationController extends SimulationProcess {
 			/**
 			 * For now using a workaround of using a flag to indicate end of simulation.
 			 */
-				while(!A.isSimStatus())
-				{
-					Hold(10);
-					System.out.println(A.isSimStatus());
-				}
+
 			/* Stops the simulation */
 			Scheduler.stopSimulation();
+			
+			SimulationController.fs.close();
 			
 			log.info("Done with simulation");
 			log.info("Final Router configrations--------->");
@@ -175,6 +181,7 @@ public class SimulationController extends SimulationProcess {
 		}
 		catch (SimulationException e) {}
 		catch (RestartException e) {}
+		catch (IOException e) {}
 	}
 
 	/* 
@@ -240,6 +247,14 @@ public class SimulationController extends SimulationProcess {
 	
 	public static int getCacheSize () {
 		return cacheSize;
+	}
+	
+	public static void setHold (int hold) {
+		SimulationController.hold = hold;
+	}
+	
+	public static int getHold () {
+		return hold;
 	}
 
 	public synchronized static void incrementPacketsProcessed() {
