@@ -165,7 +165,6 @@ public class Packets implements Cloneable {
 		try {
 			@SuppressWarnings("unused")
 			
-			Writer fs = new BufferedWriter(new FileWriter(dataDumpFile,true));
 			StringBuilder str1 = new StringBuilder();
 			Formatter str = new Formatter(str1);
 			
@@ -198,8 +197,7 @@ public class Packets implements Cloneable {
 				str.format(" gcache");
 			
 			str.format("\n");
-			fs.write(str.toString());
-			fs.close();			
+			SimulationController.fs.write(str.toString());
 			
 			if (SimulationController.getDebugging() == SimulationTypes.SIMULATION_DEBUGGING_ON)
 				collectTrace (curPacket, status);
