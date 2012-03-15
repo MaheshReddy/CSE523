@@ -63,7 +63,7 @@ public class Arrivals extends SimulationProcess {
 		 * mode. 
 		 * */
 		packetIdGenerator = new Random(5);
-		nodeSelecter = new Random(5);
+		nodeSelecter = new Random(3);
     }
 
 	/* This method is revoked intermittently to create interest packets */
@@ -129,6 +129,8 @@ public class Arrivals extends SimulationProcess {
 			}
 			
 			int srcNode = nodeSelecter.nextInt(gridSize);
+			//System.out.println("Generated Interest Packet: " + countInterestPackets);
+			//System.out.println("Source Node: " + srcNode);
 		    
 			/* 
 			 * This is not inside the for loop because we want to generate the same packet number for all the packets. 
