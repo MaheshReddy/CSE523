@@ -8,8 +8,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Random;
+import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+
+//import org.apache.log4j.Logger;
 
 import com.simulator.ccn.CCNCache;
 import com.simulator.ccn.CCNRouter;
@@ -25,7 +27,7 @@ import com.simulator.topology.Grid;
  *
  */
 public class PacketDistributions {
-	static final Logger log = Logger.getLogger(PacketDistributions.class);
+	//static final Logger log = Logger.getLogger(PacketDistributions.class);
 	
 	static Integer noDataPackets;
 
@@ -34,6 +36,8 @@ public class PacketDistributions {
 	private static String allDocs = null;
 	
 	private static Random nodeSelecter = new Random(5);
+	
+	public static ArrayList<Integer> leafNodes = null;
 	
 	/**
 	 *  distributeContentGlobeTraffic distributes the content from doc.all produced by globe traffic tool into various nodes of the topology.
@@ -50,6 +54,9 @@ public class PacketDistributions {
 		else if (SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF == distType) {
 			distributeContentGlobeTraffic();
 		}
+		else if (SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE == distType) {
+			distributeContentLeafNodes();
+		}
 		else {
 			System.out.println("Invalid distribution type:"+distType);
 			throw new Exception();
@@ -64,6 +71,31 @@ public class PacketDistributions {
 			DataPacket pack = new DataPacket(j % noNodes, dataPacketSize);
 			pack.setSegmentId(0);
 			CCNRouter router = Grid.getRouter(j % noNodes);
+			CCNCache routerLocalCache = router.getLocalCache();
+			pack.setLocality(true);
+			routerLocalCache.addToCache(pack);
+		}
+	}
+	
+	private static void distributeContentLeafNodes() {
+		
+		/* Manually enter leaf nodes based on the topology created in Brite for 100 nodes */
+		leafNodes = new ArrayList <Integer> (32);
+		
+		leafNodes.add(11); leafNodes.add(30); leafNodes.add(32); leafNodes.add(44); leafNodes.add(45); leafNodes.add(49);
+		leafNodes.add(72); leafNodes.add(70); leafNodes.add(61); leafNodes.add(59); leafNodes.add(54); leafNodes.add(51);
+		leafNodes.add(75); leafNodes.add(78); leafNodes.add(79); leafNodes.add(80); leafNodes.add(82); leafNodes.add(83);
+		leafNodes.add(84); leafNodes.add(87); leafNodes.add(88); leafNodes.add(89); leafNodes.add(90); leafNodes.add(91);
+		leafNodes.add(92); leafNodes.add(93); leafNodes.add(94); leafNodes.add(95); leafNodes.add(96); leafNodes.add(97);
+		leafNodes.add(98); leafNodes.add(99);
+		
+		Integer noNodes = PacketDistributions.leafNodes.size();
+		for(int i=0,j=0;i<=getNoDataPackets();i++,j++) {
+			
+			DataPacket pack = new DataPacket(PacketDistributions.leafNodes.get(j % noNodes), dataPacketSize);
+			System.out.println ("Data object " + i + " will reside in Node " + PacketDistributions.leafNodes.get(j % noNodes));
+			pack.setSegmentId(0);
+			CCNRouter router = Grid.getRouter(PacketDistributions.leafNodes.get(j % noNodes));
 			CCNCache routerLocalCache = router.getLocalCache();
 			pack.setLocality(true);
 			routerLocalCache.addToCache(pack);
@@ -90,7 +122,7 @@ public class PacketDistributions {
 			CCNCache routerLocalCache = router.getLocalCache();
 			pac.setLocality(true);
 			routerLocalCache.addToCache(pac);
-			log.info("Creating Data Object:"+line);
+			//log.info("Creating Data Object:"+line);
 		}
 		rd.close();
 	}

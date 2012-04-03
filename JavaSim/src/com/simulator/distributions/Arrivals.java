@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationController;
@@ -27,7 +27,7 @@ import arjuna.JavaSim.Simulation.SimulationException;
 
 public class Arrivals extends SimulationProcess {
 	
-	static final Logger log = Logger.getLogger(Arrivals.class);
+	//static final Logger log = Logger.getLogger(Arrivals.class);
 	
 	private Integer gridSize = 0;
 	private int countInterestPackets;
@@ -50,7 +50,7 @@ public class Arrivals extends SimulationProcess {
 	 */
 	private static BufferedReader rdr = null;
 
-	public Arrivals () {
+public Arrivals () {
 		
 		InterArrivalTime = new ExponentialStream(loadImpact);
 		gridSize = Grid.getGridSize();
@@ -84,6 +84,8 @@ public class Arrivals extends SimulationProcess {
 			
 			int objectID = 0;
 			int objectSize = 0;
+			
+			int srcNode = nodeSelecter.nextInt(gridSize);
 						
 			if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF) {
 			
@@ -128,8 +130,21 @@ public class Arrivals extends SimulationProcess {
 				}
 			}
 			
-			int srcNode = nodeSelecter.nextInt(gridSize);
-			//System.out.println("Generated Interest Packet: " + countInterestPackets);
+			else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE) {
+				
+				objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
+				objectSize = PacketDistributions.getDataPacketSize();
+				
+				srcNode = PacketDistributions.leafNodes.get(nodeSelecter.nextInt(PacketDistributions.leafNodes.size())) ;
+				
+				if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()) { 
+					
+					setSimStatus(true);
+					System.out.println("Done with Arrivals");
+				}
+			}		
+			
+			System.out.println("Generated Interest Packet: " + countInterestPackets);
 			//System.out.println("Source Node: " + srcNode);
 		    
 			/* 
@@ -165,7 +180,7 @@ public class Arrivals extends SimulationProcess {
 					otherPackets.activate();
 			    }
 			}			
-			log.info("Packet generated ");				
+			//log.info("Packet generated ");	
 		}
 	}
 
