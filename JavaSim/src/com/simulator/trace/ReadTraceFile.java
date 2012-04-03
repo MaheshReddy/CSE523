@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Scanner;
+
+import com.simulator.ccn.PITEntry;
+import com.simulator.packets.Packets;
 
 public class ReadTraceFile {
 	
@@ -18,7 +22,7 @@ public class ReadTraceFile {
 		path = filePath;
 		trace = new ArrayList <TraceRecord> (50);		
 		
-		//readTraceRecords();		
+		readAllTraceRecords();		
 	}
 
 	public void readAllTraceRecords () throws IOException {
@@ -61,92 +65,54 @@ public class ReadTraceFile {
 	/*
 	 * Collect the trace records at the destination node where the Interest packet is satisfied
 	 * */
-	public void readCSupprTraceRecords (String tempCSuppr) throws IOException {
+	public ArrayList <TraceRecord> readCSupprTraceRecords (String tempCSuppr) throws IOException {
 		
 		/* Empty the ArrayList before reusing it */		
-		trace.clear();		
+		//trace.clear();		
 		
-		FileReader fr = new FileReader (path);
-		//FileReader fr = new FileReader(ClassLoader.getSystemResource(path).getPath());
-		BufferedReader lineReader = new BufferedReader (fr);		
-				
-		String aLine = null;	
-				
-		while ((aLine = lineReader.readLine()) != null) {	
-						
-			Scanner scanTraceRecord = new Scanner (aLine);
-			TraceRecord temp = new TraceRecord();
+		ArrayList <TraceRecord> tempTrace = new ArrayList <TraceRecord> (50);
+		
+		Iterator<TraceRecord> itr = trace.iterator();		
+		while(itr.hasNext()) {
 			
-			/* Extracting Node Configuration from "Nodes" string onwards in the Text file */
+			TraceRecord tempRecord = itr.next();
 			
-			temp.setTimeStamp(scanTraceRecord.nextFloat());
-			temp.setPacketType(scanTraceRecord.next());
-			temp.setPacketID(scanTraceRecord.nextInt());
-			temp.setSegmentID(scanTraceRecord.nextInt());
-			temp.setPacketStatus(scanTraceRecord.next());
-			temp.setRequestedObjectID(scanTraceRecord.nextInt());
-			temp.setCurrentNode(scanTraceRecord.nextInt());
-			temp.setPreviousNode(scanTraceRecord.nextInt());			
-			temp.setSourceNode(scanTraceRecord.nextInt());
-			temp.setNumOfHops(scanTraceRecord.nextInt());
-			temp.setDeadOrAlive(scanTraceRecord.next());
-			temp.setCauseOfSuprression(scanTraceRecord.next());
-			temp.setLocalOrGlobalCache(scanTraceRecord.next());
-			
-			if (tempCSuppr.compareTo(temp.getCauseOfSuprression()) == 0){
-				trace.add(temp);
-			}						
+			/* We shouldn't flood the interest packet to same node where it came from */
+			if(tempCSuppr.compareTo(tempRecord.causeOfSuprression) == 0) {
+				tempTrace.add(tempRecord);
+			}
 		}
-		lineReader.close( );		
+		
+		return tempTrace;
+		
 	}		
 	
 	/*
 	 * Collect the trace records at the destination node where the Interest packet is satisfied
 	 * */
-	public void readIntOrDataTraceRecords (String tempPacketType) throws IOException {
+	public ArrayList <TraceRecord> readIntOrDataTraceRecords (String tempPacketType) throws IOException {
 
-		/* Empty the ArrayList before reusing it */		
-		trace.clear();
+		ArrayList <TraceRecord> tempTrace = new ArrayList <TraceRecord> (50);
 		
-		FileReader fr = new FileReader (path);
-		//FileReader fr = new FileReader(ClassLoader.getSystemResource(path).getPath());
-		BufferedReader lineReader = new BufferedReader (fr);		
-				
-		String aLine = null;	
-				
-		while ((aLine = lineReader.readLine()) != null) {	
-						
-			Scanner scanTraceRecord = new Scanner (aLine);
-			TraceRecord temp = new TraceRecord();
+		Iterator<TraceRecord> itr = trace.iterator();		
+		while(itr.hasNext()) {
 			
-			/* Extracting Node Configuration from "Nodes" string onwards in the Text file */
+			TraceRecord tempRecord = itr.next();
 			
-			temp.setTimeStamp(scanTraceRecord.nextFloat());
-			temp.setPacketType(scanTraceRecord.next());
-			temp.setPacketID(scanTraceRecord.nextInt());
-			temp.setSegmentID(scanTraceRecord.nextInt());
-			temp.setPacketStatus(scanTraceRecord.next());
-			temp.setRequestedObjectID(scanTraceRecord.nextInt());
-			temp.setCurrentNode(scanTraceRecord.nextInt());
-			temp.setPreviousNode(scanTraceRecord.nextInt());			
-			temp.setSourceNode(scanTraceRecord.nextInt());
-			temp.setNumOfHops(scanTraceRecord.nextInt());
-			temp.setDeadOrAlive(scanTraceRecord.next());
-			temp.setCauseOfSuprression(scanTraceRecord.next());
-			temp.setLocalOrGlobalCache(scanTraceRecord.next());
-			
-			if (tempPacketType.compareTo(temp.getPacketType()) == 0){
-				trace.add(temp);
-			}						
+			/* We shouldn't flood the interest packet to same node where it came from */
+			if(tempPacketType.compareTo(tempRecord.packetType) == 0) {
+				tempTrace.add(tempRecord);
+			}
 		}
-		lineReader.close( );		
+		
+		return tempTrace;		
 	}
 	
-	public void sortTimeStampPacketIDNumOfHops (){
+	public void sortTimeStampPacketIDNumOfHops (ArrayList <TraceRecord> tempTrace){
 		/* 
 		 * The following will sort the ArrayList with respect to PKTID, TimeStamp, and NumOfHops
 		 *  */			
-		Collections.sort(trace, new Comparator(){
+		Collections.sort(tempTrace, new Comparator(){
 			 
             public int compare(Object o1, Object o2) {
                 
@@ -182,11 +148,11 @@ public class ReadTraceFile {
         });
 	}
 
-	public void sortPacketIDTimeStampNumOfHops (){
+	public void sortPacketIDTimeStampNumOfHops (ArrayList <TraceRecord> tempTrace){
 		/* 
 		 * The following will sort the ArrayList with respect to PKTID, TimeStamp, and NumOfHops
 		 *  */			
-		Collections.sort(trace, new Comparator(){
+		Collections.sort(tempTrace, new Comparator(){
 			 
             public int compare(Object o1, Object o2) {
                 
@@ -222,11 +188,11 @@ public class ReadTraceFile {
         });
 	}
 	
-	public void sortObjectIDTimeStampNumOfHops (){
+	public void sortObjectIDTimeStampNumOfHops (ArrayList <TraceRecord> tempTrace){
 		/* 
 		 * The following will sort the ArrayList with respect to PKTID, TimeStamp, and NumOfHops
 		 *  */			
-		Collections.sort(trace, new Comparator(){
+		Collections.sort(tempTrace, new Comparator(){
 			 
             public int compare(Object o1, Object o2) {
                 
