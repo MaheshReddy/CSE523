@@ -1,7 +1,7 @@
 package com.simulator.ccn;
 import java.util.LinkedList;
 import java.util.List;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
@@ -12,7 +12,7 @@ import com.simulator.topology.Grid;
 
 public class CCNQueue {
     
-	private static final Logger log = Logger.getLogger(CCNQueue.class);
+	//private static final Logger log = Logger.getLogger(CCNQueue.class);
 	private LinkedList<Packets> queue = null;
 	private Integer maxSize = 0;
 	private List<Packets> head;
@@ -58,8 +58,8 @@ public class CCNQueue {
 	public Packets remove() {
 		 
 		Packets packet = queue.remove();
-		log.info("removing" + packet.toString()+" from queue");
-		log.info("Current Queue " + queue);
+		//log.info("removing" + packet.toString()+" from queue");
+		//log.info("Current Queue " + queue);
 		return packet;
 	}
 	 
