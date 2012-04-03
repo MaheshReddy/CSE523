@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import com.simulator.packets.Packets;
 
@@ -13,7 +13,7 @@ import com.simulator.packets.Packets;
 
 public class CCNCache  {
 	
-	Logger log = Logger.getLogger(CCNCache.class);
+	//Logger log = Logger.getLogger(CCNCache.class);
 	
 	/**
 	 * Cache element of CCNCache. Its a object which implements Map Interface.
