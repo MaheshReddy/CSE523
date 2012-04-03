@@ -1,7 +1,7 @@
 package com.simulator.packets;
 
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import arjuna.JavaSim.Simulation.Scheduler;
 
@@ -22,7 +22,7 @@ public class DataPacket extends Packets implements Cloneable {
 	
 	private DataPacketsApplTypes applType;
 
-	static final Logger log = Logger.getLogger(DataPacket.class);
+	//static final Logger log = Logger.getLogger(DataPacket.class);
 	
 	private int popularity;
 	
@@ -50,7 +50,7 @@ public class DataPacket extends Packets implements Cloneable {
 		setSizeOfPacket(size);
 		setAlive(true);
 		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
-		log.info("node id = "+nodeId+" packet id ="+ getPacketId());
+		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 	}
 	/**
 	 * Constructor for DataPacket which parses a line from Doc.all from GlobeTraffic and sets the properties accordinly.
@@ -77,7 +77,7 @@ public class DataPacket extends Packets implements Cloneable {
 		setOriginNode(nodeId);
 		setAlive(true);
 		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
-		log.info("node id = "+nodeId+" packet id ="+ getPacketId());
+		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 
 		setSegmentId (segId);
 		//super(1,SimulationTypes.SIMULATION_PACKETS_DATA,2);

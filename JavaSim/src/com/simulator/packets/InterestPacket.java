@@ -1,7 +1,7 @@
 package com.simulator.packets;
 
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import arjuna.JavaSim.Simulation.Scheduler;
 
@@ -24,7 +24,7 @@ import com.simulator.topology.Grid;
  *  */
 public class InterestPacket extends Packets implements Cloneable{
 	
-	static final Logger log = Logger.getLogger(InterestPacket.class);
+	//static final Logger log = Logger.getLogger(InterestPacket.class);
 	/**
 	 * Source Packet Id only makes sence when the packet is a clone. And this represents the packetid of the source packet.
 	 */
@@ -60,7 +60,7 @@ public class InterestPacket extends Packets implements Cloneable{
 		setSizeOfPacket(size);
 		setAlive(true);
 		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
-		log.info("node id = "+nodeId+" packet id ="+ getPacketId());
+		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 	}
 
 
@@ -68,7 +68,7 @@ public class InterestPacket extends Packets implements Cloneable{
 
 	public void activate() {
 		
-		log.info("Handling Interest Packet"+this.toString());
+		//log.info("Handling Interest Packet"+this.toString());
 		CCNRouter router = Grid.getRouter(getOriginNode());
 		CCNQueue packetsQ = router.getPacketsQ();
 		

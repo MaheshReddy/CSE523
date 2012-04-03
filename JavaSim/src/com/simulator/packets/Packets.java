@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Formatter;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
@@ -32,7 +32,7 @@ import arjuna.JavaSim.Simulation.*;
  *  */
 public class Packets implements Cloneable {
 	
-	static final Logger log = Logger.getLogger(Packets.class);
+	//static final Logger log = Logger.getLogger(Packets.class);
 	/**
 	 * This is global counter for packetId's. When ever you want to generate a packet ig call the getter of this var.
 	 */
@@ -155,7 +155,7 @@ public class Packets implements Cloneable {
 		/* Recording this instance in the trace file */
 		dumpStatistics(this, "DESTROY");
 		
-		log.info("Finished Packetid:"+getPacketId());
+		//log.info("Finished Packetid:"+getPacketId());
 		SimulationController.incrementPacketsProcessed();
 	}
 	
@@ -199,8 +199,8 @@ public class Packets implements Cloneable {
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
 			
-			if (SimulationController.getDebugging() == SimulationTypes.SIMULATION_DEBUGGING_ON)
-				collectTrace (curPacket, status);
+			//if (SimulationController.getDebugging() == SimulationTypes.SIMULATION_DEBUGGING_ON)
+				//collectTrace (curPacket, status);
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
