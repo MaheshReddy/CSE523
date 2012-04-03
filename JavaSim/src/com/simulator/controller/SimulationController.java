@@ -1,6 +1,6 @@
 package com.simulator.controller;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 
 import com.simulator.ccn.CCNRouter;
@@ -35,7 +35,7 @@ import java.util.Properties;
 
 public class SimulationController extends SimulationProcess {
 	
-	static final Logger log = Logger.getLogger(SimulationController.class);;
+	//static final Logger log = Logger.getLogger(SimulationController.class);;
 	private static long packetsGenerated = 0;
 	public static long maxSimulatedPackets = 0;
 	private static int cacheSize;
@@ -46,6 +46,7 @@ public class SimulationController extends SimulationProcess {
 
 	private static SimulationTypes distributionType = SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT;
 	private static SimulationTypes cacheType = SimulationTypes.SIMULATION_UNLIMITED_CACHESIZE;
+	private static SimulationTypes cacheAvailability = SimulationTypes.SIMULATION_NO_CACHE;
 	private static SimulationTypes debugging = SimulationTypes.SIMULATION_DEBUGGING_ON;
 
 	public static Writer fs = null;
@@ -87,6 +88,8 @@ public class SimulationController extends SimulationProcess {
 			
 			setCacheType (SimulationTypes.valueOf(prop.getProperty("ccn.cachesize.type")));
 			
+			setCacheAvailability (SimulationTypes.valueOf(prop.getProperty("ccn.cache")));
+			
 			setCacheSize(Integer.parseInt(prop.getProperty("ccn.cache.size")));
 			
 			CCNRouter.setProcDelay(Double.parseDouble(prop.getProperty("ccn.delay.processing")));
@@ -104,7 +107,7 @@ public class SimulationController extends SimulationProcess {
 		catch (IOException e) {
 			
 			// TODO Auto-generated catch block
-			log.info("Couldn't load properties file using default values");
+			//log.info("Couldn't load properties file using default values");
 			setNoDataPackets(10);
 			setNoNodes(5);
 			setMaxSimulatedPackets(500);
@@ -129,13 +132,16 @@ public class SimulationController extends SimulationProcess {
 		
 		try {
 			
-			log.info("Starting Simulation -- Config\n Grid Size:"+Grid.getGridSize());
+			//log.info("Starting Simulation -- Config\n Grid Size:"+Grid.getGridSize());
 			
 			/*
 			 * Arrivals object is created along with setting of the frequency with which it will be reinvoked again, and again ..
 			 * Moreover, the first interest packet is created. 
 			 * */
 			Arrivals A = new Arrivals();
+			
+			CacheFIBTrace B = new CacheFIBTrace ();
+			B.ActivateAt(1.0);
 			
 			/* The following call will place the Arrival object onto the JavaSim scheduler's queue. */
 			A.Activate();
@@ -170,13 +176,14 @@ public class SimulationController extends SimulationProcess {
 			
 			SimulationController.fs.close();
 			
-			log.info("Done with simulation");
-			log.info("Final Router configrations--------->");
+			//log.info("Done with simulation");
+			//log.info("Final Router configrations--------->");
 			
 			for(int i=0;i<Grid.getGridSize();i++)
-				log.info(Grid.getRouter(i));
+				Grid.getRouter(i).terminate();
 			
 			A.terminate();
+			B.terminate();
 			SimulationProcess.mainResume();
 		}
 		catch (SimulationException e) {}
@@ -239,6 +246,15 @@ public class SimulationController extends SimulationProcess {
 	
 	public static SimulationTypes getCacheType() {
 		return cacheType;
+	}
+	
+	
+	public static void setCacheAvailability(SimulationTypes cacheAvail) {
+		SimulationController.cacheAvailability = cacheAvail;
+	}
+	
+	public static SimulationTypes getCacheAvailability() {
+		return cacheAvailability;
 	}
 	
 	public static void setCacheSize (int cacheSize) {
