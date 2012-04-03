@@ -1,6 +1,6 @@
 package com.simulator.ccn;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
@@ -16,7 +16,7 @@ public class TransmitPackets extends SimulationProcess {
 	
 	Packets curPacket;
 	CCNRouter dstNode;
-	static final Logger log = Logger.getLogger(TransmitPackets.class);
+	//static final Logger log = Logger.getLogger(TransmitPackets.class);
 	private static double transDelay;
 	
 	TransmitPackets (Packets tempPacket,int destNode) {
@@ -26,7 +26,7 @@ public class TransmitPackets extends SimulationProcess {
 	
 	public void run() {
 		
-		log.info("Sending packet id:"+curPacket.getPacketId()+"Srcnode:"+curPacket.getCurNode()+" DstNode:"+dstNode.getRouterId());
+		//log.info("Sending packet id:"+curPacket.getPacketId()+"Srcnode:"+curPacket.getCurNode()+" DstNode:"+dstNode.getRouterId());
 		dstNode.getPacketsQ().addLast(curPacket);
 
 		this.terminate();		
