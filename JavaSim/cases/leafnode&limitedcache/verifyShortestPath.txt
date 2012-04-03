@@ -1,0 +1,865 @@
+1.0977	status=DESTROY	id=3001	seg=1	object/interst=1487	src=83	curr80	hops:(4 5) result:saved 1 HOPS
+1.1977	status=DESTROY	id=3001	seg=2	object/interst=1487	src=83	curr80	hops:(4 5) result:saved 1 HOPS
+1.5977	status=DESTROY	id=3001	seg=3	object/interst=1487	src=83	curr80	hops:(4 5) result:saved 1 HOPS
+1.6977	status=DESTROY	id=3001	seg=4	object/interst=1487	src=83	curr80	hops:(4 5) result:saved 1 HOPS
+2.7977	status=DESTROY	id=3002	seg=1	object/interst=2092	src=93	curr75	hops:(7 4) result:not optimal
+2.9977	status=DESTROY	id=3002	seg=2	object/interst=2092	src=93	curr75	hops:(7 4) result:not optimal
+3.6977	status=DESTROY	id=3002	seg=3	object/interst=2092	src=93	curr75	hops:(9 4) result:not optimal
+4.0977	status=DESTROY	id=3002	seg=4	object/interst=2092	src=93	curr75	hops:(9 4) result:not optimal
+4.3977	status=DESTROY	id=3003	seg=1	object/interst=2474	src=84	curr54	hops:(3 3) result:expected
+4.6977	status=DESTROY	id=3003	seg=2	object/interst=2474	src=84	curr54	hops:(6 3) result:not optimal
+4.8977	status=DESTROY	id=3003	seg=3	object/interst=2474	src=84	curr54	hops:(6 3) result:not optimal
+4.8977	status=DESTROY	id=3004	seg=1	object/interst=1424	src=84	curr82	hops:(5 2) result:not optimal
+5.0977	status=DESTROY	id=3003	seg=4	object/interst=2474	src=84	curr54	hops:(6 3) result:not optimal
+5.3977	status=DESTROY	id=3004	seg=2	object/interst=1424	src=84	curr82	hops:(5 2) result:not optimal
+5.7977	status=DESTROY	id=3004	seg=3	object/interst=1424	src=84	curr82	hops:(5 2) result:not optimal
+6.1977	status=DESTROY	id=3004	seg=4	object/interst=1424	src=84	curr82	hops:(7 2) result:not optimal
+6.2977	status=DESTROY	id=3005	seg=1	object/interst=1506	src=95	curr32	hops:(7 4) result:not optimal
+6.7977	status=DESTROY	id=3005	seg=2	object/interst=1506	src=95	curr32	hops:(7 4) result:not optimal
+7.1977	status=DESTROY	id=3005	seg=3	object/interst=1506	src=95	curr32	hops:(7 4) result:not optimal
+7.1977	status=DESTROY	id=3006	seg=1	object/interst=605	src=51	curr97	hops:(7 3) result:not optimal
+7.1977	status=DESTROY	id=3008	seg=1	object/interst=1691	src=78	curr95	hops:(7 2) result:not optimal
+7.3977	status=DESTROY	id=3006	seg=2	object/interst=605	src=51	curr97	hops:(7 3) result:not optimal
+7.3977	status=DESTROY	id=3008	seg=2	object/interst=1691	src=78	curr95	hops:(7 2) result:not optimal
+7.4977	status=DESTROY	id=3006	seg=3	object/interst=605	src=51	curr97	hops:(7 3) result:not optimal
+7.8977	status=DESTROY	id=3006	seg=4	object/interst=605	src=51	curr97	hops:(7 3) result:not optimal
+8.0977	status=DESTROY	id=3005	seg=4	object/interst=1506	src=95	curr32	hops:(7 4) result:not optimal
+8.0977	status=DESTROY	id=3007	seg=1	object/interst=2854	src=32	curr72	hops:(8 3) result:not optimal
+8.1977	status=DESTROY	id=3008	seg=3	object/interst=1691	src=78	curr95	hops:(7 2) result:not optimal
+8.3977	status=DESTROY	id=3008	seg=4	object/interst=1691	src=78	curr95	hops:(7 2) result:not optimal
+8.9977	status=DESTROY	id=3007	seg=2	object/interst=2854	src=32	curr72	hops:(10 3) result:not optimal
+9.0977	status=DESTROY	id=3007	seg=3	object/interst=2854	src=32	curr72	hops:(10 3) result:not optimal
+9.7977	status=DESTROY	id=3007	seg=4	object/interst=2854	src=32	curr72	hops:(10 3) result:not optimal
+11.2977	status=DESTROY	id=3009	seg=1	object/interst=722	src=45	curr84	hops:(6 3) result:not optimal
+11.5977	status=DESTROY	id=3009	seg=2	object/interst=722	src=45	curr84	hops:(6 3) result:not optimal
+11.6977	status=DESTROY	id=3009	seg=3	object/interst=722	src=45	curr84	hops:(6 3) result:not optimal
+11.8977	status=DESTROY	id=3009	seg=4	object/interst=722	src=45	curr84	hops:(6 3) result:not optimal
+12.9977	status=DESTROY	id=3010	seg=1	object/interst=321	src=95	curr30	hops:(8 4) result:not optimal
+13.5376	status=DESTROY	id=3010	seg=2	object/interst=321	src=95	curr30	hops:(8 4) result:not optimal
+13.7376	status=DESTROY	id=3010	seg=3	object/interst=321	src=95	curr30	hops:(8 4) result:not optimal
+14.0376	status=DESTROY	id=3010	seg=4	object/interst=321	src=95	curr30	hops:(8 4) result:not optimal
+17.3977	status=DESTROY	id=3011	seg=1	object/interst=2831	src=90	curr80	hops:(6 4) result:not optimal
+17.4977	status=DESTROY	id=3011	seg=2	object/interst=2831	src=90	curr80	hops:(6 4) result:not optimal
+17.5041	status=DESTROY	id=3014	seg=1	object/interst=1560	src=45	curr92	hops:(2 3) result:saved 1 HOPS
+17.6041	status=DESTROY	id=3014	seg=2	object/interst=1560	src=45	curr92	hops:(2 3) result:saved 1 HOPS
+17.7041	status=DESTROY	id=3014	seg=3	object/interst=1560	src=45	curr92	hops:(2 3) result:saved 1 HOPS
+17.8041	status=DESTROY	id=3014	seg=4	object/interst=1560	src=45	curr92	hops:(2 3) result:saved 1 HOPS
+18.0977	status=DESTROY	id=3011	seg=3	object/interst=2831	src=90	curr80	hops:(6 4) result:not optimal
+18.1977	status=DESTROY	id=3011	seg=4	object/interst=2831	src=90	curr80	hops:(6 4) result:not optimal
+18.3977	status=DESTROY	id=3012	seg=1	object/interst=303	src=84	curr80	hops:(6 3) result:not optimal
+18.6977	status=DESTROY	id=3012	seg=2	object/interst=303	src=84	curr80	hops:(6 3) result:not optimal
+18.8977	status=DESTROY	id=3012	seg=3	object/interst=303	src=84	curr80	hops:(6 3) result:not optimal
+19.0977	status=DESTROY	id=3012	seg=4	object/interst=303	src=84	curr80	hops:(6 3) result:not optimal
+19.4977	status=DESTROY	id=3013	seg=1	object/interst=1747	src=30	curr87	hops:(3 3) result:expected
+19.6977	status=DESTROY	id=3013	seg=2	object/interst=1747	src=30	curr87	hops:(3 3) result:expected
+19.7977	status=DESTROY	id=3013	seg=3	object/interst=1747	src=30	curr87	hops:(3 3) result:expected
+19.9977	status=DESTROY	id=3013	seg=4	object/interst=1747	src=30	curr87	hops:(3 3) result:expected
+21.5977	status=DESTROY	id=3018	seg=1	object/interst=2215	src=93	curr70	hops:(7 4) result:not optimal
+21.7977	status=DESTROY	id=3018	seg=2	object/interst=2215	src=93	curr70	hops:(7 4) result:not optimal
+21.9977	status=DESTROY	id=3018	seg=3	object/interst=2215	src=93	curr70	hops:(7 4) result:not optimal
+22.1977	status=DESTROY	id=3018	seg=4	object/interst=2215	src=93	curr70	hops:(7 4) result:not optimal
+22.8041	status=DESTROY	id=3017	seg=1	object/interst=978	src=79	curr84	hops:(9 3) result:not optimal
+22.9041	status=DESTROY	id=3017	seg=2	object/interst=978	src=79	curr84	hops:(9 3) result:not optimal
+23.2041	status=DESTROY	id=3017	seg=3	object/interst=978	src=79	curr84	hops:(9 3) result:not optimal
+23.6041	status=DESTROY	id=3017	seg=4	object/interst=978	src=79	curr84	hops:(9 3) result:not optimal
+23.6977	status=DESTROY	id=3019	seg=1	object/interst=17	src=75	curr83	hops:(5 3) result:not optimal
+24.3977	status=DESTROY	id=3019	seg=2	object/interst=17	src=75	curr83	hops:(7 3) result:not optimal
+24.4041	status=DESTROY	id=3015	seg=1	object/interst=428	src=80	curr75	hops:(10 2) result:not optimal
+24.4977	status=DESTROY	id=3021	seg=1	object/interst=1308	src=97	curr96	hops:(8 4) result:not optimal
+24.6041	status=DESTROY	id=3015	seg=2	object/interst=428	src=80	curr75	hops:(10 2) result:not optimal
+24.6977	status=DESTROY	id=3016	seg=1	object/interst=1090	src=83	curr32	hops:(6 3) result:not optimal
+24.8977	status=DESTROY	id=3021	seg=2	object/interst=1308	src=97	curr96	hops:(8 4) result:not optimal
+24.8977	status=DESTROY	id=3022	seg=1	object/interst=2165	src=91	curr89	hops:(6 5) result:not optimal
+24.9977	status=DESTROY	id=3016	seg=2	object/interst=1090	src=83	curr32	hops:(6 3) result:not optimal
+24.9977	status=DESTROY	id=3019	seg=3	object/interst=17	src=75	curr83	hops:(7 3) result:not optimal
+25.0041	status=DESTROY	id=3015	seg=3	object/interst=428	src=80	curr75	hops:(10 2) result:not optimal
+25.1977	status=DESTROY	id=3021	seg=3	object/interst=1308	src=97	curr96	hops:(8 4) result:not optimal
+25.2977	status=DESTROY	id=3019	seg=4	object/interst=17	src=75	curr83	hops:(5 3) result:not optimal
+25.2977	status=DESTROY	id=3021	seg=4	object/interst=1308	src=97	curr96	hops:(8 4) result:not optimal
+25.4977	status=DESTROY	id=3016	seg=3	object/interst=1090	src=83	curr32	hops:(6 3) result:not optimal
+25.5977	status=DESTROY	id=3016	seg=4	object/interst=1090	src=83	curr32	hops:(6 3) result:not optimal
+25.7977	status=DESTROY	id=3022	seg=2	object/interst=2165	src=91	curr89	hops:(6 5) result:not optimal
+25.8041	status=DESTROY	id=3015	seg=4	object/interst=428	src=80	curr75	hops:(10 2) result:not optimal
+26.0977	status=DESTROY	id=3022	seg=3	object/interst=2165	src=91	curr89	hops:(6 5) result:not optimal
+26.3977	status=DESTROY	id=3022	seg=4	object/interst=2165	src=91	curr89	hops:(6 5) result:not optimal
+27.2977	status=DESTROY	id=3023	seg=1	object/interst=2808	src=44	curr92	hops:(6 2) result:not optimal
+27.4977	status=DESTROY	id=3023	seg=2	object/interst=2808	src=44	curr92	hops:(6 2) result:not optimal
+28.7041	status=DESTROY	id=3023	seg=3	object/interst=2808	src=44	curr92	hops:(6 2) result:not optimal
+29.0041	status=DESTROY	id=3023	seg=4	object/interst=2808	src=44	curr92	hops:(6 2) result:not optimal
+29.9977	status=DESTROY	id=3020	seg=1	object/interst=1017	src=32	curr93	hops:(6 2) result:not optimal
+30.1977	status=DESTROY	id=3020	seg=2	object/interst=1017	src=32	curr93	hops:(6 2) result:not optimal
+30.4977	status=DESTROY	id=3020	seg=3	object/interst=1017	src=32	curr93	hops:(6 2) result:not optimal
+30.5977	status=DESTROY	id=3026	seg=1	object/interst=1402	src=83	curr94	hops:(15 4) result:not optimal
+30.7977	status=DESTROY	id=3020	seg=4	object/interst=1017	src=32	curr93	hops:(6 2) result:not optimal
+30.8977	status=DESTROY	id=3024	seg=1	object/interst=356	src=44	curr45	hops:(14 3) result:not optimal
+30.9041	status=DESTROY	id=3026	seg=2	object/interst=1402	src=83	curr94	hops:(4 4) result:expected
+30.9977	status=DESTROY	id=3024	seg=2	object/interst=356	src=44	curr45	hops:(14 3) result:not optimal
+31.0041	status=DESTROY	id=3026	seg=3	object/interst=1402	src=83	curr94	hops:(4 4) result:expected
+31.1977	status=DESTROY	id=3024	seg=3	object/interst=356	src=44	curr45	hops:(14 3) result:not optimal
+31.3041	status=DESTROY	id=3026	seg=4	object/interst=1402	src=83	curr94	hops:(4 4) result:expected
+31.7977	status=DESTROY	id=3031	seg=1	object/interst=2689	src=78	curr30	hops:(4 5) result:saved 1 HOPS
+31.9041	status=DESTROY	id=3029	seg=1	object/interst=2715	src=45	curr95	hops:(6 3) result:not optimal
+32.1977	status=DESTROY	id=3027	seg=1	object/interst=2180	src=75	curr45	hops:(15 4) result:not optimal
+32.2977	status=DESTROY	id=3024	seg=4	object/interst=356	src=44	curr45	hops:(6 3) result:not optimal
+32.4041	status=DESTROY	id=3029	seg=2	object/interst=2715	src=45	curr95	hops:(6 3) result:not optimal
+32.4977	status=DESTROY	id=3031	seg=2	object/interst=2689	src=78	curr30	hops:(4 5) result:saved 1 HOPS
+32.9041	status=DESTROY	id=3029	seg=3	object/interst=2715	src=45	curr95	hops:(6 3) result:not optimal
+33.1977	status=DESTROY	id=3031	seg=3	object/interst=2689	src=78	curr30	hops:(4 5) result:saved 1 HOPS
+33.3977	status=DESTROY	id=3027	seg=2	object/interst=2180	src=75	curr45	hops:(12 4) result:not optimal
+33.4041	status=DESTROY	id=3029	seg=4	object/interst=2715	src=45	curr95	hops:(6 3) result:not optimal
+33.4977	status=DESTROY	id=3031	seg=4	object/interst=2689	src=78	curr30	hops:(4 5) result:saved 1 HOPS
+33.8977	status=DESTROY	id=3027	seg=3	object/interst=2180	src=75	curr45	hops:(12 4) result:not optimal
+33.9977	status=DESTROY	id=3027	seg=4	object/interst=2180	src=75	curr45	hops:(12 4) result:not optimal
+35.3977	status=DESTROY	id=3034	seg=1	object/interst=1129	src=70	curr59	hops:(11 2) result:not optimal
+35.5977	status=DESTROY	id=3034	seg=2	object/interst=1129	src=70	curr59	hops:(11 2) result:not optimal
+35.8977	status=DESTROY	id=3034	seg=3	object/interst=1129	src=70	curr59	hops:(11 2) result:not optimal
+36.2977	status=DESTROY	id=3034	seg=4	object/interst=1129	src=70	curr59	hops:(11 2) result:not optimal
+36.4041	status=DESTROY	id=3033	seg=1	object/interst=2557	src=79	curr97	hops:(16 5) result:not optimal
+36.5041	status=DESTROY	id=3033	seg=2	object/interst=2557	src=79	curr97	hops:(16 5) result:not optimal
+36.7041	status=DESTROY	id=3033	seg=3	object/interst=2557	src=79	curr97	hops:(16 5) result:not optimal
+36.9041	status=DESTROY	id=3033	seg=4	object/interst=2557	src=79	curr97	hops:(16 5) result:not optimal
+37.3977	status=DESTROY	id=3025	seg=1	object/interst=2761	src=54	curr59	hops:(3 3) result:expected
+37.5977	status=DESTROY	id=3025	seg=2	object/interst=2761	src=54	curr59	hops:(3 3) result:expected
+37.9977	status=DESTROY	id=3025	seg=3	object/interst=2761	src=54	curr59	hops:(3 3) result:expected
+38.3977	status=DESTROY	id=3025	seg=4	object/interst=2761	src=54	curr59	hops:(3 3) result:expected
+39.9576	status=DESTROY	id=3036	seg=1	object/interst=2030	src=72	curr79	hops:(15 4) result:not optimal
+40.2977	status=DESTROY	id=3036	seg=2	object/interst=2030	src=72	curr79	hops:(15 4) result:not optimal
+40.4977	status=DESTROY	id=3036	seg=3	object/interst=2030	src=72	curr79	hops:(15 4) result:not optimal
+40.8977	status=DESTROY	id=3036	seg=4	object/interst=2030	src=72	curr79	hops:(15 4) result:not optimal
+41.7977	status=DESTROY	id=3040	seg=1	object/interst=1633	src=79	curr30	hops:(3 5) result:saved 2 HOPS
+41.9977	status=DESTROY	id=3040	seg=2	object/interst=1633	src=79	curr30	hops:(3 5) result:saved 2 HOPS
+42.1977	status=DESTROY	id=3040	seg=3	object/interst=1633	src=79	curr30	hops:(3 5) result:saved 2 HOPS
+42.2977	status=DESTROY	id=3040	seg=4	object/interst=1633	src=79	curr30	hops:(3 5) result:saved 2 HOPS
+42.6977	status=DESTROY	id=3038	seg=1	object/interst=543	src=78	curr99	hops:(17 5) result:not optimal
+42.8041	status=DESTROY	id=3037	seg=1	object/interst=946	src=70	curr84	hops:(5 2) result:not optimal
+42.8977	status=DESTROY	id=3038	seg=2	object/interst=543	src=78	curr99	hops:(17 5) result:not optimal
+42.9977	status=DESTROY	id=3038	seg=3	object/interst=543	src=78	curr99	hops:(17 5) result:not optimal
+43.1977	status=DESTROY	id=3038	seg=4	object/interst=543	src=78	curr99	hops:(17 5) result:not optimal
+43.2041	status=DESTROY	id=3037	seg=2	object/interst=946	src=70	curr84	hops:(5 2) result:not optimal
+43.5041	status=DESTROY	id=3037	seg=3	object/interst=946	src=70	curr84	hops:(5 2) result:not optimal
+44.0041	status=DESTROY	id=3037	seg=4	object/interst=946	src=70	curr84	hops:(5 2) result:not optimal
+44.7041	status=DESTROY	id=3032	seg=1	object/interst=1292	src=54	curr75	hops:(20 4) result:not optimal
+44.9041	status=DESTROY	id=3032	seg=2	object/interst=1292	src=54	curr75	hops:(20 4) result:not optimal
+45.4977	status=DESTROY	id=3032	seg=3	object/interst=1292	src=54	curr75	hops:(20 4) result:not optimal
+45.6977	status=DESTROY	id=3028	seg=1	object/interst=1647	src=51	curr80	hops:(6 3) result:not optimal
+46.0977	status=DESTROY	id=3028	seg=2	object/interst=1647	src=51	curr80	hops:(6 3) result:not optimal
+46.0977	status=DESTROY	id=3032	seg=4	object/interst=1292	src=54	curr75	hops:(20 4) result:not optimal
+47.2977	status=DESTROY	id=3028	seg=3	object/interst=1647	src=51	curr80	hops:(6 3) result:not optimal
+47.8977	status=DESTROY	id=3028	seg=4	object/interst=1647	src=51	curr80	hops:(6 3) result:not optimal
+48.7977	status=DESTROY	id=3041	seg=1	object/interst=1884	src=83	curr96	hops:(28 3) result:not optimal
+49.0977	status=DESTROY	id=3041	seg=2	object/interst=1884	src=83	curr96	hops:(28 3) result:not optimal
+49.3977	status=DESTROY	id=3041	seg=3	object/interst=1884	src=83	curr96	hops:(28 3) result:not optimal
+49.5977	status=DESTROY	id=3041	seg=4	object/interst=1884	src=83	curr96	hops:(28 3) result:not optimal
+51.1977	status=DESTROY	id=3035	seg=1	object/interst=2707	src=30	curr87	hops:(10 3) result:not optimal
+51.4977	status=DESTROY	id=3039	seg=1	object/interst=2569	src=51	curr59	hops:(17 2) result:not optimal
+52.0977	status=DESTROY	id=3035	seg=2	object/interst=2707	src=30	curr87	hops:(10 3) result:not optimal
+52.2977	status=DESTROY	id=3039	seg=2	object/interst=2569	src=51	curr59	hops:(17 2) result:not optimal
+52.3977	status=DESTROY	id=3047	seg=1	object/interst=2452	src=94	curr88	hops:(4 5) result:saved 1 HOPS
+52.4977	status=DESTROY	id=3035	seg=3	object/interst=2707	src=30	curr87	hops:(10 3) result:not optimal
+52.4977	status=DESTROY	id=3047	seg=2	object/interst=2452	src=94	curr88	hops:(4 5) result:saved 1 HOPS
+52.5977	status=DESTROY	id=3047	seg=3	object/interst=2452	src=94	curr88	hops:(4 5) result:saved 1 HOPS
+52.6977	status=DESTROY	id=3047	seg=4	object/interst=2452	src=94	curr88	hops:(4 5) result:saved 1 HOPS
+52.7977	status=DESTROY	id=3045	seg=1	object/interst=2541	src=59	curr78	hops:(16 5) result:not optimal
+52.8041	status=DESTROY	id=3050	seg=1	object/interst=2595	src=44	curr44	hops:(0 4) result:saved 4 HOPS
+52.9041	status=DESTROY	id=3050	seg=2	object/interst=2595	src=44	curr44	hops:(0 4) result:saved 4 HOPS
+52.9977	status=DESTROY	id=3035	seg=4	object/interst=2707	src=30	curr87	hops:(10 3) result:not optimal
+53.0041	status=DESTROY	id=3050	seg=3	object/interst=2595	src=44	curr44	hops:(0 4) result:saved 4 HOPS
+53.0977	status=DESTROY	id=3045	seg=2	object/interst=2541	src=59	curr78	hops:(16 5) result:not optimal
+53.1041	status=DESTROY	id=3050	seg=4	object/interst=2595	src=44	curr44	hops:(0 4) result:saved 4 HOPS
+53.2977	status=DESTROY	id=3045	seg=3	object/interst=2541	src=59	curr78	hops:(16 5) result:not optimal
+53.5977	status=DESTROY	id=3045	seg=4	object/interst=2541	src=59	curr78	hops:(16 5) result:not optimal
+53.7977	status=DESTROY	id=3039	seg=3	object/interst=2569	src=51	curr59	hops:(17 2) result:not optimal
+53.9977	status=DESTROY	id=3039	seg=4	object/interst=2569	src=51	curr59	hops:(17 2) result:not optimal
+55.5977	status=DESTROY	id=3049	seg=1	object/interst=53	src=97	curr89	hops:(10 5) result:not optimal
+55.6977	status=DESTROY	id=3049	seg=2	object/interst=53	src=97	curr89	hops:(10 5) result:not optimal
+55.7977	status=DESTROY	id=3049	seg=3	object/interst=53	src=97	curr89	hops:(10 5) result:not optimal
+56.0977	status=DESTROY	id=3049	seg=4	object/interst=53	src=97	curr89	hops:(10 5) result:not optimal
+56.5977	status=DESTROY	id=3043	seg=1	object/interst=870	src=90	curr72	hops:(11 4) result:not optimal
+56.8977	status=DESTROY	id=3043	seg=2	object/interst=870	src=90	curr72	hops:(11 4) result:not optimal
+57.0977	status=DESTROY	id=3043	seg=3	object/interst=870	src=90	curr72	hops:(11 4) result:not optimal
+57.1977	status=DESTROY	id=3043	seg=4	object/interst=870	src=90	curr72	hops:(11 4) result:not optimal
+58.6977	status=DESTROY	id=3046	seg=1	object/interst=2198	src=97	curr90	hops:(12 4) result:not optimal
+58.8977	status=DESTROY	id=3046	seg=2	object/interst=2198	src=97	curr90	hops:(12 4) result:not optimal
+59.1977	status=DESTROY	id=3046	seg=3	object/interst=2198	src=97	curr90	hops:(12 4) result:not optimal
+59.3977	status=DESTROY	id=3042	seg=1	object/interst=1451	src=83	curr51	hops:(14 5) result:not optimal
+59.3977	status=DESTROY	id=3046	seg=4	object/interst=2198	src=97	curr90	hops:(12 4) result:not optimal
+59.5977	status=DESTROY	id=3051	seg=1	object/interst=925	src=91	curr97	hops:(13 3) result:not optimal
+59.7041	status=DESTROY	id=3052	seg=1	object/interst=1805	src=97	curr78	hops:(15 3) result:not optimal
+59.9977	status=DESTROY	id=3042	seg=2	object/interst=1451	src=83	curr51	hops:(14 5) result:not optimal
+59.9977	status=DESTROY	id=3051	seg=2	object/interst=925	src=91	curr97	hops:(13 3) result:not optimal
+60.1977	status=DESTROY	id=3051	seg=3	object/interst=925	src=91	curr97	hops:(13 3) result:not optimal
+60.2041	status=DESTROY	id=3052	seg=2	object/interst=1805	src=97	curr78	hops:(15 3) result:not optimal
+60.3977	status=DESTROY	id=3051	seg=4	object/interst=925	src=91	curr97	hops:(13 3) result:not optimal
+60.4977	status=DESTROY	id=3042	seg=3	object/interst=1451	src=83	curr51	hops:(14 5) result:not optimal
+60.6041	status=DESTROY	id=3052	seg=3	object/interst=1805	src=97	curr78	hops:(15 3) result:not optimal
+60.8041	status=DESTROY	id=3052	seg=4	object/interst=1805	src=97	curr78	hops:(15 3) result:not optimal
+60.8977	status=DESTROY	id=3042	seg=4	object/interst=1451	src=83	curr51	hops:(14 5) result:not optimal
+62.0041	status=DESTROY	id=3054	seg=1	object/interst=1637	src=49	curr49	hops:(0 4) result:saved 4 HOPS
+62.1041	status=DESTROY	id=3054	seg=2	object/interst=1637	src=49	curr49	hops:(0 4) result:saved 4 HOPS
+62.2041	status=DESTROY	id=3054	seg=3	object/interst=1637	src=49	curr49	hops:(0 4) result:saved 4 HOPS
+62.3041	status=DESTROY	id=3054	seg=4	object/interst=1637	src=49	curr49	hops:(0 4) result:saved 4 HOPS
+62.8297	status=DESTROY	id=3044	seg=1	object/interst=357	src=51	curr49	hops:(10 4) result:not optimal
+62.8977	status=DESTROY	id=3030	seg=1	object/interst=320	src=44	curr11	hops:(4 3) result:not optimal
+63.0297	status=DESTROY	id=3044	seg=2	object/interst=357	src=51	curr49	hops:(10 4) result:not optimal
+63.0977	status=DESTROY	id=3030	seg=2	object/interst=320	src=44	curr11	hops:(4 3) result:not optimal
+63.1297	status=DESTROY	id=3044	seg=3	object/interst=357	src=51	curr49	hops:(10 4) result:not optimal
+63.3977	status=DESTROY	id=3044	seg=4	object/interst=357	src=51	curr49	hops:(10 4) result:not optimal
+63.7977	status=DESTROY	id=3030	seg=3	object/interst=320	src=44	curr11	hops:(4 3) result:not optimal
+63.9977	status=DESTROY	id=3053	seg=1	object/interst=712	src=70	curr61	hops:(19 4) result:not optimal
+64.1977	status=DESTROY	id=3030	seg=4	object/interst=320	src=44	curr11	hops:(4 3) result:not optimal
+64.2977	status=DESTROY	id=3053	seg=2	object/interst=712	src=70	curr61	hops:(19 4) result:not optimal
+64.6977	status=DESTROY	id=3053	seg=3	object/interst=712	src=70	curr61	hops:(19 4) result:not optimal
+64.8977	status=DESTROY	id=3053	seg=4	object/interst=712	src=70	curr61	hops:(19 4) result:not optimal
+65.0041	status=DESTROY	id=3048	seg=1	object/interst=1042	src=97	curr84	hops:(4 5) result:saved 1 HOPS
+65.1041	status=DESTROY	id=3048	seg=2	object/interst=1042	src=97	curr84	hops:(4 5) result:saved 1 HOPS
+65.3041	status=DESTROY	id=3048	seg=3	object/interst=1042	src=97	curr84	hops:(4 5) result:saved 1 HOPS
+65.5041	status=DESTROY	id=3048	seg=4	object/interst=1042	src=97	curr84	hops:(4 5) result:saved 1 HOPS
+66.1457	status=DESTROY	id=3055	seg=1	object/interst=503	src=30	curr91	hops:(4 3) result:not optimal
+66.3457	status=DESTROY	id=3055	seg=2	object/interst=503	src=30	curr91	hops:(4 3) result:not optimal
+66.6457	status=DESTROY	id=3055	seg=3	object/interst=503	src=30	curr91	hops:(4 3) result:not optimal
+66.8457	status=DESTROY	id=3055	seg=4	object/interst=503	src=30	curr91	hops:(4 3) result:not optimal
+67.3977	status=DESTROY	id=3056	seg=1	object/interst=912	src=78	curr82	hops:(8 4) result:not optimal
+67.5977	status=DESTROY	id=3056	seg=2	object/interst=912	src=78	curr82	hops:(8 4) result:not optimal
+67.6977	status=DESTROY	id=3056	seg=3	object/interst=912	src=78	curr82	hops:(8 4) result:not optimal
+67.7977	status=DESTROY	id=3056	seg=4	object/interst=912	src=78	curr82	hops:(8 4) result:not optimal
+71.9977	status=DESTROY	id=3058	seg=1	object/interst=1900	src=59	curr75	hops:(13 2) result:not optimal
+71.9977	status=DESTROY	id=3059	seg=1	object/interst=1947	src=90	curr95	hops:(10 4) result:not optimal
+72.1977	status=DESTROY	id=3059	seg=2	object/interst=1947	src=90	curr95	hops:(10 4) result:not optimal
+72.2977	status=DESTROY	id=3058	seg=2	object/interst=1900	src=59	curr75	hops:(13 2) result:not optimal
+72.4977	status=DESTROY	id=3059	seg=3	object/interst=1947	src=90	curr95	hops:(10 4) result:not optimal
+72.5977	status=DESTROY	id=3058	seg=3	object/interst=1900	src=59	curr75	hops:(13 2) result:not optimal
+72.5977	status=DESTROY	id=3064	seg=1	object/interst=326	src=59	curr72	hops:(4 4) result:expected
+72.6977	status=DESTROY	id=3058	seg=4	object/interst=1900	src=59	curr75	hops:(13 2) result:not optimal
+72.7977	status=DESTROY	id=3064	seg=2	object/interst=326	src=59	curr72	hops:(4 4) result:expected
+72.9026	status=DESTROY	id=3064	seg=3	object/interst=326	src=59	curr72	hops:(4 4) result:expected
+73.2977	status=DESTROY	id=3059	seg=4	object/interst=1947	src=90	curr95	hops:(10 4) result:not optimal
+73.3026	status=DESTROY	id=3064	seg=4	object/interst=326	src=59	curr72	hops:(4 4) result:expected
+73.6977	status=DESTROY	id=3067	seg=1	object/interst=2733	src=45	curr78	hops:(6 4) result:not optimal
+73.9977	status=DESTROY	id=3067	seg=2	object/interst=2733	src=45	curr78	hops:(6 4) result:not optimal
+74.4977	status=DESTROY	id=3067	seg=3	object/interst=2733	src=45	curr78	hops:(6 4) result:not optimal
+74.5977	status=DESTROY	id=3067	seg=4	object/interst=2733	src=45	curr78	hops:(6 4) result:not optimal
+76.3977	status=DESTROY	id=3066	seg=1	object/interst=1965	src=98	curr78	hops:(19 1) result:not optimal
+76.6977	status=DESTROY	id=3068	seg=1	object/interst=1697	src=54	curr30	hops:(4 4) result:expected
+77.2977	status=DESTROY	id=3066	seg=2	object/interst=1965	src=98	curr78	hops:(19 1) result:not optimal
+77.2977	status=DESTROY	id=3068	seg=2	object/interst=1697	src=54	curr30	hops:(4 4) result:expected
+77.4977	status=DESTROY	id=3068	seg=3	object/interst=1697	src=54	curr30	hops:(4 4) result:expected
+77.8977	status=DESTROY	id=3068	seg=4	object/interst=1697	src=54	curr30	hops:(4 4) result:expected
+78.2977	status=DESTROY	id=3066	seg=3	object/interst=1965	src=98	curr78	hops:(19 1) result:not optimal
+78.8977	status=DESTROY	id=3066	seg=4	object/interst=1965	src=98	curr78	hops:(19 1) result:not optimal
+80.1977	status=DESTROY	id=3065	seg=1	object/interst=298	src=59	curr54	hops:(17 4) result:not optimal
+80.8977	status=DESTROY	id=3065	seg=2	object/interst=298	src=59	curr54	hops:(17 4) result:not optimal
+81.3977	status=DESTROY	id=3065	seg=3	object/interst=298	src=59	curr54	hops:(17 4) result:not optimal
+81.5977	status=DESTROY	id=3071	seg=1	object/interst=49	src=75	curr83	hops:(24 4) result:not optimal
+82.0977	status=DESTROY	id=3065	seg=4	object/interst=298	src=59	curr54	hops:(17 4) result:not optimal
+82.3977	status=DESTROY	id=3072	seg=1	object/interst=2236	src=45	curr96	hops:(27 4) result:not optimal
+82.4977	status=DESTROY	id=3071	seg=2	object/interst=49	src=75	curr83	hops:(24 4) result:not optimal
+82.6977	status=DESTROY	id=3071	seg=3	object/interst=49	src=75	curr83	hops:(24 4) result:not optimal
+82.7977	status=DESTROY	id=3072	seg=2	object/interst=2236	src=45	curr96	hops:(27 4) result:not optimal
+82.9977	status=DESTROY	id=3072	seg=3	object/interst=2236	src=45	curr96	hops:(27 4) result:not optimal
+83.0977	status=DESTROY	id=3072	seg=4	object/interst=2236	src=45	curr96	hops:(27 4) result:not optimal
+83.2977	status=DESTROY	id=3071	seg=4	object/interst=49	src=75	curr83	hops:(24 4) result:not optimal
+83.7977	status=DESTROY	id=3074	seg=1	object/interst=30	src=30	curr98	hops:(21 0) result:not optimal
+84.0977	status=DESTROY	id=3074	seg=2	object/interst=30	src=30	curr98	hops:(21 0) result:not optimal
+84.3977	status=DESTROY	id=3074	seg=3	object/interst=30	src=30	curr98	hops:(21 0) result:not optimal
+84.3977	status=DESTROY	id=3076	seg=1	object/interst=1057	src=30	curr30	hops:(0 2) result:saved 2 HOPS
+84.4977	status=DESTROY	id=3076	seg=2	object/interst=1057	src=30	curr30	hops:(0 2) result:saved 2 HOPS
+84.5977	status=DESTROY	id=3074	seg=4	object/interst=30	src=30	curr98	hops:(21 0) result:not optimal
+84.5977	status=DESTROY	id=3076	seg=3	object/interst=1057	src=30	curr30	hops:(0 2) result:saved 2 HOPS
+84.6977	status=DESTROY	id=3076	seg=4	object/interst=1057	src=30	curr30	hops:(0 2) result:saved 2 HOPS
+87.3041	status=DESTROY	id=3057	seg=1	object/interst=59	src=84	curr95	hops:(5 4) result:not optimal
+87.9393	status=DESTROY	id=3057	seg=2	object/interst=59	src=84	curr95	hops:(5 4) result:not optimal
+88.6393	status=DESTROY	id=3057	seg=3	object/interst=59	src=84	curr95	hops:(5 4) result:not optimal
+89.0393	status=DESTROY	id=3057	seg=4	object/interst=59	src=84	curr95	hops:(5 4) result:not optimal
+89.2977	status=DESTROY	id=3079	seg=1	object/interst=1413	src=94	curr49	hops:(11 4) result:not optimal
+89.8977	status=DESTROY	id=3079	seg=2	object/interst=1413	src=94	curr49	hops:(11 4) result:not optimal
+89.9977	status=DESTROY	id=3079	seg=3	object/interst=1413	src=94	curr49	hops:(11 4) result:not optimal
+90.0977	status=DESTROY	id=3079	seg=4	object/interst=1413	src=94	curr49	hops:(11 4) result:not optimal
+90.4041	status=DESTROY	id=3081	seg=1	object/interst=2665	src=94	curr59	hops:(6 5) result:not optimal
+90.6041	status=DESTROY	id=3081	seg=2	object/interst=2665	src=94	curr59	hops:(6 5) result:not optimal
+90.9041	status=DESTROY	id=3081	seg=3	object/interst=2665	src=94	curr59	hops:(6 5) result:not optimal
+90.9977	status=DESTROY	id=3077	seg=1	object/interst=769	src=98	curr30	hops:(21 4) result:not optimal
+91.2977	status=DESTROY	id=3077	seg=2	object/interst=769	src=98	curr30	hops:(20 4) result:not optimal
+91.3041	status=DESTROY	id=3081	seg=4	object/interst=2665	src=94	curr59	hops:(6 5) result:not optimal
+91.5977	status=DESTROY	id=3077	seg=3	object/interst=769	src=98	curr30	hops:(20 4) result:not optimal
+91.6977	status=DESTROY	id=3083	seg=1	object/interst=1684	src=79	curr88	hops:(9 5) result:not optimal
+91.9273	status=DESTROY	id=3083	seg=2	object/interst=1684	src=79	curr88	hops:(9 5) result:not optimal
+92.5273	status=DESTROY	id=3083	seg=3	object/interst=1684	src=79	curr88	hops:(9 5) result:not optimal
+92.9273	status=DESTROY	id=3083	seg=4	object/interst=1684	src=79	curr88	hops:(9 5) result:not optimal
+92.9977	status=DESTROY	id=3077	seg=4	object/interst=769	src=98	curr30	hops:(20 4) result:not optimal
+93.0977	status=DESTROY	id=3060	seg=1	object/interst=431	src=49	curr80	hops:(7 4) result:not optimal
+93.3977	status=DESTROY	id=3060	seg=2	object/interst=431	src=49	curr80	hops:(7 4) result:not optimal
+93.5977	status=DESTROY	id=3085	seg=1	object/interst=156	src=94	curr96	hops:(13 4) result:not optimal
+93.6977	status=DESTROY	id=3085	seg=2	object/interst=156	src=94	curr96	hops:(13 4) result:not optimal
+93.7977	status=DESTROY	id=3060	seg=3	object/interst=431	src=49	curr80	hops:(7 4) result:not optimal
+93.8041	status=DESTROY	id=3085	seg=3	object/interst=156	src=94	curr96	hops:(13 4) result:not optimal
+93.9977	status=DESTROY	id=3060	seg=4	object/interst=431	src=49	curr80	hops:(7 4) result:not optimal
+94.0977	status=DESTROY	id=3085	seg=4	object/interst=156	src=94	curr96	hops:(13 4) result:not optimal
+94.2977	status=DESTROY	id=3086	seg=1	object/interst=91	src=78	curr95	hops:(13 2) result:not optimal
+94.4977	status=DESTROY	id=3086	seg=2	object/interst=91	src=78	curr95	hops:(13 2) result:not optimal
+94.5977	status=DESTROY	id=3089	seg=1	object/interst=891	src=94	curr95	hops:(3 6) result:saved 3 HOPS
+94.6977	status=DESTROY	id=3089	seg=2	object/interst=891	src=94	curr95	hops:(3 6) result:saved 3 HOPS
+94.9977	status=DESTROY	id=3089	seg=3	object/interst=891	src=94	curr95	hops:(3 6) result:saved 3 HOPS
+95.2977	status=DESTROY	id=3089	seg=4	object/interst=891	src=94	curr95	hops:(3 6) result:saved 3 HOPS
+95.4977	status=DESTROY	id=3061	seg=1	object/interst=2099	src=70	curr87	hops:(7 4) result:not optimal
+95.4977	status=DESTROY	id=3086	seg=3	object/interst=91	src=78	curr95	hops:(13 2) result:not optimal
+95.5977	status=DESTROY	id=3086	seg=4	object/interst=91	src=78	curr95	hops:(13 2) result:not optimal
+96.0977	status=DESTROY	id=3061	seg=2	object/interst=2099	src=70	curr87	hops:(7 4) result:not optimal
+96.2977	status=DESTROY	id=3061	seg=3	object/interst=2099	src=70	curr87	hops:(7 4) result:not optimal
+96.3977	status=DESTROY	id=3061	seg=4	object/interst=2099	src=70	curr87	hops:(7 4) result:not optimal
+97.8041	status=DESTROY	id=3062	seg=1	object/interst=1251	src=61	curr44	hops:(9 3) result:not optimal
+98.1977	status=DESTROY	id=3088	seg=1	object/interst=1506	src=54	curr58	hops:(15 2) result:not optimal
+98.2041	status=DESTROY	id=3062	seg=2	object/interst=1251	src=61	curr44	hops:(9 3) result:not optimal
+98.3977	status=DESTROY	id=3088	seg=2	object/interst=1506	src=54	curr58	hops:(15 2) result:not optimal
+99.0977	status=DESTROY	id=3062	seg=3	object/interst=1251	src=61	curr44	hops:(9 3) result:not optimal
+99.3977	status=DESTROY	id=3088	seg=3	object/interst=1506	src=54	curr64	hops:(16 2) result:not optimal
+99.7977	status=DESTROY	id=3069	seg=1	object/interst=1544	src=87	curr61	hops:(16 3) result:not optimal
+99.8977	status=DESTROY	id=3088	seg=4	object/interst=1506	src=54	curr64	hops:(16 2) result:not optimal
+99.9041	status=DESTROY	id=3062	seg=4	object/interst=1251	src=61	curr44	hops:(9 3) result:not optimal
+100.1977	status=DESTROY	id=3069	seg=2	object/interst=1544	src=87	curr61	hops:(16 3) result:not optimal
+100.2977	status=DESTROY	id=3070	seg=1	object/interst=1518	src=87	curr79	hops:(9 3) result:not optimal
+100.8033	status=DESTROY	id=3070	seg=2	object/interst=1518	src=87	curr79	hops:(9 3) result:not optimal
+100.8977	status=DESTROY	id=3069	seg=3	object/interst=1544	src=87	curr61	hops:(16 3) result:not optimal
+100.8977	status=DESTROY	id=3093	seg=1	object/interst=1200	src=94	curr82	hops:(6 3) result:not optimal
+101.0977	status=DESTROY	id=3069	seg=4	object/interst=1544	src=87	curr61	hops:(16 3) result:not optimal
+101.0977	status=DESTROY	id=3093	seg=2	object/interst=1200	src=94	curr82	hops:(6 3) result:not optimal
+101.1033	status=DESTROY	id=3070	seg=3	object/interst=1518	src=87	curr79	hops:(9 3) result:not optimal
+101.3977	status=DESTROY	id=3093	seg=3	object/interst=1200	src=94	curr82	hops:(6 3) result:not optimal
+101.4033	status=DESTROY	id=3070	seg=4	object/interst=1518	src=87	curr79	hops:(9 3) result:not optimal
+101.6977	status=DESTROY	id=3093	seg=4	object/interst=1200	src=94	curr82	hops:(6 3) result:not optimal
+104.0977	status=DESTROY	id=3090	seg=1	object/interst=2737	src=89	curr83	hops:(30 4) result:not optimal
+104.2977	status=DESTROY	id=3090	seg=2	object/interst=2737	src=89	curr83	hops:(30 4) result:not optimal
+104.5977	status=DESTROY	id=3090	seg=3	object/interst=2737	src=89	curr83	hops:(30 4) result:not optimal
+104.7977	status=DESTROY	id=3090	seg=4	object/interst=2737	src=89	curr83	hops:(30 4) result:not optimal
+105.5977	status=DESTROY	id=3094	seg=1	object/interst=1101	src=94	curr78	hops:(10 3) result:not optimal
+105.6977	status=DESTROY	id=3094	seg=2	object/interst=1101	src=94	curr78	hops:(10 3) result:not optimal
+105.8977	status=DESTROY	id=3094	seg=3	object/interst=1101	src=94	curr78	hops:(10 3) result:not optimal
+105.9977	status=DESTROY	id=3078	seg=1	object/interst=1360	src=51	curr82	hops:(9 5) result:not optimal
+105.9977	status=DESTROY	id=3094	seg=4	object/interst=1101	src=94	curr78	hops:(10 3) result:not optimal
+106.3977	status=DESTROY	id=3099	seg=1	object/interst=54	src=91	curr90	hops:(7 5) result:not optimal
+106.4977	status=DESTROY	id=3078	seg=2	object/interst=1360	src=51	curr82	hops:(9 5) result:not optimal
+106.5977	status=DESTROY	id=3099	seg=2	object/interst=54	src=91	curr90	hops:(7 5) result:not optimal
+106.7977	status=DESTROY	id=3073	seg=1	object/interst=658	src=59	curr84	hops:(4 3) result:not optimal
+106.7977	status=DESTROY	id=3078	seg=3	object/interst=1360	src=51	curr82	hops:(9 5) result:not optimal
+106.8977	status=DESTROY	id=3099	seg=3	object/interst=54	src=91	curr90	hops:(7 5) result:not optimal
+107.2041	status=DESTROY	id=3073	seg=2	object/interst=658	src=59	curr84	hops:(4 3) result:not optimal
+107.4041	status=DESTROY	id=3099	seg=4	object/interst=54	src=91	curr90	hops:(7 5) result:not optimal
+107.4977	status=DESTROY	id=3078	seg=4	object/interst=1360	src=51	curr82	hops:(9 5) result:not optimal
+107.7041	status=DESTROY	id=3073	seg=3	object/interst=658	src=59	curr84	hops:(4 3) result:not optimal
+108.3041	status=DESTROY	id=3073	seg=4	object/interst=658	src=59	curr84	hops:(4 3) result:not optimal
+110.2977	status=DESTROY	id=3098	seg=1	object/interst=2469	src=96	curr49	hops:(24 5) result:not optimal
+110.5977	status=DESTROY	id=3104	seg=1	object/interst=1968	src=49	curr82	hops:(9 3) result:not optimal
+110.6977	status=DESTROY	id=3080	seg=1	object/interst=2399	src=51	curr99	hops:(18 5) result:not optimal
+110.7977	status=DESTROY	id=3098	seg=2	object/interst=2469	src=96	curr49	hops:(24 5) result:not optimal
+110.8977	status=DESTROY	id=3080	seg=2	object/interst=2399	src=51	curr99	hops:(18 5) result:not optimal
+110.8977	status=DESTROY	id=3098	seg=3	object/interst=2469	src=96	curr49	hops:(24 5) result:not optimal
+110.8977	status=DESTROY	id=3104	seg=2	object/interst=1968	src=49	curr82	hops:(9 3) result:not optimal
+111.0977	status=DESTROY	id=3104	seg=3	object/interst=1968	src=49	curr82	hops:(9 3) result:not optimal
+111.1977	status=DESTROY	id=3080	seg=3	object/interst=2399	src=51	curr99	hops:(18 5) result:not optimal
+111.2977	status=DESTROY	id=3104	seg=4	object/interst=1968	src=49	curr82	hops:(9 3) result:not optimal
+111.3977	status=DESTROY	id=3098	seg=4	object/interst=2469	src=96	curr49	hops:(24 5) result:not optimal
+111.3977	status=DESTROY	id=3102	seg=1	object/interst=253	src=92	curr97	hops:(17 5) result:not optimal
+111.4977	status=DESTROY	id=3080	seg=4	object/interst=2399	src=51	curr99	hops:(18 5) result:not optimal
+111.7977	status=DESTROY	id=3102	seg=2	object/interst=253	src=92	curr97	hops:(17 5) result:not optimal
+112.1977	status=DESTROY	id=3102	seg=3	object/interst=253	src=92	curr97	hops:(17 5) result:not optimal
+112.3977	status=DESTROY	id=3102	seg=4	object/interst=253	src=92	curr97	hops:(17 5) result:not optimal
+112.6977	status=DESTROY	id=3103	seg=1	object/interst=1840	src=61	curr82	hops:(20 4) result:not optimal
+112.9977	status=DESTROY	id=3103	seg=2	object/interst=1840	src=61	curr82	hops:(20 4) result:not optimal
+113.1977	status=DESTROY	id=3103	seg=3	object/interst=1840	src=61	curr82	hops:(20 4) result:not optimal
+113.6977	status=DESTROY	id=3103	seg=4	object/interst=1840	src=61	curr82	hops:(20 4) result:not optimal
+115.4977	status=DESTROY	id=3108	seg=1	object/interst=470	src=45	curr90	hops:(13 5) result:not optimal
+115.7041	status=DESTROY	id=3108	seg=2	object/interst=470	src=45	curr90	hops:(13 5) result:not optimal
+115.7977	status=DESTROY	id=3107	seg=1	object/interst=923	src=79	curr95	hops:(14 3) result:not optimal
+115.8977	status=DESTROY	id=3108	seg=3	object/interst=470	src=45	curr90	hops:(13 5) result:not optimal
+116.1041	status=DESTROY	id=3108	seg=4	object/interst=470	src=45	curr90	hops:(13 5) result:not optimal
+116.1977	status=DESTROY	id=3107	seg=2	object/interst=923	src=79	curr95	hops:(14 3) result:not optimal
+116.1977	status=DESTROY	id=3111	seg=1	object/interst=2266	src=90	curr94	hops:(7 5) result:not optimal
+116.2977	status=DESTROY	id=3111	seg=2	object/interst=2266	src=90	curr94	hops:(7 5) result:not optimal
+116.5977	status=DESTROY	id=3107	seg=3	object/interst=923	src=79	curr95	hops:(14 3) result:not optimal
+116.6977	status=DESTROY	id=3107	seg=4	object/interst=923	src=79	curr95	hops:(14 3) result:not optimal
+116.8977	status=DESTROY	id=3111	seg=3	object/interst=2266	src=90	curr94	hops:(7 5) result:not optimal
+116.8977	status=DESTROY	id=3112	seg=1	object/interst=1055	src=59	curr99	hops:(11 4) result:not optimal
+116.9977	status=DESTROY	id=3111	seg=4	object/interst=2266	src=90	curr94	hops:(7 5) result:not optimal
+117.0977	status=DESTROY	id=3112	seg=2	object/interst=1055	src=59	curr99	hops:(11 4) result:not optimal
+117.3977	status=DESTROY	id=3106	seg=1	object/interst=2149	src=61	curr49	hops:(25 4) result:not optimal
+117.7977	status=DESTROY	id=3112	seg=3	object/interst=1055	src=59	curr99	hops:(11 4) result:not optimal
+117.8977	status=DESTROY	id=3106	seg=2	object/interst=2149	src=61	curr49	hops:(25 4) result:not optimal
+117.9977	status=DESTROY	id=3106	seg=3	object/interst=2149	src=61	curr49	hops:(25 4) result:not optimal
+118.1977	status=DESTROY	id=3112	seg=4	object/interst=1055	src=59	curr99	hops:(11 4) result:not optimal
+118.6977	status=DESTROY	id=3106	seg=4	object/interst=2149	src=61	curr49	hops:(25 4) result:not optimal
+119.2977	status=DESTROY	id=3113	seg=1	object/interst=1563	src=75	curr95	hops:(10 5) result:not optimal
+119.7977	status=DESTROY	id=3113	seg=2	object/interst=1563	src=75	curr95	hops:(10 5) result:not optimal
+119.9977	status=DESTROY	id=3113	seg=3	object/interst=1563	src=75	curr95	hops:(10 5) result:not optimal
+120.0041	status=DESTROY	id=3075	seg=1	object/interst=355	src=54	curr44	hops:(11 3) result:not optimal
+120.1977	status=DESTROY	id=3113	seg=4	object/interst=1563	src=75	curr95	hops:(10 5) result:not optimal
+120.2041	status=DESTROY	id=3075	seg=2	object/interst=355	src=54	curr44	hops:(11 3) result:not optimal
+120.2977	status=DESTROY	id=3114	seg=1	object/interst=2028	src=61	curr75	hops:(5 3) result:not optimal
+120.4977	status=DESTROY	id=3114	seg=2	object/interst=2028	src=61	curr75	hops:(5 3) result:not optimal
+120.7041	status=DESTROY	id=3075	seg=3	object/interst=355	src=54	curr44	hops:(11 3) result:not optimal
+120.8977	status=DESTROY	id=3114	seg=3	object/interst=2028	src=61	curr75	hops:(5 3) result:not optimal
+121.1041	status=DESTROY	id=3075	seg=4	object/interst=355	src=54	curr44	hops:(11 3) result:not optimal
+121.1977	status=DESTROY	id=3088	seg=1	object/interst=1506	src=54	curr64	hops:(11 2) result:not optimal
+121.1977	status=DESTROY	id=3114	seg=4	object/interst=2028	src=61	curr75	hops:(5 3) result:not optimal
+121.3977	status=DESTROY	id=3084	seg=1	object/interst=2863	src=32	curr80	hops:(3 5) result:saved 2 HOPS
+121.5977	status=DESTROY	id=3084	seg=2	object/interst=2863	src=32	curr80	hops:(3 5) result:saved 2 HOPS
+121.5977	status=DESTROY	id=3088	seg=2	object/interst=1506	src=54	curr64	hops:(11 2) result:not optimal
+121.8977	status=DESTROY	id=3082	seg=1	object/interst=73	src=32	curr59	hops:(16 4) result:not optimal
+121.9977	status=DESTROY	id=3084	seg=3	object/interst=2863	src=32	curr80	hops:(3 5) result:saved 2 HOPS
+122.0977	status=DESTROY	id=3084	seg=4	object/interst=2863	src=32	curr80	hops:(3 5) result:saved 2 HOPS
+122.0977	status=DESTROY	id=3088	seg=1	object/interst=1506	src=54	curr55	hops:(8 2) result:not optimal
+122.4977	status=DESTROY	id=3082	seg=2	object/interst=73	src=32	curr59	hops:(16 4) result:not optimal
+122.6977	status=DESTROY	id=3082	seg=3	object/interst=73	src=32	curr59	hops:(12 4) result:not optimal
+123.0977	status=DESTROY	id=3082	seg=4	object/interst=73	src=32	curr59	hops:(12 4) result:not optimal
+125.0977	status=DESTROY	id=3096	seg=1	object/interst=1585	src=51	curr83	hops:(14 4) result:not optimal
+125.2977	status=DESTROY	id=3096	seg=2	object/interst=1585	src=51	curr83	hops:(14 4) result:not optimal
+125.3977	status=DESTROY	id=3087	seg=1	object/interst=2388	src=87	curr88	hops:(8 4) result:not optimal
+125.5977	status=DESTROY	id=3096	seg=3	object/interst=1585	src=51	curr83	hops:(14 4) result:not optimal
+125.6977	status=DESTROY	id=3087	seg=2	object/interst=2388	src=87	curr88	hops:(8 4) result:not optimal
+125.7977	status=DESTROY	id=3087	seg=3	object/interst=2388	src=87	curr88	hops:(8 4) result:not optimal
+125.8977	status=DESTROY	id=3096	seg=4	object/interst=1585	src=51	curr83	hops:(14 4) result:not optimal
+126.0977	status=DESTROY	id=3087	seg=4	object/interst=2388	src=87	curr88	hops:(8 4) result:not optimal
+128.4977	status=DESTROY	id=3088	seg=1	object/interst=1506	src=54	curr16	hops:(3 2) result:not optimal
+128.9977	status=DESTROY	id=3088	seg=2	object/interst=1506	src=54	curr16	hops:(3 2) result:not optimal
+129.3977	status=DESTROY	id=3088	seg=3	object/interst=1506	src=54	curr16	hops:(3 2) result:not optimal
+129.4977	status=DESTROY	id=3117	seg=1	object/interst=1388	src=79	curr75	hops:(20 5) result:not optimal
+129.5977	status=DESTROY	id=3117	seg=2	object/interst=1388	src=79	curr75	hops:(20 5) result:not optimal
+129.6977	status=DESTROY	id=3117	seg=3	object/interst=1388	src=79	curr75	hops:(20 5) result:not optimal
+129.8977	status=DESTROY	id=3088	seg=4	object/interst=1506	src=54	curr16	hops:(3 2) result:not optimal
+129.9977	status=DESTROY	id=3117	seg=4	object/interst=1388	src=79	curr75	hops:(20 5) result:not optimal
+132.0977	status=DESTROY	id=3105	seg=1	object/interst=1744	src=51	curr82	hops:(9 4) result:not optimal
+132.0977	status=DESTROY	id=3122	seg=1	object/interst=2524	src=91	curr96	hops:(21 4) result:not optimal
+132.3977	status=DESTROY	id=3122	seg=2	object/interst=2524	src=91	curr96	hops:(21 4) result:not optimal
+132.5977	status=DESTROY	id=3122	seg=3	object/interst=2524	src=91	curr96	hops:(21 4) result:not optimal
+132.7977	status=DESTROY	id=3105	seg=2	object/interst=1744	src=51	curr82	hops:(9 4) result:not optimal
+132.8977	status=DESTROY	id=3122	seg=4	object/interst=2524	src=91	curr96	hops:(21 4) result:not optimal
+133.0977	status=DESTROY	id=3105	seg=3	object/interst=1744	src=51	curr82	hops:(9 4) result:not optimal
+133.6977	status=DESTROY	id=3105	seg=4	object/interst=1744	src=51	curr82	hops:(9 4) result:not optimal
+133.7977	status=DESTROY	id=3092	seg=1	object/interst=111	src=70	curr80	hops:(6 4) result:not optimal
+133.9977	status=DESTROY	id=3092	seg=2	object/interst=111	src=70	curr80	hops:(6 4) result:not optimal
+133.9977	status=DESTROY	id=3123	seg=1	object/interst=2824	src=30	curr61	hops:(26 3) result:not optimal
+134.2977	status=DESTROY	id=3092	seg=3	object/interst=111	src=70	curr80	hops:(6 4) result:not optimal
+134.2977	status=DESTROY	id=3123	seg=2	object/interst=2824	src=30	curr61	hops:(26 3) result:not optimal
+134.3977	status=DESTROY	id=3092	seg=4	object/interst=111	src=70	curr80	hops:(6 4) result:not optimal
+134.5977	status=DESTROY	id=3123	seg=3	object/interst=2824	src=30	curr61	hops:(26 3) result:not optimal
+134.5977	status=DESTROY	id=3124	seg=1	object/interst=2570	src=79	curr54	hops:(5 4) result:not optimal
+134.6977	status=DESTROY	id=3123	seg=4	object/interst=2824	src=30	curr61	hops:(26 3) result:not optimal
+134.7977	status=DESTROY	id=3124	seg=2	object/interst=2570	src=79	curr54	hops:(5 4) result:not optimal
+135.0977	status=DESTROY	id=3124	seg=3	object/interst=2570	src=79	curr54	hops:(5 4) result:not optimal
+135.2977	status=DESTROY	id=3124	seg=4	object/interst=2570	src=79	curr54	hops:(5 4) result:not optimal
+136.6977	status=DESTROY	id=3125	seg=1	object/interst=2638	src=83	curr79	hops:(6 4) result:not optimal
+136.7977	status=DESTROY	id=3125	seg=2	object/interst=2638	src=83	curr79	hops:(6 4) result:not optimal
+136.8041	status=DESTROY	id=3063	seg=1	object/interst=2307	src=32	curr44	hops:(10 2) result:not optimal
+136.9977	status=DESTROY	id=3125	seg=3	object/interst=2638	src=83	curr79	hops:(6 4) result:not optimal
+137.1977	status=DESTROY	id=3125	seg=4	object/interst=2638	src=83	curr79	hops:(6 4) result:not optimal
+137.7041	status=DESTROY	id=3063	seg=2	object/interst=2307	src=32	curr44	hops:(10 2) result:not optimal
+138.6977	status=DESTROY	id=3063	seg=3	object/interst=2307	src=32	curr44	hops:(10 2) result:not optimal
+139.1977	status=DESTROY	id=3063	seg=4	object/interst=2307	src=32	curr44	hops:(10 2) result:not optimal
+140.0977	status=DESTROY	id=3128	seg=1	object/interst=2391	src=54	curr91	hops:(6 5) result:not optimal
+140.4977	status=DESTROY	id=3128	seg=2	object/interst=2391	src=54	curr91	hops:(6 5) result:not optimal
+140.5977	status=DESTROY	id=3132	seg=1	object/interst=340	src=75	curr88	hops:(13 2) result:not optimal
+140.6977	status=DESTROY	id=3088	seg=1	object/interst=1506	src=54	curr32	hops:(5 2) result:not optimal
+140.7977	status=DESTROY	id=3128	seg=3	object/interst=2391	src=54	curr91	hops:(6 5) result:not optimal
+140.8977	status=DESTROY	id=3088	seg=1	object/interst=1506	src=54	curr27	hops:(6 2) result:not optimal
+140.9977	status=DESTROY	id=3132	seg=2	object/interst=340	src=75	curr88	hops:(13 2) result:not optimal
+141.0977	status=DESTROY	id=3088	seg=2	object/interst=1506	src=54	curr32	hops:(5 2) result:not optimal
+141.1977	status=DESTROY	id=3088	seg=3	object/interst=1506	src=54	curr32	hops:(5 2) result:not optimal
+141.1977	status=DESTROY	id=3128	seg=4	object/interst=2391	src=54	curr91	hops:(6 5) result:not optimal
+141.2977	status=DESTROY	id=3088	seg=2	object/interst=1506	src=54	curr27	hops:(6 2) result:not optimal
+141.4977	status=DESTROY	id=3088	seg=3	object/interst=1506	src=54	curr27	hops:(6 2) result:not optimal
+141.4977	status=DESTROY	id=3134	seg=1	object/interst=2247	src=93	curr70	hops:(7 4) result:not optimal
+141.6977	status=DESTROY	id=3133	seg=1	object/interst=2205	src=30	curr97	hops:(17 3) result:not optimal
+141.7977	status=DESTROY	id=3133	seg=2	object/interst=2205	src=30	curr97	hops:(17 3) result:not optimal
+141.7977	status=DESTROY	id=3134	seg=2	object/interst=2247	src=93	curr70	hops:(7 4) result:not optimal
+141.9977	status=DESTROY	id=3088	seg=4	object/interst=1506	src=54	curr32	hops:(5 2) result:not optimal
+141.9977	status=DESTROY	id=3134	seg=3	object/interst=2247	src=93	curr70	hops:(7 4) result:not optimal
+142.0749	status=DESTROY	id=3133	seg=3	object/interst=2205	src=30	curr97	hops:(17 3) result:not optimal
+142.1977	status=DESTROY	id=3088	seg=4	object/interst=1506	src=54	curr27	hops:(6 2) result:not optimal
+142.2977	status=DESTROY	id=3132	seg=3	object/interst=340	src=75	curr88	hops:(13 2) result:not optimal
+142.3749	status=DESTROY	id=3133	seg=4	object/interst=2205	src=30	curr97	hops:(17 3) result:not optimal
+142.3977	status=DESTROY	id=3134	seg=4	object/interst=2247	src=93	curr70	hops:(7 4) result:not optimal
+142.8977	status=DESTROY	id=3132	seg=4	object/interst=340	src=75	curr88	hops:(13 2) result:not optimal
+144.9041	status=DESTROY	id=3137	seg=1	object/interst=2316	src=97	curr75	hops:(4 5) result:saved 1 HOPS
+145.1041	status=DESTROY	id=3137	seg=2	object/interst=2316	src=97	curr75	hops:(4 5) result:saved 1 HOPS
+145.2041	status=DESTROY	id=3137	seg=3	object/interst=2316	src=97	curr75	hops:(4 5) result:saved 1 HOPS
+145.3977	status=DESTROY	id=3130	seg=1	object/interst=292	src=96	curr45	hops:(27 6) result:not optimal
+145.4041	status=DESTROY	id=3137	seg=4	object/interst=2316	src=97	curr75	hops:(4 5) result:saved 1 HOPS
+145.5977	status=DESTROY	id=3130	seg=2	object/interst=292	src=96	curr45	hops:(27 6) result:not optimal
+145.9977	status=DESTROY	id=3130	seg=3	object/interst=292	src=96	curr45	hops:(27 6) result:not optimal
+146.2977	status=DESTROY	id=3130	seg=4	object/interst=292	src=96	curr45	hops:(27 6) result:not optimal
+147.0977	status=DESTROY	id=3135	seg=1	object/interst=908	src=83	curr75	hops:(24 4) result:not optimal
+147.3977	status=DESTROY	id=3138	seg=1	object/interst=5	src=92	curr49	hops:(5 3) result:not optimal
+147.4041	status=DESTROY	id=3135	seg=2	object/interst=908	src=83	curr75	hops:(24 4) result:not optimal
+147.5977	status=DESTROY	id=3138	seg=2	object/interst=5	src=92	curr49	hops:(5 3) result:not optimal
+147.6977	status=DESTROY	id=3138	seg=3	object/interst=5	src=92	curr49	hops:(5 3) result:not optimal
+147.8039	status=DESTROY	id=3138	seg=4	object/interst=5	src=92	curr49	hops:(5 3) result:not optimal
+148.1041	status=DESTROY	id=3135	seg=3	object/interst=908	src=83	curr75	hops:(24 4) result:not optimal
+148.6041	status=DESTROY	id=3135	seg=4	object/interst=908	src=83	curr75	hops:(24 4) result:not optimal
+150.7977	status=DESTROY	id=3119	seg=1	object/interst=2443	src=93	curr51	hops:(13 5) result:not optimal
+151.6466	status=DESTROY	id=3141	seg=1	object/interst=2074	src=75	curr94	hops:(9 5) result:not optimal
+151.7977	status=DESTROY	id=3119	seg=2	object/interst=2443	src=93	curr51	hops:(13 5) result:not optimal
+151.8977	status=DESTROY	id=3119	seg=3	object/interst=2443	src=93	curr51	hops:(13 5) result:not optimal
+151.9466	status=DESTROY	id=3141	seg=2	object/interst=2074	src=75	curr94	hops:(9 5) result:not optimal
+152.1466	status=DESTROY	id=3141	seg=3	object/interst=2074	src=75	curr94	hops:(9 5) result:not optimal
+152.2466	status=DESTROY	id=3141	seg=4	object/interst=2074	src=75	curr94	hops:(9 5) result:not optimal
+152.2977	status=DESTROY	id=3119	seg=4	object/interst=2443	src=93	curr51	hops:(13 5) result:not optimal
+153.0505	status=DESTROY	id=3145	seg=1	object/interst=2006	src=30	curr90	hops:(11 2) result:not optimal
+153.0977	status=DESTROY	id=3118	seg=1	object/interst=811	src=89	curr51	hops:(26 3) result:not optimal
+153.3466	status=DESTROY	id=3142	seg=1	object/interst=1499	src=79	curr95	hops:(14 4) result:not optimal
+153.5466	status=DESTROY	id=3142	seg=2	object/interst=1499	src=79	curr95	hops:(14 4) result:not optimal
+153.5505	status=DESTROY	id=3145	seg=2	object/interst=2006	src=30	curr90	hops:(11 2) result:not optimal
+153.6977	status=DESTROY	id=3118	seg=2	object/interst=811	src=89	curr51	hops:(26 3) result:not optimal
+153.7466	status=DESTROY	id=3147	seg=1	object/interst=1789	src=96	curr97	hops:(8 4) result:not optimal
+153.7977	status=DESTROY	id=3145	seg=3	object/interst=2006	src=30	curr90	hops:(11 2) result:not optimal
+153.8977	status=DESTROY	id=3118	seg=3	object/interst=811	src=89	curr51	hops:(26 3) result:not optimal
+153.9466	status=DESTROY	id=3142	seg=3	object/interst=1499	src=79	curr95	hops:(14 4) result:not optimal
+154.0977	status=DESTROY	id=3143	seg=1	object/interst=873	src=75	curr59	hops:(13 4) result:not optimal
+154.1466	status=DESTROY	id=3147	seg=2	object/interst=1789	src=96	curr97	hops:(8 4) result:not optimal
+154.3466	status=DESTROY	id=3142	seg=4	object/interst=1499	src=79	curr95	hops:(14 4) result:not optimal
+154.3977	status=DESTROY	id=3147	seg=3	object/interst=1789	src=96	curr97	hops:(8 4) result:not optimal
+154.5041	status=DESTROY	id=3145	seg=4	object/interst=2006	src=30	curr90	hops:(11 2) result:not optimal
+154.5977	status=DESTROY	id=3143	seg=2	object/interst=873	src=75	curr59	hops:(13 4) result:not optimal
+154.5977	status=DESTROY	id=3147	seg=4	object/interst=1789	src=96	curr97	hops:(8 4) result:not optimal
+154.8977	status=DESTROY	id=3143	seg=3	object/interst=873	src=75	curr59	hops:(13 4) result:not optimal
+155.0977	status=DESTROY	id=3118	seg=4	object/interst=811	src=89	curr51	hops:(26 3) result:not optimal
+155.0977	status=DESTROY	id=3143	seg=4	object/interst=873	src=75	curr59	hops:(13 4) result:not optimal
+156.3977	status=DESTROY	id=3140	seg=1	object/interst=2744	src=96	curr92	hops:(25 4) result:not optimal
+156.4977	status=DESTROY	id=3109	seg=1	object/interst=2764	src=87	curr75	hops:(11 3) result:not optimal
+156.5977	status=DESTROY	id=3110	seg=1	object/interst=179	src=83	curr87	hops:(13 6) result:not optimal
+156.6977	status=DESTROY	id=3109	seg=2	object/interst=2764	src=87	curr75	hops:(11 3) result:not optimal
+156.7977	status=DESTROY	id=3140	seg=2	object/interst=2744	src=96	curr92	hops:(25 4) result:not optimal
+156.7977	status=DESTROY	id=3148	seg=1	object/interst=2992	src=91	curr82	hops:(6 4) result:not optimal
+156.9977	status=DESTROY	id=3148	seg=2	object/interst=2992	src=91	curr82	hops:(6 4) result:not optimal
+156.9977	status=DESTROY	id=3149	seg=3	object/interst=2764	src=98	curr75	hops:(2 4) result:saved 2 HOPS
+157.0977	status=DESTROY	id=3140	seg=3	object/interst=2744	src=96	curr92	hops:(25 4) result:not optimal
+157.1977	status=DESTROY	id=3110	seg=2	object/interst=179	src=83	curr87	hops:(13 6) result:not optimal
+157.1977	status=DESTROY	id=3148	seg=3	object/interst=2992	src=91	curr82	hops:(6 4) result:not optimal
+157.2977	status=DESTROY	id=3149	seg=4	object/interst=2764	src=98	curr75	hops:(2 4) result:saved 2 HOPS
+157.3977	status=DESTROY	id=3148	seg=4	object/interst=2992	src=91	curr82	hops:(6 4) result:not optimal
+157.6977	status=DESTROY	id=3110	seg=3	object/interst=179	src=83	curr87	hops:(13 6) result:not optimal
+158.0977	status=DESTROY	id=3146	seg=1	object/interst=1896	src=92	curr61	hops:(26 6) result:not optimal
+158.2977	status=DESTROY	id=3110	seg=4	object/interst=179	src=83	curr87	hops:(13 6) result:not optimal
+158.4977	status=DESTROY	id=3140	seg=4	object/interst=2744	src=96	curr92	hops:(25 4) result:not optimal
+158.7977	status=DESTROY	id=3100	seg=1	object/interst=2060	src=44	curr75	hops:(4 4) result:expected
+159.1977	status=DESTROY	id=3146	seg=2	object/interst=1896	src=92	curr61	hops:(26 6) result:not optimal
+159.3977	status=DESTROY	id=3100	seg=2	object/interst=2060	src=44	curr75	hops:(4 4) result:expected
+159.4977	status=DESTROY	id=3100	seg=3	object/interst=2060	src=44	curr75	hops:(4 4) result:expected
+159.6977	status=DESTROY	id=3100	seg=4	object/interst=2060	src=44	curr75	hops:(4 4) result:expected
+160.0977	status=DESTROY	id=3146	seg=3	object/interst=1896	src=92	curr61	hops:(26 6) result:not optimal
+160.5977	status=DESTROY	id=3146	seg=4	object/interst=1896	src=92	curr61	hops:(26 6) result:not optimal
+161.5977	status=DESTROY	id=3101	seg=1	object/interst=575	src=44	curr99	hops:(10 4) result:not optimal
+161.6977	status=DESTROY	id=3101	seg=2	object/interst=575	src=44	curr99	hops:(10 4) result:not optimal
+161.9977	status=DESTROY	id=3101	seg=3	object/interst=575	src=44	curr99	hops:(10 4) result:not optimal
+162.1977	status=DESTROY	id=3101	seg=4	object/interst=575	src=44	curr99	hops:(10 4) result:not optimal
+162.2977	status=DESTROY	id=3152	seg=1	object/interst=1541	src=93	curr49	hops:(13 5) result:not optimal
+162.6977	status=DESTROY	id=3150	seg=1	object/interst=209	src=72	curr83	hops:(19 2) result:not optimal
+162.6977	status=DESTROY	id=3152	seg=2	object/interst=1541	src=93	curr49	hops:(13 5) result:not optimal
+162.8977	status=DESTROY	id=3152	seg=3	object/interst=1541	src=93	curr49	hops:(13 5) result:not optimal
+163.0977	status=DESTROY	id=3150	seg=2	object/interst=209	src=72	curr83	hops:(19 2) result:not optimal
+163.1977	status=DESTROY	id=3152	seg=4	object/interst=1541	src=93	curr49	hops:(13 5) result:not optimal
+163.5977	status=DESTROY	id=3150	seg=3	object/interst=209	src=72	curr83	hops:(19 2) result:not optimal
+163.6977	status=DESTROY	id=3151	seg=1	object/interst=1377	src=99	curr30	hops:(19 4) result:not optimal
+163.8977	status=DESTROY	id=3151	seg=2	object/interst=1377	src=99	curr30	hops:(19 4) result:not optimal
+163.9977	status=DESTROY	id=3151	seg=3	object/interst=1377	src=99	curr30	hops:(19 4) result:not optimal
+164.0977	status=DESTROY	id=3129	seg=1	object/interst=651	src=98	curr51	hops:(20 4) result:not optimal
+164.0977	status=DESTROY	id=3155	seg=1	object/interst=429	src=78	curr78	hops:(0 4) result:saved 4 HOPS
+164.1977	status=DESTROY	id=3150	seg=4	object/interst=209	src=72	curr83	hops:(19 2) result:not optimal
+164.1977	status=DESTROY	id=3151	seg=4	object/interst=1377	src=99	curr30	hops:(19 4) result:not optimal
+164.1977	status=DESTROY	id=3155	seg=2	object/interst=429	src=78	curr78	hops:(0 4) result:saved 4 HOPS
+164.2977	status=DESTROY	id=3155	seg=3	object/interst=429	src=78	curr78	hops:(0 4) result:saved 4 HOPS
+164.3977	status=DESTROY	id=3155	seg=4	object/interst=429	src=78	curr78	hops:(0 4) result:saved 4 HOPS
+165.2977	status=DESTROY	id=3129	seg=2	object/interst=651	src=98	curr51	hops:(20 4) result:not optimal
+165.6977	status=DESTROY	id=3129	seg=3	object/interst=651	src=98	curr51	hops:(20 4) result:not optimal
+165.6977	status=DESTROY	id=3156	seg=1	object/interst=1405	src=99	curr97	hops:(6 3) result:not optimal
+165.7977	status=DESTROY	id=3129	seg=4	object/interst=651	src=98	curr51	hops:(20 4) result:not optimal
+165.8041	status=DESTROY	id=3153	seg=1	object/interst=1462	src=98	curr90	hops:(16 5) result:not optimal
+165.9977	status=DESTROY	id=3156	seg=2	object/interst=1405	src=99	curr97	hops:(6 3) result:not optimal
+166.0977	status=DESTROY	id=3156	seg=3	object/interst=1405	src=99	curr97	hops:(6 3) result:not optimal
+166.1041	status=DESTROY	id=3153	seg=2	object/interst=1462	src=98	curr90	hops:(16 5) result:not optimal
+166.5977	status=DESTROY	id=3156	seg=4	object/interst=1405	src=99	curr97	hops:(6 3) result:not optimal
+166.6041	status=DESTROY	id=3153	seg=3	object/interst=1462	src=98	curr90	hops:(16 5) result:not optimal
+167.0041	status=DESTROY	id=3153	seg=4	object/interst=1462	src=98	curr90	hops:(16 5) result:not optimal
+167.0977	status=DESTROY	id=3115	seg=1	object/interst=1098	src=32	curr54	hops:(5 5) result:expected
+167.1977	status=DESTROY	id=3115	seg=2	object/interst=1098	src=32	curr54	hops:(5 5) result:expected
+167.2977	status=DESTROY	id=3115	seg=3	object/interst=1098	src=32	curr54	hops:(5 5) result:expected
+167.4977	status=DESTROY	id=3115	seg=4	object/interst=1098	src=32	curr54	hops:(5 5) result:expected
+171.1174	status=DESTROY	id=3120	seg=1	object/interst=1240	src=32	curr92	hops:(10 4) result:not optimal
+171.4977	status=DESTROY	id=3120	seg=2	object/interst=1240	src=32	curr92	hops:(10 4) result:not optimal
+171.6174	status=DESTROY	id=3161	seg=1	object/interst=919	src=92	curr91	hops:(4 4) result:expected
+171.8174	status=DESTROY	id=3161	seg=2	object/interst=919	src=92	curr91	hops:(4 4) result:expected
+171.9977	status=DESTROY	id=3120	seg=3	object/interst=1240	src=32	curr92	hops:(10 4) result:not optimal
+172.0174	status=DESTROY	id=3161	seg=3	object/interst=919	src=92	curr91	hops:(4 4) result:expected
+172.6174	status=DESTROY	id=3161	seg=4	object/interst=919	src=92	curr91	hops:(4 4) result:expected
+172.7977	status=DESTROY	id=3120	seg=4	object/interst=1240	src=32	curr92	hops:(10 4) result:not optimal
+173.0977	status=DESTROY	id=3165	seg=1	object/interst=2556	src=96	curr96	hops:(0 4) result:saved 4 HOPS
+173.1977	status=DESTROY	id=3165	seg=2	object/interst=2556	src=96	curr96	hops:(0 4) result:saved 4 HOPS
+173.2977	status=DESTROY	id=3165	seg=3	object/interst=2556	src=96	curr96	hops:(0 4) result:saved 4 HOPS
+173.3977	status=DESTROY	id=3165	seg=4	object/interst=2556	src=96	curr96	hops:(0 4) result:saved 4 HOPS
+174.1977	status=DESTROY	id=3160	seg=1	object/interst=485	src=99	curr49	hops:(18 2) result:not optimal
+174.6977	status=DESTROY	id=3160	seg=2	object/interst=485	src=99	curr49	hops:(18 2) result:not optimal
+174.8174	status=DESTROY	id=3160	seg=3	object/interst=485	src=99	curr49	hops:(18 2) result:not optimal
+174.9174	status=DESTROY	id=3160	seg=4	object/interst=485	src=99	curr49	hops:(18 2) result:not optimal
+178.1302	status=DESTROY	id=3164	seg=1	object/interst=924	src=78	curr96	hops:(23 2) result:not optimal
+178.3302	status=DESTROY	id=3164	seg=2	object/interst=924	src=78	curr96	hops:(23 2) result:not optimal
+178.9302	status=DESTROY	id=3164	seg=3	object/interst=924	src=78	curr96	hops:(23 2) result:not optimal
+178.9313	status=DESTROY	id=3172	seg=1	object/interst=909	src=91	curr78	hops:(2 4) result:saved 2 HOPS
+179.1313	status=DESTROY	id=3172	seg=2	object/interst=909	src=91	curr78	hops:(2 4) result:saved 2 HOPS
+179.1977	status=DESTROY	id=3164	seg=4	object/interst=924	src=78	curr96	hops:(23 2) result:not optimal
+179.3313	status=DESTROY	id=3172	seg=3	object/interst=909	src=91	curr78	hops:(2 4) result:saved 2 HOPS
+179.3977	status=DESTROY	id=3167	seg=1	object/interst=1328	src=61	curr82	hops:(20 3) result:not optimal
+179.5313	status=DESTROY	id=3172	seg=4	object/interst=909	src=91	curr78	hops:(2 4) result:saved 2 HOPS
+179.5977	status=DESTROY	id=3167	seg=2	object/interst=1328	src=61	curr82	hops:(20 3) result:not optimal
+179.6977	status=DESTROY	id=3167	seg=3	object/interst=1328	src=61	curr82	hops:(20 3) result:not optimal
+180.1977	status=DESTROY	id=3167	seg=4	object/interst=1328	src=61	curr82	hops:(20 3) result:not optimal
+180.2977	status=DESTROY	id=3166	seg=1	object/interst=1185	src=61	curr30	hops:(26 3) result:not optimal
+180.5977	status=DESTROY	id=3166	seg=2	object/interst=1185	src=61	curr30	hops:(26 3) result:not optimal
+180.9977	status=DESTROY	id=3166	seg=3	object/interst=1185	src=61	curr30	hops:(26 3) result:not optimal
+181.0977	status=DESTROY	id=3166	seg=4	object/interst=1185	src=61	curr30	hops:(26 3) result:not optimal
+183.8977	status=DESTROY	id=3177	seg=1	object/interst=1343	src=99	curr99	hops:(0 4) result:saved 4 HOPS
+183.9977	status=DESTROY	id=3177	seg=2	object/interst=1343	src=99	curr99	hops:(0 4) result:saved 4 HOPS
+184.0977	status=DESTROY	id=3177	seg=3	object/interst=1343	src=99	curr99	hops:(0 4) result:saved 4 HOPS
+184.1977	status=DESTROY	id=3177	seg=4	object/interst=1343	src=99	curr99	hops:(0 4) result:saved 4 HOPS
+184.3977	status=DESTROY	id=3173	seg=1	object/interst=1047	src=72	curr91	hops:(12 4) result:not optimal
+184.5977	status=DESTROY	id=3127	seg=1	object/interst=1523	src=70	curr87	hops:(7 4) result:not optimal
+184.5977	status=DESTROY	id=3173	seg=2	object/interst=1047	src=72	curr91	hops:(12 4) result:not optimal
+184.7977	status=DESTROY	id=3127	seg=2	object/interst=1523	src=70	curr87	hops:(7 4) result:not optimal
+184.9977	status=DESTROY	id=3173	seg=3	object/interst=1047	src=72	curr91	hops:(12 4) result:not optimal
+185.0977	status=DESTROY	id=3127	seg=3	object/interst=1523	src=70	curr87	hops:(7 4) result:not optimal
+185.1977	status=DESTROY	id=3127	seg=4	object/interst=1523	src=70	curr87	hops:(7 4) result:not optimal
+185.3977	status=DESTROY	id=3173	seg=4	object/interst=1047	src=72	curr91	hops:(12 4) result:not optimal
+186.0977	status=DESTROY	id=3091	seg=1	object/interst=1843	src=44	curr87	hops:(10 4) result:not optimal
+186.3977	status=DESTROY	id=3091	seg=2	object/interst=1843	src=44	curr87	hops:(10 4) result:not optimal
+186.6977	status=DESTROY	id=3091	seg=3	object/interst=1843	src=44	curr87	hops:(10 4) result:not optimal
+186.9977	status=DESTROY	id=3175	seg=1	object/interst=1621	src=95	curr89	hops:(16 4) result:not optimal
+187.4977	status=DESTROY	id=3091	seg=4	object/interst=1843	src=44	curr87	hops:(10 4) result:not optimal
+187.8977	status=DESTROY	id=3175	seg=2	object/interst=1621	src=95	curr89	hops:(16 4) result:not optimal
+187.9835	status=DESTROY	id=3116	seg=1	object/interst=2604	src=44	curr75	hops:(4 2) result:not optimal
+188.0977	status=DESTROY	id=3175	seg=3	object/interst=1621	src=95	curr89	hops:(16 4) result:not optimal
+188.2977	status=DESTROY	id=3175	seg=4	object/interst=1621	src=95	curr89	hops:(16 4) result:not optimal
+188.4977	status=DESTROY	id=3116	seg=2	object/interst=2604	src=44	curr75	hops:(4 2) result:not optimal
+188.5977	status=DESTROY	id=3116	seg=3	object/interst=2604	src=44	curr75	hops:(4 2) result:not optimal
+188.7977	status=DESTROY	id=3116	seg=4	object/interst=2604	src=44	curr75	hops:(4 2) result:not optimal
+189.5107	status=DESTROY	id=3178	seg=1	object/interst=2977	src=98	curr30	hops:(21 5) result:not optimal
+190.1041	status=DESTROY	id=3097	seg=1	object/interst=1027	src=51	curr44	hops:(11 3) result:not optimal
+190.3041	status=DESTROY	id=3097	seg=2	object/interst=1027	src=51	curr44	hops:(11 3) result:not optimal
+190.7041	status=DESTROY	id=3097	seg=3	object/interst=1027	src=51	curr44	hops:(11 3) result:not optimal
+190.9107	status=DESTROY	id=3178	seg=2	object/interst=2977	src=98	curr30	hops:(21 5) result:not optimal
+190.9977	status=DESTROY	id=3183	seg=1	object/interst=2408	src=72	curr61	hops:(16 4) result:not optimal
+191.1857	status=DESTROY	id=3186	seg=1	object/interst=685	src=49	curr78	hops:(3 4) result:saved 1 HOPS
+191.2107	status=DESTROY	id=3178	seg=3	object/interst=2977	src=98	curr30	hops:(21 5) result:not optimal
+191.2977	status=DESTROY	id=3183	seg=2	object/interst=2408	src=72	curr61	hops:(16 4) result:not optimal
+191.3857	status=DESTROY	id=3186	seg=2	object/interst=685	src=49	curr78	hops:(3 4) result:saved 1 HOPS
+191.3977	status=DESTROY	id=3097	seg=4	object/interst=1027	src=51	curr44	hops:(11 3) result:not optimal
+191.5857	status=DESTROY	id=3186	seg=3	object/interst=685	src=49	curr78	hops:(3 4) result:saved 1 HOPS
+191.5977	status=DESTROY	id=3183	seg=3	object/interst=2408	src=72	curr61	hops:(16 4) result:not optimal
+191.6857	status=DESTROY	id=3186	seg=4	object/interst=685	src=49	curr78	hops:(3 4) result:saved 1 HOPS
+191.7857	status=DESTROY	id=3176	seg=1	object/interst=677	src=89	curr49	hops:(26 3) result:not optimal
+191.7977	status=DESTROY	id=3183	seg=4	object/interst=2408	src=72	curr61	hops:(16 4) result:not optimal
+191.9107	status=DESTROY	id=3178	seg=4	object/interst=2977	src=98	curr30	hops:(21 5) result:not optimal
+192.0977	status=DESTROY	id=3181	seg=1	object/interst=296	src=79	curr61	hops:(25 5) result:not optimal
+192.3041	status=DESTROY	id=3185	seg=1	object/interst=2505	src=49	curr59	hops:(17 2) result:not optimal
+192.3977	status=DESTROY	id=3181	seg=2	object/interst=296	src=79	curr61	hops:(25 5) result:not optimal
+192.5857	status=DESTROY	id=3176	seg=2	object/interst=677	src=89	curr49	hops:(26 3) result:not optimal
+192.6977	status=DESTROY	id=3179	seg=1	object/interst=1022	src=54	curr98	hops:(20 2) result:not optimal
+192.8041	status=DESTROY	id=3185	seg=2	object/interst=2505	src=49	curr59	hops:(17 2) result:not optimal
+192.9857	status=DESTROY	id=3176	seg=3	object/interst=677	src=89	curr49	hops:(26 3) result:not optimal
+193.1857	status=DESTROY	id=3176	seg=4	object/interst=677	src=89	curr49	hops:(26 3) result:not optimal
+193.1977	status=DESTROY	id=3181	seg=3	object/interst=296	src=79	curr61	hops:(25 5) result:not optimal
+193.3977	status=DESTROY	id=3181	seg=4	object/interst=296	src=79	curr61	hops:(25 5) result:not optimal
+193.5041	status=DESTROY	id=3185	seg=3	object/interst=2505	src=49	curr59	hops:(17 2) result:not optimal
+194.4977	status=DESTROY	id=3179	seg=2	object/interst=1022	src=54	curr98	hops:(20 2) result:not optimal
+194.9977	status=DESTROY	id=3185	seg=4	object/interst=2505	src=49	curr59	hops:(17 2) result:not optimal
+195.4977	status=DESTROY	id=3179	seg=3	object/interst=1022	src=54	curr98	hops:(20 2) result:not optimal
+195.4977	status=DESTROY	id=3184	seg=1	object/interst=1077	src=30	curr89	hops:(27 4) result:not optimal
+195.8107	status=DESTROY	id=3191	seg=1	object/interst=2673	src=30	curr83	hops:(5 4) result:not optimal
+196.0107	status=DESTROY	id=3191	seg=2	object/interst=2673	src=30	curr83	hops:(5 4) result:not optimal
+196.1977	status=DESTROY	id=3121	seg=1	object/interst=253	src=44	curr37	hops:(2 4) result:saved 2 HOPS
+196.1977	status=DESTROY	id=3193	seg=1	object/interst=1082	src=88	curr94	hops:(4 3) result:not optimal
+196.3107	status=DESTROY	id=3191	seg=3	object/interst=2673	src=30	curr83	hops:(5 4) result:not optimal
+196.4107	status=DESTROY	id=3191	seg=4	object/interst=2673	src=30	curr83	hops:(5 4) result:not optimal
+196.4977	status=DESTROY	id=3184	seg=2	object/interst=1077	src=30	curr89	hops:(27 4) result:not optimal
+196.4977	status=DESTROY	id=3193	seg=2	object/interst=1082	src=88	curr94	hops:(4 3) result:not optimal
+196.4977	status=DESTROY	id=3194	seg=1	object/interst=400	src=90	curr82	hops:(3 3) result:expected
+196.6977	status=DESTROY	id=3121	seg=2	object/interst=253	src=44	curr37	hops:(2 4) result:saved 2 HOPS
+196.7977	status=DESTROY	id=3179	seg=4	object/interst=1022	src=54	curr98	hops:(20 2) result:not optimal
+196.7977	status=DESTROY	id=3193	seg=3	object/interst=1082	src=88	curr94	hops:(4 3) result:not optimal
+196.7977	status=DESTROY	id=3194	seg=2	object/interst=400	src=90	curr82	hops:(3 3) result:expected
+196.8977	status=DESTROY	id=3121	seg=1	object/interst=253	src=44	curr97	hops:(4 4) result:expected
+196.9977	status=DESTROY	id=3194	seg=3	object/interst=400	src=90	curr82	hops:(3 3) result:expected
+197.0977	status=DESTROY	id=3121	seg=2	object/interst=253	src=44	curr97	hops:(4 4) result:expected
+197.0977	status=DESTROY	id=3188	seg=1	object/interst=348	src=95	curr96	hops:(14 5) result:not optimal
+197.0977	status=DESTROY	id=3193	seg=4	object/interst=1082	src=88	curr94	hops:(4 3) result:not optimal
+197.3977	status=DESTROY	id=3109	seg=3	object/interst=2764	src=87	curr75	hops:(9 3) result:not optimal
+197.3977	status=DESTROY	id=3194	seg=4	object/interst=400	src=90	curr82	hops:(3 3) result:expected
+197.4977	status=DESTROY	id=3121	seg=3	object/interst=253	src=44	curr37	hops:(2 4) result:saved 2 HOPS
+197.6977	status=DESTROY	id=3121	seg=3	object/interst=253	src=44	curr97	hops:(4 4) result:expected
+197.8977	status=DESTROY	id=3121	seg=1	object/interst=253	src=44	curr56	hops:(5 4) result:not optimal
+197.9977	status=DESTROY	id=3121	seg=1	object/interst=253	src=44	curr62	hops:(5 4) result:not optimal
+198.0977	status=DESTROY	id=3109	seg=4	object/interst=2764	src=87	curr75	hops:(9 3) result:not optimal
+198.0977	status=DESTROY	id=3121	seg=4	object/interst=253	src=44	curr37	hops:(2 4) result:saved 2 HOPS
+198.1977	status=DESTROY	id=3121	seg=4	object/interst=253	src=44	curr97	hops:(4 4) result:expected
+198.1977	status=DESTROY	id=3121	seg=2	object/interst=253	src=44	curr56	hops:(5 4) result:not optimal
+198.1977	status=DESTROY	id=3188	seg=2	object/interst=348	src=95	curr96	hops:(14 5) result:not optimal
+198.3977	status=DESTROY	id=3121	seg=2	object/interst=253	src=44	curr62	hops:(5 4) result:not optimal
+198.6977	status=DESTROY	id=3188	seg=3	object/interst=348	src=95	curr96	hops:(14 5) result:not optimal
+198.8977	status=DESTROY	id=3121	seg=3	object/interst=253	src=44	curr62	hops:(5 4) result:not optimal
+198.8977	status=DESTROY	id=3184	seg=3	object/interst=1077	src=30	curr89	hops:(27 4) result:not optimal
+198.9977	status=DESTROY	id=3121	seg=3	object/interst=253	src=44	curr56	hops:(5 4) result:not optimal
+198.9977	status=DESTROY	id=3188	seg=4	object/interst=348	src=95	curr96	hops:(14 5) result:not optimal
+199.0977	status=DESTROY	id=3189	seg=1	object/interst=1661	src=30	curr97	hops:(17 4) result:not optimal
+199.1977	status=DESTROY	id=3121	seg=4	object/interst=253	src=44	curr62	hops:(5 4) result:not optimal
+199.2977	status=DESTROY	id=3189	seg=2	object/interst=1661	src=30	curr97	hops:(17 4) result:not optimal
+199.4977	status=DESTROY	id=3189	seg=3	object/interst=1661	src=30	curr97	hops:(17 4) result:not optimal
+199.7977	status=DESTROY	id=3121	seg=4	object/interst=253	src=44	curr56	hops:(5 4) result:not optimal
+199.7977	status=DESTROY	id=3184	seg=4	object/interst=1077	src=30	curr89	hops:(27 4) result:not optimal
+199.7977	status=DESTROY	id=3189	seg=4	object/interst=1661	src=30	curr97	hops:(17 4) result:not optimal
+200.9977	status=DESTROY	id=3195	seg=1	object/interst=216	src=72	curr92	hops:(16 5) result:not optimal
+201.4977	status=DESTROY	id=3195	seg=2	object/interst=216	src=72	curr92	hops:(16 5) result:not optimal
+201.5977	status=DESTROY	id=3195	seg=3	object/interst=216	src=72	curr92	hops:(16 5) result:not optimal
+202.3977	status=DESTROY	id=3195	seg=4	object/interst=216	src=72	curr92	hops:(16 5) result:not optimal
+202.6977	status=DESTROY	id=3158	seg=1	object/interst=134	src=51	curr72	hops:(15 4) result:not optimal
+202.9977	status=DESTROY	id=3158	seg=2	object/interst=134	src=51	curr72	hops:(15 4) result:not optimal
+203.3977	status=DESTROY	id=3158	seg=3	object/interst=134	src=51	curr72	hops:(15 4) result:not optimal
+203.8977	status=DESTROY	id=3158	seg=4	object/interst=134	src=51	curr72	hops:(15 4) result:not optimal
+204.4977	status=DESTROY	id=3197	seg=1	object/interst=1681	src=78	curr83	hops:(7 4) result:not optimal
+204.5977	status=DESTROY	id=3197	seg=2	object/interst=1681	src=78	curr83	hops:(7 4) result:not optimal
+204.7977	status=DESTROY	id=3144	seg=1	object/interst=565	src=32	curr89	hops:(17 4) result:not optimal
+204.7977	status=DESTROY	id=3197	seg=3	object/interst=1681	src=78	curr83	hops:(7 4) result:not optimal
+204.9977	status=DESTROY	id=3144	seg=2	object/interst=565	src=32	curr89	hops:(17 4) result:not optimal
+204.9977	status=DESTROY	id=3197	seg=4	object/interst=1681	src=78	curr83	hops:(7 4) result:not optimal
+205.2977	status=DESTROY	id=3196	seg=1	object/interst=105	src=61	curr59	hops:(18 3) result:not optimal
+205.3977	status=DESTROY	id=3144	seg=3	object/interst=565	src=32	curr89	hops:(17 4) result:not optimal
+205.4977	status=DESTROY	id=3144	seg=4	object/interst=565	src=32	curr89	hops:(17 4) result:not optimal
+205.6977	status=DESTROY	id=3196	seg=2	object/interst=105	src=61	curr59	hops:(18 3) result:not optimal
+205.9977	status=DESTROY	id=3196	seg=3	object/interst=105	src=61	curr59	hops:(18 3) result:not optimal
+206.5977	status=DESTROY	id=3196	seg=4	object/interst=105	src=61	curr59	hops:(18 3) result:not optimal
+208.7977	status=DESTROY	id=3201	seg=1	object/interst=2471	src=79	curr70	hops:(8 5) result:not optimal
+208.9977	status=DESTROY	id=3201	seg=2	object/interst=2471	src=79	curr70	hops:(8 5) result:not optimal
+209.78	status=DESTROY	id=3201	seg=3	object/interst=2471	src=79	curr70	hops:(8 5) result:not optimal
+209.88	status=DESTROY	id=3201	seg=4	object/interst=2471	src=79	curr70	hops:(8 5) result:not optimal
+211.1977	status=DESTROY	id=3126	seg=1	object/interst=1818	src=44	curr94	hops:(4 4) result:expected
+211.4977	status=DESTROY	id=3126	seg=2	object/interst=1818	src=44	curr94	hops:(4 4) result:expected
+211.6977	status=DESTROY	id=3126	seg=3	object/interst=1818	src=44	curr94	hops:(4 4) result:expected
+211.8977	status=DESTROY	id=3126	seg=4	object/interst=1818	src=44	curr94	hops:(4 4) result:expected
+212.6977	status=DESTROY	id=3095	seg=1	object/interst=1600	src=70	curr11	hops:(4 3) result:not optimal
+212.8977	status=DESTROY	id=3095	seg=2	object/interst=1600	src=70	curr11	hops:(4 3) result:not optimal
+213.0977	status=DESTROY	id=3095	seg=3	object/interst=1600	src=70	curr11	hops:(4 3) result:not optimal
+213.2977	status=DESTROY	id=3095	seg=4	object/interst=1600	src=70	curr11	hops:(4 3) result:not optimal
+213.2977	status=DESTROY	id=3205	seg=1	object/interst=759	src=93	curr91	hops:(10 5) result:not optimal
+213.4977	status=DESTROY	id=3205	seg=2	object/interst=759	src=93	curr91	hops:(10 5) result:not optimal
+213.5977	status=DESTROY	id=3204	seg=1	object/interst=1150	src=70	curr98	hops:(14 2) result:not optimal
+213.7977	status=DESTROY	id=3204	seg=2	object/interst=1150	src=70	curr98	hops:(14 2) result:not optimal
+213.9977	status=DESTROY	id=3205	seg=3	object/interst=759	src=93	curr91	hops:(10 5) result:not optimal
+214.4977	status=DESTROY	id=3205	seg=4	object/interst=759	src=93	curr91	hops:(10 5) result:not optimal
+214.9977	status=DESTROY	id=3204	seg=3	object/interst=1150	src=70	curr98	hops:(14 2) result:not optimal
+215.0977	status=DESTROY	id=3168	seg=1	object/interst=2571	src=96	curr51	hops:(24 5) result:not optimal
+215.1977	status=DESTROY	id=3204	seg=4	object/interst=1150	src=70	curr98	hops:(14 2) result:not optimal
+215.9977	status=DESTROY	id=3202	seg=1	object/interst=261	src=96	curr49	hops:(24 3) result:not optimal
+216.0977	status=DESTROY	id=3168	seg=2	object/interst=2571	src=96	curr51	hops:(24 5) result:not optimal
+216.2977	status=DESTROY	id=3168	seg=3	object/interst=2571	src=96	curr51	hops:(24 5) result:not optimal
+216.3977	status=DESTROY	id=3168	seg=4	object/interst=2571	src=96	curr51	hops:(24 5) result:not optimal
+216.8977	status=DESTROY	id=3202	seg=2	object/interst=261	src=96	curr49	hops:(24 3) result:not optimal
+217.3977	status=DESTROY	id=3202	seg=3	object/interst=261	src=96	curr49	hops:(24 3) result:not optimal
+217.7977	status=DESTROY	id=3202	seg=4	object/interst=261	src=96	curr49	hops:(24 3) result:not optimal
+217.8977	status=DESTROY	id=3174	seg=1	object/interst=1003	src=92	curr51	hops:(6 2) result:not optimal
+218.1977	status=DESTROY	id=3174	seg=2	object/interst=1003	src=92	curr51	hops:(6 2) result:not optimal
+218.2041	status=DESTROY	id=3199	seg=1	object/interst=904	src=54	curr61	hops:(25 3) result:not optimal
+218.3977	status=DESTROY	id=3174	seg=3	object/interst=1003	src=92	curr51	hops:(6 2) result:not optimal
+218.4977	status=DESTROY	id=3174	seg=4	object/interst=1003	src=92	curr51	hops:(6 2) result:not optimal
+218.6977	status=DESTROY	id=3214	seg=1	object/interst=325	src=78	curr49	hops:(3 1) result:not optimal
+218.7041	status=DESTROY	id=3199	seg=2	object/interst=904	src=54	curr61	hops:(25 3) result:not optimal
+218.9041	status=DESTROY	id=3199	seg=3	object/interst=904	src=54	curr61	hops:(25 3) result:not optimal
+218.9977	status=DESTROY	id=3214	seg=2	object/interst=325	src=78	curr49	hops:(3 1) result:not optimal
+219.0977	status=DESTROY	id=3214	seg=3	object/interst=325	src=78	curr49	hops:(3 1) result:not optimal
+219.2041	status=DESTROY	id=3199	seg=4	object/interst=904	src=54	curr61	hops:(25 3) result:not optimal
+219.3977	status=DESTROY	id=3214	seg=4	object/interst=325	src=78	curr49	hops:(3 1) result:not optimal
+220.7041	status=DESTROY	id=3154	seg=1	object/interst=2761	src=32	curr59	hops:(12 3) result:not optimal
+221.0041	status=DESTROY	id=3154	seg=2	object/interst=2761	src=32	curr59	hops:(12 3) result:not optimal
+221.3977	status=DESTROY	id=3154	seg=3	object/interst=2761	src=32	curr59	hops:(12 3) result:not optimal
+221.4977	status=DESTROY	id=3211	seg=1	object/interst=852	src=54	curr88	hops:(9 4) result:not optimal
+221.4977	status=DESTROY	id=3215	seg=1	object/interst=334	src=83	curr79	hops:(6 4) result:not optimal
+221.7977	status=DESTROY	id=3211	seg=2	object/interst=852	src=54	curr88	hops:(9 4) result:not optimal
+221.8977	status=DESTROY	id=3215	seg=2	object/interst=334	src=83	curr79	hops:(6 4) result:not optimal
+221.9977	status=DESTROY	id=3211	seg=3	object/interst=852	src=54	curr88	hops:(9 4) result:not optimal
+222.0041	status=DESTROY	id=3154	seg=4	object/interst=2761	src=32	curr59	hops:(12 3) result:not optimal
+222.2977	status=DESTROY	id=3211	seg=4	object/interst=852	src=54	curr88	hops:(9 4) result:not optimal
+222.5977	status=DESTROY	id=3215	seg=3	object/interst=334	src=83	curr79	hops:(6 4) result:not optimal
+222.8977	status=DESTROY	id=3215	seg=4	object/interst=334	src=83	curr79	hops:(6 4) result:not optimal
+223.8977	status=DESTROY	id=3209	seg=1	object/interst=1649	src=96	curr83	hops:(28 5) result:not optimal
+224.4977	status=DESTROY	id=3209	seg=2	object/interst=1649	src=96	curr83	hops:(28 5) result:not optimal
+224.9977	status=DESTROY	id=3209	seg=3	object/interst=1649	src=96	curr83	hops:(28 5) result:not optimal
+225.2977	status=DESTROY	id=3209	seg=4	object/interst=1649	src=96	curr83	hops:(28 5) result:not optimal
+225.7977	status=DESTROY	id=3210	seg=1	object/interst=1572	src=89	curr45	hops:(29 4) result:not optimal
+226.0977	status=DESTROY	id=3210	seg=2	object/interst=1572	src=89	curr45	hops:(29 4) result:not optimal
+226.1977	status=DESTROY	id=3210	seg=3	object/interst=1572	src=89	curr45	hops:(29 4) result:not optimal
+226.3977	status=DESTROY	id=3210	seg=4	object/interst=1572	src=89	curr45	hops:(29 4) result:not optimal
+227.5041	status=DESTROY	id=3216	seg=1	object/interst=108	src=78	curr75	hops:(19 4) result:not optimal
+227.7041	status=DESTROY	id=3216	seg=2	object/interst=108	src=78	curr75	hops:(19 4) result:not optimal
+227.8977	status=DESTROY	id=3216	seg=3	object/interst=108	src=78	curr75	hops:(19 4) result:not optimal
+227.8977	status=DESTROY	id=3220	seg=1	object/interst=745	src=95	curr59	hops:(5 4) result:not optimal
+228.2041	status=DESTROY	id=3216	seg=4	object/interst=108	src=78	curr75	hops:(19 4) result:not optimal
+228.4977	status=DESTROY	id=3220	seg=2	object/interst=745	src=95	curr59	hops:(5 4) result:not optimal
+228.5977	status=DESTROY	id=3220	seg=3	object/interst=745	src=95	curr59	hops:(5 4) result:not optimal
+228.6977	status=DESTROY	id=3220	seg=4	object/interst=745	src=95	curr59	hops:(5 4) result:not optimal
+229.4977	status=DESTROY	id=3157	seg=1	object/interst=617	src=87	curr59	hops:(12 2) result:not optimal
+229.7977	status=DESTROY	id=3157	seg=2	object/interst=617	src=87	curr59	hops:(12 2) result:not optimal
+229.8977	status=DESTROY	id=3157	seg=3	object/interst=617	src=87	curr59	hops:(12 2) result:not optimal
+230.1977	status=DESTROY	id=3157	seg=4	object/interst=617	src=87	curr59	hops:(12 2) result:not optimal
+232.3977	status=DESTROY	id=3162	seg=1	object/interst=199	src=80	curr70	hops:(6 2) result:not optimal
+232.4977	status=DESTROY	id=3221	seg=1	object/interst=2494	src=30	curr98	hops:(21 5) result:not optimal
+232.5977	status=DESTROY	id=3162	seg=2	object/interst=199	src=80	curr70	hops:(6 2) result:not optimal
+232.6977	status=DESTROY	id=3162	seg=3	object/interst=199	src=80	curr70	hops:(6 2) result:not optimal
+232.7977	status=DESTROY	id=3221	seg=2	object/interst=2494	src=30	curr98	hops:(21 5) result:not optimal
+232.8977	status=DESTROY	id=3162	seg=4	object/interst=199	src=80	curr70	hops:(6 2) result:not optimal
+232.8977	status=DESTROY	id=3163	seg=1	object/interst=399	src=78	curr80	hops:(7 4) result:not optimal
+232.9977	status=DESTROY	id=3121	seg=1	object/interst=253	src=44	curr29	hops:(2 4) result:saved 2 HOPS
+232.9977	status=DESTROY	id=3221	seg=3	object/interst=2494	src=30	curr98	hops:(21 5) result:not optimal
+233.0977	status=DESTROY	id=3221	seg=4	object/interst=2494	src=30	curr98	hops:(21 5) result:not optimal
+233.1977	status=DESTROY	id=3121	seg=2	object/interst=253	src=44	curr29	hops:(2 4) result:saved 2 HOPS
+233.2977	status=DESTROY	id=3163	seg=2	object/interst=399	src=78	curr80	hops:(7 4) result:not optimal
+233.3977	status=DESTROY	id=3121	seg=3	object/interst=253	src=44	curr29	hops:(2 4) result:saved 2 HOPS
+233.5977	status=DESTROY	id=3121	seg=4	object/interst=253	src=44	curr29	hops:(2 4) result:saved 2 HOPS
+233.7977	status=DESTROY	id=3163	seg=3	object/interst=399	src=78	curr80	hops:(7 4) result:not optimal
+234.1977	status=DESTROY	id=3163	seg=4	object/interst=399	src=78	curr80	hops:(7 4) result:not optimal
+235.9977	status=DESTROY	id=3230	seg=1	object/interst=2180	src=45	curr45	hops:(0 3) result:saved 3 HOPS
+236.0977	status=DESTROY	id=3230	seg=2	object/interst=2180	src=45	curr45	hops:(0 3) result:saved 3 HOPS
+236.1977	status=DESTROY	id=3230	seg=3	object/interst=2180	src=45	curr45	hops:(0 3) result:saved 3 HOPS
+236.2977	status=DESTROY	id=3230	seg=4	object/interst=2180	src=45	curr45	hops:(0 3) result:saved 3 HOPS
+238.0041	status=DESTROY	id=3228	seg=1	object/interst=1663	src=61	curr99	hops:(15 4) result:not optimal
+238.4041	status=DESTROY	id=3228	seg=2	object/interst=1663	src=61	curr99	hops:(15 4) result:not optimal
+238.4041	status=DESTROY	id=3232	seg=1	object/interst=2874	src=97	curr94	hops:(5 4) result:not optimal
+238.4977	status=DESTROY	id=3169	seg=1	object/interst=2383	src=32	curr80	hops:(3 5) result:saved 2 HOPS
+238.5977	status=DESTROY	id=3232	seg=2	object/interst=2874	src=97	curr94	hops:(5 4) result:not optimal
+238.6977	status=DESTROY	id=3169	seg=2	object/interst=2383	src=32	curr80	hops:(3 5) result:saved 2 HOPS
+238.8041	status=DESTROY	id=3229	seg=1	object/interst=1488	src=72	curr82	hops:(10 4) result:not optimal
+238.8977	status=DESTROY	id=3232	seg=3	object/interst=2874	src=97	curr94	hops:(5 4) result:not optimal
+239.0977	status=DESTROY	id=3169	seg=3	object/interst=2383	src=32	curr80	hops:(3 5) result:saved 2 HOPS
+239.0977	status=DESTROY	id=3232	seg=4	object/interst=2874	src=97	curr94	hops:(5 4) result:not optimal
+239.1041	status=DESTROY	id=3229	seg=2	object/interst=1488	src=72	curr82	hops:(10 4) result:not optimal
+239.1977	status=DESTROY	id=3169	seg=4	object/interst=2383	src=32	curr80	hops:(3 5) result:saved 2 HOPS
+239.4041	status=DESTROY	id=3229	seg=3	object/interst=1488	src=72	curr82	hops:(10 4) result:not optimal
+240.0041	status=DESTROY	id=3229	seg=4	object/interst=1488	src=72	curr82	hops:(10 4) result:not optimal
+240.7041	status=DESTROY	id=3228	seg=3	object/interst=1663	src=61	curr99	hops:(15 4) result:not optimal
+241.4041	status=DESTROY	id=3228	seg=4	object/interst=1663	src=61	curr99	hops:(15 4) result:not optimal
+242.4977	status=DESTROY	id=3226	seg=1	object/interst=1653	src=83	curr89	hops:(30 5) result:not optimal
+242.8977	status=DESTROY	id=3226	seg=2	object/interst=1653	src=83	curr89	hops:(30 5) result:not optimal
+243.3977	status=DESTROY	id=3226	seg=3	object/interst=1653	src=83	curr89	hops:(30 5) result:not optimal
+243.4977	status=DESTROY	id=3226	seg=4	object/interst=1653	src=83	curr89	hops:(30 5) result:not optimal
+245.6977	status=DESTROY	id=3237	seg=1	object/interst=422	src=75	curr72	hops:(11 4) result:not optimal
+245.8977	status=DESTROY	id=3237	seg=2	object/interst=422	src=75	curr72	hops:(11 4) result:not optimal
+246.1977	status=DESTROY	id=3236	seg=1	object/interst=1937	src=99	curr83	hops:(22 3) result:not optimal
+246.1977	status=DESTROY	id=3237	seg=3	object/interst=422	src=75	curr72	hops:(11 4) result:not optimal
+246.2977	status=DESTROY	id=3237	seg=4	object/interst=422	src=75	curr72	hops:(11 4) result:not optimal
+246.6977	status=DESTROY	id=3236	seg=2	object/interst=1937	src=99	curr83	hops:(22 3) result:not optimal
+246.8977	status=DESTROY	id=3236	seg=3	object/interst=1937	src=99	curr83	hops:(22 3) result:not optimal
+247.1977	status=DESTROY	id=3236	seg=4	object/interst=1937	src=99	curr83	hops:(22 3) result:not optimal
+247.2977	status=DESTROY	id=3238	seg=1	object/interst=2047	src=90	curr99	hops:(14 4) result:not optimal
+247.4977	status=DESTROY	id=3238	seg=2	object/interst=2047	src=90	curr99	hops:(14 4) result:not optimal
+247.9977	status=DESTROY	id=3238	seg=3	object/interst=2047	src=90	curr99	hops:(14 4) result:not optimal
+247.9977	status=DESTROY	id=3239	seg=1	object/interst=2917	src=70	curr49	hops:(8 4) result:not optimal
+248.1977	status=DESTROY	id=3238	seg=4	object/interst=2047	src=90	curr99	hops:(14 4) result:not optimal
+248.1977	status=DESTROY	id=3239	seg=2	object/interst=2917	src=70	curr49	hops:(8 4) result:not optimal
+248.3977	status=DESTROY	id=3239	seg=3	object/interst=2917	src=70	curr49	hops:(8 4) result:not optimal
+248.6977	status=DESTROY	id=3239	seg=4	object/interst=2917	src=70	curr49	hops:(8 4) result:not optimal
+248.7977	status=DESTROY	id=3240	seg=1	object/interst=1051	src=91	curr95	hops:(11 4) result:not optimal
+249.1977	status=DESTROY	id=3240	seg=2	object/interst=1051	src=91	curr95	hops:(11 4) result:not optimal
+249.3977	status=DESTROY	id=3240	seg=3	object/interst=1051	src=91	curr95	hops:(11 4) result:not optimal
+249.5977	status=DESTROY	id=3240	seg=4	object/interst=1051	src=91	curr95	hops:(11 4) result:not optimal
