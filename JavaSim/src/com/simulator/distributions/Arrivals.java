@@ -50,7 +50,7 @@ public class Arrivals extends SimulationProcess {
 	 */
 	private static BufferedReader rdr = null;
 
-public Arrivals () {
+	public Arrivals () {
 		
 		InterArrivalTime = new ExponentialStream(loadImpact);
 		gridSize = Grid.getGridSize();
@@ -86,101 +86,107 @@ public Arrivals () {
 			int objectSize = 0;
 			
 			int srcNode = nodeSelecter.nextInt(gridSize);
-						
-			if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF) {
 			
-				/*
-				 * Now we have to parse next line from workload.all and assign the refpacket id for this interest packet.
-				 * If we have reached EOF just end this thread thus controller thread which is waiting on this 
-				 * notified.
-				 * */
-				String line = null;
+			/* This 'if' conditions stops the arrival class from generating anymore interest packets when the total number of interest packets
+			 * has reached
+			 * */
+			if (!this.isSimStatus()) {	
 				
-				try {				
+				if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF) {
 					
-					line = rdr.readLine();
-				
-					if(line != null) {
+					/*
+					 * Now we have to parse next line from workload.all and assign the refpacket id for this interest packet.
+					 * If we have reached EOF just end this thread thus controller thread which is waiting on this 
+					 * notified.
+					 * */
+					String line = null;
+					
+					try {				
 						
-						String [] words = line.split("\\s+");
-						objectID = Integer.parseInt(words[1]);
-						objectSize = Integer.parseInt(words[2]);
+						line = rdr.readLine();
+					
+						if(line != null) {
+							
+							String [] words = line.split("\\s+");
+							objectID = Integer.parseInt(words[1]);
+							objectSize = Integer.parseInt(words[2]);
+						}
+						else{
+							
+							rdr.close();
+							setSimStatus(true);
+							System.out.println("Done with Arrivals");
+						}
+					} 
+					catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					else{
+				}
+				else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT) {
+					
+					objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
+					objectSize = PacketDistributions.getDataPacketSize();
+					
+					if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()) { 
 						
-						rdr.close();
 						setSimStatus(true);
 						System.out.println("Done with Arrivals");
 					}
-				} 
-				catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+				
+				else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE) {
+					
+					objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
+					objectSize = PacketDistributions.getDataPacketSize();
+					
+					srcNode = PacketDistributions.leafNodes.get(nodeSelecter.nextInt(PacketDistributions.leafNodes.size())) ;
+					
+					if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()) { 
+						
+						setSimStatus(true);
+						System.out.println("Done with Arrivals");
+					}
+				}		
+				
+				System.out.println("Generated Interest Packet: " + countInterestPackets);
+				//System.out.println("Source Node: " + srcNode);
+			    
+				/* 
+				 * This is not inside the for loop because we want to generate the same packet number for all the packets. 
+				 * The packets created in the for loop are cloned, hence use the same packetID created with the first packet 
+				 * */
+				InterestPacket firstPacket = new InterestPacket(srcNode, interestPacketSize, 1);
+				firstPacket.setRefPacketId(objectID);	
+				Packets.dumpStatistics(firstPacket, "CREATED");
+				firstPacket.activate();		
+				
+				countInterestPackets++;
+				
+				double numberOfIntPacks = Math.ceil((double)objectSize/(double)Arrivals.getSegmentSize());			
+				
+				if (numberOfIntPacks >= 2) {
+				
+					for (int i = 2; i <= (int)numberOfIntPacks; i++) {
+						/* The following statement will randomly choose a source node for the interest packet */
+						
+				    	InterestPacket otherPackets = (InterestPacket) firstPacket.clone();
+				    	otherPackets.setSegmentId(i);  	
+				    	otherPackets.setCurNode(-1);
+						
+						/* 
+						 * The following code records the creation of the interest packet 
+						 * */			
+						Packets.dumpStatistics(otherPackets, "CREATED");			
+						
+						/* The following statement moves the program control the Packet class, where this interest packet is added into
+						 * the source nodes queue 
+						 */			
+						otherPackets.activate();
+				    }
+				}			
+				//log.info("Packet generated ");
 			}
-			else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT) {
-				
-				objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
-				objectSize = PacketDistributions.getDataPacketSize();
-				
-				if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()) { 
-					
-					setSimStatus(true);
-					System.out.println("Done with Arrivals");
-				}
-			}
-			
-			else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE) {
-				
-				objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
-				objectSize = PacketDistributions.getDataPacketSize();
-				
-				srcNode = PacketDistributions.leafNodes.get(nodeSelecter.nextInt(PacketDistributions.leafNodes.size())) ;
-				
-				if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()) { 
-					
-					setSimStatus(true);
-					System.out.println("Done with Arrivals");
-				}
-			}		
-			
-			System.out.println("Generated Interest Packet: " + countInterestPackets);
-			//System.out.println("Source Node: " + srcNode);
-		    
-			/* 
-			 * This is not inside the for loop because we want to generate the same packet number for all the packets. 
-			 * The packets created in the for loop are cloned, hence use the same packetID created with the first packet 
-			 * */
-			InterestPacket firstPacket = new InterestPacket(srcNode, interestPacketSize, 1);
-			firstPacket.setRefPacketId(objectID);	
-			Packets.dumpStatistics(firstPacket, "CREATED");
-			firstPacket.activate();		
-			
-			countInterestPackets++;
-			
-			double numberOfIntPacks = Math.ceil((double)objectSize/(double)Arrivals.getSegmentSize());			
-			
-			if (numberOfIntPacks >= 2) {
-			
-				for (int i = 2; i <= (int)numberOfIntPacks; i++) {
-					/* The following statement will randomly choose a source node for the interest packet */
-					
-			    	InterestPacket otherPackets = (InterestPacket) firstPacket.clone();
-			    	otherPackets.setSegmentId(i);  	
-			    	otherPackets.setCurNode(-1);
-					
-					/* 
-					 * The following code records the creation of the interest packet 
-					 * */			
-					Packets.dumpStatistics(otherPackets, "CREATED");			
-					
-					/* The following statement moves the program control the Packet class, where this interest packet is added into
-					 * the source nodes queue 
-					 */			
-					otherPackets.activate();
-			    }
-			}			
-			//log.info("Packet generated ");	
 		}
 	}
 
