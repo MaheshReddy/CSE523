@@ -189,7 +189,7 @@ for($i = 0; $i <= $length_of_trace; $i++)
 
 		}
 
-		elsif($row[4] eq "CRTDPRD")
+		elsif(($row[4] eq "CRTDPRD") || ($row[4] eq "CRTDPRDA"))
 		{
 			@node = split(' ', $packets{$row[5].$row[3]});
 			if($node[$dest_ts] == -1) {

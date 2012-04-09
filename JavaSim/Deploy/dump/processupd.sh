@@ -1,3 +1,4 @@
+nodes= 
 input_filename= 
 output_filename= 
 
@@ -5,6 +6,7 @@ while getopts n:i:o: opt
 do
     #echo $opt
     case "$opt" in
+      n)  nodes="$OPTARG";;
       i)  input_filename="$OPTARG";;
       o)  output_filename="$OPTARG";;
       \?)		# unknown flag
@@ -15,7 +17,7 @@ do
 done
 shift $((OPTIND - 1))
 
-perl grepupd.pl $input_filename > .temp.txt
+perl grepupd.pl $input_filename $nodes > .temp.txt
 sort -k1 -n .temp.txt > $output_filename
 rm .temp.txt
 

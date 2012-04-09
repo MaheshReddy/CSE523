@@ -146,8 +146,7 @@ for($i = 0; $i <= $length_of_trace; $i++)
 
 	elsif(($row[4] eq "DESTROY") && ($row[1] eq "d")) 
 	{
-
-		if($row[11] eq "SUPRESSION_DEST_NODE") 
+		if($row[11] eq "6") 
 		{
 				
 		#
@@ -166,7 +165,7 @@ for($i = 0; $i <= $length_of_trace; $i++)
 			
 			$node[$dest_ts] = $timestamp;
 			$timestamp = $timestamp + 1;
-
+			
 			$packets{$row[5].$row[3]} = "";
 
 			for($j = 0; $j <= $#node; $j++)
@@ -184,12 +183,15 @@ for($i = 0; $i <= $length_of_trace; $i++)
 			#print "Data packet has reached the requesting source node\n";
 			#print $packets{$row[5].$row[3]}."\n\n";
 		}
-		elsif($row[11] eq "SUPRESSION_NO_PIT")
+		elsif(($row[11] eq 1) || ($row[11] eq "9"))
 		{
 
 			@node = split(' ', $packets{$row[5].$row[3]});			
 				
 			$node[$total_data] += $row[9];
+			
+			$node[$dest_ts] = $timestamp;
+			$timestamp = $timestamp + 1;
 
 			$packets{$row[5].$row[3]} = "";
 
