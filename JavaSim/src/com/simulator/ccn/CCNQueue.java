@@ -40,6 +40,9 @@ public class CCNQueue {
 		
 		/* Add packet at the end of the neighboring nodes queue */
 		queue.addLast(packet);
+		
+		/* To maintain current queue size */
+		PacketssInCCNQueue++;
 		 		
 		/* We need to record packet is sent into the queue 
 		 * Packets.dumpStatistics(packet);
@@ -54,12 +57,18 @@ public class CCNQueue {
 	public boolean isEmpty() {
 		return queue.isEmpty();	 
 	}
+		
+	/* Returns current queue size */
+	public long packetsInCCNQueue () {
+		return PacketssInCCNQueue;
+	}
 	
 	public Packets remove() {
 		 
 		Packets packet = queue.remove();
 		//log.info("removing" + packet.toString()+" from queue");
 		//log.info("Current Queue " + queue);
+		PacketssInCCNQueue--;
 		return packet;
 	}
 	 
