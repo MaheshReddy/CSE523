@@ -187,69 +187,89 @@ public class CCNRouter extends SimulationProcess {
 		*/
 		
 		InterestEntry dataObject = new InterestEntry (curPacket.getPacketId(), curPacket.getSegmentId());
-		
+				
 		/* I got this data packet so setting its locality to false */
 		curPacket.setLocality(false);
 		//log.info("In Data packet handler");
 		List<PITEntry> pitEntry = pit.get(dataObject); 
 		
-		/* I havn't seen this packet so discard it */
-		if(pitEntry == null) {
+		/* The following 'if' statements will purge expired PIT entries. There are two conditions: (a) the PIT corresponding to the Interest
+		 * packet ID of the data packet received right now has expired or not available. In this case, we will create a 'PIT expiration' entry; 
+		 * and (b) there are PIT entries which are invalid, but do not have any association with the current data packet are simply removed without any entry
+		 * into the trace */
+		if (pitEntry != null) {
 			
+			/* The request submitted by this particular Interest packet has already been expired, and there is no PIT entry for it */
+			if (!containsPITEntry(pitEntry, curPacket.getRefPacketId())) {
+				
+				Packets clonePac = (Packets) curPacket.clone();
+				clonePac.finished(SupressionTypes.PIT_EXPIRATION);			
+			}
+			
+			Iterator<PITEntry> stalledPITEntries = pitEntry.iterator();	
+			boolean temp = true;
+			
+			/* Check if there are PIT entries that need to be expelled because the interest packets do not need to be sent there anymore.
+			 * To reduce processing time, we will only check PIT entries associated with the current objectID in question at this node.
+			 * This way, we will not have to traverse over the entire HashMap to update all the PIT Entries corresponding to the PIT table of this node
+			 * */	
+			while(stalledPITEntries.hasNext()) {
+				
+				//countTemp++;
+				
+				PITEntry rid = stalledPITEntries.next();
+
+				try {
+					
+					/* Used for debugging purposes 
+					 *	Writer fs1 = new BufferedWriter(new FileWriter("dump/PITExpiration.txt",true));
+						fs1.write("AT Router: " + this.getRouterId() + "\n");
+						fs1.write("Start of Data Handler function \nTime: " + CCNRouter.CurrentTime() + "\n");
+						fs1.write("Processing Interest packet #: " + curPacket.getRefPacketId() + "\n");
+						fs1.write("Processing Data packet #: " + curPacket.getPacketId() + "\n");
+						fs1.write("PIT Entry: Outgoing Interface is " + rid.getoutgoingInterface() + "\n");
+						fs1.write("PIT Entry: Entry was created at " + rid.getCreatedAtTime() + "\n");	
+					 * */					
+					
+					/* We are traversing and removing the expired entries from PIT table. The pitTimeOut is a parameterized value taken from
+					 * "ccn.properties" file
+					 * */
+					if ((SimulationProcess.CurrentTime() - rid.getCreatedAtTime()) >= pitTimeOut && rid.getoutgoingInterface() != -1) {						
+						
+						//pitEntry.contains(o)
+						//clonePac.setRefPacketId(rid.getRefPacketId());					
+						if (curPacket.getRefPacketId() == rid.getRefPacketId()) {
+							
+							Packets clonePac = (Packets) curPacket.clone();
+							clonePac.finished(SupressionTypes.PIT_EXPIRATION);
+							temp = false;
+						}
+						
+						stalledPITEntries.remove();
+
+						//countTemp--;
+						/* Used for debugging purposes 
+						 *	fs1.write("\nEntry Removed at " + SimulationProcess.CurrentTime() + "\n"); 
+						 */										
+					}
+					
+					/* Used for debugging purposes
+					 *  fs1.write("\n\n\n");				
+						fs1.close();
+					 */				
+				}				
+				catch (Exception e){}
+			}			
+			
+		}
+		
+		/* I havn't seen this packet so discard it */
+		else {
+
 			//log.info("No entry in pit table ignoring");
 			curPacket.finished(SupressionTypes.SUPRESSION_NO_PIT);
 			return;
-		}
-		
-		/* If the current node is not present in the PIT table list dump the packet as live packet and set the hop counts 
-		 * to zero.
-		 * */
-		if(!(pitEntry.contains(-1))) {
-			//Packets.dumpStatistics(curPacket);
-			//curPacket.setNoOfHops(0);
-		}
-		
-		/* Check if there are PIT entries that need to be expelled because the interest packets do not need to be sent there anymore.
-		 * To reduce processing time, we will only check PIT entries associated with the current objectID in question at this node.
-		 * This way, we will not have to traverse over the entire HashMap to update all the PIT Entries corresponding to the PIT table of this node
-		 * */
-		
-		Iterator<PITEntry> stalledPITEntries = pitEntry.iterator();		
-		while(stalledPITEntries.hasNext()) {
-			
-			PITEntry rid = stalledPITEntries.next();
-			
-			try {
-				
-				/* Used for debugging purposes 
-				 *	Writer fs1 = new BufferedWriter(new FileWriter("dump/PITExpiration.txt",true));
-					fs1.write("AT Router: " + this.getRouterId() + "\n");
-					fs1.write("Start of Data Handler function \nTime: " + CCNRouter.CurrentTime() + "\n");
-					fs1.write("Processing Interest packet #: " + curPacket.getRefPacketId() + "\n");
-					fs1.write("Processing Data packet #: " + curPacket.getPacketId() + "\n");
-					fs1.write("PIT Entry: Outgoing Interface is " + rid.getoutgoingInterface() + "\n");
-					fs1.write("PIT Entry: Entry was created at " + rid.getCreatedAtTime() + "\n");	
-				 * */
-				
-				
-				
-				/* We are traversing and removing the expired entries from PIT table. The pitTimeOut is a parameterized value taken from
-				 * "ccn.properties" file
-				 * */
-				if ((SimulationProcess.CurrentTime() - rid.getCreatedAtTime()) >= pitTimeOut) {
-					stalledPITEntries.remove();
-					/* Used for debugging purposes 
-					 *	fs1.write("\nEntry Removed at " + SimulationProcess.CurrentTime() + "\n"); 
-					 */										
-				}
-				
-				/* Used for debugging purposes
-				 *  fs1.write("\n\n\n");				
-					fs1.close();
-				 */				
-			}				
-			catch (Exception e){}
-		}
+		}					
 		
 		/* The following code is used to flood data packets over all the interfaces in PIT entry for this object */
 		Iterator<PITEntry> itr = pitEntry.iterator();		
@@ -267,9 +287,15 @@ public class CCNRouter extends SimulationProcess {
 				//System.out.println("ObjectID: " + curPacket.getPacketId());
 				//System.out.println("Print Outgoing Interface: " + rid.getoutgoingInterface());
 				//System.out.println("Previous Hop of data packet: " + getRouterId() + "\n");
+				
+				
 				Packets clonePac = (Packets) curPacket.clone();
 				
+				/* In the following 'if' statement, we "create" data packets for all those PIT entries which are also satisfied other than the one
+				 * associated with the current data packets' interest id */
 				if (clonePac.getRefPacketId() != rid.getRefPacketId()) {
+					
+					//printPITEntry(pitEntry, clonePac);
 					
 					clonePac.setRefPacketId(rid.getRefPacketId());
 					clonePac.setOriginNode(getRouterId());
@@ -277,10 +303,11 @@ public class CCNRouter extends SimulationProcess {
 					clonePac.setCurNode(-1);
 					clonePac.setPrevHop(-1);
 					clonePac.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);		
-					Packets.dumpStatistics(clonePac, "CRTDPRD");	
+					Packets.dumpStatistics(clonePac, "CRTDPRDA");	
+
 				}
 				
-				sendPacket(clonePac, rid.getoutgoingInterface());
+				sendPacket(clonePac, rid.getoutgoingInterface());				
 			}
 		}		
 		
@@ -470,7 +497,7 @@ public class CCNRouter extends SimulationProcess {
 		}	
 		/* I have seen this packet so I add to PIT and suppress it */
 		else {			
-						//printPITEntry(pitEntry, curPacket);
+			
 			if(!pitEntry.contains(curPacket.getPrevHop())/*!containsPITEntry(pitEntry,curPacket.getPrevHop())*/) {
 				
 				pitEntry.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), SimulationProcess.CurrentTime()));
@@ -500,7 +527,7 @@ public class CCNRouter extends SimulationProcess {
 		}	
 	}
 	
-private void printPITEntry (List<PITEntry> checkPITEntry, Packets curPacket) {
+	private void printPITEntry (List<PITEntry> checkPITEntry, Packets curPacket) {
 		
 		Iterator<PITEntry> itr = checkPITEntry.iterator();	
 		int count = 0;
@@ -513,7 +540,7 @@ private void printPITEntry (List<PITEntry> checkPITEntry, Packets curPacket) {
 			/* We shouldn't flood the data packet to same node where it came from */
 			try {
 				
-				System.out.println("Inside");
+				//System.out.println("Inside");
 				Writer fs1 = new BufferedWriter(new FileWriter("dump/PITEntry.txt",true));
 				fs1.write("\nEntry : " + count + "\n");
 				fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");
@@ -521,6 +548,7 @@ private void printPITEntry (List<PITEntry> checkPITEntry, Packets curPacket) {
 				fs1.write("PacketID : " + curPacket.getPacketId() + "\n");
 				fs1.write("ObjectID : " + curPacket.getRefPacketId() + "\n");				
 				fs1.write("Outgoing Interface is: " + rid.getoutgoingInterface() + "\n");
+				fs1.write("Outgoing Interface is: " + rid.getRefPacketId() + "\n");
 				fs1.write("Timestamp: " + rid.getCreatedAtTime() + "\n" + "\n" + "\n" + "\n");
 				fs1.close();
 			}
@@ -528,6 +556,23 @@ private void printPITEntry (List<PITEntry> checkPITEntry, Packets curPacket) {
 			
 				
 		}	
+	}
+	
+	/* This function returns 'true', if it finds a PIT entry matching the 'ref' packet ID (Interest ID) of the data packet */
+	private boolean containsPITEntry (List<PITEntry> checkPITEntry, int tempRefPacket) {
+		
+		Iterator<PITEntry> itr = checkPITEntry.iterator();	
+		
+		while(itr.hasNext()) {
+			
+			PITEntry rid = itr.next();
+			
+			if (rid.getRefPacketId() == tempRefPacket) {
+				return true;
+			}						
+		}		
+		
+		return false;	
 	}
 
 	/**
