@@ -184,17 +184,19 @@ public class Packets implements Cloneable {
 			str.format(" %d",curPacket.getOriginNode());
 			str.format(" %d",curPacket.getNoOfHops());
 			
-			if(Integer.toBinaryString((curPacket.isAlive())?1:0).compareTo("1") == 0)
-				str.format(" alive");
-			else
-				str.format(" dead");
+			//if(Integer.toBinaryString((curPacket.isAlive())?1:0).compareTo("1") == 0)
+				//str.format(" alive");
+			//else
+				//str.format(" dead");
 			
-			str.format(" %s", (curPacket.getCauseOfSupr().toString()));
+			str.format(" %d", (curPacket.isAlive())?1:0);
+			
+			str.format(" %d", (curPacket.getCauseOfSupr().ordinal()));
 			
 			if(curPacket.isLocal())
-				str.format(" lcache");
+				str.format(" 0");
 			else
-				str.format(" gcache");
+				str.format(" 1");
 			
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
