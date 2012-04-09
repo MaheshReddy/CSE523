@@ -4,11 +4,14 @@ package com.simulator.controller;
 
 
 import com.simulator.ccn.CCNRouter;
+import com.simulator.ccn.InterestEntry;
+import com.simulator.ccn.PITEntry;
 import com.simulator.ccn.TransmitPackets;
 import com.simulator.distributions.Arrivals;
 import com.simulator.distributions.PacketDistributions;
 import com.simulator.enums.GridTypes;
 import com.simulator.enums.SimulationTypes;
+import com.simulator.enums.SupressionTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 import com.simulator.trace.*;
@@ -22,6 +25,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /*
@@ -33,7 +39,7 @@ import java.util.Properties;
  * reinvoked. If the termination condition is satisfied the simulation stops.   
  * */
 
-public class SimulationController extends SimulationProcess {
+	public class SimulationController extends SimulationProcess {
 	
 	//static final Logger log = Logger.getLogger(SimulationController.class);;
 	private static long packetsGenerated = 0;
@@ -162,14 +168,26 @@ public class SimulationController extends SimulationProcess {
 				//System.out.println(A.isSimStatus());
 			}
 			
-			/**
-			 //TODO
-			 * Joining this thread to Arrivals Thread. By doing this we are blocking this thread till finished execution.
-			 * Intial Hold is necessary to as to make Arrivals thread run.
-			 */
-			/**
-			 * For now using a workaround of using a flag to indicate end of simulation.
-			 */
+			/* The following 'while' loop will execute till all router queues are empty */		
+			while (true) {
+				
+				/* Loop over all routers */
+				boolean terminate = true;	
+				for(int i=0;i<Grid.getGridSize();i++) {
+					if (!Grid.getRouter(i).getPacketsQ().isEmpty()) {						
+						//System.out.println("The queue of Router + " + Grid.getRouter(i).getRouterId() + " has " + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + " packets");
+						terminate = false;
+					}
+				}
+
+				//System.out.println("\n");
+				
+				/* If they are not empty, wait for 10 'ticks', and execute this thread again */
+				if (!terminate) 
+					Hold(10);
+				else 
+					break;				
+			}
 
 			/* Stops the simulation */
 			Scheduler.stopSimulation();
@@ -177,7 +195,8 @@ public class SimulationController extends SimulationProcess {
 			SimulationController.fs.close();
 			
 			//log.info("Done with simulation");
-			//log.info("Final Router configrations--------->");
+			//log.info("Final Router configrations--------->");			
+			
 			
 			for(int i=0;i<Grid.getGridSize();i++)
 				Grid.getRouter(i).terminate();
