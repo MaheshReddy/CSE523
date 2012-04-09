@@ -41,6 +41,11 @@ public class CCNCache  {
 	 * 1000 and current size to zero.
 	 * @param id 
 	 */
+	
+	/* TODO: */	
+	/* Need to take-in SimuationType and not boolean variable for unlimitedSizeCache. This can lead to errors if anyone changes the order of 
+	 * SimulaionTypes 
+	 * */
 	public CCNCache(int id, int size, boolean unlimitedSizeCache)	{
 		
 		setNodeId(id);		
