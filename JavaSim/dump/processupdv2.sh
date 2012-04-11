@@ -18,7 +18,7 @@ do
 done
 shift $((OPTIND - 1))
 
-perl grep.pl $input_filename $nodes > .temp.txt
+perl grepupdv2.pl $input_filename $nodes > .temp.txt
 sort -k1 -n .temp.txt > $output_filename
 rm .temp.txt
 
