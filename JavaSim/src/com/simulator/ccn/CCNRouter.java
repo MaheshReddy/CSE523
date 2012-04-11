@@ -197,18 +197,10 @@ public class CCNRouter extends SimulationProcess {
 		 * packet ID of the data packet received right now has expired or not available. In this case, we will create a 'PIT expiration' entry; 
 		 * and (b) there are PIT entries which are invalid, but do not have any association with the current data packet are simply removed without any entry
 		 * into the trace */
-		if (pitEntry != null) {
-			
-			/* The request submitted by this particular Interest packet has already been expired, and there is no PIT entry for it */
-			if (!containsPITEntry(pitEntry, curPacket.getRefPacketId())) {
-				
-				Packets clonePac = (Packets) curPacket.clone();
-				clonePac.finished(SupressionTypes.PIT_EXPIRATION);			
-			}
+		if (pitEntry != null) {			
 			
 			Iterator<PITEntry> stalledPITEntries = pitEntry.iterator();	
-			boolean temp = true;
-			
+						
 			/* Check if there are PIT entries that need to be expelled because the interest packets do not need to be sent there anymore.
 			 * To reduce processing time, we will only check PIT entries associated with the current objectID in question at this node.
 			 * This way, we will not have to traverse over the entire HashMap to update all the PIT Entries corresponding to the PIT table of this node
@@ -234,20 +226,24 @@ public class CCNRouter extends SimulationProcess {
 					/* We are traversing and removing the expired entries from PIT table. The pitTimeOut is a parameterized value taken from
 					 * "ccn.properties" file
 					 * */
-					if ((SimulationProcess.CurrentTime() - rid.getCreatedAtTime()) >= pitTimeOut && rid.getoutgoingInterface() != -1) {						
-						
-						//pitEntry.contains(o)
-						//clonePac.setRefPacketId(rid.getRefPacketId());					
-						if (curPacket.getRefPacketId() == rid.getRefPacketId()) {
+					if ((SimulationProcess.CurrentTime() - rid.getCreatedAtTime()) >= pitTimeOut && rid.getoutgoingInterface() != -1) {									
+				
+						//if (curPacket.getRefPacketId() == rid.getRefPacketId()) {
 							
 							Packets clonePac = (Packets) curPacket.clone();
+							
+							clonePac.setRefPacketId(rid.getRefPacketId());
+							clonePac.setPrevHop(-1);
+							clonePac.setOriginNode(-1);
+							clonePac.setNoOfHops(-1);
+							clonePac.setCauseOfSupr(SupressionTypes.PIT_EXPIRATION);
+							clonePac.setLocality(false);						
+							
 							clonePac.finished(SupressionTypes.PIT_EXPIRATION);
-							temp = false;
-						}
+						//}
 						
 						stalledPITEntries.remove();
 
-						//countTemp--;
 						/* Used for debugging purposes 
 						 *	fs1.write("\nEntry Removed at " + SimulationProcess.CurrentTime() + "\n"); 
 						 */										
@@ -259,7 +255,14 @@ public class CCNRouter extends SimulationProcess {
 					 */				
 				}				
 				catch (Exception e){}
-			}			
+			}	
+			
+			/* The request submitted by this particular Interest packet has already been expired/exhausted, and there is no PIT entry for it */
+			if (!containsPITEntry(pitEntry, curPacket.getRefPacketId())) {
+				
+				Packets clonePac = (Packets) curPacket.clone();
+				clonePac.finished(SupressionTypes.SUPRESSION_NO_PIT);			
+			}
 			
 		}
 		
@@ -286,8 +289,7 @@ public class CCNRouter extends SimulationProcess {
 				//System.out.println("PacketID: " + curPacket.getRefPacketId());
 				//System.out.println("ObjectID: " + curPacket.getPacketId());
 				//System.out.println("Print Outgoing Interface: " + rid.getoutgoingInterface());
-				//System.out.println("Previous Hop of data packet: " + getRouterId() + "\n");
-				
+				//System.out.println("Previous Hop of data packet: " + getRouterId() + "\n");			
 				
 				Packets clonePac = (Packets) curPacket.clone();
 				
@@ -477,6 +479,18 @@ public class CCNRouter extends SimulationProcess {
 				PITEntry rid = stalledPITEntries.next();
 			
 				if ((SimulationProcess.CurrentTime() - rid.getCreatedAtTime()) >= pitTimeOut) {
+					
+					Packets clonePac = (Packets) curPacket.clone();
+					
+					clonePac.setRefPacketId(rid.getRefPacketId());
+					clonePac.setPrevHop(-1);
+					clonePac.setOriginNode(-1);
+					clonePac.setNoOfHops(-1);
+					clonePac.setCauseOfSupr(SupressionTypes.PIT_EXPIRATION);
+					clonePac.setLocality(false);						
+					
+					clonePac.finished(SupressionTypes.PIT_EXPIRATION);
+					
 					stalledPITEntries.remove();
 					/* Used for debugging purposes 
 					 *	fs1.write("\nEntry Removed at " + SimulationProcess.CurrentTime() + "\n"); 
