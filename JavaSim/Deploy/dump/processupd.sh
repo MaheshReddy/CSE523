@@ -1,3 +1,4 @@
+#!/bin/bash
 nodes= 
 input_filename= 
 output_filename= 

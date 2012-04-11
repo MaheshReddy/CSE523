@@ -91,7 +91,9 @@ for($i = 0; $i <= $length_of_trace; $i++)
 		$node[$src_ts] = $timestamp;
 		$timestamp = $timestamp + 1;
 
-		$node[$dest_ts] = -1; 
+		$node[$dest_ts] = $timestamp;
+		$timestamp = $timestamp + 1;
+		
 		$node[$dest] = "X";
 
 		$node[$total_int] = 0;
@@ -114,7 +116,7 @@ for($i = 0; $i <= $length_of_trace; $i++)
 		#print $packets{$row[2].$row[3]}."\n\n";
 	}
 
-	elsif(($row[4] eq "ENQUEUE") && ($row[1] eq "i") && ($row[8] ne $row[6])) 
+	elsif(($row[4] eq "ENQUEUE") && ($row[1] eq "i") && ($row[9] != 0)) 
 	{
 	
 		#
@@ -141,33 +143,46 @@ for($i = 0; $i <= $length_of_trace; $i++)
 		}
 					
 		#print "Interest packet enqueued\n";
-		#print $packets{$row[2].$row[3]}."\n\n";
+		#print $packets{$row[2].$row[3]}."\n\n"; 
 	}
 
-	elsif(($row[4] eq "DESTROY") && ($row[1] eq "d")) 
+	elsif ($row[1] eq "d") 
 	{
-		if($row[11] == 6) 
-		{
+		if ($row[4] eq "ENQUEUE") {
+		
+			@node = split(' ', $packets{$row[5].$row[3]});			
+					
+			$node[$total_data] += 1;		
+				
+			$packets{$row[5].$row[3]} = "";
+	
+			for($j = 0; $j <= $#node; $j++)
+			{
+				if($j != $#node)
+				{
+					$packets{$row[5].$row[3]} = $packets{$row[5].$row[3]}.$node[$j]." ";
+				}
+				else
+				{
+					$packets{$row[5].$row[3]} = $packets{$row[5].$row[3]}.$node[$j];
+				}
+			}
+		}
+		
+		elsif (($row[11] == 6) && ($row[4] eq "DESTROY")) {
 				
 		#
 		#	Data packet when it has reached the destination
-		#
-
-
+		
 			@node = split(' ', $packets{$row[5].$row[3]});
 
 			#print "D-". $row[2].$row[3].":: At node ".$row[6]." DataSource = ". $row[8]."\n";
 
 			$node[$useful_int] = $row[9];
-			$node[$useful_data] = $row[9];
-
-			$node[$total_data] += $node[$useful_data];	
-			
-			$node[$dest_ts] = $timestamp;
-			$timestamp = $timestamp + 1;
+			$node[$useful_data] = $row[9];					
 			
 			$packets{$row[5].$row[3]} = "";
-
+	
 			for($j = 0; $j <= $#node; $j++)
 			{
 				if($j != $#node)
@@ -178,38 +193,11 @@ for($i = 0; $i <= $length_of_trace; $i++)
 				{
 					$packets{$row[5].$row[3]} = $packets{$row[5].$row[3]}.$node[$j];
 				}
-			}
-
-			#print "Data packet has reached the requesting source node\n";
-			#print $packets{$row[5].$row[3]}."\n\n";
+			}			
 		}
-		elsif($row[11] == 1)
-		{
-
-			@node = split(' ', $packets{$row[5].$row[3]});			
-				
-			$node[$total_data] += $row[9];
-			
-			$node[$dest_ts] = $timestamp;
-			$timestamp = $timestamp + 1;
-
-			$packets{$row[5].$row[3]} = "";
-
-			for($j = 0; $j <= $#node; $j++)
-			{
-				if($j != $#node)
-				{
-					$packets{$row[5].$row[3]} = $packets{$row[5].$row[3]}.$node[$j]." ";
-				}
-				else
-				{
-					$packets{$row[5].$row[3]} = $packets{$row[5].$row[3]}.$node[$j];
-				}
-			}
-
-			#print "Data packet is suppressed as there is not PIT entry\n";
-			#print $packets{$row[5].$row[3]}."\n\n";
-		}
+		
+		#print "Data packet has reached the requesting source node\n";
+		#print $packets{$row[5].$row[3]}."\n\n";				
 	}	
 }
 
