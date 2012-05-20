@@ -1,0 +1,30 @@
+Current Time: 0.0
+The average size for the queues at all router: 0.0
+The average size for the PIT at all router: 0.0
+The average size for the InterestServed list at all router: 0.0
+The average size for the Forwarding Tables at all router: 0.0
+
+Current Time: 50.0
+The average size for the queues at all router: 88.36
+The average size for the PIT at all router: 138.92
+The average size for the InterestServed list at all router: 147.93
+The average size for the Forwarding Tables at all router: 2.38
+
+Current Time: 100.0
+The average size for the queues at all router: 169.91
+The average size for the PIT at all router: 263.99
+The average size for the InterestServed list at all router: 287.24
+The average size for the Forwarding Tables at all router: 5.15
+
+Current Time: 150.0
+The average size for the queues at all router: 264.61
+The average size for the PIT at all router: 398.18
+The average size for the InterestServed list at all router: 436.77
+The average size for the Forwarding Tables at all router: 8.42
+
+Current Time: 200.0
+The average size for the queues at all router: 376.43
+The average size for the PIT at all router: 547.05
+The average size for the InterestServed list at all router: 601.59
+The average size for the Forwarding Tables at all router: 11.79
+
