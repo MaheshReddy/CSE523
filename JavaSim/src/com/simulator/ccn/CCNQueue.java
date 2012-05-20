@@ -26,7 +26,7 @@ public class CCNQueue {
 	public CCNQueue (int id) {
 		setNodeId(id);
 		queue = new LinkedList<Packets>();
-		maxSize = 10000;
+		maxSize = 10000;//useless value
     }
 
 	/**
