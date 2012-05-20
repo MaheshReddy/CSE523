@@ -46,13 +46,8 @@ my $useful_data;
 #
 # Input file name taken as argument. This file needs to be in the same directory.
 #
-open INPUT, $ARGV[0];
-@trace = <INPUT>;
-close INPUT;
+open TRACE, $ARGV[0] or die "could not open file";
 
-chomp(@trace);
-
-$length_of_trace = $#trace;
 $timestamp = 1;
 
 #Represents the source node for the interest packet
@@ -75,12 +70,13 @@ $useful_int = 6;
 $total_data = 7;
 $useful_data = 8;
 
-for($i = 0; $i <= $length_of_trace; $i++) 
+while (my $line = <TRACE>) 
 {
-	@row = split(' ', $trace[$i]);
-
+	
+	@row = split (' ',$line);
+		
 	if($row[4] eq "CREATED") 
-	{
+	{		
 		my @node;		
 
 		#initializing hash row
@@ -115,7 +111,7 @@ for($i = 0; $i <= $length_of_trace; $i++)
 		#print "New interest packet\n";
 		#print $packets{$row[2].$row[3]}."\n\n";
 	}
-
+	
 	elsif(($row[4] eq "ENQUEUE") && ($row[1] eq "i") && ($row[9] != 0)) 
 	{
 	
@@ -140,16 +136,15 @@ for($i = 0; $i <= $length_of_trace; $i++)
 			{
 				$packets{$row[2].$row[3]} = $packets{$row[2].$row[3]}.$node[$j];
 			}
-		}
-					
+		}					
 		#print "Interest packet enqueued\n";
 		#print $packets{$row[2].$row[3]}."\n\n"; 
 	}
-
+	
 	elsif ($row[1] eq "d") 
 	{
-		if ($row[4] eq "ENQUEUE") {
-		
+		if ($row[4] eq "ENQUEUE") 
+		{			
 			@node = split(' ', $packets{$row[5].$row[3]});			
 					
 			$node[$total_data] += 1;		
@@ -168,21 +163,21 @@ for($i = 0; $i <= $length_of_trace; $i++)
 				}
 			}
 		}
-		
-		elsif (($row[11] == 6) && ($row[4] eq "DESTROY")) {
-				
-		#
-		#	Data packet when it has reached the destination
-		
+	
+		elsif (($row[11] == 6) && ($row[4] eq "DESTROY")) 
+		{					
+			#
+			#Data packet when it has reached the destination
+			
 			@node = split(' ', $packets{$row[5].$row[3]});
-
+	
 			#print "D-". $row[2].$row[3].":: At node ".$row[6]." DataSource = ". $row[8]."\n";
-
+	
 			$node[$useful_int] = $row[9];
 			$node[$useful_data] = $row[9];					
-			
+				
 			$packets{$row[5].$row[3]} = "";
-	
+		
 			for($j = 0; $j <= $#node; $j++)
 			{
 				if($j != $#node)
@@ -194,12 +189,13 @@ for($i = 0; $i <= $length_of_trace; $i++)
 					$packets{$row[5].$row[3]} = $packets{$row[5].$row[3]}.$node[$j];
 				}
 			}			
-		}
-		
+		}			
 		#print "Data packet has reached the requesting source node\n";
 		#print $packets{$row[5].$row[3]}."\n\n";				
 	}	
 }
+
+close TRACE;
 
 while (($key, $value) =each(%packets))
 {
@@ -220,6 +216,3 @@ while (($key, $value) =each(%packets))
 		print $time_interest." i ".$interest_packet_id." ".$segment." ".$node[$total_int]." ".$node[$useful_int]."\n";
 		print $time_data." d ".$interest_packet_id." ".$segment." ".$node[$total_data]." ".$node[$useful_data]."\n";
 }
-
-
-

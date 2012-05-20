@@ -18,7 +18,7 @@ do
 	  q)  output_filename_updv2="$OPTARG";;
 	  c)  packets="$OPTARG";;
 	  s)  segments="$OPTARG";;
-      \?)		# unknown flag
+     \?)		# unknown flag
       	  echo >&6 \
 	  "usage: $0 [-n] [nodes] [-i] [input filename] [-o] [output filename original] [-p] [output filename updatev1] [-q] [output filename updatev2][-c] [packets] [-s] [segments]"
 	  exit 1;;
@@ -33,6 +33,9 @@ perl grepupdv2.pl $input_filename $nodes > .tempupd2.txt
 awk -v packets=$packets -v segments=$segments 'BEGIN {sum = 0; sumi = 0; sumd = 0;} { sum = sum + $5; if($2 == "i") {sumi = sumi + $5;} if($2 == "d") {sumd = sumd + $5;}} END { printf("Orignial script total packet count: %d\n", (sum + (packets * segments) + segments)); printf("Original script interest packet count: %d\n", (sumi + (packets * segments) + segments)); printf("Original script data packet count: %d\n", sumd);}' .temp.txt	
 awk -v packets=$packets -v segments=$segments 'BEGIN {sum = 0; sumi = 0; sumd = 0;} { sum = sum + $5; if($2 == "i") {sumi = sumi + $5;} if($2 == "d") {sumd = sumd + $5;}} END {printf("Updated script total packet count: %d\n", (sum + (packets * segments) + segments)); printf("Updated script interest packet count: %d\n", (sumi + (packets * segments) + segments)); printf("Updated script data packet count: %d\n", sumd);}' .tempupd.txt
 awk -v packets=$packets -v segments=$segments 'BEGIN {sum = 0; sumi = 0; sumd = 0;} { sum = sum + $5; if($2 == "i") {sumi = sumi + $5;} if($2 == "d") {sumd = sumd + $5;}} END {printf("UpdatedV2 script total packet count: %d\n", (sum + (packets * segments) + segments)); printf("UpdatedV2 script interest packet count: %d\n", (sumi + (packets * segments) + segments)); printf("UpdatedV2 script data packet count: %d\n", sumd);}' .tempupd2.txt
+
+#awk 'BEGIN {sum = 0;} { sum = sum + $2 * ($3/1500);} END { printf("Requests: %d\n", (sum));}' docs.web
+#awk 'BEGIN {large = 0;} { if (large <= $3) {  };} END { printf("Average: %d\n", (sum/54273));}' docs.web
 
 echo Total packets directly from trace file: 
 cat $input_filename | grep 'ENQUEUE' | wc -l
