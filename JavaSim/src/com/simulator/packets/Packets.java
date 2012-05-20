@@ -338,6 +338,10 @@ public class Packets implements Cloneable {
 		return currenPacketId++;
 	}
 	
+	public static synchronized Integer getCurrentPacketId() {
+		return currenPacketId;
+	}
+	
 	public static synchronized void setCurrenPacketId(Integer currenPacketId) {
 		Packets.currenPacketId = currenPacketId;
 	}
