@@ -147,9 +147,49 @@ public class Arrivals extends SimulationProcess {
 						setSimStatus(true);
 						System.out.println("Done with Arrivals");
 					}
-				}		
+				}
 				
-				System.out.println("Generated Interest Packet: " + countInterestPackets);
+				else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF_LEAFNODE) {
+					
+					srcNode = PacketDistributions.leafNodes.get(nodeSelecter.nextInt(PacketDistributions.leafNodes.size()));
+					
+					/*
+					 * Now we have to parse next line from workload.all and assign the refpacket id for this interest packet.
+					 * If we have reached EOF just end this thread thus controller thread which is waiting on this 
+					 * notified.
+					 * */
+					String line = null;
+					
+					try {				
+						
+						line = rdr.readLine();
+					
+						if(line != null) {
+							
+							String [] words = line.split("\\s+");
+							objectID = Integer.parseInt(words[1]);
+							
+							if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_ON) {
+								objectSize = Integer.parseInt(words[2]);						
+							}
+							else if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_OFF) {
+								objectSize = Arrivals.getSegmentSize();
+							}							
+						}
+						else{
+							
+							rdr.close();
+							setSimStatus(true);
+							System.out.println("Done with Arrivals");
+						}
+					} 
+					catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				//System.out.println("Generated Interest Packet: " + countInterestPackets);
 				//System.out.println("Source Node: " + srcNode);
 			    
 				/* 
@@ -161,6 +201,8 @@ public class Arrivals extends SimulationProcess {
 				Packets.dumpStatistics(firstPacket, "CREATED");
 				firstPacket.activate();		
 				
+				
+				System.out.println("Generated Interest Packet (Actual): " + firstPacket.getCurrentPacketId());				
 				countInterestPackets++;
 				
 				double numberOfIntPacks = Math.ceil((double)objectSize/(double)Arrivals.getSegmentSize());			
