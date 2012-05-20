@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 import com.simulator.controller.SimulationController;
 
+import com.simulator.distributions.Arrivals;
 import com.simulator.distributions.PacketDistributions;
 import com.simulator.enums.PacketsType;
 import com.simulator.enums.SimulationTypes;
@@ -75,20 +77,25 @@ public class CCNRouter extends SimulationProcess {
 	 */
 	
 	private List<InterestEntry> interestsServed = null;
+	private HashSet<InterestEntry> interestsServedSet = null;
 	
 	public CCNRouter (int id) {
 		
 		STime = new ExponentialStream(8);
-		working = false;
+		working = false;List
 		currentPacket = null;
 		packetsQ = new CCNQueue(id);
-		pit = new HashMap<InterestEntry,List<PITEntry>>();
-		forwardingTable = new HashMap<Integer, FIBEntry>(200);
-		interestsServed = new ArrayList<InterestEntry>();
+		pit = new HashMap<InterestEntry,List<PITEntry>>(SimulationController.getPITSize(), (float)0.9);
+		forwardingTable = new HashMap<Integer, FIBEntry>(SimulationController.getFIBSize(), (float)0.9);
+		//interestsServed = new ArrayList<InterestEntry>(SimulationController.getInterestListSize());
+		interestsServedSet = new HashSet<InterestEntry>(SimulationController.getInterestListSize(), (float)0.9);
 		setRouterId(id);
 		
+		//double numberOfIntPacks = Math.ceil((double)objectSize/(double)Arrivals.getSegmentSize())
+		
 		/* The localCache will always be of unlimited size */
-		localCache = new CCNCache(id, 100, true);
+		localCache = new CCNCache(id, SimulationController.getLocalCacheSize(), true);
+			
 		
 		/* The globalCache will be based on the value passed in "ccn.properties" file. The size will be effective in case the cache
 		 * is of a limited size */
@@ -419,19 +426,27 @@ public class CCNRouter extends SimulationProcess {
 		InterestEntry interest = new InterestEntry (curPacket.getPacketId(), curPacket.getSegmentId());
 		
 		/* The following code is to suppress the interest packets that have already been served */
-		if (isInterestServed(interest)) {
+		if (interestsServedSet.contains(interest)) {
 			
 			curPacket.finished(SupressionTypes.SUPRESSION_ALREADY_SERVED);
 			//log.info("Already served interest packet "+ curPacket.getPacketId() + " with segment ID " + curPacket.getSegmentId());
 			return;
 		}
 		
+		/*if (isInterestServed(interest)) {
+			
+			curPacket.finished(SupressionTypes.SUPRESSION_ALREADY_SERVED);
+			//log.info("Already served interest packet "+ curPacket.getPacketId() + " with segment ID " + curPacket.getSegmentId());
+			return;
+		}*/
+		
 		//log.info("Machine Interest packet handler"+curPacket.toString());
 		
 		/* Add the interest packet into the list of served interest packets. It will assist in achieving the step above, which
 		 * is to suppress interest packets already served 
 		 * */
-		addToInterestServed(interest);
+		interestsServedSet.add(interest);
+		//addToInterestServed(interest);
 		
 		Boolean newInPit = false;
 		
@@ -482,7 +497,9 @@ public class CCNRouter extends SimulationProcess {
 					
 					Packets clonePac = (Packets) curPacket.clone();
 					
-					clonePac.setRefPacketId(rid.getRefPacketId());
+					clonePac.setPacketId(rid.getRefPacketId());
+					clonePac.setRefPacketId(dataObject.getInterestID());
+					clonePac.setSegmentId(dataObject.getSegmentID());
 					clonePac.setPrevHop(-1);
 					clonePac.setOriginNode(-1);
 					clonePac.setNoOfHops(-1);
@@ -520,8 +537,7 @@ public class CCNRouter extends SimulationProcess {
 			}
 			curPacket.finished(SupressionTypes.SUPRESSION_FLOODING_PIT_HIT);
 			return;
-		}	
-		
+		}		
 		
 		//log.info("Current Pit table-> "+pit);
 		
@@ -566,9 +582,7 @@ public class CCNRouter extends SimulationProcess {
 				fs1.write("Timestamp: " + rid.getCreatedAtTime() + "\n" + "\n" + "\n" + "\n");
 				fs1.close();
 			}
-			catch (IOException e){}	
-			
-				
+			catch (IOException e){}					
 		}	
 	}
 	
@@ -811,6 +825,16 @@ public class CCNRouter extends SimulationProcess {
 	public void setForwardingTable(Map<Integer, FIBEntry> forwardingTable) {
 		this.forwardingTable = forwardingTable;
 	}
+	
+	/*public List getInterestsServed () {
+		return interestsServed;
+		
+	}*/
+	
+	public HashSet getInterestsServed () {
+		return interestsServedSet;
+	}
+
 
 	/**
 	 * Searches the interestServed list.
