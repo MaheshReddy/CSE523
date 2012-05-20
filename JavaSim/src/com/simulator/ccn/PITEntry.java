@@ -44,7 +44,16 @@ public class PITEntry {
 	}
 	
 	public int hashCode() {
-	    return outgoingInterface;
+		
+		int hash = 7;
+		hash = 31 * hash + outgoingInterface;
+		hash = 31 * hash + refPacketId;
+		
+		long bits = Double.doubleToLongBits(createdAtTime);
+		int var_code = (int)(bits ^ (bits >>> 32));		
+		hash = 31 * hash + var_code;	
+		
+		return hash;	   
 	}
 	
 	
