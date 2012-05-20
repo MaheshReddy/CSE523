@@ -54,6 +54,9 @@ public class PacketDistributions {
 		else if (SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF == distType) {
 			distributeContentGlobeTraffic();
 		}
+		else if (SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF_LEAFNODE == distType) {
+			distributeContentGlobeTrafficLeafNodes();
+		}
 		else if (SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE == distType) {
 			distributeContentLeafNodes();
 		}
@@ -61,6 +64,8 @@ public class PacketDistributions {
 			System.out.println("Invalid distribution type:"+distType);
 			throw new Exception();
 		}
+		
+		Packets.setCurrenPacketId(1);
 	}	
 	
 	private static void distributeContentDefault() {
@@ -122,6 +127,56 @@ public class PacketDistributions {
 			CCNCache routerLocalCache = router.getLocalCache();
 			pac.setLocality(true);
 			routerLocalCache.addToCache(pac);
+			//log.info("Creating Data Object:"+line);
+		}
+		rd.close();
+	}
+	
+	/**
+	 *  distributeContentGlobeTraffic distributes the content from doc.all produced by globe traffic tool into various nodes of the topology.
+	 *  //TODO currently randomly choosing a node to distribute content need to review this.
+	 * @throws IOException 
+	 */
+	private static void distributeContentGlobeTrafficLeafNodes() throws IOException {
+		
+		
+		/* Manually enter leaf nodes based on the topology created in Brite for 100 nodes using GlobeTraff*/
+		
+		/*
+		leafNodes = new ArrayList <Integer> (32);
+		
+		For 100 node topology these are the leaf nodes
+		leafNodes.add(11); leafNodes.add(30); leafNodes.add(32); leafNodes.add(44); leafNodes.add(45); leafNodes.add(49);
+		leafNodes.add(72); leafNodes.add(70); leafNodes.add(61); leafNodes.add(59); leafNodes.add(54); leafNodes.add(51);
+		leafNodes.add(75); leafNodes.add(78); leafNodes.add(79); leafNodes.add(80); leafNodes.add(82); leafNodes.add(83);
+		leafNodes.add(84); leafNodes.add(87); leafNodes.add(88); leafNodes.add(89); leafNodes.add(90); leafNodes.add(91);
+		leafNodes.add(92); leafNodes.add(93); leafNodes.add(94); leafNodes.add(95); leafNodes.add(96); leafNodes.add(97);
+		leafNodes.add(98); leafNodes.add(99);
+		
+		*/
+		leafNodes = new ArrayList <Integer> (31);
+		for (int i = 8; i <= 38; i++)	
+			leafNodes.add(i); 
+		
+		Integer noNodes = PacketDistributions.leafNodes.size();
+		//FileReader inReader = new FileReader(new File(ClassLoader.getSystemResource(getAllDocs()).toURI()));
+		//InputStreamReader inReader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs()));
+		BufferedReader rd = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs())));
+		String line;
+		int count = -1;
+		
+		while((line = rd.readLine())!=null)	{
+			
+			count++;
+			
+			DataPacket pack = new DataPacket(PacketDistributions.leafNodes.get(count % noNodes), dataPacketSize);
+			System.out.println ("Data object " + count + " will reside in Node " + PacketDistributions.leafNodes.get(count % noNodes));
+			pack.setSegmentId(0);
+			CCNRouter router = Grid.getRouter(PacketDistributions.leafNodes.get(count % noNodes));
+			CCNCache routerLocalCache = router.getLocalCache();
+			pack.setLocality(true);
+			routerLocalCache.addToCache(pack);
+
 			//log.info("Creating Data Object:"+line);
 		}
 		rd.close();
