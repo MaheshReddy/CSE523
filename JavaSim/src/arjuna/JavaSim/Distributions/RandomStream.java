@@ -67,7 +67,7 @@ protected RandomStream (long MGSeed, long LCGSeed)
 	if (MGSeed < 0) MGSeed = -MGSeed;
 	if (LCGSeed < 0) LCGSeed = -LCGSeed;
 
-	// Initialise state
+	// Initialize state
     
 	MSeed = MGSeed;
 	LSeed = LCGSeed;
