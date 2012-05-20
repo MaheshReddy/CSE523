@@ -30,7 +30,13 @@ public class InterestEntry {
 	}
 	
 	public int hashCode() {
-	    return interestID;
+		
+		int hash = 7;
+		
+		hash = 31 * hash + interestID;
+		hash = 31 * hash + segmentID;
+		
+		return hash;
 	}
 	
 	public void setSegmentID (int temp) {
