@@ -49,7 +49,7 @@ public class CacheFIBTrace extends SimulationProcess {
 				
 				
 				
-				if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE) {
+				if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE || SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF_LEAFNODE) {
 					
 					if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
 						
