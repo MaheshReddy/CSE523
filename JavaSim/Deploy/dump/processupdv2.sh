@@ -10,7 +10,7 @@ do
       n)  nodes="$OPTARG";;
       i)  input_filename="$OPTARG";;
       o)  output_filename="$OPTARG";;
-      \?)		# unknown flag
+     \?)		# unknown flag
       	  echo >&2 \
 	  "usage: $0 [-n] [nodes] [-i] [input filename] [-o] [output filename]"
 	  exit 1;;
@@ -18,7 +18,7 @@ do
 done
 shift $((OPTIND - 1))
 
-perl grepupdv2.pl $input_filename $nodes > .temp.txt
+perl grepupdv2.pl $input_filename > .temp.txt
 sort -k1 -n .temp.txt > $output_filename
 rm .temp.txt
 

@@ -1,0 +1,14 @@
+popularity bias = 0; one-timers = 0; LRU Dynamic Stack Model; everything else default setting
+===================================================
+Workload size:  35 GB,  Total #requests: 3396245
+    Web:	1266396 #req, 37.288124  of total, median size = 10.143000 KBs
+    ****[Note by H. Badr: average web object size = 11147 bytes
+                          weighted average web object size = 10768 bytes (weighted by popularity)]
+    ****[Note by H. Badr: Number of web objects = 379918]****
+    P2P:	8 #req, 0.000236  of total, median size = 650.609985 MBs
+    Video:	1232 #req, 0.036275  of total, median size = 5.816412 MBs
+    Other:	2128609 #req, 62.675369  of total, median size = 5.000000 KBs
+
+Total request traffic (1KB/request)= 3316  MB
+===================================================
+Web #objects = 379918, redundancy = 0.700000, totalNoofRequests = 1266396 

@@ -29,7 +29,7 @@ my %packets;
 #
 # $n represents the no of nodes in the topolgoy. It is the second command line argument to the perl script.
 #
-my $n = $ARGV[1];
+#my $n = $ARGV[1];
 
 my $src;
 my $dest;
@@ -44,7 +44,7 @@ my $total_data;
 my $useful_data;
 
 #
-# Input file name taken as arguement. This file needs to be in the same directory.
+# Input file name taken as argument. This file needs to be in the same directory.
 #
 open INPUT, $ARGV[0];
 @trace = <INPUT>;

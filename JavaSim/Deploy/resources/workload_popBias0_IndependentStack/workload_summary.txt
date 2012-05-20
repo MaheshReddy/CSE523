@@ -1,0 +1,11 @@
+popularity bias = 0; one-timers = 0; Independent Stack Model; everything else default setting
+===================================================
+Workload size:  5 GB,  Total #requests: 485177
+    Web:	180913 #req, 37.288040  of total, median size = 10.143000 KBs
+        ****[Note by H. Badr: Number of web objects = 54273]****
+    P2P:	1 #req, 0.000206  of total, median size = 650.609985 MBs
+    Video:	176 #req, 0.036275  of total, median size = 5.816412 MBs
+    Other:	304087 #req, 62.675476  of total, median size = 5.000000 KBs
+
+Total request traffic (1KB/request)= 473  MB
+===================================================
