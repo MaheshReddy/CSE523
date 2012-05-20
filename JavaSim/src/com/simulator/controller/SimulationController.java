@@ -45,6 +45,10 @@ import java.util.Properties;
 	private static long packetsGenerated = 0;
 	public static long maxSimulatedPackets = 0;
 	private static int cacheSize;
+	private static int localCacheSize;
+	private static int fibSize;
+	private static int pitSize;
+	private static int interestListSize;
 	
 	private static int hold = 0;
 	
@@ -54,6 +58,7 @@ import java.util.Properties;
 	private static SimulationTypes cacheType = SimulationTypes.SIMULATION_UNLIMITED_CACHESIZE;
 	private static SimulationTypes cacheAvailability = SimulationTypes.SIMULATION_NO_CACHE;
 	private static SimulationTypes debugging = SimulationTypes.SIMULATION_DEBUGGING_ON;
+	private static SimulationTypes objectSegmentation = SimulationTypes.SIMULATION_SEG_OFF;
 
 	public static Writer fs = null;
 	
@@ -90,6 +95,8 @@ import java.util.Properties;
 
 			setDistributionType (SimulationTypes.valueOf(prop.getProperty("ccn.object.distribution")));
 			
+			setObjectSegmentation (SimulationTypes.valueOf(prop.getProperty("ccn.object.segmentation")));
+			
 			setDebugging (SimulationTypes.valueOf(prop.getProperty("ccn.debgging")));
 			
 			setCacheType (SimulationTypes.valueOf(prop.getProperty("ccn.cachesize.type")));
@@ -98,6 +105,8 @@ import java.util.Properties;
 			
 			setCacheSize(Integer.parseInt(prop.getProperty("ccn.cache.size")));
 			
+			setLocalCacheSize(Integer.parseInt(prop.getProperty("ccn.localcache.size")));
+			
 			CCNRouter.setProcDelay(Double.parseDouble(prop.getProperty("ccn.delay.processing")));
 			
 			TransmitPackets.setTransDelay(Double.parseDouble(prop.getProperty("ccn.delay.transmitting")));
@@ -105,6 +114,12 @@ import java.util.Properties;
 			Arrivals.setLoadImpact(Double.parseDouble(prop.getProperty("ccn.load.impact")));	
 
 			CCNRouter.setPitTimeOut(Double.parseDouble(prop.getProperty("ccn.pit.timeout")));
+			
+			setPITSize(Integer.parseInt(prop.getProperty("ccn.pit.size")));
+			
+			setFIBSize(Integer.parseInt(prop.getProperty("ccn.fib.size")));
+			
+			setInterestListSize(Integer.parseInt(prop.getProperty("ccn.interestlist.size")));
 			
 			PacketDistributions.setAllDocs(prop.getProperty("ccn.globeTraff.alldocs"));
 			
@@ -146,8 +161,8 @@ import java.util.Properties;
 			 * */
 			Arrivals A = new Arrivals();
 			
-			CacheFIBTrace B = new CacheFIBTrace ();
-			B.ActivateAt(1.0);
+			//CacheFIBTrace B = new CacheFIBTrace ();
+			//B.ActivateAt(1.0);
 			
 			/* The following call will place the Arrival object onto the JavaSim scheduler's queue. */
 			A.Activate();
@@ -163,7 +178,61 @@ import java.util.Properties;
 			/**
 			 * For now using a workaround of using a flag to indicate end of simulation.
 			 */
+			Writer f = null;
+			
+			//try {
+				
+				//f = new BufferedWriter(new FileWriter("dump/averages.txt",true));			
+			//}		
+		    //catch (IOException e) {}
+			
+			
 			while(!A.isSimStatus())	{
+				
+				int sum1 = 0;
+				int sum2 = 0;
+				int sum3 = 0;
+				int sum4 = 0;
+				
+				for(int i=0;i<Grid.getGridSize();i++) {
+					//if (!Grid.getRouter(i).getPacketsQ().isEmpty()) {						
+						//System.out.println("The queue of Router + " + Grid.getRouter(i).getRouterId() + " has " + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + " packets");
+						sum1 +=  Grid.getRouter(i).getPacketsQ().packetsInCCNQueue();
+						sum2 +=  Grid.getRouter(i).getPIT().size();
+						sum3 += Grid.getRouter(i).getInterestsServed().size();						
+						sum4 += Grid.getRouter(i).getForwardingTable().size();
+						//sum4 += Grid.getRouter(i).getPIT().values().size();
+						
+						
+						//terminate = false;
+					//}								
+				}		
+				
+				//System.out.println("\nThe average size all router 'Queues' + " + (double) sum1/(double) Grid.getGridSize());
+				//System.out.println("The average size all router 'PIT' + " + (double) sum2/(double) Grid.getGridSize());
+				//System.out.println("The average size all router 'InterestServed' + " + (double) sum3/(double) Grid.getGridSize());
+				//System.out.println("The average size all router 'Forwarding tabes' + " + (double) sum4/(double) Grid.getGridSize());
+				
+				
+				try {
+					
+					f = new BufferedWriter(new FileWriter("dump/averages.txt",true));
+					
+					f.write("Current Time: " + SimulationController.CurrentTime());
+					f.write("\nThe average size for the queues at all router: " + (double) sum1/(double) Grid.getGridSize());
+					f.write("\nThe average size for the PIT at all router: " + (double) sum2/(double) Grid.getGridSize());
+					f.write("\nThe average size for the InterestServed list at all router: " + (double) sum3/(double) Grid.getGridSize());
+					f.write("\nThe average size for the Forwarding Tables at all router: " + (double) sum4/(double) Grid.getGridSize() + "\n\n");
+					
+					f.close();
+					
+					//System.out.println("\nThe average size all router 'Queues' + " + (double) sum1/(double) Grid.getGridSize());
+					//System.out.println("The average size all router 'PIT' + " + (double) sum2/(double) Grid.getGridSize());
+					//System.out.println("The average size all router 'InterestServed' + " + (double) sum3/(double) Grid.getGridSize());
+					//System.out.println("The average size all router 'Forwarding tabes' + " + (double) sum4/(double) Grid.getGridSize());
+					
+				} catch (IOException e){}
+				
 				Hold(SimulationController.getHold());
 				//System.out.println(A.isSimStatus());
 			}
@@ -193,16 +262,17 @@ import java.util.Properties;
 			Scheduler.stopSimulation();
 			
 			SimulationController.fs.close();
+			//f.close();
 			
 			//log.info("Done with simulation");
-			//log.info("Final Router configrations--------->");			
+			//log.info("Final Router configurations--------->");			
 			
 			
 			for(int i=0;i<Grid.getGridSize();i++)
 				Grid.getRouter(i).terminate();
 			
 			A.terminate();
-			B.terminate();
+			//B.terminate();
 			SimulationProcess.mainResume();
 		}
 		catch (SimulationException e) {}
@@ -264,8 +334,7 @@ import java.util.Properties;
 	}
 	
 	public static SimulationTypes getCacheType() {
-		return cacheType;
-	}
+		return cacheType;	}
 	
 	
 	public static void setCacheAvailability(SimulationTypes cacheAvail) {
@@ -276,12 +345,52 @@ import java.util.Properties;
 		return cacheAvailability;
 	}
 	
+	public static void setObjectSegmentation(SimulationTypes seg) {
+		SimulationController.objectSegmentation = seg;
+	}
+	
+	public static SimulationTypes getObjectSegmentation() {
+		return objectSegmentation;
+	}
+	
 	public static void setCacheSize (int cacheSize) {
 		SimulationController.cacheSize = cacheSize;
 	}
 	
 	public static int getCacheSize () {
 		return cacheSize;
+	}
+	
+	public static void setLocalCacheSize (int cacheSize) {
+		SimulationController.localCacheSize = cacheSize;
+	}
+	
+	public static int getLocalCacheSize () {
+		return localCacheSize;
+	}
+	
+	public static void setFIBSize (int size) {
+		SimulationController.fibSize = size;
+	}
+	
+	public static int getFIBSize () {
+		return fibSize;
+	}
+	
+	public static void setPITSize (int size) {
+		SimulationController.pitSize = size;
+	}
+	
+	public static int getPITSize () {
+		return pitSize;
+	}
+	
+	public static void setInterestListSize (int size) {
+		SimulationController.interestListSize = size;
+	}
+	
+	public static int getInterestListSize () {
+		return interestListSize;
 	}
 	
 	public static void setHold (int hold) {
