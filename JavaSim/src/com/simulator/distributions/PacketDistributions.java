@@ -39,6 +39,9 @@ public class PacketDistributions {
 	
 	public static ArrayList<Integer> leafNodes = null;
 	
+	public static long size[];
+
+	
 	/**
 	 *  distributeContentGlobeTraffic distributes the content from doc.all produced by globe traffic tool into various nodes of the topology.
 	 *  //TODO currently randomly choosing a node to distribute content need to review this.
@@ -48,6 +51,9 @@ public class PacketDistributions {
 	
 	public static void distributeContent (SimulationTypes distType) throws Exception 
 	{
+		
+		size = new long [noDataPackets+1];
+		
 		if (SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT == distType) {
 			distributeContentDefault();
 		}
@@ -65,7 +71,7 @@ public class PacketDistributions {
 			throw new Exception();
 		}
 		
-		Packets.setCurrenPacketId(1);
+		Packets.setCurrenPacketId(0);
 	}	
 	
 	private static void distributeContentDefault() {
@@ -75,6 +81,9 @@ public class PacketDistributions {
 			
 			DataPacket pack = new DataPacket(j % noNodes, dataPacketSize);
 			pack.setSegmentId(0);
+			
+			size [i] = (long) pack.getSizeOfPacket();
+			
 			CCNRouter router = Grid.getRouter(j % noNodes);
 			CCNCache routerLocalCache = router.getLocalCache();
 			pack.setLocality(true);
@@ -100,6 +109,9 @@ public class PacketDistributions {
 			DataPacket pack = new DataPacket(PacketDistributions.leafNodes.get(j % noNodes), dataPacketSize);
 			System.out.println ("Data object " + i + " will reside in Node " + PacketDistributions.leafNodes.get(j % noNodes));
 			pack.setSegmentId(0);
+			
+			size [i] = (long) pack.getSizeOfPacket();
+
 			CCNRouter router = Grid.getRouter(PacketDistributions.leafNodes.get(j % noNodes));
 			CCNCache routerLocalCache = router.getLocalCache();
 			pack.setLocality(true);
@@ -117,12 +129,20 @@ public class PacketDistributions {
 		//FileReader inReader = new FileReader(new File(ClassLoader.getSystemResource(getAllDocs()).toURI()));
 		//InputStreamReader inReader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs()));
 		BufferedReader rd = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs())));
+		
+		int count = 0;
+		int count1 = 0;
 		String line;
 		
 		while((line = rd.readLine())!=null)	{
 			
 			Integer rtrId = nodeSelecter.nextInt(Grid.getGridSize());
 			DataPacket pac = new DataPacket(line,rtrId,0);
+			
+			size [count1] = (long) pac.getSizeOfPacket();
+			
+			count1++;
+			
 			CCNRouter router = Grid.getRouter(rtrId);
 			CCNCache routerLocalCache = router.getLocalCache();
 			pac.setLocality(true);
@@ -159,26 +179,36 @@ public class PacketDistributions {
 			leafNodes.add(i); 
 		
 		Integer noNodes = PacketDistributions.leafNodes.size();
-		//FileReader inReader = new FileReader(new File(ClassLoader.getSystemResource(getAllDocs()).toURI()));
-		//InputStreamReader inReader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs()));
+
 		BufferedReader rd = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs())));
+		
 		String line;
 		int count = -1;
+		int count1 = 0;
 		
 		while((line = rd.readLine())!=null)	{
 			
 			count++;
 			
-			DataPacket pack = new DataPacket(PacketDistributions.leafNodes.get(count % noNodes), dataPacketSize);
+			DataPacket pack = new DataPacket(line,PacketDistributions.leafNodes.get(count % noNodes),0);
+			
+			//DataPacket pack = new DataPacket(PacketDistributions.leafNodes.get(count % noNodes), dataPacketSize);
 			System.out.println ("Data object " + count + " will reside in Node " + PacketDistributions.leafNodes.get(count % noNodes));
+			
 			pack.setSegmentId(0);
+			
+			size [count1] = (long)pack.getSizeOfPacket();
+			
+			count1++;
+			
 			CCNRouter router = Grid.getRouter(PacketDistributions.leafNodes.get(count % noNodes));
 			CCNCache routerLocalCache = router.getLocalCache();
 			pack.setLocality(true);
 			routerLocalCache.addToCache(pack);
 
 			//log.info("Creating Data Object:"+line);
-		}
+		}	
+		
 		rd.close();
 	}
 	/**
