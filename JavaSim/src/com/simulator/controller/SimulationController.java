@@ -141,7 +141,9 @@ import java.util.Properties;
 		/* The following function will distributed the objects amongst various nodes based on docs.all file of
 		 * Globe Traffic.  
 		 * */
-
+		
+		//System.out.println("Invalid distribution type:"+distributionType);
+		
 		PacketDistributions.distributeContent(distributionType);
 		
 		fs = new BufferedWriter(new FileWriter(Packets.getDataDumpFile(),true));
@@ -199,7 +201,7 @@ import java.util.Properties;
 						//System.out.println("The queue of Router + " + Grid.getRouter(i).getRouterId() + " has " + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + " packets");
 						sum1 +=  Grid.getRouter(i).getPacketsQ().packetsInCCNQueue();
 						sum2 +=  Grid.getRouter(i).getPIT().size();
-						sum3 += Grid.getRouter(i).getInterestsServed().size();						
+						//sum3 += Grid.getRouter(i).getInterestsServed().length;						
 						sum4 += Grid.getRouter(i).getForwardingTable().size();
 						//sum4 += Grid.getRouter(i).getPIT().values().size();
 						
@@ -221,7 +223,7 @@ import java.util.Properties;
 					f.write("Current Time: " + SimulationController.CurrentTime());
 					f.write("\nThe average size for the queues at all router: " + (double) sum1/(double) Grid.getGridSize());
 					f.write("\nThe average size for the PIT at all router: " + (double) sum2/(double) Grid.getGridSize());
-					f.write("\nThe average size for the InterestServed list at all router: " + (double) sum3/(double) Grid.getGridSize());
+					//f.write("\nThe average size for the InterestServed list at all router: " + (double) sum3/(double) Grid.getGridSize());
 					f.write("\nThe average size for the Forwarding Tables at all router: " + (double) sum4/(double) Grid.getGridSize() + "\n\n");
 					
 					f.close();
