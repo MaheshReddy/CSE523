@@ -55,7 +55,8 @@ public class Arrivals extends SimulationProcess {
 		InterArrivalTime = new ExponentialStream(loadImpact);
 		gridSize = Grid.getGridSize();
 		
-		countInterestPackets = PacketDistributions.getNoDataPackets();
+		//countInterestPackets = PacketDistributions.getNoDataPackets();
+		countInterestPackets = 0;
 		
 		rdr = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getWorkload())));
 		
@@ -170,7 +171,8 @@ public class Arrivals extends SimulationProcess {
 							objectID = Integer.parseInt(words[1]);
 							
 							if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_ON) {
-								objectSize = Integer.parseInt(words[2]);						
+								//objectSize = Integer.parseInt(words[2]);
+								objectSize = (int) PacketDistributions.size[objectID];
 							}
 							else if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_OFF) {
 								objectSize = Arrivals.getSegmentSize();
