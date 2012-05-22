@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.BitSet;
 
 //import org.apache.log4j.Logger;
 
@@ -78,6 +79,7 @@ public class CCNRouter extends SimulationProcess {
 	
 	private List<InterestEntry> interestsServed = null;
 	private HashSet<InterestEntry> interestsServedSet = null;
+	private BitSet interestServedBitArray[] = null;
 	
 	public CCNRouter (int id) {
 		
@@ -88,7 +90,9 @@ public class CCNRouter extends SimulationProcess {
 		pit = new HashMap<InterestEntry,List<PITEntry>>(SimulationController.getPITSize(), (float)0.9);
 		forwardingTable = new HashMap<Integer, FIBEntry>(SimulationController.getFIBSize(), (float)0.9);
 		//interestsServed = new ArrayList<InterestEntry>(SimulationController.getInterestListSize());
-		interestsServedSet = new HashSet<InterestEntry>(SimulationController.getInterestListSize(), (float)0.9);
+		//interestsServedSet = new HashSet<InterestEntry>(SimulationController.getInterestListSize(), (float)0.9);
+		//interestServedBitArray = new BitSet [(int)SimulationController.getMaxSimulatedPackets()];
+		interestServedBitArray = new BitSet [1000];
 		setRouterId(id);
 		
 		//double numberOfIntPacks = Math.ceil((double)objectSize/(double)Arrivals.getSegmentSize())
@@ -423,14 +427,26 @@ public class CCNRouter extends SimulationProcess {
 	 */
 	public void interestPacketsHandler(Packets curPacket) {
 		
-		InterestEntry interest = new InterestEntry (curPacket.getPacketId(), curPacket.getSegmentId());
+		//InterestEntry interest = new InterestEntry (curPacket.getPacketId(), curPacket.getSegmentId());
 		
 		/* The following code is to suppress the interest packets that have already been served */
-		if (interestsServedSet.contains(interest)) {
+		/*if (interestsServedSet.contains(interest)) {
 			
 			curPacket.finished(SupressionTypes.SUPRESSION_ALREADY_SERVED);
 			//log.info("Already served interest packet "+ curPacket.getPacketId() + " with segment ID " + curPacket.getSegmentId());
 			return;
+		}*/		
+		
+		if(interestServedBitArray[curPacket.getPacketId()] != null) {
+			if (interestServedBitArray[curPacket.getPacketId()].get(curPacket.getSegmentId())) {
+				curPacket.finished(SupressionTypes.SUPRESSION_ALREADY_SERVED);
+				//log.info("Already served interest packet "+ curPacket.getPacketId() + " with segment ID " + curPacket.getSegmentId());
+				return;
+			}
+		}
+		else {
+			int sizeOfBitSet = (int) Math.ceil((double)PacketDistributions.size[curPacket.getRefPacketId()]/(double)Arrivals.getSegmentSize());
+			interestServedBitArray[curPacket.getPacketId()] = new BitSet(sizeOfBitSet);
 		}
 		
 		/*if (isInterestServed(interest)) {
@@ -445,7 +461,9 @@ public class CCNRouter extends SimulationProcess {
 		/* Add the interest packet into the list of served interest packets. It will assist in achieving the step above, which
 		 * is to suppress interest packets already served 
 		 * */
-		interestsServedSet.add(interest);
+		//interestsServedSet.add(interest);
+		//interestServedBitArray.set(PacketDistributions.suppIndex[curPacket.getRefPacketId()] + curPacket.getSegmentId() - 1);
+		interestServedBitArray[curPacket.getPacketId()].set(curPacket.getSegmentId());
 		//addToInterestServed(interest);
 		
 		Boolean newInPit = false;
@@ -831,8 +849,12 @@ public class CCNRouter extends SimulationProcess {
 		
 	}*/
 	
-	public HashSet getInterestsServed () {
+	/*public HashSet getInterestsServed () {
 		return interestsServedSet;
+	}*/
+	
+	public BitSet[] getInterestsServed () {
+		return interestServedBitArray;
 	}
 
 
