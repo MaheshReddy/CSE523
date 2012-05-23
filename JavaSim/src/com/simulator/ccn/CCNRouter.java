@@ -91,8 +91,8 @@ public class CCNRouter extends SimulationProcess {
 		forwardingTable = new HashMap<Integer, FIBEntry>(SimulationController.getFIBSize(), (float)0.9);
 		//interestsServed = new ArrayList<InterestEntry>(SimulationController.getInterestListSize());
 		//interestsServedSet = new HashSet<InterestEntry>(SimulationController.getInterestListSize(), (float)0.9);
-		//interestServedBitArray = new BitSet [(int)SimulationController.getMaxSimulatedPackets()];
-		interestServedBitArray = new BitSet [1000];
+		interestServedBitArray = new BitSet [(int)SimulationController.getMaxSimulatedPackets()];
+		//interestServedBitArray = new BitSet [1000];
 		setRouterId(id);
 		
 		//double numberOfIntPacks = Math.ceil((double)objectSize/(double)Arrivals.getSegmentSize())
