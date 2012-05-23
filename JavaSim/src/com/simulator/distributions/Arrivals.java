@@ -110,7 +110,7 @@ public class Arrivals extends SimulationProcess {
 							
 							String [] words = line.split("\\s+");
 							objectID = Integer.parseInt(words[1]);
-							objectSize = Integer.parseInt(words[2]);
+							objectSize = (int) PacketDistributions.size[objectID];
 						}
 						else{
 							
@@ -127,7 +127,7 @@ public class Arrivals extends SimulationProcess {
 				else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT) {
 					
 					objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
-					objectSize = PacketDistributions.getDataPacketSize();
+					objectSize = (int) PacketDistributions.size[objectID];
 					
 					if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()) { 
 						
@@ -139,7 +139,7 @@ public class Arrivals extends SimulationProcess {
 				else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE) {
 					
 					objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
-					objectSize = PacketDistributions.getDataPacketSize();
+					objectSize = (int) PacketDistributions.size[objectID];
 					
 					srcNode = PacketDistributions.leafNodes.get(nodeSelecter.nextInt(PacketDistributions.leafNodes.size())) ;
 					
@@ -169,14 +169,7 @@ public class Arrivals extends SimulationProcess {
 							
 							String [] words = line.split("\\s+");
 							objectID = Integer.parseInt(words[1]);
-							
-							if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_ON) {
-								//objectSize = Integer.parseInt(words[2]);
-								objectSize = (int) PacketDistributions.size[objectID];
-							}
-							else if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_OFF) {
-								objectSize = Arrivals.getSegmentSize();
-							}							
+							objectSize = (int) PacketDistributions.size[objectID];							
 						}
 						else{
 							
