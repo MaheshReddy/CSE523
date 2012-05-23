@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import com.simulator.ccn.CCNCache;
 import com.simulator.ccn.CCNRouter;
+import com.simulator.controller.SimulationController;
 import com.simulator.enums.SimulationTypes;
 import com.simulator.packets.DataPacket;
 import com.simulator.packets.Packets;
@@ -139,7 +140,12 @@ public class PacketDistributions {
 			Integer rtrId = nodeSelecter.nextInt(Grid.getGridSize());
 			DataPacket pac = new DataPacket(line,rtrId,0);
 			
-			size [count1] = (long) pac.getSizeOfPacket();
+			if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_ON) {
+				size [count1] = (long)pac.getSizeOfPacket();
+			}
+			else if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_OFF) {
+				size [count1] = Arrivals.getSegmentSize();
+			}	
 			
 			count1++;
 			
@@ -197,7 +203,12 @@ public class PacketDistributions {
 			
 			pack.setSegmentId(0);
 			
-			size [count1] = (long)pack.getSizeOfPacket();
+			if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_ON) {
+				size [count1] = (long)pack.getSizeOfPacket();
+			}
+			else if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_OFF) {
+				size [count1] = Arrivals.getSegmentSize();
+			}			
 			
 			count1++;
 			
