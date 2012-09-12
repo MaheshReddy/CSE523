@@ -10,7 +10,7 @@ import arjuna.JavaSim.Simulation.*;;
 /* The following class implements the logic of transmitting a packet. It is always called before sending a packet with a
  * delay, which represents the transmission delay. It is immediately terminated after implementing transmission which is
  * to simply add the packet into the queue of the destination node. The delay is implemented by calling this class with explicit
- * delaybb.
+ * delay.
  * */
 public class TransmitPackets extends SimulationProcess {
 	
