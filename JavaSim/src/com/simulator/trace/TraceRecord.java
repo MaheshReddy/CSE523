@@ -1,5 +1,5 @@
 package com.simulator.trace;
-
+/**/
 public class TraceRecord {
 	
 	String packetType = null;
