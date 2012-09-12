@@ -16,6 +16,7 @@ import com.simulator.enums.SimulationTypes;
 import com.simulator.packets.InterestPacket;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
+import com.simulator.ccn.TimeOutFields;
 
 import arjuna.JavaSim.Simulation.SimulationException;
 
@@ -38,7 +39,9 @@ public class Arrivals extends SimulationProcess {
 	private static int interestPacketSize = 0;
 	private static int segmentSize;
 	
-	boolean simStatus = false;
+	/* This variable to set to true when all the required number of interest packets have
+	 * been generated */
+	private static boolean arrivalStatus = false;
 	
 	private Random nodeSelecter;
 	private Random packetIdGenerator;
@@ -52,10 +55,10 @@ public class Arrivals extends SimulationProcess {
 
 	public Arrivals () {
 		
+		//InterArrivalTime = new ExponentialStream(loadImpact, 0, 3063366117L, 3003062878L);
 		InterArrivalTime = new ExponentialStream(loadImpact);
 		gridSize = Grid.getGridSize();
 		
-		//countInterestPackets = PacketDistributions.getNoDataPackets();
 		countInterestPackets = 0;
 		
 		rdr = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getWorkload())));
@@ -63,8 +66,10 @@ public class Arrivals extends SimulationProcess {
 		/* At present, we are using seeds for testing purposes. However, eventually, we will remove them in the production 
 		 * mode. 
 		 * */
+		//packetIdGenerator = new Random(3008370503L);
+		//nodeSelecter = new Random(3009377119L);
 		packetIdGenerator = new Random(5);
-		nodeSelecter = new Random(3);
+		nodeSelecter = new Random(3);		
     }
 
 	/* This method is revoked intermittently to create interest packets */
@@ -88,15 +93,15 @@ public class Arrivals extends SimulationProcess {
 			
 			int srcNode = nodeSelecter.nextInt(gridSize);
 			
-			/* This 'if' conditions stops the arrival class from generating anymore interest packets when the total number of interest packets
-			 * has reached
+			/* This 'if' conditions stops the arrival class from generating anymore interest packets when the total number of 
+			 * interest packets has reached
 			 * */
-			if (!this.isSimStatus()) {	
+			if (!Arrivals.isArrivalStatus()) {	
 				
 				if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF) {
 					
 					/*
-					 * Now we have to parse next line from workload.all and assign the refpacket id for this interest packet.
+					 * Now we have to parse next line from workload.all and assign the object id for this interest packet.
 					 * If we have reached EOF just end this thread thus controller thread which is waiting on this 
 					 * notified.
 					 * */
@@ -115,7 +120,7 @@ public class Arrivals extends SimulationProcess {
 						else{
 							
 							rdr.close();
-							setSimStatus(true);
+							setArrivalStatus(true);
 							System.out.println("Done with Arrivals");
 						}
 					} 
@@ -126,26 +131,26 @@ public class Arrivals extends SimulationProcess {
 				}
 				else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT) {
 					
-					objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
+					objectID = packetIdGenerator.nextInt(PacketDistributions.getNoOfObjects());
 					objectSize = (int) PacketDistributions.size[objectID];
 					
-					if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()) { 
+					if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()-1) { 
 						
-						setSimStatus(true);
+						setArrivalStatus(true);
 						System.out.println("Done with Arrivals");
 					}
 				}
 				
 				else if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE) {
 					
-					objectID = packetIdGenerator.nextInt(PacketDistributions.getNoDataPackets());
+					objectID = packetIdGenerator.nextInt(PacketDistributions.getNoOfObjects());
 					objectSize = (int) PacketDistributions.size[objectID];
 					
 					srcNode = PacketDistributions.leafNodes.get(nodeSelecter.nextInt(PacketDistributions.leafNodes.size())) ;
 					
-					if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()) { 
+					if (countInterestPackets >= SimulationController.getMaxSimulatedPackets()-1) { 
 						
-						setSimStatus(true);
+						setArrivalStatus(true);
 						System.out.println("Done with Arrivals");
 					}
 				}
@@ -174,7 +179,7 @@ public class Arrivals extends SimulationProcess {
 						else{
 							
 							rdr.close();
-							setSimStatus(true);
+							setArrivalStatus(true);
 							System.out.println("Done with Arrivals");
 						}
 					} 
@@ -184,32 +189,70 @@ public class Arrivals extends SimulationProcess {
 					}
 				}
 				
-				//System.out.println("Generated Interest Packet: " + countInterestPackets);
-				//System.out.println("Source Node: " + srcNode);
-			    
 				/* 
 				 * This is not inside the for loop because we want to generate the same packet number for all the packets. 
-				 * The packets created in the for loop are cloned, hence use the same packetID created with the first packet 
+				 * The packets created in the for loop are cloned, hence use the same packetID (but different segment number) created with the first packet 
 				 * */
+				
+				/* This decrements the defaultInterface value (-ve value) maintained at a node. When a interest packet is created at a node ,
+				 * this interface value is assigned. This value is used to identify this interest packet in the PIT table when
+				 * the respective data packet is received. 
+				*/				
+				Grid.getRouter(srcNode).decDefaultInterface();
+				
+				/* Create an Interest packet */
 				InterestPacket firstPacket = new InterestPacket(srcNode, interestPacketSize, 1);
-				firstPacket.setRefPacketId(objectID);	
+				firstPacket.setRefPacketId(objectID);
+				/* PrimaryInterestID is the global marker for this Interest packet. It will remain same throughout all retransmissions
+				 * 
+				*/ 
+				firstPacket.setPrimaryInterestId(firstPacket.getPacketId());
+				firstPacket.setPrevHop(Grid.getRouter(srcNode).getDefaultInterface());
+				
 				Packets.dumpStatistics(firstPacket, "CREATED");
+				
 				firstPacket.activate();		
 				
+				/* The following code add this interest packet into the TimeOutQueue. */
+				double tempTimeOutValue = SimulationController.CurrentTime() + SimulationController.getPitTimeOut() + 
+						SimulationController.getRetransNuance(); 
 				
-				System.out.println("Generated Interest Packet (Actual): " + firstPacket.getCurrentPacketId());				
+				SimulationController.timeOutQueue.add(new TimeOutFields(firstPacket.getPrimaryInterestId(), firstPacket.getPacketId(), firstPacket.getSegmentId(), 
+						firstPacket.getRefPacketId(), firstPacket.getOriginNode(), firstPacket.getExpirationCount(), 
+						tempTimeOutValue, false));
+				
+				/* In case the TimeOutProcess is idle or suspended state, we need to reactivate it. This process will be in this state only
+				 * when TimeOutQueue has one element (the one we just entered) 
+				 * */
+				try {
+					if (SimulationController.timeOutQueue.size() == 1 && SimulationController.top.idle()) {
+						SimulationController.top.ActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
+					}
+				} 
+				catch (SimulationException e) {
+					 //TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				catch (RestartException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.out.println("Generated Interest Packet (Actual): " + Packets.getCurrentPacketId());				
 				countInterestPackets++;
 				
+				/* The following code will perform segmentation, if required. */
 				double numberOfIntPacks = Math.ceil((double)objectSize/(double)Arrivals.getSegmentSize());			
 				
 				if (numberOfIntPacks >= 2) {
 				
 					for (int i = 2; i <= (int)numberOfIntPacks; i++) {
 						/* The following statement will randomly choose a source node for the interest packet */
-						
+						Grid.getRouter(srcNode).decDefaultInterface();
 				    	InterestPacket otherPackets = (InterestPacket) firstPacket.clone();
 				    	otherPackets.setSegmentId(i);  	
 				    	otherPackets.setCurNode(-1);
+				    	otherPackets.setPrevHop(Grid.getRouter(srcNode).getDefaultInterface());
 						
 						/* 
 						 * The following code records the creation of the interest packet 
@@ -220,6 +263,30 @@ public class Arrivals extends SimulationProcess {
 						 * the source nodes queue 
 						 */			
 						otherPackets.activate();
+						
+						/* The TimeOutValue of subsequent segmented interest packets should have a larger time out by the processing delay as they
+						 * will wait in queue behind the previous segmented packet (untested idea as of 9/10/2012)
+						 * */
+						tempTimeOutValue = SimulationController.CurrentTime() + SimulationController.getPitTimeOut() + 
+								SimulationController.getRetransNuance() + CCNRouter.getProcDelay() * (i -1); 
+						
+						SimulationController.timeOutQueue.add(new TimeOutFields(otherPackets.getPrimaryInterestId(), otherPackets.getPacketId(), 
+								otherPackets.getSegmentId(), otherPackets.getRefPacketId(), otherPackets.getOriginNode(), 
+								otherPackets.getExpirationCount(), tempTimeOutValue, false));
+						
+						try {
+							if (SimulationController.timeOutQueue.size() == 1 && SimulationController.top.idle()) {
+								SimulationController.top.ActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
+							}
+						} 
+						catch (SimulationException e) {
+							 //TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
+						catch (RestartException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 				    }
 				}			
 				//log.info("Packet generated ");
@@ -263,11 +330,11 @@ public class Arrivals extends SimulationProcess {
 		Arrivals.workload = workload;
 	}
 
-	public synchronized boolean isSimStatus() {
-		return simStatus;
+	public static synchronized boolean isArrivalStatus() {
+		return arrivalStatus;
 	}
 
-	public void setSimStatus(boolean simStatus) {
-		this.simStatus = simStatus;
+	public static void setArrivalStatus(boolean simStatus) {
+		arrivalStatus = simStatus;
 	}
 };

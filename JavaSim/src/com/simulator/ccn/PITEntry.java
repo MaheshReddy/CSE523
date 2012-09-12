@@ -1,34 +1,46 @@
 package com.simulator.ccn;
 
-import java.util.Iterator;
-import java.util.List;
-
-import com.simulator.packets.Packets;
 
 public class PITEntry {
 	
 	private int outgoingInterface;
 	private int refPacketId;
 	private double createdAtTime;
+	private int primaryInterestID;
+	private int numOfTimesExpired;
 	
-	PITEntry () {
+	public PITEntry () {
 		
-		outgoingInterface = 0;
-		createdAtTime = 0;	
-		refPacketId = 0;
+		outgoingInterface = -1;
+		createdAtTime = -1;	
+		refPacketId = -1;
+		primaryInterestID = -1;		
+		numOfTimesExpired = -1;
 	}
 	
-	PITEntry (int tempInt, double tempTime) {
+	
+	public PITEntry (int tempInt) {
+		
+		outgoingInterface = tempInt;
+		createdAtTime = -1;	
+		refPacketId = -1;
+		primaryInterestID = -1;		
+		numOfTimesExpired = -1;
+	}
+	
+	public PITEntry (int tempInt, double tempTime) {
 		
 		outgoingInterface = tempInt;
 		createdAtTime = tempTime;		
 	}
 	
-	PITEntry (int tempInt, int tempPacketId, double tempTime) {
+	public PITEntry (int tempInt, int tempPacketId, int tempPrimaryInterestID, double tempTime, int tempNumOfTimesExpired) {
 		
 		outgoingInterface = tempInt;
 		refPacketId = tempPacketId;
+		primaryInterestID = tempPrimaryInterestID;
 		createdAtTime = tempTime;		
+		numOfTimesExpired = tempNumOfTimesExpired;
 	}
 	
 	public boolean equals(Object o) {
@@ -39,8 +51,8 @@ public class PITEntry {
 	        return false;
 	    
 	    PITEntry pn = (PITEntry)o;
-	    return pn.outgoingInterface == outgoingInterface 
-	    		&& pn.refPacketId == refPacketId;
+	    return pn.outgoingInterface == outgoingInterface; 
+	    		//&& pn.refPacketId == refPacketId;
 	}
 	
 	public int hashCode() {
@@ -80,5 +92,21 @@ public class PITEntry {
 	
 	public double getCreatedAtTime () {
 		return createdAtTime;
+	}
+
+	public int getPrimaryInterestID() {
+		return primaryInterestID;
+	}
+
+	public void setPrimaryInterestID(int primaryInterestID) {
+		this.primaryInterestID = primaryInterestID;
+	}
+
+	public int getNumOfTimesExpired() {
+		return numOfTimesExpired;
+	}
+
+	public void setNumOfTimesExpired(int numOfTimesExpired) {
+		this.numOfTimesExpired = numOfTimesExpired;
 	}			
 }

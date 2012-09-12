@@ -2,10 +2,13 @@ package com.simulator.controller;
 
 //import org.apache.log4j.Logger;
 
+import com.simulator.ccn.IDEntry;
+import com.simulator.ccn.PITEntry;
+import com.simulator.ccn.TimeOutProcess;
+import com.simulator.ccn.TimeOutFields;
+
 
 import com.simulator.ccn.CCNRouter;
-import com.simulator.ccn.InterestEntry;
-import com.simulator.ccn.PITEntry;
 import com.simulator.ccn.TransmitPackets;
 import com.simulator.distributions.Arrivals;
 import com.simulator.distributions.PacketDistributions;
@@ -15,19 +18,20 @@ import com.simulator.enums.SupressionTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 import com.simulator.trace.*;
+import java.util.concurrent.PriorityBlockingQueue;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import arjuna.JavaSim.Simulation.*;
-
-import arjuna.JavaSim.Simulation.SimulationException;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Writer;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 /*
@@ -35,8 +39,9 @@ import java.util.Properties;
  * (the simulator). After the constructor the code transfer to the "run()" method where the object of Arrivals class is created
  * which is responsible to generate interest packets. Before the simulation starts, the first interest packet is created, and then
  * the simulation is started. The Arrival class object is called intermittently to generate new interest packets. The termination
- * condition is called after a wait of "hold(holdTerminationVerification)"; after which the SimulationController thread is 
- * reinvoked. If the termination condition is satisfied the simulation stops.   
+ * condition is called after a wait of "hold()"; after which the SimulationController thread is 
+ * reinvoked. If the termination condition is satisfied the simulation stops. Once new interest packets have stopped, the "timeOutQueue" is
+ * checked till its empty. Once all interest packets and their retransmission have completed, the simulation is terminated
  * */
 
 	public class SimulationController extends SimulationProcess {
@@ -45,10 +50,17 @@ import java.util.Properties;
 	private static long packetsGenerated = 0;
 	public static long maxSimulatedPackets = 0;
 	private static int cacheSize;
+	private static int edgeCacheSize;
+	private static int coreCacheSize;
 	private static int localCacheSize;
 	private static int fibSize;
 	private static int pitSize;
-	private static int interestListSize;
+
+	private static double pitTimeOut;
+	private static double retransNuance;
+	
+	public static TimeOutProcess top = null;
+	public static PriorityBlockingQueue <TimeOutFields> timeOutQueue = null; 
 	
 	private static int hold = 0;
 	
@@ -57,8 +69,12 @@ import java.util.Properties;
 	private static SimulationTypes distributionType = SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT;
 	private static SimulationTypes cacheType = SimulationTypes.SIMULATION_UNLIMITED_CACHESIZE;
 	private static SimulationTypes cacheAvailability = SimulationTypes.SIMULATION_NO_CACHE;
+	private static SimulationTypes fibAvailability = SimulationTypes.SIMULATION_NO_FIB;
 	private static SimulationTypes debugging = SimulationTypes.SIMULATION_DEBUGGING_ON;
 	private static SimulationTypes objectSegmentation = SimulationTypes.SIMULATION_SEG_OFF;
+	private static SimulationTypes cacheEntries = SimulationTypes.SIMULATION_CACHE_ENTRIES_OFF;
+	private static SimulationTypes cacheFibEntries = SimulationTypes.SIMULATION_CACHE_FIB_TRACE_OFF;
+	
 
 	public static Writer fs = null;
 	
@@ -73,77 +89,68 @@ import java.util.Properties;
 		/* Initializing the simulation */		
 		try {
 			
-			prop.load(ClassLoader.getSystemResourceAsStream("ccn.properties"));
+			prop.load(ClassLoader.getSystemResourceAsStream("ccn.properties"));			
 			
-			setHold(Integer.parseInt(prop.getProperty("ccn.hold.time")));
-			
-			setNoDataPackets(Integer.parseInt(prop.getProperty("ccn.no.datapackets")));
-			
-			PacketDistributions.setDataPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.datapackets")));
-			
-			Arrivals.setInterestPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.interestpackets")));			
-
+			setHold(Integer.parseInt(prop.getProperty("ccn.hold.time")));			
+			PacketDistributions.setNoOfObjects(Integer.parseInt(prop.getProperty("ccn.no.objects")));			
+			PacketDistributions.setObjectSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.objects")));			
+			Arrivals.setInterestPacketSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.interestpackets")));	
 			Arrivals.setSegmentSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.segment")));
-
-			setNoNodes(Integer.parseInt(prop.getProperty("ccn.no.nodes")));
-			
-			setMaxSimulatedPackets(Integer.parseInt(prop.getProperty("ccn.no.simulationpackets")));
-			
-			Packets.setDataDumpFile(prop.getProperty("dumpfile.packets"));
-			
+			setMaxSimulatedPackets(Integer.parseInt(prop.getProperty("ccn.no.simulationpackets")));			
+			Packets.setDataDumpFile(prop.getProperty("dumpfile.packets"));			
 			setGridType(GridTypes.valueOf(prop.getProperty("ccn.topology")));			
-
-			setDistributionType (SimulationTypes.valueOf(prop.getProperty("ccn.object.distribution")));
-			
-			setObjectSegmentation (SimulationTypes.valueOf(prop.getProperty("ccn.object.segmentation")));
-			
-			setDebugging (SimulationTypes.valueOf(prop.getProperty("ccn.debgging")));
-			
-			setCacheType (SimulationTypes.valueOf(prop.getProperty("ccn.cachesize.type")));
-			
-			setCacheAvailability (SimulationTypes.valueOf(prop.getProperty("ccn.cache")));
-			
-			setCacheSize(Integer.parseInt(prop.getProperty("ccn.cache.size")));
-			
-			setLocalCacheSize(Integer.parseInt(prop.getProperty("ccn.localcache.size")));
-			
-			CCNRouter.setProcDelay(Double.parseDouble(prop.getProperty("ccn.delay.processing")));
-			
+			setDistributionType (SimulationTypes.valueOf(prop.getProperty("ccn.object.distribution")));			
+			setObjectSegmentation (SimulationTypes.valueOf(prop.getProperty("ccn.object.segmentation")));			
+			setCacheType (SimulationTypes.valueOf(prop.getProperty("ccn.cachesize.type")));			
+			setCacheAvailability (SimulationTypes.valueOf(prop.getProperty("ccn.cache")));			
+			setFibAvailability (SimulationTypes.valueOf(prop.getProperty("ccn.fib")));			
+			setCacheSize(Integer.parseInt(prop.getProperty("ccn.cache.size")));			
+			setEdgeCacheSize(Integer.parseInt(prop.getProperty("ccn.edgecache.size")));			
+			setCoreCacheSize(Integer.parseInt(prop.getProperty("ccn.corecache.size")));			
+			setCacheEntries(SimulationTypes.valueOf(prop.getProperty("ccn.cache.entries")));			
+			setCacheFibTrace(SimulationTypes.valueOf(prop.getProperty("ccn.cachefib.trace")));			
+			setDebugging (SimulationTypes.valueOf(prop.getProperty("ccn.debgging")));			
+			setLocalCacheSize(Integer.parseInt(prop.getProperty("ccn.localcache.size")));			
+			CCNRouter.setProcDelay(Double.parseDouble(prop.getProperty("ccn.delay.processing")));			
 			TransmitPackets.setTransDelay(Double.parseDouble(prop.getProperty("ccn.delay.transmitting")));
-
 			Arrivals.setLoadImpact(Double.parseDouble(prop.getProperty("ccn.load.impact")));	
-
-			CCNRouter.setPitTimeOut(Double.parseDouble(prop.getProperty("ccn.pit.timeout")));
-			
-			setPITSize(Integer.parseInt(prop.getProperty("ccn.pit.size")));
-			
-			setFIBSize(Integer.parseInt(prop.getProperty("ccn.fib.size")));
-			
-			setInterestListSize(Integer.parseInt(prop.getProperty("ccn.interestlist.size")));
-			
-			PacketDistributions.setAllDocs(prop.getProperty("ccn.globeTraff.alldocs"));
-			
+			setPitTimeOut(Double.parseDouble(prop.getProperty("ccn.pit.timeout")));			
+			setRetransNuance(Double.parseDouble(prop.getProperty("ccn.retransmission.nuance")));			
+			setPITSize(Integer.parseInt(prop.getProperty("ccn.pit.size")));			
+			setFIBSize(Integer.parseInt(prop.getProperty("ccn.fib.size")));			
+			PacketDistributions.setAllDocs(prop.getProperty("ccn.globeTraff.alldocs"));			
 			Arrivals.setWorkload(prop.getProperty("ccn.globeTraff.workload"));
 		} 
 		catch (IOException e) {
 			
 			// TODO Auto-generated catch block
 			//log.info("Couldn't load properties file using default values");
-			setNoDataPackets(10);
-			setNoNodes(5);
+			PacketDistributions.setNoOfObjects(10);
 			setMaxSimulatedPackets(500);
 			e.printStackTrace();
 		}
+		
+		timeOutQueue = new PriorityBlockingQueue <TimeOutFields> (1000, new Comparator<TimeOutFields>() {
+			public int compare(TimeOutFields to1, TimeOutFields to2) {
+				if (to1.getTimeOutValue() < to2.getTimeOutValue()) {
+            		return -1;
+            	}
+            	else if (to1.getTimeOutValue() > to2.getTimeOutValue()) {
+            		return 1;
+            	}
+            	else {
+            		return 0;
+            	}
+            }
+        });
 		
 		/* The following method will create the appropriate topology based on the choice provided in the ccn.properties file */
 		Grid.createTopology(gridType);
 		
 		/* The following function will distributed the objects amongst various nodes based on docs.all file of
 		 * Globe Traffic.  
-		 * */
-		
-		//System.out.println("Invalid distribution type:"+distributionType);
-		
+		 * */	
+			
 		PacketDistributions.distributeContent(distributionType);
 		
 		fs = new BufferedWriter(new FileWriter(Packets.getDataDumpFile(),true));
@@ -163,11 +170,17 @@ import java.util.Properties;
 			 * */
 			Arrivals A = new Arrivals();
 			
-			//CacheFIBTrace B = new CacheFIBTrace ();
-			//B.ActivateAt(1.0);
+			/* If Cache and FIB trace is required, then we create the CacheFIBTrace process which is invoked intermittently to print
+			 * the sizes of all caches and fibs.*/
+			if (SimulationController.getCacheFibTrace() == SimulationTypes.SIMULATION_CACHE_FIB_TRACE_ON) {
+				CacheFIBTrace B = new CacheFIBTrace ();
+				B.ActivateAt(1.0);
+			}
 			
 			/* The following call will place the Arrival object onto the JavaSim scheduler's queue. */
 			A.Activate();
+			
+			top = new TimeOutProcess();
 
 			/* The simulation is started, and JavaSim scheduler comes to life */
 			Scheduler.startSimulation();
@@ -180,65 +193,28 @@ import java.util.Properties;
 			/**
 			 * For now using a workaround of using a flag to indicate end of simulation.
 			 */
-			Writer f = null;
 			
-			//try {
-				
-				//f = new BufferedWriter(new FileWriter("dump/averages.txt",true));			
-			//}		
-		    //catch (IOException e) {}
-			
-			
-			while(!A.isSimStatus())	{
-				
-				int sum1 = 0;
-				int sum2 = 0;
-				int sum3 = 0;
-				int sum4 = 0;
-				
-				for(int i=0;i<Grid.getGridSize();i++) {
-					//if (!Grid.getRouter(i).getPacketsQ().isEmpty()) {						
-						//System.out.println("The queue of Router + " + Grid.getRouter(i).getRouterId() + " has " + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + " packets");
-						sum1 +=  Grid.getRouter(i).getPacketsQ().packetsInCCNQueue();
-						sum2 +=  Grid.getRouter(i).getPIT().size();
-						//sum3 += Grid.getRouter(i).getInterestsServed().length;						
-						sum4 += Grid.getRouter(i).getForwardingTable().size();
-						//sum4 += Grid.getRouter(i).getPIT().values().size();
-						
-						
-						//terminate = false;
-					//}								
-				}		
-				
-				//System.out.println("\nThe average size all router 'Queues' + " + (double) sum1/(double) Grid.getGridSize());
-				//System.out.println("The average size all router 'PIT' + " + (double) sum2/(double) Grid.getGridSize());
-				//System.out.println("The average size all router 'InterestServed' + " + (double) sum3/(double) Grid.getGridSize());
-				//System.out.println("The average size all router 'Forwarding tabes' + " + (double) sum4/(double) Grid.getGridSize());
-				
-				
-				try {
-					
-					f = new BufferedWriter(new FileWriter("dump/averages.txt",true));
-					
-					f.write("Current Time: " + SimulationController.CurrentTime());
-					f.write("\nThe average size for the queues at all router: " + (double) sum1/(double) Grid.getGridSize());
-					f.write("\nThe average size for the PIT at all router: " + (double) sum2/(double) Grid.getGridSize());
-					//f.write("\nThe average size for the InterestServed list at all router: " + (double) sum3/(double) Grid.getGridSize());
-					f.write("\nThe average size for the Forwarding Tables at all router: " + (double) sum4/(double) Grid.getGridSize() + "\n\n");
-					
-					f.close();
-					
-					//System.out.println("\nThe average size all router 'Queues' + " + (double) sum1/(double) Grid.getGridSize());
-					//System.out.println("The average size all router 'PIT' + " + (double) sum2/(double) Grid.getGridSize());
-					//System.out.println("The average size all router 'InterestServed' + " + (double) sum3/(double) Grid.getGridSize());
-					//System.out.println("The average size all router 'Forwarding tabes' + " + (double) sum4/(double) Grid.getGridSize());
-					
-				} catch (IOException e){}
-				
+			while(!Arrivals.isArrivalStatus())	{
+		
 				Hold(SimulationController.getHold());
-				//System.out.println(A.isSimStatus());
 			}
 			
+			/* The following code insures that the TimeOutQueue is empty before the simulation is terminated */
+			while(true) {
+				
+				boolean terminate = true;
+				
+				if (SimulationController.timeOutQueue.size() != 0) {
+					terminate = false;
+				}
+				
+				if (!terminate) 
+					Hold(10);
+				else 
+					break;			
+			}
+			
+					
 			/* The following 'while' loop will execute till all router queues are empty */		
 			while (true) {
 				
@@ -251,7 +227,8 @@ import java.util.Properties;
 					}
 				}
 
-				//System.out.println("\n");
+				System.out.println("Supposedly, this loop should not execute more than once only when the timeOutQueue will" +
+						"be empty, will the code reach this point\n");
 				
 				/* If they are not empty, wait for 10 'ticks', and execute this thread again */
 				if (!terminate) 
@@ -259,12 +236,12 @@ import java.util.Properties;
 				else 
 					break;				
 			}
-
+			
 			/* Stops the simulation */
 			Scheduler.stopSimulation();
 			
 			SimulationController.fs.close();
-			//f.close();
+
 			
 			//log.info("Done with simulation");
 			//log.info("Final Router configurations--------->");			
@@ -274,7 +251,7 @@ import java.util.Properties;
 				Grid.getRouter(i).terminate();
 			
 			A.terminate();
-			//B.terminate();
+			
 			SimulationProcess.mainResume();
 		}
 		catch (SimulationException e) {}
@@ -286,25 +263,11 @@ import java.util.Properties;
 	 * The following method is a standard requirement of JavaSim implementation. It is called from the main function of this 
 	 * class
 	 *  */
+	
 	public void Await () {
 		
 		this.Resume();
 		SimulationProcess.mainSuspend();
-	}
-
-	public Integer getNoDataPackets() {
-		return PacketDistributions.getNoDataPackets();
-	}
-
-	public void setNoDataPackets(Integer noDataPackets) {
-		PacketDistributions.setnoDataPackets(noDataPackets);
-	}
-	public Integer getNoNodes() {
-		return Grid.getGridSize();
-	}
-
-	public void setNoNodes(Integer noNodes) {
-		Grid.setGridSize(noNodes);
 	}
 
 	public GridTypes getGridType() {
@@ -331,12 +294,29 @@ import java.util.Properties;
 		SimulationController.debugging = debugging;
 	}
 	
+	public static void setCacheEntries(SimulationTypes cEntries) {
+		SimulationController.cacheEntries = cEntries;
+	}
+	
+	public static SimulationTypes getCacheEntries() {
+		return cacheEntries;
+	}
+	
+	public static void setCacheFibTrace(SimulationTypes cFTrace) {
+		SimulationController.cacheFibEntries = cFTrace;
+	}
+	
+	public static SimulationTypes getCacheFibTrace() {
+		return cacheFibEntries;
+	}
+	
 	public static void setCacheType(SimulationTypes cacheType) {
 		SimulationController.cacheType = cacheType;
 	}
 	
 	public static SimulationTypes getCacheType() {
-		return cacheType;	}
+		return cacheType;	
+	}
 	
 	
 	public static void setCacheAvailability(SimulationTypes cacheAvail) {
@@ -345,6 +325,14 @@ import java.util.Properties;
 	
 	public static SimulationTypes getCacheAvailability() {
 		return cacheAvailability;
+	}
+	
+	public static void setFibAvailability(SimulationTypes fibAvail) {
+		SimulationController.fibAvailability = fibAvail;
+	}
+	
+	public static SimulationTypes getFibAvailability() {
+		return fibAvailability;
 	}
 	
 	public static void setObjectSegmentation(SimulationTypes seg) {
@@ -359,8 +347,24 @@ import java.util.Properties;
 		SimulationController.cacheSize = cacheSize;
 	}
 	
+	public static void setEdgeCacheSize (int cacheSize) {
+		SimulationController.edgeCacheSize = cacheSize;
+	}
+	
+	public static void setCoreCacheSize (int cacheSize) {
+		SimulationController.coreCacheSize = cacheSize;
+	}
+	
 	public static int getCacheSize () {
 		return cacheSize;
+	}
+	
+	public static int getEdgeCacheSize () {
+		return edgeCacheSize;
+	}
+	
+	public static int getCoreCacheSize () {
+		return coreCacheSize;
 	}
 	
 	public static void setLocalCacheSize (int cacheSize) {
@@ -385,14 +389,6 @@ import java.util.Properties;
 	
 	public static int getPITSize () {
 		return pitSize;
-	}
-	
-	public static void setInterestListSize (int size) {
-		SimulationController.interestListSize = size;
-	}
-	
-	public static int getInterestListSize () {
-		return interestListSize;
 	}
 	
 	public static void setHold (int hold) {
@@ -423,11 +419,27 @@ import java.util.Properties;
 		
 		if (getCacheType() == SimulationTypes.SIMULATION_UNLIMITED_CACHESIZE) {
 			return true;
-		}
-		
+		}		
 		return false;		
 	}
 	
+	public static double getPitTimeOut (){
+		return pitTimeOut;
+	}
+
+	public static void setPitTimeOut (double tempTimeOut) {
+		pitTimeOut = tempTimeOut;
+	}
+	
+	public static double getRetransNuance (){
+		return retransNuance;
+	}
+
+	public static void setRetransNuance (double tempNuance) {
+		retransNuance = tempNuance;
+	}
+	
+
 	public static void main (String[] args) {
 
 		SimulationController ctrl;
@@ -451,11 +463,11 @@ import java.util.Properties;
 		/* The following is a user-defined class which helps to categorize the trace file. It assists in verifying the trace
 		 * file.
 		 * */
-		if (ctrl.getDebugging() == SimulationTypes.SIMULATION_DEBUGGING_ON) {
-			ManipulateTrace m = new ManipulateTrace (Packets.getDataDumpFile());
-		}
+		if (SimulationController.getDebugging() == SimulationTypes.SIMULATION_DEBUGGING_ON) {
+			new ManipulateTrace (Packets.getDataDumpFile());
+		}	
 		
-		System.out.println("Done simulation exiting");
+		System.out.println("Done simulation exiting");			
 		System.exit(0);
 	}
 };

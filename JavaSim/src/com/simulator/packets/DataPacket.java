@@ -6,7 +6,7 @@ package com.simulator.packets;
 import arjuna.JavaSim.Simulation.Scheduler;
 
 import com.simulator.enums.DataPacketsApplTypes;
-import com.simulator.enums.PacketsType;
+import com.simulator.enums.PacketTypes;
 import com.simulator.enums.SimulationTypes;
 import com.simulator.enums.SupressionTypes;
 
@@ -37,23 +37,23 @@ public class DataPacket extends Packets implements Cloneable {
 	 * We get a unique Id from a static packet Id generator and assign it to PacketId. We also assign the same Id of sourceId since we
 	 * are creating the packet here.
 	 */
-
+	
 	public DataPacket(Integer nodeId, int size) {
 		
 		setPacketId(getCurrenPacketId());
 		setSourcePacketId(getPacketId());
 		setSegmentId (0);
-		setPacketType(PacketsType.PACKET_TYPE_DATA);
+		setPacketType(PacketTypes.PACKET_TYPE_DATA);
 		setPrevHop(-1);
 		setRefPacketId(-1);
 		setOriginNode(nodeId);
 		setSizeOfPacket(size);
 		setAlive(true);
 		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
-		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());
+		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());		
 	}
 	/**
-	 * Constructor for DataPacket which parses a line from Doc.all from GlobeTraffic and sets the properties accordinly.
+	 * Constructor for DataPacket which parses a line from Doc.all from GlobeTraffic and sets the properties accordingly.
 	 * @param line line from docs.all file
 	 * @param nodeId node to which this packet is assigned.
 	 */
@@ -69,7 +69,7 @@ public class DataPacket extends Packets implements Cloneable {
 		setApplType(DataPacketsApplTypes.values()[Integer.parseInt(words[3])]);
 		setSizeOfPacket(Integer.parseInt(words[2]));
 		setSourcePacketId(getPacketId());
-		setPacketType(PacketsType.PACKET_TYPE_DATA);
+		setPacketType(PacketTypes.PACKET_TYPE_DATA);
 		setPrevHop(-1);
 		setRefPacketId(-1);
 		setOriginNode(nodeId);
@@ -104,5 +104,6 @@ public class DataPacket extends Packets implements Cloneable {
 	public void setPopularity(int popularity) {
 		this.popularity = popularity;
 	}
+
 		
 };

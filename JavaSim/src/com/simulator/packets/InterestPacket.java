@@ -8,7 +8,7 @@ import arjuna.JavaSim.Simulation.Scheduler;
 
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
-import com.simulator.enums.PacketsType;
+import com.simulator.enums.PacketTypes;
 import com.simulator.enums.SimulationTypes;
 import com.simulator.enums.SupressionTypes;
 import com.simulator.topology.Grid;
@@ -26,9 +26,11 @@ public class InterestPacket extends Packets implements Cloneable{
 	
 	//static final Logger log = Logger.getLogger(InterestPacket.class);
 	/**
-	 * Source Packet Id only makes sence when the packet is a clone. And this represents the packetid of the source packet.
+	 * Source Packet Id only makes sense when the packet is a clone. And this represents the packetid of the source packet.
 	 */
 	private int sourcePacketId = 0;
+	
+	
 	/**
 	 * Type of the packet.
 	 */
@@ -53,16 +55,20 @@ public class InterestPacket extends Packets implements Cloneable{
 		setPacketId(getCurrenPacketId());
 		setSegmentId(segId);
 		setSourcePacketId(getPacketId());
-		setPacketType(PacketsType.PACKET_TYPE_INTEREST);
+		setPacketType(PacketTypes.PACKET_TYPE_INTEREST);
 		setPrevHop(-1);
 		setRefPacketId(-1);
 		setOriginNode(nodeId);
 		setSizeOfPacket(size);
 		setAlive(true);
 		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
+		
+		setPrimaryInterestId(-1);
+		setParentInterestId(-1);		
+		setExpirationCount(0);	
+		
 		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 	}
-
 
 	/* This method name is confusing. It does not need to be activate() as this method is pre-defined thread method */
 
@@ -84,5 +90,5 @@ public class InterestPacket extends Packets implements Cloneable{
 		InterestPacket clonedPacket = (InterestPacket) super.clone();
 		//clonedPacket.pathTravelled = new String(this.getPathTravelled());
 		return clonedPacket;
-	}
+	}	
 };

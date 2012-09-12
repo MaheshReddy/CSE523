@@ -1,6 +1,6 @@
 package com.simulator.enums;
 
-public enum PacketsType {
+public enum PacketTypes {
 	PACKET_TYPE_INTEREST, 
 	PACKET_TYPE_DATA,
 }

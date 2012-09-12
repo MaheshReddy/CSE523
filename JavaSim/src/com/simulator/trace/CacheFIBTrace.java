@@ -10,7 +10,7 @@ import com.simulator.packets.Packets;
 import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationController;
 import com.simulator.distributions.PacketDistributions;
-import com.simulator.enums.PacketsType;
+import com.simulator.enums.PacketTypes;
 import com.simulator.enums.SimulationTypes;
 import com.simulator.topology.Grid;
 
@@ -31,7 +31,7 @@ public class CacheFIBTrace extends SimulationProcess {
 		
 		try {
 			
-			Writer f = new BufferedWriter(new FileWriter("dump/cacheFIB.txt",true));
+			Writer f = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_cf",true));
 			System.out.println("\nInside Constructor: " + CCNRouter.CurrentTime());
 		}		
 	    catch (IOException e) {}
@@ -45,83 +45,76 @@ public class CacheFIBTrace extends SimulationProcess {
 			try {				
 				
 				StringBuilder str1 = new StringBuilder();
-				Formatter str = new Formatter(str1);
-				
-				
+				Formatter str = new Formatter(str1);				
 				
 				if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_LEAFNODE || SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF_LEAFNODE) {
 					
 					if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
 						
-						str.format("%(,2.4f(c_leaf)\t",SimulationProcess.CurrentTime());
+						str.format("%(,2.4f\tc\t",SimulationProcess.CurrentTime());
 						//Integer noNodes = PacketDistributions.leafNodes.size();
 											
 						/* Tracing leaf nodes cache size */
 						for (int i = 0; i < PacketDistributions.leafNodes.size(); i++) {
-							str.format(" %d\t",Grid.getRouter(PacketDistributions.leafNodes.get(i)).getGlobalCache().usedEntries());
+							str.format("%d\t",Grid.getRouter(PacketDistributions.leafNodes.get(i)).getGlobalCache().usedEntries());
 						}
-						
-						str.format("\n");
-					}
-						
-					str.format("%(,2.4f(f_leaf)\t",SimulationProcess.CurrentTime());
-					
-					/* Tracing leaf nodes FIB size */
-					for (int i = 0; i < PacketDistributions.leafNodes.size(); i++) {
-						str.format(" %d\t",Grid.getRouter(PacketDistributions.leafNodes.get(i)).getForwardingTable().size());						
-					}
-					
-					str.format("\n");
-					
-					if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) { 
-						str.format("%(,2.4f(c_core)",SimulationProcess.CurrentTime());
 						
 						/* Tracing core nodes cache size */
 						for (int i = 0; i < Grid.getGridSize(); i++) {
 							if (!PacketDistributions.leafNodes.contains(i)) {
-								str.format(" %d\t",Grid.getRouter(i).getGlobalCache().usedEntries());
+								str.format("%d\t",Grid.getRouter(i).getGlobalCache().usedEntries());
 							}
 						}
 						
 						str.format("\n");
-					}
+					}					
 					
-					str.format("%(,2.4f(f_core)\t",SimulationProcess.CurrentTime());
-					
-					/* Tracing core nodes FIB size */
-					for (int i = 0; i < Grid.getGridSize(); i++) {
-						if (!PacketDistributions.leafNodes.contains(i)) {
-							str.format(" %d\t",Grid.getRouter(i).getForwardingTable().size());
+					if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
+						
+						str.format("%(,2.4f\tf\t",SimulationProcess.CurrentTime());
+						/* Tracing leaf nodes FIB size */
+						for (int i = 0; i < PacketDistributions.leafNodes.size(); i++) {
+							str.format("%d\t",Grid.getRouter(PacketDistributions.leafNodes.get(i)).getForwardingTable().size());						
+						}					
+						
+						/* Tracing core nodes FIB size */
+						for (int i = 0; i < Grid.getGridSize(); i++) {
+							if (!PacketDistributions.leafNodes.contains(i)) {
+								str.format("%d\t",Grid.getRouter(i).getForwardingTable().size());
+							}
 						}
-					}
 														
-					str.format("\n");
+						str.format("\n");
+					}
 				}
-				else {
-					
-					str.format("%(,2.4f(c)\t",SimulationProcess.CurrentTime());
+				else {					
 					
 					if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
+						
+						str.format("%(,2.4f\tc\t",SimulationProcess.CurrentTime());
 					
 						/* Tracing Cache sizes of nodes */
 						for (int i = 0; i < Grid.getGridSize(); i++) {
-							str.format(" %d\t",Grid.getRouter(i).getGlobalCache().usedEntries());
+							str.format("%d\t",Grid.getRouter(i).getGlobalCache().usedEntries());
 						}
 										
 						str.format("\n");
+					}					
+					
+					if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
+						
+						str.format("%(,2.4f\tf\t",SimulationProcess.CurrentTime());
+						
+						/* Tracing FIB sizes of nodes */
+						for (int i = 0; i < Grid.getGridSize(); i++) {
+							str.format("%d\t",Grid.getRouter(i).getForwardingTable().size());
+						}			
+					
+						str.format("\n");
 					}
-					
-					str.format("%(,2.4f(f)\t",SimulationProcess.CurrentTime());
-					
-					/* Tracing FIB sizes of nodes */
-					for (int i = 0; i < Grid.getGridSize(); i++) {
-						str.format(" %d\t",Grid.getRouter(i).getForwardingTable().size());
-					}			
-					
-					str.format("\n");
 				}
 				
-				Writer f = new BufferedWriter(new FileWriter("dump/cacheFIB.txt",true));				
+				Writer f = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_cf",true));				
 				f.write(str.toString());
 				f.close();				
 								

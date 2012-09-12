@@ -30,30 +30,36 @@ import com.simulator.topology.Grid;
 public class PacketDistributions {
 	//static final Logger log = Logger.getLogger(PacketDistributions.class);
 	
-	static Integer noDataPackets;
+	private static Integer noOfObjects;
 
-	static int dataPacketSize;	
+	private static int objectSize;	
 
 	private static String allDocs = null;
 	
 	private static Random nodeSelecter = new Random(5);
 	
+	/* This list is created to store the leaf nodes of a topology. This nodes in this list
+	 * will be used as the source and destination of all interest and data packets. 
+	 */
 	public static ArrayList<Integer> leafNodes = null;
 	
+	/* We create this array to store sizes of all objects. This array is used in Arrivals class
+	 * for segmentation of Interest packets
+	 * */
 	public static long size[];
 
 	
 	/**
-	 *  distributeContentGlobeTraffic distributes the content from doc.all produced by globe traffic tool into various nodes of the topology.
+	 *  distributeContentGlobeTraffic distributes the content from doc.web produced by globe traffic tool into various nodes of the topology.
 	 *  //TODO currently randomly choosing a node to distribute content need to review this.
 	 * @throws IOException 
 	 */
 
-	
+	/* This functions selects different options to distribute content among various nodes*/
 	public static void distributeContent (SimulationTypes distType) throws Exception 
 	{
 		
-		size = new long [noDataPackets+1];
+		size = new long [noOfObjects+1];
 		
 		if (SimulationTypes.SIMULATION_DISTRIBUTION_DEFAULT == distType) {
 			distributeContentDefault();
@@ -72,26 +78,34 @@ public class PacketDistributions {
 			throw new Exception();
 		}
 		
+		/* We have the same ID to generate Data packets and Interest packets. It is a flaw in the design. 
+		 * However, we want the Interest packets to generte IDs from 0, so we reinitialize the CurrentPacketID
+		 * in Packets class.
+		 * */
 		Packets.setCurrenPacketId(0);
 	}	
 	
+	
+	/* We distribute (serially: 0, 1, 2 .. n-1, n, 0, 1 ... ) content between all nodes in any given topology */
 	private static void distributeContentDefault() {
 		
 		Integer noNodes = Grid.getGridSize();
-		for(int i=0,j=0;i<=getNoDataPackets();i++,j++) {
+		for(int i=0,j=0;i<=getNoOfObjects();i++,j++) {
 			
-			DataPacket pack = new DataPacket(j % noNodes, dataPacketSize);
+			DataPacket pack = new DataPacket(j % noNodes, objectSize);
 			pack.setSegmentId(0);
 			
 			size [i] = (long) pack.getSizeOfPacket();
 			
 			CCNRouter router = Grid.getRouter(j % noNodes);
-			CCNCache routerLocalCache = router.getLocalCache();
+			CCNCache routerLocalCache = router.getLocalStorage();
 			pack.setLocality(true);
 			routerLocalCache.addToCache(pack);
 		}
 	}
 	
+	/* We distribute content between the leaf nodes of 100 customized topology. The leaf nodes are selected in circular
+	 * list starting from the node having smallest ID */
 	private static void distributeContentLeafNodes() {
 		
 		/* Manually enter leaf nodes based on the topology created in Brite for 100 nodes */
@@ -105,16 +119,17 @@ public class PacketDistributions {
 		leafNodes.add(98); leafNodes.add(99);
 		
 		Integer noNodes = PacketDistributions.leafNodes.size();
-		for(int i=0,j=0;i<=getNoDataPackets();i++,j++) {
+		
+		for(int i=0,j=0;i<=getNoOfObjects();i++,j++) {
 			
-			DataPacket pack = new DataPacket(PacketDistributions.leafNodes.get(j % noNodes), dataPacketSize);
+			DataPacket pack = new DataPacket(PacketDistributions.leafNodes.get(j % noNodes), objectSize);
 			System.out.println ("Data object " + i + " will reside in Node " + PacketDistributions.leafNodes.get(j % noNodes));
 			pack.setSegmentId(0);
 			
 			size [i] = (long) pack.getSizeOfPacket();
 
 			CCNRouter router = Grid.getRouter(PacketDistributions.leafNodes.get(j % noNodes));
-			CCNCache routerLocalCache = router.getLocalCache();
+			CCNCache routerLocalCache = router.getLocalStorage();
 			pack.setLocality(true);
 			routerLocalCache.addToCache(pack);
 		}
@@ -125,10 +140,10 @@ public class PacketDistributions {
 	 *  //TODO currently randomly choosing a node to distribute content need to review this.
 	 * @throws IOException 
 	 */
+	/* We randomly distribute content between nodes of a given topology. We select the objects from a given docs.web file. */
 	private static void distributeContentGlobeTraffic() throws IOException {
 		
-		//FileReader inReader = new FileReader(new File(ClassLoader.getSystemResource(getAllDocs()).toURI()));
-		//InputStreamReader inReader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs()));
+		/* Open the docs.web file to read the object id's and their sizes */
 		BufferedReader rd = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs())));
 		
 		int count = 0;
@@ -150,7 +165,7 @@ public class PacketDistributions {
 			count1++;
 			
 			CCNRouter router = Grid.getRouter(rtrId);
-			CCNCache routerLocalCache = router.getLocalCache();
+			CCNCache routerLocalCache = router.getLocalStorage();
 			pac.setLocality(true);
 			routerLocalCache.addToCache(pac);
 			//log.info("Creating Data Object:"+line);
@@ -162,30 +177,47 @@ public class PacketDistributions {
 	 *  distributeContentGlobeTraffic distributes the content from doc.all produced by globe traffic tool into various nodes of the topology.
 	 *  //TODO currently randomly choosing a node to distribute content need to review this.
 	 * @throws IOException 
+	 * 
 	 */
+	
+	/* We distribute content between the leaf nodes of 100 and 39 custom-built topologies. The leaf nodes are selected in circular
+	 * list starting from the node having smallest ID. We select the objects from a given docs.web file. */
 	private static void distributeContentGlobeTrafficLeafNodes() throws IOException {
 		
 		
 		/* Manually enter leaf nodes based on the topology created in Brite for 100 nodes using GlobeTraff*/
 		
-		/*
-		leafNodes = new ArrayList <Integer> (32);
+		if (Grid.getGridSize() == 100) {
 		
-		For 100 node topology these are the leaf nodes
-		leafNodes.add(11); leafNodes.add(30); leafNodes.add(32); leafNodes.add(44); leafNodes.add(45); leafNodes.add(49);
-		leafNodes.add(72); leafNodes.add(70); leafNodes.add(61); leafNodes.add(59); leafNodes.add(54); leafNodes.add(51);
-		leafNodes.add(75); leafNodes.add(78); leafNodes.add(79); leafNodes.add(80); leafNodes.add(82); leafNodes.add(83);
-		leafNodes.add(84); leafNodes.add(87); leafNodes.add(88); leafNodes.add(89); leafNodes.add(90); leafNodes.add(91);
-		leafNodes.add(92); leafNodes.add(93); leafNodes.add(94); leafNodes.add(95); leafNodes.add(96); leafNodes.add(97);
-		leafNodes.add(98); leafNodes.add(99);
+			leafNodes = new ArrayList <Integer> (32);
+			
+			//For 100 node topology these are the leaf nodes
+			leafNodes.add(11); leafNodes.add(30); leafNodes.add(32); leafNodes.add(44); leafNodes.add(45); leafNodes.add(49);
+			leafNodes.add(72); leafNodes.add(70); leafNodes.add(61); leafNodes.add(59); leafNodes.add(54); leafNodes.add(51);
+			leafNodes.add(75); leafNodes.add(78); leafNodes.add(79); leafNodes.add(80); leafNodes.add(82); leafNodes.add(83);
+			leafNodes.add(84); leafNodes.add(87); leafNodes.add(88); leafNodes.add(89); leafNodes.add(90); leafNodes.add(91);
+			leafNodes.add(92); leafNodes.add(93); leafNodes.add(94); leafNodes.add(95); leafNodes.add(96); leafNodes.add(97);
+			leafNodes.add(98); leafNodes.add(99);
+		}
 		
-		*/
-		leafNodes = new ArrayList <Integer> (31);
-		for (int i = 8; i <= 38; i++)	
-			leafNodes.add(i); 
+		else if (Grid.getGridSize() == 39) {
+			
+			/* For 39 node topology these are the leaf nodes */
+			
+			leafNodes = new ArrayList <Integer> (31);
+			for (int i = 8; i <= 38; i++)	
+				leafNodes.add(i); 
+			
+		}
+		
+		else {
+			System.out.println("Error: Incorrect topology");
+			System.exit(0);
+		}		
 		
 		Integer noNodes = PacketDistributions.leafNodes.size();
 
+		/* Open the docs.web file to read the object id's and their sizes */
 		BufferedReader rd = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs())));
 		
 		String line;
@@ -198,7 +230,6 @@ public class PacketDistributions {
 			
 			DataPacket pack = new DataPacket(line,PacketDistributions.leafNodes.get(count % noNodes),0);
 			
-			//DataPacket pack = new DataPacket(PacketDistributions.leafNodes.get(count % noNodes), dataPacketSize);
 			System.out.println ("Data object " + count + " will reside in Node " + PacketDistributions.leafNodes.get(count % noNodes));
 			
 			pack.setSegmentId(0);
@@ -213,7 +244,7 @@ public class PacketDistributions {
 			count1++;
 			
 			CCNRouter router = Grid.getRouter(PacketDistributions.leafNodes.get(count % noNodes));
-			CCNCache routerLocalCache = router.getLocalCache();
+			CCNCache routerLocalCache = router.getLocalStorage();
 			pack.setLocality(true);
 			routerLocalCache.addToCache(pack);
 
@@ -228,26 +259,23 @@ public class PacketDistributions {
 	 * @return
 	 */
 	
-	/* 
-	 * We are not using the following function anymore. It might not be needed anymore. This functionality is achieved in
-	 * Arrivals.java using the PacketIDGenerator.
-	 *  */
-		
-	public static Integer getNoDataPackets() {
-		return noDataPackets;
+	
+	public static Integer getNoOfObjects() {
+		return noOfObjects;
 	}
 
-	public static void setnoDataPackets(Integer noDataPackets) {
-		PacketDistributions.noDataPackets = noDataPackets;
+	public static void setNoOfObjects(Integer tempNoOfObjects) {
+		PacketDistributions.noOfObjects = tempNoOfObjects;
 	}	
 	
-	public static int getDataPacketSize() {
-		return dataPacketSize;
+	public static int getObjectSize() {
+		return objectSize;
 	}
 
-	public static void setDataPacketSize(int tempDataPacketSize) {
-		PacketDistributions.dataPacketSize = tempDataPacketSize;
+	public static void setObjectSize(int tempDataPacketSize) {
+		PacketDistributions.objectSize = tempDataPacketSize;
 	}
+	
 	public static String getAllDocs() {
 		return allDocs;
 	}

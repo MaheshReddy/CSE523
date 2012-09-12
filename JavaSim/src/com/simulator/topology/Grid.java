@@ -6,13 +6,11 @@ import java.util.Map;
 
 import com.simulator.ccn.CCNRouter;
 import com.simulator.enums.GridTypes;
-import com.simulator.enums.SimulationTypes;
 
 public class Grid 
 {
 	static CCNRouter[] routerList ;	
 
-	//static int[][] adjacencyList;
 	/* Represents an edge */
 	private static Map<Integer,LinkedHashSet<HashMap<Integer,Integer>>> graph = new HashMap<Integer,LinkedHashSet<HashMap<Integer,Integer>>>(); 
     private static Integer gridSize = 0;
@@ -84,7 +82,7 @@ public class Grid
 		
 		for(int i = 0; i < getGridSize(); i++)
 		{
-			routerList[i]=new CCNRouter(i);
+			routerList[i] = new CCNRouter(i);
 			System.out.println("Routing Table for Node " + i);
 			for (int j = 0; j < (nodes[i].getRoutingTable()).size(); j++) {
 				/* First parameter: Node (Whose routing table is being formed
@@ -136,8 +134,6 @@ public class Grid
 			Iterator<HashMap<Integer,Integer>> itr = adj.iterator();
 			while(itr.hasNext())
 				System.out.println("Edge To: Neighboring Node"+itr.next());
-		}
-		
-		
+		}		
 	}
 }

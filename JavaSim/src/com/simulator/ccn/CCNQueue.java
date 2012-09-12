@@ -1,6 +1,5 @@
 package com.simulator.ccn;
 import java.util.LinkedList;
-import java.util.List;
 //import org.apache.log4j.Logger;
 
 import com.simulator.packets.Packets;
@@ -15,8 +14,6 @@ public class CCNQueue {
 	//private static final Logger log = Logger.getLogger(CCNQueue.class);
 	private LinkedList<Packets> queue = null;
 	private Integer maxSize = 0;
-	private List<Packets> head;
-	private long length;
 	private int nodeId;
 	public long TotalPackets = 0;
 	public long ProcessedPackets = 0;

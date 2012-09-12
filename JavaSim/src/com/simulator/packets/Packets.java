@@ -14,7 +14,7 @@ import java.util.Formatter;
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationController;
-import com.simulator.enums.PacketsType;
+import com.simulator.enums.PacketTypes;
 import com.simulator.enums.SimulationTypes;
 import com.simulator.enums.SupressionTypes;
 import com.simulator.topology.Grid;
@@ -92,7 +92,7 @@ public class Packets implements Cloneable {
 	/**
 	 * Type of the packet.
 	 */
-	private PacketsType packetType;
+	private PacketTypes packetType;
 	
 	/**
 	 * Number of hops 
@@ -119,6 +119,39 @@ public class Packets implements Cloneable {
 	 * finished method.
 	 */
 	private SupressionTypes causeOfSupr;
+	
+	/* The first interest packet id which requested the object. 
+	 * It comes into use when a interest packet is timed out. 
+	 * */
+	private int primaryInterestId;
+	
+	/* When an interest packet is timed out, the interest packet 
+	 * that has timed out will be stored parentInterestId field.
+	 * */
+	private int parentInterestId;
+
+	
+	private static int currentDataPacketId = 0;
+	
+	private int dataPacketId = 0;
+	
+	public int getDataPacketId() {
+		return dataPacketId;
+	}
+	
+	public void setDataPacketId(int tempDataPacketId) {
+		dataPacketId = tempDataPacketId;
+	}
+	
+	public static int getCurrentDataPacketId() {
+		return currentDataPacketId;
+	}
+	
+	public static void incCurrentDataPacketId() {
+		currentDataPacketId++;;
+	}
+
+	private int expirationCount;
 
 	
 	public Packets(Packets pac)	{}
@@ -170,7 +203,7 @@ public class Packets implements Cloneable {
 			
 			str.format("%(,2.4f",SimulationProcess.CurrentTime());
 			
-			if(PacketsType.PACKET_TYPE_DATA == curPacket.getPacketType())
+			if(PacketTypes.PACKET_TYPE_DATA == curPacket.getPacketType())
 				str.format(" d");
 			else 
 				str.format(" i");
@@ -198,6 +231,75 @@ public class Packets implements Cloneable {
 			else
 				str.format(" 1");
 			
+
+			str.format(" %d",curPacket.getPrimaryInterestId());
+			str.format(" %d",curPacket.getParentInterestId());
+			str.format(" %d",curPacket.getExpirationCount());
+			str.format(" %d",curPacket.getDataPacketId());
+
+			str.format("\n");
+			SimulationController.fs.write(str.toString());
+			
+			//if (SimulationController.getDebugging() == SimulationTypes.SIMULATION_DEBUGGING_ON)
+				//collectTrace (curPacket, status);
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
+	/* Used only when a data packet (CRTDPRDA) is created because of a PIT entry */
+	public synchronized static void dumpStatistics(Packets curPacket, String status, Packets causalPacket) {
+		
+		try {
+			@SuppressWarnings("unused")
+			
+			StringBuilder str1 = new StringBuilder();
+			Formatter str = new Formatter(str1);
+			
+			str.format("%(,2.4f",SimulationProcess.CurrentTime());
+			
+			if(PacketTypes.PACKET_TYPE_DATA == curPacket.getPacketType())
+				str.format(" d");
+			else 
+				str.format(" i");
+			
+			str.format(" %d",curPacket.getPacketId());
+			str.format(" %d",curPacket.getSegmentId());
+			str.format(" %s", status);
+			str.format(" %d",curPacket.getRefPacketId());
+			str.format(" %d",curPacket.getCurNode());
+			str.format(" %d",curPacket.getPrevHop());
+			str.format(" %d",curPacket.getOriginNode());
+			str.format(" %d",curPacket.getNoOfHops());
+			
+			//if(Integer.toBinaryString((curPacket.isAlive())?1:0).compareTo("1") == 0)
+				//str.format(" alive");
+			//else
+				//str.format(" dead");
+			
+			str.format(" %d", (curPacket.isAlive())?1:0);
+			
+			str.format(" %d", (curPacket.getCauseOfSupr().ordinal()));
+			
+			if(curPacket.isLocal())
+				str.format(" 0");
+			else
+				str.format(" 1");
+			
+
+			str.format(" %d",curPacket.getPrimaryInterestId());
+			str.format(" %d",curPacket.getParentInterestId());
+			str.format(" %d",curPacket.getExpirationCount());
+			str.format(" %d",curPacket.getDataPacketId());
+			
+			str.format(" %d",causalPacket.getDataPacketId());
+			str.format(" %d",causalPacket.getPrimaryInterestId());
+			str.format(" %d",causalPacket.getRefPacketId());
+			str.format(" %d",causalPacket.getPrevHop());
+			
+
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
 			
@@ -222,7 +324,7 @@ public class Packets implements Cloneable {
 			
 			str.format("%(,2.4f\t",SimulationProcess.CurrentTime());
 			
-			if(PacketsType.PACKET_TYPE_DATA == curPacket.getPacketType())
+			if(PacketTypes.PACKET_TYPE_DATA == curPacket.getPacketType())
 				str.format("d\t");
 			else 
 				str.format("i\t");	
@@ -270,11 +372,11 @@ public class Packets implements Cloneable {
 		this.segmentId = segId;
 	}
 
-	public PacketsType getPacketType() {
+	public PacketTypes getPacketType() {
 		return packetType;
 	}
 
-	public void setPacketType(PacketsType packetType) {
+	public void setPacketType(PacketTypes packetType) {
 		this.packetType = packetType;
 	}
 	public Integer getPrevHop() {
@@ -415,5 +517,29 @@ public class Packets implements Cloneable {
 	
 	public void setSourcePacketId(int sourcePacketId) {
 		this.sourcePacketId = sourcePacketId;
+	}
+	
+	public int getPrimaryInterestId() {
+		return primaryInterestId;
+	}
+
+	public void setPrimaryInterestId(int primaryInterestId) {
+		this.primaryInterestId = primaryInterestId;
+	}
+
+	public int getParentInterestId() {
+		return parentInterestId;
+	}
+
+	public void setParentInterestId(int parentInterestId) {
+		this.parentInterestId = parentInterestId;
+	}
+
+	public int getExpirationCount() {
+		return expirationCount;
+	}
+
+	public void setExpirationCount(int expirationCount) {
+		this.expirationCount = expirationCount;
 	}
 };

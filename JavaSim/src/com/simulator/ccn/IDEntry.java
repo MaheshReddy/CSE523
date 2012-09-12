@@ -1,31 +1,37 @@
 package com.simulator.ccn;
 
-public class InterestEntry {
+public class IDEntry {
 	
-	private int interestID;
+	private int id;
 	private int segmentID;
 	
-	InterestEntry(){
+	IDEntry(){
 		
-		interestID = 0;
+		id = 0;
 		segmentID = 0;
 	}
 	
-	InterestEntry(int tempIntID, int tempSegID){
+	public IDEntry(int tempIntID, int tempSegID){
 		
-		interestID = tempIntID;
+		id = tempIntID;
 		segmentID = tempSegID;
+	}
+	
+	IDEntry(IDEntry tempIDEntry){
+		
+		id = tempIDEntry.getID();
+		segmentID = tempIDEntry.getSegmentID();
 	}
 	
 	public boolean equals(Object o) {
 		
 	    if (o == this)
 	        return true;
-	    if (!(o instanceof InterestEntry))
+	    if (!(o instanceof IDEntry))
 	        return false;
 	    
-	    InterestEntry pn = (InterestEntry)o;
-	    return pn.interestID == interestID &&
+	    IDEntry pn = (IDEntry)o;
+	    return pn.id == id &&
 	           pn.segmentID == segmentID;
 	}
 	
@@ -33,7 +39,7 @@ public class InterestEntry {
 		
 		int hash = 7;
 		
-		hash = 31 * hash + interestID;
+		hash = 31 * hash + id;
 		hash = 31 * hash + segmentID;
 		
 		return hash;
@@ -43,12 +49,12 @@ public class InterestEntry {
 		segmentID  = temp;
 	}	
 	
-	public void setInterestID (int temp) {
-		interestID  = temp;
+	public void setID (int temp) {
+		id  = temp;
 	}
 	
-	public int getInterestID () {
-		return interestID;
+	public int getID () {
+		return id;
 	}
 	
 	public int getSegmentID () {
