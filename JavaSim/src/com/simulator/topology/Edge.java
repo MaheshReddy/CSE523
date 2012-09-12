@@ -2,6 +2,8 @@ package com.simulator.topology;
 
 import java.util.*;
 
+/**/
+
 public class Edge {
 	
 	private int edgeID;
