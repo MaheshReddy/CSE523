@@ -1,6 +1,7 @@
 package com.simulator.topology;
 import java.util.*;
 
+/**/
 public class Node {
 	
 	private int nodeID;
