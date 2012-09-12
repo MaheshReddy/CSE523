@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.util.*;
 
+/**/
 public class ReadFile {
 
 	private String path;
