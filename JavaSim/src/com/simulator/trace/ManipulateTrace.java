@@ -7,10 +7,7 @@ import java.io.Writer;
 import java.util.*;
 
 import com.simulator.djikstra.Djikstra;
-import com.simulator.topology.Edge;
 import com.simulator.topology.Grid;
-import com.simulator.topology.Node;
-import com.simulator.topology.ReadFile;
 
 public class ManipulateTrace {
 	
