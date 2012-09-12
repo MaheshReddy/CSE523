@@ -1,5 +1,6 @@
 package com.simulator.trace;
 
+/**/
 public class ShortestPathRoutingTable {
 	
 	public int shortestPathTable [][] = null;
