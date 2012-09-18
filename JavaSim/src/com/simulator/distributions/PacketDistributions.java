@@ -190,8 +190,8 @@ public class PacketDistributions {
 		/* Manually enter leaf nodes based on the topology created in Brite for 100 nodes using GlobeTraff*/
 		
 		if (Grid.getGridSize() == 100) {
-		
-			leafNode = new ArrayList <Integer> (32);
+
+			leafNodes = ne ArrayList <Integer> (32);
 			
 			//For 100 node topology these are the leaf nodes
 			leafNodes.add(11); leafNodes.add(30); leafNodes.add(32); leafNodes.add(44); leafNodes.add(45); leafNodes.add(49);
