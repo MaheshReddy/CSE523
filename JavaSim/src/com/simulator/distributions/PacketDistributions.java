@@ -202,7 +202,7 @@ public class PacketDistributions {
 		
 		else if (Grid.getGridSize() == 39) {
 			
-			/* For 39 node topology these are the leaf nodes. abc*/
+			/* For 39 node topology these are the leaf nodes.*/
 			
 			leafNodes = new ArrayList <Integer> (31);
 			for (int i = 8; i <= 38; i++)	
