@@ -189,7 +189,7 @@ public class PacketDistributions {
 		
 		if (Grid.getGridSize() == 100) {
 		
-			leafNodes = ne ArrayList <Integer> (32);
+			leafNodes = new ArrayList <Integer> (32);
 			
 			//For 100 node topology these are the leaf nodes
 			leafNodes.add(11); leafNodes.add(30); leafNodes.add(32); leafNodes.add(44); leafNodes.add(45); leafNodes.add(49);
