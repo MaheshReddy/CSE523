@@ -130,7 +130,7 @@ import java.util.Properties;
 			e.printStackTrace();
 		}
 		
-		timeOutQueue = new PriorityBlockingQueue <TimeOutFields> (1000, new Comparator<TimeOutFields>() {
+		timeOutQueue = new PriorityBlockingQueue <TimeOutFields> (200000, new Comparator<TimeOutFields>() {
 			public int compare(TimeOutFields to1, TimeOutFields to2) {
 				if (to1.getTimeOutValue() < to2.getTimeOutValue()) {
             		return -1;
@@ -196,7 +196,9 @@ import java.util.Properties;
 			
 			while(!Arrivals.isArrivalStatus())	{
 		
-				Hold(SimulationController.getHold());
+				System.out.println("Number of Interest Packets Generated: " + Packets.getCurrentPacketId());
+				System.out.println("Number of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
+				Hold(SimulationController.getHold());				
 			}
 			
 			/* The following code insures that the TimeOutQueue is empty before the simulation is terminated */
@@ -222,13 +224,15 @@ import java.util.Properties;
 				boolean terminate = true;	
 				for(int i=0;i<Grid.getGridSize();i++) {
 					if (!Grid.getRouter(i).getPacketsQ().isEmpty()) {						
-						//System.out.println("The queue of Router + " + Grid.getRouter(i).getRouterId() + " has " + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + " packets");
+						System.out.println("The queue of Router + " + Grid.getRouter(i).getRouterId() + " has " + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + " packets");
 						terminate = false;
 					}
 				}
 
 				System.out.println("Supposedly, this loop should not execute more than once only when the timeOutQueue will" +
 						"be empty, will the code reach this point\n");
+				
+				System.out.println("TimeOutQueue " + SimulationController.timeOutQueue.size());
 				
 				/* If they are not empty, wait for 10 'ticks', and execute this thread again */
 				if (!terminate) 

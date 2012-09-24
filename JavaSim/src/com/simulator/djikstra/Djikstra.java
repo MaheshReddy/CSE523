@@ -125,6 +125,8 @@ public class Djikstra {
 			}
 		}
 		
+		int largeValue = 0;
+		
 		List<Vertex> path = null;
 		for (int i=0; i<vertexList.size(); i++) {
 			computePaths(vertexList.get(i));
@@ -132,11 +134,14 @@ public class Djikstra {
 				v = vertexList.get(j);
 				pathTable[i][j] = (int)v.minDistance;
 				System.out.println("shortestPathTable["+i+"]["+j+"] = "+pathTable[i][j]+";");
-				 path = getShortestPathTo(v);
-				 System.out.println("Path: " + path);
+				if (pathTable[i][j] > largeValue) {
+					largeValue = pathTable[i][j];
+				}
+				path = getShortestPathTo(v);
+				System.out.println("Path: " + path);
 			}
 			resetDistances(vertexList);
-			System.out.println();
+			System.out.println("Largest, shortest path in the network is: " + largeValue + " hops");
 		}
 		
 		setShortestPathTable(pathTable);		

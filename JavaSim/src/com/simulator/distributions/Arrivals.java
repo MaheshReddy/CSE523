@@ -31,7 +31,7 @@ public class Arrivals extends SimulationProcess {
 	//static final Logger log = Logger.getLogger(Arrivals.class);
 	
 	private Integer gridSize = 0;
-	private int countInterestPackets;
+	public int countInterestPackets;
 	private ExponentialStream InterArrivalTime;
 	
 	private static double loadImpact;
@@ -238,7 +238,7 @@ public class Arrivals extends SimulationProcess {
 					e.printStackTrace();
 				}
 				
-				System.out.println("Generated Interest Packet (Actual): " + Packets.getCurrentPacketId());				
+				//System.out.println("Generated Interest Packet (Actual): " + Packets.getCurrentPacketId());				
 				countInterestPackets++;
 				
 				/* The following code will perform segmentation, if required. */

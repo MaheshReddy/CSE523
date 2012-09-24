@@ -44,6 +44,8 @@ public class CCNRouter extends SimulationProcess {
 	public static int hops6= 0;
 	public static int hops7= 0;
 	public static int hops8Plus = 0;
+	public static int countDataPacketsReceived = 0;
+	
 	
 	private boolean working;
 	private Packets currentPacket;
@@ -95,7 +97,7 @@ public class CCNRouter extends SimulationProcess {
 		pit = new HashMap<IDEntry,List<PITEntry>>(SimulationController.getPITSize(), (float)0.9);
 		
 		/* This array is used to suppress redundant/duplicate interest packets */
-		interestServedBitArray = new BitSet [(int)SimulationController.getMaxSimulatedPackets()*3];
+		interestServedBitArray = new BitSet [(int)SimulationController.getMaxSimulatedPackets()];
 		
 		/* Do not initialize the FIB, if we are running a simulation which does not have a FIB*/
 		if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
@@ -304,7 +306,7 @@ public class CCNRouter extends SimulationProcess {
 
 					clonePac.setRefPacketId(rid.getRefPacketId());
 					clonePac.setOriginNode(getRouterId());
-					clonePac.setNoOfHops(0);
+					
 					clonePac.setCurNode(-1);
 					clonePac.setPrevHop(-1);
 					clonePac.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);		
@@ -559,12 +561,15 @@ public class CCNRouter extends SimulationProcess {
 			if(rid != null) {
 				/* TODO
 				 * I do not think we need to clone this packet!? However, I am leaving it for now as everything is working.
-				 * I will address it in the next revision */ 
+				 * I will address it in the next revision
+				 * */ 
+				//curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);
+				curPacket.setCauseOfSupr(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);
 				sendPacket((Packets)curPacket.clone(), rid.getDestinationNode());
-				curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);			
+					
 			}
 			/* IF we do not have FIB match, then we flood the interest packet*/
-			else {
+			else {				
 				floodInterestPacket(curPacket);			
 			}	
 		}
@@ -749,6 +754,8 @@ public class CCNRouter extends SimulationProcess {
 			  default: 
 				  hops8Plus++;
 			}
+			
+			countDataPacketsReceived++;
 
 			/* When a data packet has reached its destination, we search the TimeOutQueue to find out the corresponding interest packet. 
 			 * We turn the receivedDataObject variable to true so that it does not retransmit */
