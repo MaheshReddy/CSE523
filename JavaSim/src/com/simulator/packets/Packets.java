@@ -8,11 +8,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Formatter;
+import java.util.List;
+import java.util.Map;
 
 //import org.apache.log4j.Logger;
 
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
+import com.simulator.ccn.IDEntry;
+import com.simulator.ccn.PITEntry;
+import com.simulator.ccn.HistoryEntry;
 import com.simulator.controller.SimulationController;
 import com.simulator.enums.PacketTypes;
 import com.simulator.enums.SimulationTypes;
@@ -134,6 +139,9 @@ public class Packets implements Cloneable {
 	private static int currentDataPacketId = 0;
 	
 	private int dataPacketId = 0;
+	
+	/* It will hold the history of which interest packet has contributed in fetching in this object to this point */
+	private Map<IDEntry, List<HistoryEntry>> historyOfDataPackets = null;
 	
 	public int getDataPacketId() {
 		return dataPacketId;
@@ -541,5 +549,14 @@ public class Packets implements Cloneable {
 
 	public void setExpirationCount(int expirationCount) {
 		this.expirationCount = expirationCount;
+	}
+	
+	public Map<IDEntry, List<HistoryEntry>> getHistoryOfDataPackets() {
+		return historyOfDataPackets;
+	}
+	
+	public void setHistoryOfDataPackets(
+			Map<IDEntry, List<HistoryEntry>> historyOfDataPackets) {
+		this.historyOfDataPackets = historyOfDataPackets;
 	}
 };
