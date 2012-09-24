@@ -225,7 +225,7 @@ public class CCNRouter extends SimulationProcess {
 			
 		IDEntry pitIndex = new IDEntry (dataObject); 
 		
-		/* Remove stall entries from PIT table before adding a PIT Entry */			
+		/* Remove stall entries from PIT table before checking for a valid PIT Entry */			
 		List<PITEntry> pitEntries = pit.get(pitIndex);	
 				
 		if (pit.containsKey(pitIndex)) {					
@@ -287,6 +287,35 @@ public class CCNRouter extends SimulationProcess {
 			return;	
 		}
 		
+		/* Create or update history related information pertaining to the object, and which Interest 
+		 * packet is responsible for getting that object into the cache */		
+		Map<IDEntry, List<HistoryEntry>> tempHistoryOfDataPackets = curPacket.getHistoryOfDataPackets();
+		
+		if (tempHistoryOfDataPackets == null) {
+			
+			IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());
+			ArrayList<HistoryEntry> tempHistoryEntries = new ArrayList<HistoryEntry>(1);
+			
+			/* Number of hops should be one, as this condition will satisfy only for nodes that are one hop away. */
+			tempHistoryEntries.add(new HistoryEntry(interestID, curPacket.getNoOfHops()));			
+			
+			tempHistoryOfDataPackets = new HashMap<IDEntry,List<HistoryEntry>>(20, (float)0.9);		
+			
+			/* Add history information into the historyCache, which will be part of cache entry. */
+			tempHistoryOfDataPackets.put(interestID, tempHistoryEntries);
+		}
+		else {
+			
+			IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());
+			ArrayList<HistoryEntry> tempHistoryEntries = new ArrayList<HistoryEntry>(1);
+			
+			/* Create history information related to this hop taken by the Data packet */
+			tempHistoryEntries.add(new HistoryEntry(interestID, curPacket.getNoOfHops()));				
+			
+			/* Add history information into the historyCache, which will be part of cache entry. */
+			tempHistoryOfDataPackets.put(interestID, tempHistoryEntries);			
+		}
+		
 		/* The following code is used to flood data packets over all the interfaces in PIT entry for this object */
 		Iterator<PITEntry> itr = pitEntries.iterator();		
 		
@@ -312,9 +341,10 @@ public class CCNRouter extends SimulationProcess {
 					clonePac.setExpirationCount(rid.getNumOfTimesExpired());
 					clonePac.setPrimaryInterestId(rid.getPrimaryInterestID());
 					clonePac.setParentInterestId(rid.getRefPacketId());
+					clonePac.setHistoryOfDataPackets(tempHistoryOfDataPackets);
 					
 					clonePac.setDataPacketId(Packets.getCurrentDataPacketId());
-					Packets.incCurrentDataPacketId();
+					Packets.incCurrentDataPacketId();					
 					
 					Packets.dumpStatistics(clonePac, "CRTDPRDA", curPacket);	
 				}
@@ -329,21 +359,20 @@ public class CCNRouter extends SimulationProcess {
 		/* The following swapping before entering into the Global cache is because of a more logical entry relevant to "(PCKSTATUS:CRTDPRD)" 
 		 * in the trace file 
 		 * */
-		int tempCurr = curPacket.getCurNode(); 
-		int tempPreHop = curPacket.getPrevHop();
 		
-		curPacket.setCurNode(-1); 
-		curPacket.setPrevHop(-1);
 		
 		/* add the data packet into my global cache */
-		//log.info("Adding to global cache");	
+		//log.info("Adding to global cache");
+		
+		Packets tempGlobalCacheEntry = (Packets)curPacket.clone();
+		
+		tempGlobalCacheEntry.setCurNode(-1); 
+		tempGlobalCacheEntry.setPrevHop(-1);	
+		tempGlobalCacheEntry.setHistoryOfDataPackets(tempHistoryOfDataPackets);
 		
 		/* Cache is a Map <Integer, Packet> object, hence, we do not have to check for duplicate values */
 		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability())
-			getGlobalCache().addToCache((Packets)curPacket.clone());	
-		
-		curPacket.setCurNode(tempCurr); 
-		curPacket.setPrevHop(tempPreHop);
+			getGlobalCache().addToCache(tempGlobalCacheEntry);	
 		
 		/* adding entry to forwarding table */
 		/* 1. We check whether the FIBEntry is null or not
@@ -714,6 +743,23 @@ public class CCNRouter extends SimulationProcess {
 			 *   Instead of the latter, we need to place 0.9 value. While for the former, we need to calculate what 
 			 *   percentage of the total objects has been received.
 			 *  */
+			
+			Map<IDEntry, List<HistoryEntry>> tempHistoryOfDataPackets = curPacket.getHistoryOfDataPackets();
+			
+			if (tempHistoryOfDataPackets != null) {
+				
+				IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());
+				ArrayList<HistoryEntry> tempHistoryEntries = new ArrayList<HistoryEntry>(1);
+				
+				/* Number of hops should be one, as this condition will satisfy only for nodes that are one hop away. */
+				tempHistoryEntries.add(new HistoryEntry(interestID, curPacket.getNoOfHops()));			
+				
+				tempHistoryOfDataPackets = new HashMap<IDEntry,List<HistoryEntry>>(20, (float)0.9);		
+				
+				/* Add history information into the historyCache, which will be part of cache entry. */
+				tempHistoryOfDataPackets.put(interestID, tempHistoryEntries);
+			}
+			
 		
 			curPacket.finished(SupressionTypes.SUPRESSION_DEST_NODE);
 			//log.info("Packet Destined to my node,so suppressing");
