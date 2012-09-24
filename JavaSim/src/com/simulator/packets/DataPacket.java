@@ -3,17 +3,16 @@ package com.simulator.packets;
 
 //import org.apache.log4j.Logger;
 
-import arjuna.JavaSim.Simulation.Scheduler;
-
+import java.util.List;
+import java.util.Map;
+import com.simulator.ccn.IDEntry;
+import com.simulator.ccn.PITEntry;
 import com.simulator.enums.DataPacketsApplTypes;
 import com.simulator.enums.PacketTypes;
-import com.simulator.enums.SimulationTypes;
 import com.simulator.enums.SupressionTypes;
 
-
 /* *
-
- * This is class for DataPacket for CCN networks it extends Pakcets Class. It has constructors for GlobeTraffic Generator. 
+ * This is class for DataPacket for CCN networks it extends Packets Class. It has constructors for GlobeTraffic Generator. 
  * NOTE:
  *  Important Note while adding elements to this class make sure you add only basic data types (i.e like int,char etc) , if you have to add Complex data types
  *  please make sure to edit clone() method of packets so that it works properly.
@@ -23,6 +22,8 @@ public class DataPacket extends Packets implements Cloneable {
 	private DataPacketsApplTypes applType;
 
 	//static final Logger log = Logger.getLogger(DataPacket.class);
+	
+	
 	
 	private int popularity;
 	
@@ -50,6 +51,7 @@ public class DataPacket extends Packets implements Cloneable {
 		setSizeOfPacket(size);
 		setAlive(true);
 		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
+		this.setHistoryOfDataPackets(null);
 		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());		
 	}
 	/**
@@ -78,6 +80,7 @@ public class DataPacket extends Packets implements Cloneable {
 		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 
 		setSegmentId (segId);
+		this.setHistoryOfDataPackets(null);
 		//super(1,SimulationTypes.SIMULATION_PACKETS_DATA,2);
 	}	
 
@@ -104,6 +107,6 @@ public class DataPacket extends Packets implements Cloneable {
 	public void setPopularity(int popularity) {
 		this.popularity = popularity;
 	}
-
-		
+	
+	
 };
