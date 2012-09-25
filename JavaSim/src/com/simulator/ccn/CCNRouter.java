@@ -97,7 +97,7 @@ public class CCNRouter extends SimulationProcess {
 		pit = new HashMap<IDEntry,List<PITEntry>>(SimulationController.getPITSize(), (float)0.9);
 		
 		/* This array is used to suppress redundant/duplicate interest packets */
-		interestServedBitArray = new BitSet [(int)SimulationController.getMaxSimulatedPackets()];
+		interestServedBitArray = new BitSet [(int)SimulationController.getMaxSimulatedPackets()*2];
 		
 		/* Do not initialize the FIB, if we are running a simulation which does not have a FIB*/
 		if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
