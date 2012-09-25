@@ -1,28 +1,21 @@
 package com.simulator.packets;
 
-import java.awt.image.BufferedImage;
+
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Formatter;
-import java.util.List;
 import java.util.Map;
 
 //import org.apache.log4j.Logger;
 
-import com.simulator.ccn.CCNQueue;
-import com.simulator.ccn.CCNRouter;
+
 import com.simulator.ccn.IDEntry;
-import com.simulator.ccn.PITEntry;
-import com.simulator.ccn.HistoryEntry;
 import com.simulator.controller.SimulationController;
 import com.simulator.enums.PacketTypes;
-import com.simulator.enums.SimulationTypes;
 import com.simulator.enums.SupressionTypes;
-import com.simulator.topology.Grid;
+
 
 import arjuna.JavaSim.Simulation.*;
 
@@ -104,6 +97,12 @@ public class Packets implements Cloneable {
 	 */
 
 	private int noOfHops=0;
+	
+	/**
+	 * Useful number of hops 
+	 */
+	private int usefulNoOfHops=-1;
+	
 	/**
 	 * Statistics dump file
 	 */
@@ -141,7 +140,7 @@ public class Packets implements Cloneable {
 	private int dataPacketId = 0;
 	
 	/* It will hold the history of which interest packet has contributed in fetching in this object to this point */
-	private Map<IDEntry, List<HistoryEntry>> historyOfDataPackets = null;
+	private Map<IDEntry, Integer> historyOfDataPackets = null;
 	
 	public int getDataPacketId() {
 		return dataPacketId;
@@ -244,6 +243,9 @@ public class Packets implements Cloneable {
 			str.format(" %d",curPacket.getParentInterestId());
 			str.format(" %d",curPacket.getExpirationCount());
 			str.format(" %d",curPacket.getDataPacketId());
+			
+			if (PacketTypes.PACKET_TYPE_DATA == curPacket.getPacketType())
+				str.format(" %d",curPacket.getUsefulNoOfHops());
 
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
@@ -551,12 +553,20 @@ public class Packets implements Cloneable {
 		this.expirationCount = expirationCount;
 	}
 	
-	public Map<IDEntry, List<HistoryEntry>> getHistoryOfDataPackets() {
+	public Map<IDEntry, Integer> getHistoryOfDataPackets() {
 		return historyOfDataPackets;
 	}
 	
 	public void setHistoryOfDataPackets(
-			Map<IDEntry, List<HistoryEntry>> historyOfDataPackets) {
+			Map<IDEntry, Integer> historyOfDataPackets) {
 		this.historyOfDataPackets = historyOfDataPackets;
+	}
+
+	public int getUsefulNoOfHops() {
+		return usefulNoOfHops;
+	}
+
+	public void setUsefulNoOfHops(int usefulNoOfHops) {
+		this.usefulNoOfHops = usefulNoOfHops;
 	}
 };
