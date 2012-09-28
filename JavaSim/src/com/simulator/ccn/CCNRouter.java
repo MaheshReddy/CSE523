@@ -308,7 +308,14 @@ public class CCNRouter extends SimulationProcess {
 			tempHistoryOfDataPackets = new HashMap <IDEntry, Integer> (curPacket.getHistoryOfDataPackets());
 			/* Create history information related to this hop taken by the Data packet */			
 			/* Add history information into the historyCache, which will be part of cache entry. */
-			tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops());			
+			
+			if (tempHistoryOfDataPackets.containsKey(interestID)) {
+				Integer hopCount = tempHistoryOfDataPackets.get(interestID);
+				tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops() + hopCount.intValue());
+			}
+			else {
+				tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops());
+			}
 		}
 		
 		if (curPacket.getPrimaryInterestId() == 182)
