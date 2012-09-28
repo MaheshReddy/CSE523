@@ -229,15 +229,13 @@ public class Packets implements Cloneable {
 			//else
 				//str.format(" dead");
 			
-			str.format(" %d", (curPacket.isAlive())?1:0);
-			
+			str.format(" %d", (curPacket.isAlive())?1:0);			
 			str.format(" %d", (curPacket.getCauseOfSupr().ordinal()));
 			
 			if(curPacket.isLocal())
 				str.format(" 0");
 			else
-				str.format(" 1");
-			
+				str.format(" 1");			
 
 			str.format(" %d",curPacket.getPrimaryInterestId());
 			str.format(" %d",curPacket.getParentInterestId());
