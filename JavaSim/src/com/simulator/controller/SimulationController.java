@@ -447,7 +447,7 @@ import java.util.Properties;
 		/* Created the SimulationController object */
 		try {
 			ctrl = new SimulationController();
-		} 
+		}
 		catch (Exception e) {
 		
 			// TODO Auto-generated catch block
