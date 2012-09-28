@@ -309,6 +309,7 @@ public class CCNRouter extends SimulationProcess {
 					
 					clonePac.setCurNode(-1);
 					clonePac.setPrevHop(-1);
+					clonePac.setNoOfHops(0);
 					clonePac.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);		
 					
 					clonePac.setExpirationCount(rid.getNumOfTimesExpired());
