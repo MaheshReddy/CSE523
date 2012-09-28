@@ -292,8 +292,14 @@ public class CCNRouter extends SimulationProcess {
 		Map<IDEntry, Integer> tempHistoryOfDataPackets = null;
 		IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());		
 		
-		if (curPacket.getPrimaryInterestId() == 182)
-			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "Printing the history inside the packet");
+		if (curPacket.getPrimaryInterestId() == 202)
+			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "202: Printing the history inside the packet");
+		if (curPacket.getPrimaryInterestId() == 239)
+			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "239: Printing the history inside the packet");
+		if (curPacket.getPrimaryInterestId() == 335)
+			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "335: Printing the history inside the packet");
+		if (curPacket.getPrimaryInterestId() == 407)
+			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "407: Printing the history inside the packet");
 		
 		if (curPacket.getHistoryOfDataPackets() == null) {		
 						
@@ -318,8 +324,15 @@ public class CCNRouter extends SimulationProcess {
 			}
 		}
 		
-		if (curPacket.getPrimaryInterestId() == 182)
-			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "Value to be inserted into the Global Cache");
+		if (curPacket.getPrimaryInterestId() == 202)
+			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "202: Value to be inserted into the Global Cache");
+		if (curPacket.getPrimaryInterestId() == 239)
+			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "239: Value to be inserted into the Global Cache");
+		if (curPacket.getPrimaryInterestId() == 335)
+			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "335: Value to be inserted into the Global Cache");
+		if (curPacket.getPrimaryInterestId() == 407)
+			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "407: Value to be inserted into the Global Cache");
+	
 		
 		/* The following code is used to flood data packets over all the interfaces in PIT entry for this object */
 		Iterator<PITEntry> itr = pitEntries.iterator();		
@@ -385,10 +398,7 @@ public class CCNRouter extends SimulationProcess {
 			
 			if (data_packet!=null) {
 				
-				printDebugStatus("There is already a cache entry in the cache");
-				if (curPacket.getPrimaryInterestId() == 182)
-					printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "There is already a cache entry in the cache");
-				
+				printDebugStatus("There is already a cache entry in the cache for InterestID " + curPacket.getPrimaryInterestId());		
 			}
 			
 			getGlobalCache().addToCache(tempGlobalCacheEntry);	
@@ -511,9 +521,16 @@ public class CCNRouter extends SimulationProcess {
 			/* Create a data packet in reply of the interest packet, and place it in the trace file */
 			Packets.dumpStatistics(clonePac, "CRTDPRD");	
 			
-			if (curPacket.getPrimaryInterestId() == 182)
-				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "Interest packet handler (Cache Hit, and this value is from the cache)");
 			
+			if (curPacket.getPrimaryInterestId() == 202)
+				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "202: Interest packet handler (Cache Hit, and this value is from the cache)");
+			if (curPacket.getPrimaryInterestId() == 239)
+				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "239: Interest packet handler (Cache Hit, and this value is from the cache)");
+			if (curPacket.getPrimaryInterestId() == 335)
+				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "335: Interest packet handler (Cache Hit, and this value is from the cache)");
+			if (curPacket.getPrimaryInterestId() == 407)
+				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "407: Interest packet handler (Cache Hit, and this value is from the cache)");
+					
 			sendPacket(clonePac, curPacket.getPrevHop());
 			
 			data_packet.setRefPacketId(-1);
@@ -671,7 +688,8 @@ public class CCNRouter extends SimulationProcess {
 			fs1.write("\nStatus : " + status+ "\n");
 			fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
 			fs1.write("Current Node : " + getRouterId() + "\n");
-			fs1.write("PacketID : " + curPacket.getPrimaryInterestId() + "\n");
+			fs1.write("InterestID : " + curPacket.getPacketId() + "\n");
+			fs1.write("Primary InterestID : " + curPacket.getPrimaryInterestId() + "\n");
 			fs1.write("History of ObjectID : " + curPacket.getRefPacketId() + "\n");	
 		
 			if (historyOfObject != null) {
