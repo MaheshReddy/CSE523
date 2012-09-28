@@ -289,10 +289,13 @@ public class CCNRouter extends SimulationProcess {
 		
 		/* Create or update history related information pertaining to the object, and which Interest 
 		 * packet is responsible for getting that object into the cache */		
-		Map<IDEntry, Integer> tempHistoryOfDataPackets = curPacket.getHistoryOfDataPackets();
+		Map<IDEntry, Integer> tempHistoryOfDataPackets = null;
 		IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());		
 		
-		if (tempHistoryOfDataPackets == null) {		
+		if (curPacket.getPrimaryInterestId() == 182)
+			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "Printing the history inside the packet");
+		
+		if (curPacket.getHistoryOfDataPackets() == null) {		
 						
 			tempHistoryOfDataPackets = new HashMap<IDEntry,Integer>(20, (float)0.9);		
 			
@@ -301,11 +304,15 @@ public class CCNRouter extends SimulationProcess {
 			tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops());
 		}
 		else {
-						
+			
+			tempHistoryOfDataPackets = new HashMap <IDEntry, Integer> (curPacket.getHistoryOfDataPackets());
 			/* Create history information related to this hop taken by the Data packet */			
 			/* Add history information into the historyCache, which will be part of cache entry. */
 			tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops());			
 		}
+		
+		if (curPacket.getPrimaryInterestId() == 182)
+			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "Value to be inserted into the Global Cache");
 		
 		/* The following code is used to flood data packets over all the interfaces in PIT entry for this object */
 		Iterator<PITEntry> itr = pitEntries.iterator();		
@@ -365,8 +372,20 @@ public class CCNRouter extends SimulationProcess {
 		 * Check cache, and print value in file */
 		
 		/* Cache is a Map <Integer, Packet> object, hence, we do not have to check for duplicate values */
-		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability())
+		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
+			
+			Packets data_packet = getDataPacketfromCache(dataObject);
+			
+			if (data_packet!=null) {
+				
+				printDebugStatus("There is already a cache entry in the cache");
+				if (curPacket.getPrimaryInterestId() == 182)
+					printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "There is already a cache entry in the cache");
+				
+			}
+			
 			getGlobalCache().addToCache(tempGlobalCacheEntry);	
+		}
 		
 		/* adding entry to forwarding table */
 		/* 1. We check whether the FIBEntry is null or not
@@ -483,7 +502,10 @@ public class CCNRouter extends SimulationProcess {
 			curPacket.finished(SupressionTypes.SUPRESSION_SENT_DATA_PACKET);
 			
 			/* Create a data packet in reply of the interest packet, and place it in the trace file */
-			Packets.dumpStatistics(clonePac, "CRTDPRD");			
+			Packets.dumpStatistics(clonePac, "CRTDPRD");	
+			
+			if (curPacket.getPrimaryInterestId() == 182)
+				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "Interest packet handler (Cache Hit, and this value is from the cache)");
 			
 			sendPacket(clonePac, curPacket.getPrevHop());
 			
@@ -631,6 +653,56 @@ public class CCNRouter extends SimulationProcess {
 			fs1.close();
 		}
 		catch (IOException e){}	
+	}
+	
+	/* Prints the history of a cache entry */
+	public void printCacheObjectHistory (Map<IDEntry, Integer> historyOfObject, Packets curPacket, String status) {
+		
+		try {
+			
+			Writer fs1 = new BufferedWriter(new FileWriter("dump/CacheObjectHistoryEntry.txt",true));
+			fs1.write("\nStatus : " + status+ "\n");
+			fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
+			fs1.write("Current Node : " + getRouterId() + "\n");
+			fs1.write("PacketID : " + curPacket.getPrimaryInterestId() + "\n");
+			fs1.write("History of ObjectID : " + curPacket.getRefPacketId() + "\n");	
+		
+			if (historyOfObject != null) {
+				
+				int count = 0;
+				
+				for (Map.Entry<IDEntry, Integer> entry : historyOfObject.entrySet()) {	
+					
+					count ++;
+					
+					//System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+								
+					fs1.write("\nEntry : " + count + "\n");
+					fs1.write("InterestID: " + entry.getKey().getID() + "\n");
+					fs1.write("Number of Hops Counts: " + entry.getValue() + "\n\n");																		
+				}	
+				
+				fs1.write("\n" + "\n" + "\n" + "\n");	
+			}
+		
+		fs1.close();
+		
+		}
+		catch (IOException e){}	
+	}
+	
+	/* Prints the history of a cache entry */
+	public void printDebugStatus (String status) {
+		
+		try {
+			
+			Writer fs1 = new BufferedWriter(new FileWriter("dump/Debug.txt",true));
+			fs1.write("Current Time: " + SimulationProcess.CurrentTime());
+			fs1.write(" Status: " + status+ "\n");
+			fs1.close();
+			
+		}
+		catch (IOException e){}
 	}
 
 	/**
