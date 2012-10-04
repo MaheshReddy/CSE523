@@ -396,7 +396,7 @@ public class CCNRouter extends SimulationProcess {
 			
 			Packets data_packet = getDataPacketfromCache(dataObject);
 			
-			if (data_packet!=null) {
+			if (data_packet != null) {
 				
 				printDebugStatus("There is already a cache entry in the cache for InterestID " + curPacket.getPrimaryInterestId());		
 			}
@@ -411,6 +411,9 @@ public class CCNRouter extends SimulationProcess {
 		 * 3. However, if FIB entry is null, then we will add the new FIB entry
 		 * */
 		if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
+			
+			printFIB(forwardingTable, curPacket, "FIB before entering any value");
+						
 			if (forwardingTable.get(curPacket.getPacketId()) != null) {
 				
 				try {
@@ -425,15 +428,18 @@ public class CCNRouter extends SimulationProcess {
 						temp.setDestinationNode(curPacket.getPrevHop());
 						temp.setHops(curPacket.getNoOfHops());
 						
-						getForwardingTable().put(curPacket.getPacketId(), temp);											
+						getForwardingTable().put(curPacket.getPacketId(), temp);	
+						//printFIB(forwardingTable, curPacket, "FIB after updating hop count value");						
 					}
 				}
 				catch (Exception e) {}
 			}
 			
 			/* If there is no FIB entry for the object, then we create a new FIB entry for it */
-			else 
-				getForwardingTable().put(curPacket.getPacketId(), new FIBEntry (curPacket.getPrevHop(), curPacket.getNoOfHops()));	
+			else {
+				getForwardingTable().put(curPacket.getPacketId(), new FIBEntry (curPacket.getPrevHop(), curPacket.getNoOfHops()));
+				//printFIB(forwardingTable, curPacket, "FIB after entering new value");
+			}
 		}
 	}
 	/**
@@ -520,22 +526,11 @@ public class CCNRouter extends SimulationProcess {
 			
 			/* Create a data packet in reply of the interest packet, and place it in the trace file */
 			Packets.dumpStatistics(clonePac, "CRTDPRD");	
-			
-			
-			if (curPacket.getPrimaryInterestId() == 202)
-				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "202: Interest packet handler (Cache Hit, and this value is from the cache)");
-			if (curPacket.getPrimaryInterestId() == 239)
-				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "239: Interest packet handler (Cache Hit, and this value is from the cache)");
-			if (curPacket.getPrimaryInterestId() == 335)
-				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "335: Interest packet handler (Cache Hit, and this value is from the cache)");
-			if (curPacket.getPrimaryInterestId() == 407)
-				printCacheObjectHistory(clonePac.getHistoryOfDataPackets(), curPacket, "407: Interest packet handler (Cache Hit, and this value is from the cache)");
-					
+							
 			sendPacket(clonePac, curPacket.getPrevHop());
 			
 			data_packet.setRefPacketId(-1);
-			data_packet.setSegmentId(0);
-			
+			data_packet.setSegmentId(0);			
 
 			return;
 		}
@@ -708,6 +703,44 @@ public class CCNRouter extends SimulationProcess {
 				}	
 				
 				fs1.write("\n" + "\n" + "\n" + "\n");	
+			}
+		
+		fs1.close();
+		
+		}
+		catch (IOException e){}	
+	}
+	
+	/* Prints the FIB entries */
+	public void printFIB (Map<Integer, FIBEntry> fib, Packets curPacket, String status) {
+		
+		try {
+			
+			Writer fs1 = new BufferedWriter(new FileWriter("dump/FIB.txt",true));
+			fs1.write("\nStatus : " + status+ "\n");
+			fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
+			
+			fs1.write("Current Packet Information: \n");
+			fs1.write("Current Node : " + getRouterId() + "\n");
+			fs1.write("InterestID : " + curPacket.getRefPacketId() + "\n");
+			fs1.write("Primary InterestID : " + curPacket.getPrimaryInterestId() + "\n");
+			fs1.write("ObjectID : " + curPacket.getPacketId() + "\n");
+			fs1.write("No of Hops : " + curPacket.getNoOfHops() + "\n\n");
+					
+			if (fib != null) {
+				
+				int count = 0;
+				
+				fs1.write("Entry\tObjectID\tInterface\t#Hops\n");
+				for (Map.Entry<Integer, FIBEntry> entry : fib.entrySet()) {	
+					
+					count ++;
+					
+					fs1.write(count + "\t\t" + entry.getKey().intValue() + "\t\t\t" + entry.getValue().getDestinationNode() + "\t\t\t"
+							+ entry.getValue().getHops() + "\n");																						
+				}	
+				
+				fs1.write("\n" + "\n" + "\n");	
 			}
 		
 		fs1.close();
