@@ -291,15 +291,7 @@ public class CCNRouter extends SimulationProcess {
 		 * packet is responsible for getting that object into the cache */		
 		Map<IDEntry, Integer> tempHistoryOfDataPackets = null;
 		IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());		
-		
-		if (curPacket.getPrimaryInterestId() == 202)
-			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "202: Printing the history inside the packet");
-		if (curPacket.getPrimaryInterestId() == 239)
-			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "239: Printing the history inside the packet");
-		if (curPacket.getPrimaryInterestId() == 335)
-			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "335: Printing the history inside the packet");
-		if (curPacket.getPrimaryInterestId() == 407)
-			printCacheObjectHistory(curPacket.getHistoryOfDataPackets(), curPacket, "407: Printing the history inside the packet");
+
 		
 		if (curPacket.getHistoryOfDataPackets() == null) {		
 						
@@ -322,17 +314,7 @@ public class CCNRouter extends SimulationProcess {
 			else {
 				tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops());
 			}
-		}
-		
-		if (curPacket.getPrimaryInterestId() == 202)
-			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "202: Value to be inserted into the Global Cache");
-		if (curPacket.getPrimaryInterestId() == 239)
-			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "239: Value to be inserted into the Global Cache");
-		if (curPacket.getPrimaryInterestId() == 335)
-			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "335: Value to be inserted into the Global Cache");
-		if (curPacket.getPrimaryInterestId() == 407)
-			printCacheObjectHistory(tempHistoryOfDataPackets, curPacket, "407: Value to be inserted into the Global Cache");
-	
+		}	
 		
 		/* The following code is used to flood data packets over all the interfaces in PIT entry for this object */
 		Iterator<PITEntry> itr = pitEntries.iterator();		
@@ -412,7 +394,7 @@ public class CCNRouter extends SimulationProcess {
 		 * */
 		if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
 			
-			printFIB(forwardingTable, curPacket, "FIB before entering any value");
+			//printFIB(forwardingTable, curPacket, "FIB before entering any value");
 						
 			if (forwardingTable.get(curPacket.getPacketId()) != null) {
 				
