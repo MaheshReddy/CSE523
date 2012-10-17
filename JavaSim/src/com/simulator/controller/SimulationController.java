@@ -2,11 +2,9 @@ package com.simulator.controller;
 
 //import org.apache.log4j.Logger;
 
-import com.simulator.ccn.IDEntry;
-import com.simulator.ccn.PITEntry;
+
 import com.simulator.ccn.TimeOutProcess;
 import com.simulator.ccn.TimeOutFields;
-
 
 import com.simulator.ccn.CCNRouter;
 import com.simulator.ccn.TransmitPackets;
@@ -14,17 +12,11 @@ import com.simulator.distributions.Arrivals;
 import com.simulator.distributions.PacketDistributions;
 import com.simulator.enums.GridTypes;
 import com.simulator.enums.SimulationTypes;
-import com.simulator.enums.SupressionTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 import com.simulator.trace.*;
 import java.util.concurrent.PriorityBlockingQueue;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import arjuna.JavaSim.Simulation.*;
 
