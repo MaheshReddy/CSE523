@@ -606,16 +606,30 @@ public class CCNRouter extends SimulationProcess {
 				/* TODO
 				 * I do not think we need to clone this packet!? However, I am leaving it for now as everything is working.
 				 * I will address it in the next revision */ 
-				sendPacket((Packets)curPacket.clone(), rid.getDestinationNode());
-				curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);			
+				
+				/* It is pointless to clone this packet as we have commented the "curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT).
+				 * However, as the code was working fine with cloning, so we have tried not to make a change. We are persisting with cloning the
+				 * packet before we sent. The only addition is that we have placed the cause of flooding suppression within the packet. "
+				 *  */
+				Packets clonePac = (Packets) curPacket.clone();
+				clonePac.setCauseOfSupr(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);
+				
+				sendPacket(clonePac, rid.getDestinationNode());
+				
+				/* There is no point in finishing the packet as it will continue along the FIB path. Finished should be used 
+				 * when a packet is terminated at that point. 
+				 * */
+				//curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);			
 			}
 			/* IF we do not have FIB match, then we flood the interest packet*/
 			else {
+				curPacket.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 				floodInterestPacket(curPacket);			
 			}	
 		}
 		/* If we do not have a FIB, then we flood the interest packet every time */
 		else {
+			curPacket.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 			floodInterestPacket(curPacket);			
 		}	
 	}
