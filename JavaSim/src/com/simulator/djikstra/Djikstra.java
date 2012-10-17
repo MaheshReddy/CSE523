@@ -1,5 +1,9 @@
 package com.simulator.djikstra;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -74,9 +78,7 @@ public class Djikstra {
 					v.minDistance = distanceThroughU;
 					v.previous = u;
 					vertexQueue.add(v);
-
 				}
-
 			}
 		}
 	}
@@ -125,19 +127,28 @@ public class Djikstra {
 			}
 		}
 		
-		List<Vertex> path = null;
-		for (int i=0; i<vertexList.size(); i++) {
-			computePaths(vertexList.get(i));
-			for (int j=0; j<vertexList.size(); j++) {
-				v = vertexList.get(j);
-				pathTable[i][j] = (int)v.minDistance;
-				System.out.println("shortestPathTable["+i+"]["+j+"] = "+pathTable[i][j]+";");
-				 path = getShortestPathTo(v);
-				 System.out.println("Path: " + path);
+		try {
+			
+			Writer fs1 = new BufferedWriter(new FileWriter("dump/Djikstra.txt",true));
+		
+			List<Vertex> path = null;
+			for (int i=0; i<vertexList.size(); i++) {
+				computePaths(vertexList.get(i));
+				for (int j=0; j<vertexList.size(); j++) {
+					v = vertexList.get(j);
+					pathTable[i][j] = (int)v.minDistance;
+					fs1.write("shortestPathTable["+i+"]["+j+"] = "+pathTable[i][j]+ ";" + "\n");
+					System.out.println("shortestPathTable["+i+"]["+j+"] = "+pathTable[i][j]+";");
+					path = getShortestPathTo(v);
+					fs1.write("Path: " + path + "\n");
+					System.out.println("Path: " + path);
+				}
+				resetDistances(vertexList);
+				System.out.println();
 			}
-			resetDistances(vertexList);
-			System.out.println();
+			fs1.close();
 		}
+		catch (IOException d){}	
 		
 		setShortestPathTable(pathTable);		
 	}
