@@ -227,7 +227,7 @@ public class CCNRouter extends SimulationProcess {
 			
 		IDEntry pitIndex = new IDEntry (dataObject); 
 		
-		/* Remove stall entries from PIT table before adding a PIT Entry */			
+		/* Remove stall entries from PIT table before checking for a valid PIT Entry */			
 		List<PITEntry> pitEntries = pit.get(pitIndex);	
 				
 		if (pit.containsKey(pitIndex)) {					
@@ -289,6 +289,35 @@ public class CCNRouter extends SimulationProcess {
 			return;	
 		}
 		
+		/* Create or update history related information pertaining to the object, and which Interest 
+		 * packet is responsible for getting that object into the cache */		
+		Map<IDEntry, Integer> tempHistoryOfDataPackets = null;
+		IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());		
+
+		
+		if (curPacket.getHistoryOfDataPackets() == null) {		
+						
+			tempHistoryOfDataPackets = new HashMap<IDEntry,Integer>(20, (float)0.9);		
+			
+			/* Add history information into the historyCache, which will be part of cache entry. */
+			/* Number of hops should be one, as this condition will satisfy only for nodes that are one hop away. */
+			tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops());
+		}
+		else {
+			
+			tempHistoryOfDataPackets = new HashMap <IDEntry, Integer> (curPacket.getHistoryOfDataPackets());
+			/* Create history information related to this hop taken by the Data packet */			
+			/* Add history information into the historyCache, which will be part of cache entry. */
+			
+			if (tempHistoryOfDataPackets.containsKey(interestID)) {
+				Integer hopCount = tempHistoryOfDataPackets.get(interestID);
+				tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops() + hopCount.intValue());
+			}
+			else {
+				tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops());
+			}
+		}	
+		
 		/* The following code is used to flood data packets over all the interfaces in PIT entry for this object */
 		Iterator<PITEntry> itr = pitEntries.iterator();		
 		
@@ -315,9 +344,10 @@ public class CCNRouter extends SimulationProcess {
 					clonePac.setExpirationCount(rid.getNumOfTimesExpired());
 					clonePac.setPrimaryInterestId(rid.getPrimaryInterestID());
 					clonePac.setParentInterestId(rid.getRefPacketId());
+					clonePac.setHistoryOfDataPackets(tempHistoryOfDataPackets);
 					
 					clonePac.setDataPacketId(Packets.getCurrentDataPacketId());
-					Packets.incCurrentDataPacketId();
+					Packets.incCurrentDataPacketId();					
 					
 					Packets.dumpStatistics(clonePac, "CRTDPRDA", curPacket);	
 				}
@@ -332,21 +362,32 @@ public class CCNRouter extends SimulationProcess {
 		/* The following swapping before entering into the Global cache is because of a more logical entry relevant to "(PCKSTATUS:CRTDPRD)" 
 		 * in the trace file 
 		 * */
-		int tempCurr = curPacket.getCurNode(); 
-		int tempPreHop = curPacket.getPrevHop();
 		
-		curPacket.setCurNode(-1); 
-		curPacket.setPrevHop(-1);
 		
 		/* add the data packet into my global cache */
-		//log.info("Adding to global cache");	
+		//log.info("Adding to global cache");
+		
+		Packets tempGlobalCacheEntry = (Packets)curPacket.clone();
+		
+		tempGlobalCacheEntry.setCurNode(-1); 
+		tempGlobalCacheEntry.setPrevHop(-1);	
+		tempGlobalCacheEntry.setHistoryOfDataPackets(tempHistoryOfDataPackets);
+		
+		/* Flag that the cache was filled, when it should not have been.
+		 * Check cache, and print value in file */
 		
 		/* Cache is a Map <Integer, Packet> object, hence, we do not have to check for duplicate values */
-		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability())
-			getGlobalCache().addToCache((Packets)curPacket.clone());	
-		
-		curPacket.setCurNode(tempCurr); 
-		curPacket.setPrevHop(tempPreHop);
+		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
+			
+			Packets data_packet = getDataPacketfromCache(dataObject);
+			
+			if (data_packet != null) {
+				
+				printDebugStatus("There is already a cache entry in the cache for InterestID " + curPacket.getPrimaryInterestId());		
+			}
+			
+			getGlobalCache().addToCache(tempGlobalCacheEntry);	
+		}
 		
 		/* adding entry to forwarding table */
 		/* 1. We check whether the FIBEntry is null or not
@@ -355,6 +396,9 @@ public class CCNRouter extends SimulationProcess {
 		 * 3. However, if FIB entry is null, then we will add the new FIB entry
 		 * */
 		if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
+			
+			//printFIB(forwardingTable, curPacket, "FIB before entering any value");
+						
 			if (forwardingTable.get(curPacket.getPacketId()) != null) {
 				
 				try {
@@ -369,15 +413,18 @@ public class CCNRouter extends SimulationProcess {
 						temp.setDestinationNode(curPacket.getPrevHop());
 						temp.setHops(curPacket.getNoOfHops());
 						
-						getForwardingTable().put(curPacket.getPacketId(), temp);											
+						getForwardingTable().put(curPacket.getPacketId(), temp);	
+						//printFIB(forwardingTable, curPacket, "FIB after updating hop count value");						
 					}
 				}
 				catch (Exception e) {}
 			}
 			
 			/* If there is no FIB entry for the object, then we create a new FIB entry for it */
-			else 
-				getForwardingTable().put(curPacket.getPacketId(), new FIBEntry (curPacket.getPrevHop(), curPacket.getNoOfHops()));	
+			else {
+				getForwardingTable().put(curPacket.getPacketId(), new FIBEntry (curPacket.getPrevHop(), curPacket.getNoOfHops()));
+				//printFIB(forwardingTable, curPacket, "FIB after entering new value");
+			}
 		}
 	}
 	/**
@@ -463,13 +510,12 @@ public class CCNRouter extends SimulationProcess {
 			curPacket.finished(SupressionTypes.SUPRESSION_SENT_DATA_PACKET);
 			
 			/* Create a data packet in reply of the interest packet, and place it in the trace file */
-			Packets.dumpStatistics(clonePac, "CRTDPRD");			
-			
+			Packets.dumpStatistics(clonePac, "CRTDPRD");	
+							
 			sendPacket(clonePac, curPacket.getPrevHop());
 			
 			data_packet.setRefPacketId(-1);
-			data_packet.setSegmentId(0);
-			
+			data_packet.setSegmentId(0);			
 
 			return;
 		}
@@ -562,20 +608,31 @@ public class CCNRouter extends SimulationProcess {
 			if(rid != null) {
 				/* TODO
 				 * I do not think we need to clone this packet!? However, I am leaving it for now as everything is working.
-				 * I will address it in the next revision
-				 * */ 
-				//curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);
-				curPacket.setCauseOfSupr(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);
-				sendPacket((Packets)curPacket.clone(), rid.getDestinationNode());
-					
+				 * I will address it in the next revision */ 
+				
+				/* It is pointless to clone this packet as we have commented the "curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT).
+				 * However, as the code was working fine with cloning, so we have tried not to make a change. We are persisting with cloning the
+				 * packet before we sent. The only addition is that we have placed the cause of flooding suppression within the packet. "
+				 *  */
+				Packets clonePac = (Packets) curPacket.clone();
+				clonePac.setCauseOfSupr(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);
+				
+				sendPacket(clonePac, rid.getDestinationNode());
+				
+				/* There is no point in finishing the packet as it will continue along the FIB path. Finished should be used 
+				 * when a packet is terminated at that point. 
+				 * */
+				//curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);			
 			}
 			/* IF we do not have FIB match, then we flood the interest packet*/
-			else {				
+			else {
+				curPacket.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 				floodInterestPacket(curPacket);			
 			}	
 		}
 		/* If we do not have a FIB, then we flood the interest packet every time */
 		else {
+			curPacket.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 			floodInterestPacket(curPacket);			
 		}	
 	}
@@ -614,6 +671,95 @@ public class CCNRouter extends SimulationProcess {
 			fs1.close();
 		}
 		catch (IOException e){}	
+	}
+	
+	/* Prints the history of a cache entry */
+	public void printCacheObjectHistory (Map<IDEntry, Integer> historyOfObject, Packets curPacket, String status) {
+		
+		try {
+			
+			Writer fs1 = new BufferedWriter(new FileWriter("dump/CacheObjectHistoryEntry.txt",true));
+			fs1.write("\nStatus : " + status+ "\n");
+			fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
+			fs1.write("Current Node : " + getRouterId() + "\n");
+			fs1.write("InterestID : " + curPacket.getPacketId() + "\n");
+			fs1.write("Primary InterestID : " + curPacket.getPrimaryInterestId() + "\n");
+			fs1.write("History of ObjectID : " + curPacket.getRefPacketId() + "\n");	
+		
+			if (historyOfObject != null) {
+				
+				int count = 0;
+				
+				for (Map.Entry<IDEntry, Integer> entry : historyOfObject.entrySet()) {	
+					
+					count ++;
+					
+					//System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+								
+					fs1.write("\nEntry : " + count + "\n");
+					fs1.write("InterestID: " + entry.getKey().getID() + "\n");
+					fs1.write("Number of Hops Counts: " + entry.getValue() + "\n\n");																		
+				}	
+				
+				fs1.write("\n" + "\n" + "\n" + "\n");	
+			}
+		
+		fs1.close();
+		
+		}
+		catch (IOException e){}	
+	}
+	
+	/* Prints the FIB entries */
+	public void printFIB (Map<Integer, FIBEntry> fib, Packets curPacket, String status) {
+		
+		try {
+			
+			Writer fs1 = new BufferedWriter(new FileWriter("dump/FIB.txt",true));
+			fs1.write("\nStatus : " + status+ "\n");
+			fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
+			
+			fs1.write("Current Packet Information: \n");
+			fs1.write("Current Node : " + getRouterId() + "\n");
+			fs1.write("InterestID : " + curPacket.getRefPacketId() + "\n");
+			fs1.write("Primary InterestID : " + curPacket.getPrimaryInterestId() + "\n");
+			fs1.write("ObjectID : " + curPacket.getPacketId() + "\n");
+			fs1.write("No of Hops : " + curPacket.getNoOfHops() + "\n\n");
+					
+			if (fib != null) {
+				
+				int count = 0;
+				
+				fs1.write("Entry\tObjectID\tInterface\t#Hops\n");
+				for (Map.Entry<Integer, FIBEntry> entry : fib.entrySet()) {	
+					
+					count ++;
+					
+					fs1.write(count + "\t\t" + entry.getKey().intValue() + "\t\t\t" + entry.getValue().getDestinationNode() + "\t\t\t"
+							+ entry.getValue().getHops() + "\n");																						
+				}	
+				
+				fs1.write("\n" + "\n" + "\n");	
+			}
+		
+		fs1.close();
+		
+		}
+		catch (IOException e){}	
+	}
+	
+	/* Prints the history of a cache entry */
+	public void printDebugStatus (String status) {
+		
+		try {
+			
+			Writer fs1 = new BufferedWriter(new FileWriter("dump/Debug.txt",true));
+			fs1.write("Current Time: " + SimulationProcess.CurrentTime());
+			fs1.write(" Status: " + status+ "\n");
+			fs1.close();
+			
+		}
+		catch (IOException e){}
 	}
 
 	/**
@@ -720,7 +866,22 @@ public class CCNRouter extends SimulationProcess {
 			 *   Instead of the latter, we need to place 0.9 value. While for the former, we need to calculate what 
 			 *   percentage of the total objects has been received.
 			 *  */
-		
+			
+			Map<IDEntry, Integer> tempHistoryOfDataPackets = curPacket.getHistoryOfDataPackets();
+			IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());
+			
+			if (tempHistoryOfDataPackets != null && tempHistoryOfDataPackets.containsKey(interestID)) {
+				
+				Integer numberOfHops = tempHistoryOfDataPackets.get(interestID);
+				int totalNumberOfUsefulHops = numberOfHops.intValue() + curPacket.getNoOfHops();
+				
+				curPacket.setUsefulNoOfHops(totalNumberOfUsefulHops);				
+			}
+			else {
+				
+				curPacket.setUsefulNoOfHops(curPacket.getNoOfHops());					
+			}			
+					
 			curPacket.finished(SupressionTypes.SUPRESSION_DEST_NODE);
 			//log.info("Packet Destined to my node,so suppressing");
 			
