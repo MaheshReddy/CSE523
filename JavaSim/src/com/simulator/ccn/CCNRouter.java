@@ -219,7 +219,6 @@ public class CCNRouter extends SimulationProcess {
 	
 	public void dataPacketsHandler(Packets curPacket) {
 		
-		
 		IDEntry dataObject = new IDEntry (curPacket.getPacketId(), curPacket.getSegmentId());		
 				
 		/* I got this data packet so setting its locality to false */
@@ -293,7 +292,6 @@ public class CCNRouter extends SimulationProcess {
 		 * packet is responsible for getting that object into the cache */		
 		Map<IDEntry, Integer> tempHistoryOfDataPackets = null;
 		IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());		
-
 		
 		if (curPacket.getHistoryOfDataPackets() == null) {		
 						
@@ -361,8 +359,7 @@ public class CCNRouter extends SimulationProcess {
 		
 		/* The following swapping before entering into the Global cache is because of a more logical entry relevant to "(PCKSTATUS:CRTDPRD)" 
 		 * in the trace file 
-		 * */
-		
+		 * */		
 		
 		/* add the data packet into my global cache */
 		//log.info("Adding to global cache");
@@ -370,7 +367,8 @@ public class CCNRouter extends SimulationProcess {
 		Packets tempGlobalCacheEntry = (Packets)curPacket.clone();
 		
 		tempGlobalCacheEntry.setCurNode(-1); 
-		tempGlobalCacheEntry.setPrevHop(-1);	
+		tempGlobalCacheEntry.setPrevHop(-1);
+		tempGlobalCacheEntry.setSourceObjectCopy(false);
 		tempGlobalCacheEntry.setHistoryOfDataPackets(tempHistoryOfDataPackets);
 		
 		/* Flag that the cache was filled, when it should not have been.
@@ -398,32 +396,35 @@ public class CCNRouter extends SimulationProcess {
 		if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
 			
 			//printFIB(forwardingTable, curPacket, "FIB before entering any value");
-						
-			if (forwardingTable.get(curPacket.getPacketId()) != null) {
-				
-				try {
-
-					/* The following code will print to the file whenever a FIB entry is changed because of hop count */
-					if (getForwardingTableEntry(curPacket.getPacketId()).getHops() > curPacket.getNoOfHops()) {
-						
-						/* The following four lines of code are part of the core code performing the entry into the FIB in case there is a change of 
-						 * hop count 
-						 * */
-						FIBEntry temp = getForwardingTableEntry(curPacket.getPacketId());
-						temp.setDestinationNode(curPacket.getPrevHop());
-						temp.setHops(curPacket.getNoOfHops());
-						
-						getForwardingTable().put(curPacket.getPacketId(), temp);	
-						//printFIB(forwardingTable, curPacket, "FIB after updating hop count value");						
-					}
-				}
-				catch (Exception e) {}
-			}
 			
-			/* If there is no FIB entry for the object, then we create a new FIB entry for it */
-			else {
-				getForwardingTable().put(curPacket.getPacketId(), new FIBEntry (curPacket.getPrevHop(), curPacket.getNoOfHops()));
-				//printFIB(forwardingTable, curPacket, "FIB after entering new value");
+			if (curPacket.isSourceObjectCopy()) {
+						
+				if (forwardingTable.get(curPacket.getPacketId()) != null) {
+					
+					try {
+	
+						/* The following code will print to the file whenever a FIB entry is changed because of hop count */
+						if (getForwardingTableEntry(curPacket.getPacketId()).getHops() > curPacket.getTotalHops()) {
+							
+							/* The following four lines of code are part of the core code performing the entry into the FIB in case there is a change of 
+							 * hop count 
+							 * */
+							FIBEntry temp = getForwardingTableEntry(curPacket.getPacketId());
+							temp.setDestinationNode(curPacket.getPrevHop());
+							temp.setHops(curPacket.getTotalHops());
+							
+							getForwardingTable().put(curPacket.getPacketId(), temp);	
+							//printFIB(forwardingTable, curPacket, "FIB after updating hop count value");						
+						}
+					}
+					catch (Exception e) {}
+				}
+				
+				/* If there is no FIB entry for the object, then we create a new FIB entry for it */
+				else {
+					getForwardingTable().put(curPacket.getPacketId(), new FIBEntry (curPacket.getPrevHop(), curPacket.getNoOfHops()));
+					//printFIB(forwardingTable, curPacket, "FIB after entering new value");
+				}
 			}
 		}
 	}
@@ -642,7 +643,7 @@ public class CCNRouter extends SimulationProcess {
 		
 		try {
 			
-			Writer fs1 = new BufferedWriter(new FileWriter("dump/PITEntry.txt",true));
+			Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_PITEntry.txt",true));
 			fs1.write("\nStatus : " + status+ "\n");
 			fs1.write("Current Node : " + getRouterId() + "\n");
 			fs1.write("ObjectID : " + curPacket.getRefPacketId() + "\n");	
@@ -678,7 +679,7 @@ public class CCNRouter extends SimulationProcess {
 		
 		try {
 			
-			Writer fs1 = new BufferedWriter(new FileWriter("dump/CacheObjectHistoryEntry.txt",true));
+			Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_CacheObjectHistoryEntry.txt",true));
 			fs1.write("\nStatus : " + status+ "\n");
 			fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
 			fs1.write("Current Node : " + getRouterId() + "\n");
@@ -715,16 +716,16 @@ public class CCNRouter extends SimulationProcess {
 		
 		try {
 			
-			Writer fs1 = new BufferedWriter(new FileWriter("dump/FIB.txt",true));
-			fs1.write("\nStatus : " + status+ "\n");
-			fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
+			Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_FIB.txt",true));
+			//fs1.write("\nStatus : " + status+ "\n");
+			//fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
 			
-			fs1.write("Current Packet Information: \n");
+			//fs1.write("Current Packet Information: \n");
 			fs1.write("Current Node : " + getRouterId() + "\n");
-			fs1.write("InterestID : " + curPacket.getRefPacketId() + "\n");
-			fs1.write("Primary InterestID : " + curPacket.getPrimaryInterestId() + "\n");
-			fs1.write("ObjectID : " + curPacket.getPacketId() + "\n");
-			fs1.write("No of Hops : " + curPacket.getNoOfHops() + "\n\n");
+			//fs1.write("InterestID : " + curPacket.getRefPacketId() + "\n");
+			//fs1.write("Primary InterestID : " + curPacket.getPrimaryInterestId() + "\n");
+			//fs1.write("ObjectID : " + curPacket.getPacketId() + "\n");
+			//fs1.write("No of Hops : " + curPacket.getNoOfHops() + "\n\n");
 					
 			if (fib != null) {
 				
@@ -753,7 +754,7 @@ public class CCNRouter extends SimulationProcess {
 		
 		try {
 			
-			Writer fs1 = new BufferedWriter(new FileWriter("dump/Debug.txt",true));
+			Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_Debug.txt",true));
 			fs1.write("Current Time: " + SimulationProcess.CurrentTime());
 			fs1.write(" Status: " + status+ "\n");
 			fs1.close();
@@ -774,37 +775,53 @@ public class CCNRouter extends SimulationProcess {
 	}
 	
 	/**
-	 * Searches local cache and then global cache to find the the packet and if successful returns it else returns null;
-	 * @param packetId Id if the data packet
+	 * Searches local cache and then global cache to find the the packet and if
+	 * successful returns it else returns null;
+	 * 
+	 * @param packetId
+	 *            Id if the data packet
 	 * @return data packet
 	 */
-	/* Searches local storage and global cache (InterestPacketHander() comment: Function 2)*/
+	/*
+	 * Searches local storage and global cache (InterestPacketHander() comment:
+	 * Function 2)
+	 */
 	private Packets getDataPacketfromCache(IDEntry dataObject) {
-		
-		/* Objects in local cache are represented by segment 0, hence, we have created the object below to compare against it.
-		 * Essentially, we are ignoring the segment number in local caches to save on memory. The assumption is that all
-		 * segments will be present so it is useless to explicitly store all of them
-		 * */ 
-		
-		IDEntry localDataObject = new IDEntry (dataObject.getID(), 0);
-		
+
+		/*
+		 * Objects in local cache are represented by segment 0, hence, we have
+		 * created the object below to compare against it. Essentially, we are
+		 * ignoring the segment number in local caches to save on memory. The
+		 * assumption is that all segments will be present so it is useless to
+		 * explicitly store all of them
+		 */
+
+		IDEntry localDataObject = new IDEntry(dataObject.getID(), 0);
+
 		Packets packet = localStorage.get(localDataObject);
-	
-		if(packet != null) {
-			
+
+		if (packet != null) {
+			if (!packet.isSourceObjectCopy()) {
+				System.out
+						.println("According to packet entry, this object should have been retrieved from Global Cache");
+			}
 			return packet;
 		}
-		
-		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
-			
+
+		if (SimulationTypes.SIMULATION_CACHE == SimulationController
+				.getCacheAvailability()) {
+
 			packet = globalCache.get(dataObject);
 
-			if(packet != null) {
-				
+			if (packet != null) {
+				if (packet.isSourceObjectCopy()) {
+					System.out
+							.println("According to packet entry, this object should have been retrieved from Local Cache");
+				}
 				return packet;
 			}
-		}		
-		return null;		
+		}
+		return null;
 	}
 	
 	/**
@@ -846,6 +863,14 @@ public class CCNRouter extends SimulationProcess {
 			/* setting the source id as my Id before flooding it to my good neighbors */
 			curPacket.setPrevHop(getRouterId()); 
 			curPacket.incrHops();
+			
+			/* We are maintaining total hops for data packets as they are at times created at intermediate nodes
+			 * because of PIT entry being satisfied. Hence, total hops accounts from the time the object was created
+			 * at source till it reaches destination. The hops starts accounting when a data packet is created, hence,
+			 * it is in a way local in nature to that data packet. */
+			if (curPacket.getPacketType() == PacketTypes.PACKET_TYPE_DATA) {
+				curPacket.incrTotalHops();
+			}
 			
 			TransmitPackets trans = new TransmitPackets(curPacket, nodeId);
 			

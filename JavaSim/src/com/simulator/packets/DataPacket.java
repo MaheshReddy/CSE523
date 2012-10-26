@@ -3,10 +3,6 @@ package com.simulator.packets;
 
 //import org.apache.log4j.Logger;
 
-import java.util.List;
-import java.util.Map;
-import com.simulator.ccn.IDEntry;
-import com.simulator.ccn.PITEntry;
 import com.simulator.enums.DataPacketsApplTypes;
 import com.simulator.enums.PacketTypes;
 import com.simulator.enums.SupressionTypes;
@@ -21,9 +17,7 @@ public class DataPacket extends Packets implements Cloneable {
 	
 	private DataPacketsApplTypes applType;
 
-	//static final Logger log = Logger.getLogger(DataPacket.class);
-	
-	
+	//static final Logger log = Logger.getLogger(DataPacket.class);	
 	
 	private int popularity;
 	
@@ -52,6 +46,8 @@ public class DataPacket extends Packets implements Cloneable {
 		setAlive(true);
 		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 		this.setHistoryOfDataPackets(null);
+		setSourceObjectCopy(true);
+		setTotalHops(0);
 		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());		
 	}
 	/**
@@ -76,12 +72,19 @@ public class DataPacket extends Packets implements Cloneable {
 		setRefPacketId(-1);
 		setOriginNode(nodeId);
 		setAlive(true);
+		this.setLocality(true);
 		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 
 		setSegmentId (segId);
 		this.setHistoryOfDataPackets(null);
 		//super(1,SimulationTypes.SIMULATION_PACKETS_DATA,2);
+		
+		/* This constructor is called by PacketDistribution when using a workload.doc file.
+		 * The packets distributed need to have this value true as we are placing object in
+		 * repository (Local cache; Mahesh terminology) */
+		setSourceObjectCopy(true);
+		setTotalHops(0);
 	}	
 
 	@Override

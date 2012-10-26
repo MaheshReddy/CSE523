@@ -1,12 +1,8 @@
 package com.simulator.distributions;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -147,8 +143,7 @@ public class PacketDistributions {
 		
 		/* Open the docs.web file to read the object id's and their sizes */
 		BufferedReader rd = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(getAllDocs())));
-		
-		int count = 0;
+
 		int count1 = 0;
 		String line;
 		

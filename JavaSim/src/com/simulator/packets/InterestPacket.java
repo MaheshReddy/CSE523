@@ -3,9 +3,6 @@ package com.simulator.packets;
 
 //import org.apache.log4j.Logger;
 
-import arjuna.JavaSim.Simulation.Scheduler;
-
-
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
 import com.simulator.enums.PacketTypes;
