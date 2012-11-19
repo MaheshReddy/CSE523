@@ -139,6 +139,8 @@ public class Packets implements Cloneable {
 	
 	private int dataPacketId = 0;
 	
+	private boolean sourceObjectCopy;
+	
 	/* It will hold the history of which interest packet has contributed in fetching in this object to this point */
 	private Map<IDEntry, Integer> historyOfDataPackets = null;
 	
@@ -159,6 +161,8 @@ public class Packets implements Cloneable {
 	}
 
 	private int expirationCount;
+	
+	private int totalHops;
 
 	
 	public Packets(Packets pac)	{}
@@ -242,8 +246,16 @@ public class Packets implements Cloneable {
 			str.format(" %d",curPacket.getExpirationCount());
 			str.format(" %d",curPacket.getDataPacketId());
 			
-			if (PacketTypes.PACKET_TYPE_DATA == curPacket.getPacketType())
+			/* These values are useful when a Data packet is created or destroyed */
+			if (PacketTypes.PACKET_TYPE_DATA == curPacket.getPacketType()) {
 				str.format(" %d",curPacket.getUsefulNoOfHops());
+				str.format(" %d",curPacket.getTotalHops());
+				
+				if(curPacket.isSourceObjectCopy())
+					str.format(" 1");
+				else
+					str.format(" 0");
+			}
 
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
@@ -307,7 +319,13 @@ public class Packets implements Cloneable {
 			str.format(" %d",causalPacket.getRefPacketId());
 			str.format(" %d",causalPacket.getPrevHop());
 			
-
+			str.format(" %d",curPacket.getTotalHops());	
+			
+			if(curPacket.isSourceObjectCopy())
+				str.format(" 1");
+			else
+				str.format(" 0");
+	
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
 			
@@ -479,6 +497,7 @@ public class Packets implements Cloneable {
 		setNoOfHops(getNoOfHops()+1);
 	}
 	
+
 	public static String getDataDumpFile() {
 		return dataDumpFile;
 	}
@@ -567,4 +586,25 @@ public class Packets implements Cloneable {
 	public void setUsefulNoOfHops(int usefulNoOfHops) {
 		this.usefulNoOfHops = usefulNoOfHops;
 	}
+
+	public boolean isSourceObjectCopy() {
+		return sourceObjectCopy;
+	}
+
+	public void setSourceObjectCopy(boolean sourceObjectCopy) {
+		this.sourceObjectCopy = sourceObjectCopy;
+	}
+
+	public int getTotalHops() {
+		return totalHops;
+	}
+
+	public void setTotalHops(int totalHops) {
+		this.totalHops = totalHops;
+	}
+	
+	public void incrTotalHops() {
+		setTotalHops(getTotalHops()+1);
+	}
+	
 };

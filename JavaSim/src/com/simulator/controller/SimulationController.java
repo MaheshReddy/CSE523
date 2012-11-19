@@ -233,6 +233,11 @@ import java.util.Properties;
 					break;				
 			}
 			
+			for(int i=0;i<Grid.getGridSize();i++) {
+			
+				Grid.getRouter(i).printFIB(Grid.getRouter(i).getForwardingTable(), null, null);				
+			}
+			
 			/* Stops the simulation */
 			Scheduler.stopSimulation();
 			

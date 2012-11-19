@@ -7,7 +7,6 @@ import java.io.Writer;
 import java.util.Formatter;
 
 import com.simulator.packets.Packets;
-import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationController;
 import com.simulator.distributions.PacketDistributions;
 import com.simulator.enums.SimulationTypes;
@@ -22,18 +21,9 @@ import arjuna.JavaSim.Simulation.*;;
  * */
 public class CacheFIBTrace extends SimulationProcess {
 	
-	private static double printDelay;
-	
 	//public static Writer fsCacheFIBTrace = null;
 	
 	public CacheFIBTrace () {
-		
-		try {
-			
-			Writer f = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_cf",true));
-			System.out.println("\nInside Constructor: " + CCNRouter.CurrentTime());
-		}		
-	    catch (IOException e) {}
 				
 	}
 	
