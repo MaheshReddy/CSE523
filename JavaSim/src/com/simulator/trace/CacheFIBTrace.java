@@ -10,7 +10,6 @@ import com.simulator.packets.Packets;
 import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationController;
 import com.simulator.distributions.PacketDistributions;
-import com.simulator.enums.PacketTypes;
 import com.simulator.enums.SimulationTypes;
 import com.simulator.topology.Grid;
 
