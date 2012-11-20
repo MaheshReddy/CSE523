@@ -56,7 +56,7 @@ public class DataPacket extends Packets implements Cloneable {
 	 * @param nodeId node to which this packet is assigned.
 	 */
 
-	public DataPacket(String line,int nodeId,int segId)
+	public DataPacket(String line, int nodeId, int segId)
 	{
 		String [] words = line.split("\\s+");
 
@@ -109,7 +109,5 @@ public class DataPacket extends Packets implements Cloneable {
 
 	public void setPopularity(int popularity) {
 		this.popularity = popularity;
-	}
-	
-	
+	}	
 };
