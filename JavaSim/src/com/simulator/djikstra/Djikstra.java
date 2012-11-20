@@ -129,7 +129,7 @@ public class Djikstra {
 		
 		try {
 			
-			Writer fs1 = new BufferedWriter(new FileWriter("dump/Djikstra.txt",true));
+			Writer fs1 = new BufferedWriter(new FileWriter("resources/First.Djikstra",true));
 		
 			List<Vertex> path = null;
 			for (int i=0; i<vertexList.size(); i++) {
