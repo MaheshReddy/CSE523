@@ -216,7 +216,7 @@ import java.util.Properties;
 				boolean terminate = true;	
 				for(int i=0;i<Grid.getGridSize();i++) {
 					if (!Grid.getRouter(i).getPacketsQ().isEmpty()) {						
-						System.out.println("The queue of Router + " + Grid.getRouter(i).getRouterId() + " has " + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + " packets");
+						System.out.println("The queue of Router " + Grid.getRouter(i).getRouterId() + " has " + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + " packets");
 						terminate = false;
 					}
 				}
@@ -472,3 +472,4 @@ import java.util.Properties;
 		System.exit(0);
 	}
 };
+
