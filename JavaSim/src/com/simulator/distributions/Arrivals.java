@@ -56,6 +56,7 @@ public class Arrivals extends SimulationProcess {
 		
 		//InterArrivalTime = new ExponentialStream(loadImpact, 0, 3063366117L, 3003062878L);
 		InterArrivalTime = new ExponentialStream(loadImpact);
+		
 		gridSize = Grid.getGridSize();
 		
 		countInterestPackets = 0;
