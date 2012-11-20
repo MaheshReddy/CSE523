@@ -17,6 +17,7 @@ import com.simulator.topology.Grid;
 import com.simulator.trace.*;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.Comparator;
+import java.util.Formatter;
 
 import arjuna.JavaSim.Simulation.*;
 
@@ -69,6 +70,7 @@ import java.util.Properties;
 	
 
 	public static Writer fs = null;
+	
 	
     /**
      * Reads "ccn.properties" file and sets the corresponding simulation parameters.
@@ -146,6 +148,7 @@ import java.util.Properties;
 		PacketDistributions.distributeContent(distributionType);
 		
 		fs = new BufferedWriter(new FileWriter(Packets.getDataDumpFile(),true));
+		
 	}
 	/* The following method is called after the constructor. It will create an object of the Arrivals class which is responsible
 	 * to generate interest packets based on the frequency provided in ccn.properties 
@@ -190,6 +193,28 @@ import java.util.Properties;
 		
 				System.out.println("Number of Interest Packets Generated: " + Packets.getCurrentPacketId());
 				System.out.println("Number of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
+				
+				Writer queueSizeWriter = new BufferedWriter(new FileWriter(Packets.getDataDumpFile()+ "_queue-sizes",true));
+				
+				StringBuilder str1 = new StringBuilder();
+				Formatter str = new Formatter(str1);
+				
+				double avgQueueSizes = 0;
+				
+				for(int i=0; i<Grid.getGridSize(); i++) {
+					
+					str.format("%d\t", Grid.getRouter(i).getPacketsQ().packetsInCCNQueue());
+					//queueSizeWriter.write("" + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + "\t");	
+					//System.out.print("" + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + "\t");
+					avgQueueSizes = avgQueueSizes + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue();
+					//queueSizeWriter.write("hello");
+				}
+				
+				avgQueueSizes = avgQueueSizes / (double) Grid.getGridSize();
+				str.format("%f\n", avgQueueSizes);
+				queueSizeWriter.write(str.toString());
+				queueSizeWriter.close();
+				
 				Hold(SimulationController.getHold());				
 			}
 			
@@ -242,6 +267,7 @@ import java.util.Properties;
 			Scheduler.stopSimulation();
 			
 			SimulationController.fs.close();
+			//SimulationController.queueSizeWriter.close();
 
 			
 			//log.info("Done with simulation");
