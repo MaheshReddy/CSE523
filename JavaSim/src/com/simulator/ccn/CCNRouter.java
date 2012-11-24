@@ -90,7 +90,7 @@ public class CCNRouter extends SimulationProcess {
 		defaultInterface = 0;
 		setRouterId(id);
 		packetsQ = new CCNQueue(id);
-		
+
 		/* The following code initializes the PIT with values from ccn.properties file. Note that smaller sized PIT
 		 * for large simulations slows down the process significantly
 		 *  */
@@ -243,10 +243,8 @@ public class CCNRouter extends SimulationProcess {
 				while(stalledPITEntries.hasNext()) {
 					
 					PITEntry current = stalledPITEntries.next();
-					
-					double pitTO = SimulationController.getPitTimeOut();
-					
-					if ((SimulationProcess.CurrentTime() - current.getCreatedAtTime()) >= pitTO) {
+										
+					if ((SimulationProcess.CurrentTime() - current.getExpirationTime()) >= 0) {
 						removePITIndex = true;
 					}
 					
@@ -521,8 +519,7 @@ public class CCNRouter extends SimulationProcess {
 			return;
 		}
 		
-		/* Remove stall entries from PIT table before adding a PIT Entry */		
-		
+		/* Remove stall entries from PIT table before adding a PIT Entry */				
 		IDEntry pitIndex = new IDEntry (dataObject); 		
 			
 		if (pit.containsKey(pitIndex)) {
@@ -542,7 +539,7 @@ public class CCNRouter extends SimulationProcess {
 				while(stalledPITEntries.hasNext()) {
 					
 					PITEntry current = stalledPITEntries.next();					
-					if ((SimulationProcess.CurrentTime() - current.getCreatedAtTime()) >= SimulationController.getPitTimeOut()) {
+					if ((SimulationProcess.CurrentTime() - current.getExpirationTime()) >= 0) {
 						removePITIndex = true;
 					}
 					
@@ -577,13 +574,16 @@ public class CCNRouter extends SimulationProcess {
 		
 		List<PITEntry> pitEntries = pit.get(pitIndex);	
 		
-		/* I have seen this index, and need to append the outgoing interface in the PITEntry list. Further, I need to suppress this packet */
+		/* I have seen this index, and need to append the outgoing interface in the PITEntry list. 
+		 * Further, I need to suppress this packet */
 		if (pit.containsKey(pitIndex)) {
 			
 			/* If I already have this outgoing interface, then I do not add this to the PITEntry list*/
 			if(!pitEntries.contains(new PITEntry(curPacket.getPrevHop())))/*!containsPITEntry(pitEntries,curPacket.getPrevHop())*/ {
-					
-				pitEntries.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), curPacket.getPrimaryInterestId(), SimulationController.CurrentTime(), curPacket.getExpirationCount()));
+				
+				pitEntries.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), curPacket.getPrimaryInterestId(), 
+						SimulationController.CurrentTime(), SimulationController.CurrentTime() + calculateTimeOutValue(routerId).get(0), 
+						curPacket.getExpirationCount()));
 			}				
 
 			/* Suppress the packet */
@@ -594,7 +594,9 @@ public class CCNRouter extends SimulationProcess {
 		else {
 			
 			List<PITEntry> newPITEntry = new ArrayList<PITEntry>();
-			newPITEntry.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), curPacket.getPrimaryInterestId(), SimulationProcess.CurrentTime(), curPacket.getExpirationCount()));
+			newPITEntry.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), curPacket.getPrimaryInterestId(), 
+					SimulationController.CurrentTime(), SimulationController.CurrentTime() + calculateTimeOutValue(routerId).get(0), 
+					curPacket.getExpirationCount()));
 			
 			pit.put(pitIndex, newPITEntry);	
 		}		
@@ -636,6 +638,41 @@ public class CCNRouter extends SimulationProcess {
 			curPacket.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 			floodInterestPacket(curPacket);			
 		}	
+	}
+	
+	/**/
+	
+	public static ArrayList <Double> calculateTimeOutValue (int routerID) {
+		
+		/* When calculateTimeOutValue is called, then this object will be returned containing the PIT and Interest
+		 * Packet timeouts. The order will be PIT and Interest Packet timeouts*/
+		ArrayList <Double> pitInterestPktTO = new ArrayList <Double> (2);			
+		
+		double pitTO = 0.0;
+		double intPktTO = 0.0;
+		double weightMean = 0.0;		
+		double leeway = (CCNRouter.getProcDelay() + TransmitPackets.getTransDelay()) * 5;
+		
+		for(int i=0; i<Grid.getGridSize(); i++) {
+			weightMean = weightMean + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() * SimulationController.ratioDCToAllEdges.get(i);
+		}
+		
+		/* PIT timeout is set just before a packet is transmitted, hence, we do need to add the delay of the actual queue one-way */
+		pitTO = Math.ceil (((CCNRouter.getProcDelay() + TransmitPackets.getTransDelay()) * 2) * SimulationController.getEccentricCentrality()
+				+ leeway 
+				+ (weightMean * 0.4 * SimulationController.getEccentricCentrality()) 
+				+ (Grid.getRouter(routerID).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay()));		
+		
+		intPktTO = Math.ceil (((CCNRouter.getProcDelay() + TransmitPackets.getTransDelay()) * 2) * SimulationController.getEccentricCentrality()
+				+ leeway + leeway
+				+ (weightMean * 0.4 * SimulationController.getEccentricCentrality()) 
+				+ (Grid.getRouter(routerID).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay() * 2) 
+				+ SimulationController.getRetransNuance());
+		
+		pitInterestPktTO.add(pitTO);
+		pitInterestPktTO.add(intPktTO);
+		
+		return pitInterestPktTO;
 	}
 	
 	/* Prints the current PIT entries corresponding to a particular PIT index */
@@ -856,9 +893,25 @@ public class CCNRouter extends SimulationProcess {
 	 * This function puts the packet in the destination Router's queue. But makes necessary changes to the packet before putting it.
 	 * It creates a new SimulationProcess TransmitPackets and adds transmission delay to it.
 	 */
-	public void sendPacket(Packets curPacket,final Integer nodeId) {
+	public void sendPacket(Packets curPacket, final Integer nodeId) {
 		
 		if(nodeId > -1) {
+			
+			/*
+			 * Enter the code of TimeOutProcess
+			 * 
+			 * 
+			 * */
+			/* If this interest packet is originating from this node, and is a retransmission then we add it into the TimeOutQueue */
+			//if (curPacket.getPrevHop() < 0 && curPacket.getExpirationCount() >= 1) {
+				
+				//ArrayList<Double> timeoutValue = CCNRouter.calculateTimeOutValue(SimulationController.timeOutQueue.peek().getNodeID());
+				//double tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
+				
+				//SimulationController.timeOutQueue.add(new TimeOutFields(curPacket.getPrimaryInterestId(), curPacket.getPacketId(),
+						//curPacket.getSegmentId(), curPacket.getRefPacketId(), 
+						//curPacket.getOriginNode(), curPacket.getExpirationCount(), tempTimeOutValue, false));
+			//}
 			
 			/* setting the source id as my Id before flooding it to my good neighbors */
 			curPacket.setPrevHop(getRouterId()); 
@@ -1063,6 +1116,9 @@ public class CCNRouter extends SimulationProcess {
 		this.forwardingTable = forwardingTable;
 	}
 	
+	public void setInterestsServed (BitSet[] temp) {
+		interestServedBitArray = temp;
+	}
 	public BitSet[] getInterestsServed () {
 		return interestServedBitArray;
 	}
