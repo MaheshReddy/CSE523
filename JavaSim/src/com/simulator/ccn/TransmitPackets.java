@@ -19,7 +19,7 @@ public class TransmitPackets extends SimulationProcess {
 	//static final Logger log = Logger.getLogger(TransmitPackets.class);
 	private static double transDelay;
 	
-	TransmitPackets (Packets tempPacket,int destNode) {
+	TransmitPackets (Packets tempPacket, int destNode) {
 		curPacket = tempPacket;
 		dstNode = Grid.getRouter(destNode);
 	}
