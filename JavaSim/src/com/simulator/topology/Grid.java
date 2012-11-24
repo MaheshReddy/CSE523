@@ -2,9 +2,11 @@ package com.simulator.topology;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.simulator.ccn.CCNRouter;
+import com.simulator.controller.SimulationController;
 import com.simulator.enums.GridTypes;
 
 public class Grid 
@@ -79,6 +81,20 @@ public class Grid
 		 * */
 		
 		Node[] nodes = readToplogyBrite.getAllNodes(); 
+		
+		/*Start: This code will store the number of edges each node maintains. 
+		 * They will be used to calculate weighted mean for PIT and Interest packet
+		 * timeouts*/
+		SimulationController.edgeCountPerNode = new ArrayList <Integer> ();
+		
+		for(int i = 0; i < nodes.length; i++) {	
+			
+			SimulationController.edgeCountPerNode.add(nodes[i].getRoutingTable().size());
+			System.out.println("Edges for Node " + i + "is: " + nodes[i].getRoutingTable().size());
+			SimulationController.edgeCount = SimulationController.edgeCount + nodes[i].getRoutingTable().size();
+		}
+		
+		System.out.println("Edge Count is: " + SimulationController.edgeCount);
 		
 		for(int i = 0; i < getGridSize(); i++)
 		{
