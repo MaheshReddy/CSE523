@@ -278,7 +278,7 @@ public class Packets implements Cloneable {
 			StringBuilder str1 = new StringBuilder();
 			Formatter str = new Formatter(str1);
 			
-			str.format("%(,2.4f",SimulationProcess.CurrentTime());
+			str.format("%2.4f",SimulationProcess.CurrentTime());
 			
 			if(PacketTypes.PACKET_TYPE_DATA == curPacket.getPacketType())
 				str.format(" d");
