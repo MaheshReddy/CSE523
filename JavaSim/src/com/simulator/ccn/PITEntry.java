@@ -6,6 +6,7 @@ public class PITEntry {
 	private int outgoingInterface;
 	private int refPacketId;
 	private double createdAtTime;
+	private double expirationTime;
 	private int primaryInterestID;
 	private int numOfTimesExpired;
 	
@@ -13,6 +14,7 @@ public class PITEntry {
 		
 		outgoingInterface = -1;
 		createdAtTime = -1;	
+		expirationTime = -1;
 		refPacketId = -1;
 		primaryInterestID = -1;		
 		numOfTimesExpired = -1;
@@ -23,6 +25,7 @@ public class PITEntry {
 		
 		outgoingInterface = tempInt;
 		createdAtTime = -1;	
+		expirationTime = -1;
 		refPacketId = -1;
 		primaryInterestID = -1;		
 		numOfTimesExpired = -1;
@@ -34,12 +37,14 @@ public class PITEntry {
 		createdAtTime = tempTime;		
 	}
 	
-	public PITEntry (int tempInt, int tempPacketId, int tempPrimaryInterestID, double tempTime, int tempNumOfTimesExpired) {
+	public PITEntry (int tempInt, int tempPacketId, int tempPrimaryInterestID, double tempTime, double tempExpirationTime, 
+			int tempNumOfTimesExpired) {
 		
 		outgoingInterface = tempInt;
 		refPacketId = tempPacketId;
 		primaryInterestID = tempPrimaryInterestID;
-		createdAtTime = tempTime;		
+		createdAtTime = tempTime;
+		expirationTime = tempExpirationTime;
 		numOfTimesExpired = tempNumOfTimesExpired;
 	}
 	
@@ -108,5 +113,15 @@ public class PITEntry {
 
 	public void setNumOfTimesExpired(int numOfTimesExpired) {
 		this.numOfTimesExpired = numOfTimesExpired;
+	}
+
+
+	public double getExpirationTime() {
+		return expirationTime;
+	}
+
+
+	public void setExpirationTime(double expirationTime) {
+		this.expirationTime = expirationTime;
 	}			
 }
