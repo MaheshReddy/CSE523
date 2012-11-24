@@ -2,6 +2,7 @@ package com.simulator.distributions;
 import arjuna.JavaSim.Simulation.*;
 import arjuna.JavaSim.Distributions.*;
 import java.util.Random;
+import java.util.ArrayList;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class Arrivals extends SimulationProcess {
 	//static final Logger log = Logger.getLogger(Arrivals.class);
 	
 	private Integer gridSize = 0;
-	public int countInterestPackets;
+	public static int countInterestPackets;
 	private ExponentialStream InterArrivalTime;
 	
 	private static double loadImpact;
@@ -111,6 +112,8 @@ public class Arrivals extends SimulationProcess {
 				if (!Arrivals.isArrivalStatus()) {	
 					
 					if (SimulationController.getDistributionType() == SimulationTypes.SIMULATION_DISTRIBUTION_GLOBETRAFF) {
+						
+						//System.out.println ("Inside this function: " + countInterestPackets);
 						
 						srcNode = nodeSelecter.nextInt(gridSize);	
 						/*
@@ -230,8 +233,11 @@ public class Arrivals extends SimulationProcess {
 					firstPacket.activate();		
 					
 					/* The following code add this interest packet into the TimeOutQueue. */
-					double tempTimeOutValue = SimulationController.CurrentTime() + SimulationController.getPitTimeOut() + 
-							SimulationController.getRetransNuance(); 
+					//double tempTimeOutValue = SimulationController.CurrentTime() + SimulationController.getPitTimeOut() + 
+							//SimulationController.getRetransNuance(); 
+					
+					ArrayList<Double> timeoutValue = CCNRouter.calculateTimeOutValue(srcNode);
+					double tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
 					
 					SimulationController.timeOutQueue.add(new TimeOutFields(firstPacket.getPrimaryInterestId(), firstPacket.getPacketId(), firstPacket.getSegmentId(), 
 							firstPacket.getRefPacketId(), firstPacket.getOriginNode(), firstPacket.getExpirationCount(), 
@@ -283,8 +289,11 @@ public class Arrivals extends SimulationProcess {
 							/* The TimeOutValue of subsequent segmented interest packets should have a larger time out by the processing delay as they
 							 * will wait in queue behind the previous segmented packet (untested idea as of 9/10/2012)
 							 * */
-							tempTimeOutValue = SimulationController.CurrentTime() + SimulationController.getPitTimeOut() + 
-									SimulationController.getRetransNuance() + CCNRouter.getProcDelay() * (i -1); 
+							//tempTimeOutValue = SimulationController.CurrentTime() + SimulationController.getPitTimeOut() + 
+									//SimulationController.getRetransNuance() + CCNRouter.getProcDelay() * (i -1);
+							
+							timeoutValue = CCNRouter.calculateTimeOutValue(srcNode);
+							tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
 							
 							SimulationController.timeOutQueue.add(new TimeOutFields(otherPackets.getPrimaryInterestId(), otherPackets.getPacketId(), 
 									otherPackets.getSegmentId(), otherPackets.getRefPacketId(), otherPackets.getOriginNode(), 
