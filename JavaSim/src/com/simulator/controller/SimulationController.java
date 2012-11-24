@@ -18,6 +18,7 @@ import com.simulator.trace.*;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.Comparator;
 import java.util.Formatter;
+import java.util.ArrayList;
 
 import arjuna.JavaSim.Simulation.*;
 
@@ -42,6 +43,7 @@ import java.util.Properties;
 	//static final Logger log = Logger.getLogger(SimulationController.class);;
 	private static long packetsGenerated = 0;
 	public static long maxSimulatedPackets = 0;
+	private static int eccentricCentrality;
 	private static int cacheSize;
 	private static int edgeCacheSize;
 	private static int coreCacheSize;
@@ -54,6 +56,10 @@ import java.util.Properties;
 	
 	public static TimeOutProcess top = null;
 	public static PriorityBlockingQueue <TimeOutFields> timeOutQueue = null; 
+	
+	public static ArrayList <Double> ratioDCToAllEdges = null;
+	public static ArrayList <Integer> edgeCountPerNode = null; 
+	public static int edgeCount = 0; 
 	
 	private static int hold = 0;
 	
@@ -92,7 +98,8 @@ import java.util.Properties;
 			Arrivals.setSegmentSize(Integer.parseInt(prop.getProperty("ccn.sizeOf.segment")));
 			setMaxSimulatedPackets(Integer.parseInt(prop.getProperty("ccn.no.simulationpackets")));			
 			Packets.setDataDumpFile(prop.getProperty("dumpfile.packets"));			
-			setGridType(GridTypes.valueOf(prop.getProperty("ccn.topology")));			
+			setGridType(GridTypes.valueOf(prop.getProperty("ccn.topology")));
+			setEccentricCentrality(Integer.parseInt(prop.getProperty("ccn.eccentricity.centrality")));
 			setDistributionType (SimulationTypes.valueOf(prop.getProperty("ccn.object.distribution")));			
 			setObjectSegmentation (SimulationTypes.valueOf(prop.getProperty("ccn.object.segmentation")));			
 			setCacheType (SimulationTypes.valueOf(prop.getProperty("ccn.cachesize.type")));			
@@ -141,6 +148,13 @@ import java.util.Properties;
 		
 		/* The following method will create the appropriate topology based on the choice provided in the ccn.properties file */
 		Grid.createTopology(gridType);
+		
+		ratioDCToAllEdges = new ArrayList <Double> ();
+		
+		for (int i = 0; i < edgeCountPerNode.size(); i++) {
+			ratioDCToAllEdges.add((double)edgeCountPerNode.get(i)/(double)(edgeCount));
+			System.out.println("Ratio for Node " + i + "is: " + (double)edgeCountPerNode.get(i)/(double)(edgeCount));
+		}
 		
 		/* The following function will distributed the objects amongst various nodes based on docs.all file of
 		 * Globe Traffic.  
@@ -192,7 +206,9 @@ import java.util.Properties;
 			
 			while(!Arrivals.isArrivalStatus())	{
 		
-				System.out.println("Number of Interest Packets Generated: " + Packets.getCurrentPacketId());
+				System.out.println("Total Interest Packets Generated (retranmission inclusive): " + Packets.getCurrentPacketId());
+				System.out.println("Retransmissed Interest Packets: " + TimeOutProcess.retranmissionPacketCount);
+				System.out.println("New Interest Packets Generated: " + Arrivals.countInterestPackets);
 				System.out.println("Number of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
 				
 				Writer queueSizeWriter = new BufferedWriter(new FileWriter(Packets.getDataDumpFile()+ "_queue-sizes",true));
@@ -221,6 +237,34 @@ import java.util.Properties;
 			
 			/* The following code insures that the TimeOutQueue is empty before the simulation is terminated */
 			while(true) {
+				
+				Writer queueSizeWriter = new BufferedWriter(new FileWriter(Packets.getDataDumpFile()+ "_timeoutQueueEmpty",true));
+				
+				queueSizeWriter.write("\n\nCurrent time: " + SimulationController.CurrentTime());
+				queueSizeWriter.write("\nNumber of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
+				queueSizeWriter.write("\nTimeOutQueue Size" + SimulationController.timeOutQueue.size());
+				
+				if (SimulationController.timeOutQueue.size() > 0) {				
+					
+					queueSizeWriter.write("\nFirst interest packet on Queue (PrimaryInterestID)" + SimulationController.timeOutQueue.peek().getPrimaryInterestID());
+					queueSizeWriter.write("\nFirst interest packet on Queue (NodeID)" + SimulationController.timeOutQueue.peek().getNodeID());
+					queueSizeWriter.write("\nFirst interest packet on Queue (TimeOutValue)" + SimulationController.timeOutQueue.peek().getTimeOutValue());
+					queueSizeWriter.write("\nFirst interest packet on Queue (InterestID)" + SimulationController.timeOutQueue.peek().getInterestID());
+					queueSizeWriter.write("\nFirst interest packet on Queue (ObjectID)" + SimulationController.timeOutQueue.peek().getObjectID());
+					queueSizeWriter.write("\nFirst interest packet on Queue (ReceivedObject)" + SimulationController.timeOutQueue.peek().getReceivedDataObject() + "\n");
+				
+				}
+				//System.out.println("\nCurrent time: " + SimulationController.CurrentTime());
+				//System.out.println("Number of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
+				//System.out.println("TimeOutQueue Size" + SimulationController.timeOutQueue.size());
+				//System.out.println("First interest packet on Queue (PrimaryInterestID)" + SimulationController.timeOutQueue.peek().getPrimaryInterestID());
+				//System.out.println("First interest packet on Queue (NodeID)" + SimulationController.timeOutQueue.peek().getNodeID());
+				//System.out.println("First interest packet on Queue (TimeOutValue)" + SimulationController.timeOutQueue.peek().getTimeOutValue());
+				//System.out.println("First interest packet on Queue (InterestID)" + SimulationController.timeOutQueue.peek().getInterestID());
+				//System.out.println("First interest packet on Queue (ObjectID)" + SimulationController.timeOutQueue.peek().getObjectID());
+				//System.out.println("First interest packet on Queue (ReceivedObject)" + SimulationController.timeOutQueue.peek().getReceivedDataObject() + "\n");
+				
+				queueSizeWriter.close();
 				
 				boolean terminate = true;
 				
@@ -468,6 +512,12 @@ import java.util.Properties;
 	}
 	
 
+	public static int getEccentricCentrality() {
+		return eccentricCentrality;
+	}
+	public static void setEccentricCentrality(int eccentricCentrality) {
+		SimulationController.eccentricCentrality = eccentricCentrality;
+	}
 	public static void main (String[] args) {
 
 		SimulationController ctrl;
