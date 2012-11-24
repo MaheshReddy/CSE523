@@ -1,7 +1,11 @@
 package com.simulator.ccn;
+import java.util.BitSet;
 import java.util.LinkedList;
 //import org.apache.log4j.Logger;
 
+import com.simulator.distributions.Arrivals;
+import com.simulator.distributions.PacketDistributions;
+import com.simulator.enums.SupressionTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 
@@ -30,17 +34,17 @@ public class CCNQueue {
 	 * Add a packet to end of the queue. 
 	 * @param packet
 	 */
-	public void addLast(Packets packet) {		 
-		 
+	public void addLast(Packets packet) {	
+		
 		/* Updating the current node of the packet */
 		packet.setCurNode(getNodeId()); 
-		
+			
 		/* Add packet at the end of the neighboring nodes queue */
 		queue.addLast(packet);
-		
+			
 		/* To maintain current queue size */
 		PacketssInCCNQueue++;
-		 		
+			 		
 		/* We need to record packet is sent into the queue 
 		 * Packets.dumpStatistics(packet);
 		 * */
@@ -48,7 +52,7 @@ public class CCNQueue {
 		
 		/* Calling router activate every time a packet is added to its queue to make sure its on the scheduling queue */	 
 		CCNRouter rtr = Grid.getRouter(getNodeId());
-		rtr.Activate();	 
+		rtr.Activate();		
 	}
 	 
 	public boolean isEmpty() {
