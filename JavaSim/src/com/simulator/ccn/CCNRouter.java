@@ -86,11 +86,11 @@ public class CCNRouter extends SimulationProcess {
 	private BitSet interestServedBitArray[] = null;
 	
 	public CCNRouter (int id) {
-		
+	
 		defaultInterface = 0;
 		setRouterId(id);
 		packetsQ = new CCNQueue(id);
-
+	
 		/* The following code initializes the PIT with values from ccn.properties file. Note that smaller sized PIT
 		 * for large simulations slows down the process significantly
 		 *  */
@@ -105,36 +105,37 @@ public class CCNRouter extends SimulationProcess {
 		}
 		
 		/* The localCache will always be of unlimited size */
-		localStorage = new CCNCache(id, SimulationController.getLocalCacheSize(), true, 0);			
+		localStorage = new CCNCache(id, SimulationController.getLocalCacheSize(), true, 0);	
 		
 		
 		/* Do not initialize the caches if we are running a simulation with no cache */
 		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
-			
+		
 			/* For the smaller topology (39), the following code will execute which will assign different cache sizes for the edge
 			 * and core nodes */
 			if (Grid.getGridSize() < 50) {
 				if (id >= 8 ) {
-					globalCache = new CCNCache(id, SimulationController.getEdgeCacheSize(), SimulationController.cacheType(), 1);
+						globalCache = new CCNCache(id, SimulationController.getEdgeCacheSize(), SimulationController.cacheType(), 1);
 				}
 				else {
 					globalCache = new CCNCache(id, SimulationController.getCoreCacheSize(), SimulationController.cacheType(), 1);
 				}
-			}			
+			}
+			
 			/* For the larger topology (100), the following code will execute which will assign different cache sizes for the edge
 			 * and core nodes */
 			else {
 				if ((id == 11) || (id == 30) || (id == 32) || (id == 44) || (id == 45) || (id == 49) || (id == 72) || (id == 70)
-						|| (id == 61) || (id == 59) || (id == 51) || (id == 75) || (id == 78) || (id == 79) || (id == 80) || (id == 82) 
-						|| (id == 84) || (id == 87) || (id == 88) || (id == 89) || (id == 90) || (id == 91) || (id == 92) || (id == 93)
-						|| (id == 94) || (id == 95) || (id == 96) || (id == 97) || (id == 98) || (id == 99)) {
-					
-					globalCache = new CCNCache(id, SimulationController.getEdgeCacheSize(), SimulationController.cacheType(), 1);
+				|| (id == 61) || (id == 59) || (id == 51) || (id == 75) || (id == 78) || (id == 79) || (id == 80) || (id == 82) 
+				|| (id == 84) || (id == 87) || (id == 88) || (id == 89) || (id == 90) || (id == 91) || (id == 92) || (id == 93)
+				|| (id == 94) || (id == 95) || (id == 96) || (id == 97) || (id == 98) || (id == 99)) {
+				
+						globalCache = new CCNCache(id, SimulationController.getEdgeCacheSize(), SimulationController.cacheType(), 1);
 				}
 				else {
-					globalCache = new CCNCache(id, SimulationController.getCoreCacheSize(), SimulationController.cacheType(), 1);					
-				}				
-			}			
+						globalCache = new CCNCache(id, SimulationController.getCoreCacheSize(), SimulationController.cacheType(), 1);	
+				}	
+			}	
 		}
 	}	
 	
@@ -143,17 +144,17 @@ public class CCNRouter extends SimulationProcess {
 	 * and processes it accordingly. 
 	 * */
 	public void run () {
-		
+	
 		for (;;) {
-			
+		
 			working = true;
-
+		
 			while (!packetsQ.isEmpty())	{
-				
+			
 				CurrentTime();
 				
 				currentPacket = (Packets) packetsQ.remove();
-							
+				
 				/* Records the time at which the packet was removed from the queue */
 				//Packets.dumpStatistics(currentPacket, "DEQUEUE");
 				
@@ -179,9 +180,9 @@ public class CCNRouter extends SimulationProcess {
 				
 				CurrentTime();
 			}
-
+		
 			working = false;
-
+		
 			/* In case the CCNRouter objects queue is empty, then we suspend the CCNRouter using "Cancel()". When it will have 
 			 * packets in its queue, it will be activated and placed in the scheduler again. 
 			 * */
@@ -206,44 +207,44 @@ public class CCNRouter extends SimulationProcess {
 	 * 
 	 * 1. 	Check the PIT (Index) to see if we are expecting this packet to come.
 	 * 2A. 	If we have a PIT index, then firstly, we remove stalled entries from 
-	 * 		the PIT table (always perform this operation before accessing PIT).
+	 * 	the PIT table (always perform this operation before accessing PIT).
 	 * 2B 	If we have no PIT index for the corresponding object, then we suppress 
-	 * 		the incoming data packet function labeling it "SUPPRESSION_NO_PIT".
+	 * 	the incoming data packet function labeling it "SUPPRESSION_NO_PIT".
 	 * 3. 	Continue flow from 2A.
 	 * 4. 	Iterate over all PIT entries, and send packets over the interfaces in the entries.
 	 * 5. 	Remove PIT index and corresponding PIT entries from PIT.
 	 * 6A. 	Add object, interface number, and hops on which packet arrived into FIB, if there is no previous 
-	 * 		entry for the object.
+	 * 	entry for the object.
 	 * 6B. 	If there is an entry, only update it if the packet received has a smaller number hops.
 	 *  */
 	
 	public void dataPacketsHandler(Packets curPacket) {
+	
+		IDEntry dataObject = new IDEntry (curPacket.getPacketId(), curPacket.getSegmentId());	
 		
-		IDEntry dataObject = new IDEntry (curPacket.getPacketId(), curPacket.getSegmentId());		
-				
 		/* I got this data packet so setting its locality to false */
 		curPacket.setLocality(false);
-			
+		
 		IDEntry pitIndex = new IDEntry (dataObject); 
 		
-		/* Remove stall entries from PIT table before checking for a valid PIT Entry */			
+		/* Remove stall entries from PIT table before checking for a valid PIT Entry */	
 		List<PITEntry> pitEntries = pit.get(pitIndex);	
-				
-		if (pit.containsKey(pitIndex)) {					
+		
+		if (pit.containsKey(pitIndex)) {	
 			if (pitEntries != null) {
-				
+			
 				/* Retrieve the PIT entries corresponding to the data packet (packet id & segment id)*/
 				Iterator<PITEntry> stalledPITEntries = pitEntries.iterator();
 				boolean removePITIndex = false;
 				
-				ArrayList <Packets> tempCollectionExpiredPackets = new ArrayList <Packets> (10);				
+				ArrayList <Packets> tempCollectionExpiredPackets = new ArrayList <Packets> (10);	
 				
 				/* Iterate over the PIT entries, and check for timeout condition. If anyone of the entry (interface)
 				 * has timed out, then all pit entries along with the pit index are remove from the PIT */
 				while(stalledPITEntries.hasNext()) {
-					
+				
 					PITEntry current = stalledPITEntries.next();
-										
+					
 					if ((SimulationProcess.CurrentTime() - current.getExpirationTime()) >= 0) {
 						removePITIndex = true;
 					}
@@ -261,48 +262,50 @@ public class CCNRouter extends SimulationProcess {
 					clonePac.setLocality(false);
 					clonePac.setExpirationCount(-1);
 					clonePac.setPrimaryInterestId(current.getPrimaryInterestID());
-					clonePac.setParentInterestId(-1);					
+					clonePac.setParentInterestId(-1);	
 					
-					tempCollectionExpiredPackets.add(clonePac);							
-				}		
+					tempCollectionExpiredPackets.add(clonePac);	
+				}	
 				
 				/* If any one of the entries expires, the following code will suppress the cloned packets with "PIT_Expiration"
-				 * labels. The PIT index and the corresponding PIT entries will be removed from the PIT*/
+				 * labels. The PIT index and the corresponding PIT entries will be removed from the PIT */
 				if (removePITIndex) {
 					for (int i = 0; i < tempCollectionExpiredPackets.size(); i++)
 						tempCollectionExpiredPackets.get(i).finished(SupressionTypes.PIT_EXPIRATION);
 					
 					pit.remove(pitIndex);
-					curPacket.finished(SupressionTypes.SUPRESSION_NO_PIT);
-									
+					curPacket.finished(SupressionTypes.SUPRESSION_NO_PIT_INDEX_DUE_PIT_EXPIRATION);
+					
 					return;
-				}						
-			}		
-		}		
+				}	
+			}	
+		}	
 		else 
-		/* I havn't seen this packet so discard it */
-		{			
-			curPacket.finished(SupressionTypes.SUPRESSION_NO_PIT);
+		/* I havn't seen this packet so discard it. This scenario could also occur because of PIT expiration due to an Interest packet
+		 * processed in the interestPacketHandler(). Hence, due not confuse the above suppression type which is definitely executed when 
+		 * an PIT entry for the data packet has expired when it was being processed. */
+		{	
+			curPacket.finished(SupressionTypes.SUPRESSION_NO_PIT_INDEX);
 			return;	
 		}
 		
 		/* Create or update history related information pertaining to the object, and which Interest 
-		 * packet is responsible for getting that object into the cache */		
+		 * packet is responsible for getting that object into the cache */	
 		Map<IDEntry, Integer> tempHistoryOfDataPackets = null;
-		IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());		
+		IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());	
 		
-		if (curPacket.getHistoryOfDataPackets() == null) {		
-						
-			tempHistoryOfDataPackets = new HashMap<IDEntry,Integer>(20, (float)0.9);		
+		if (curPacket.getHistoryOfDataPackets() == null) {	
+		
+			tempHistoryOfDataPackets = new HashMap<IDEntry,Integer>(20, (float)0.9);	
 			
 			/* Add history information into the historyCache, which will be part of cache entry. */
 			/* Number of hops should be one, as this condition will satisfy only for nodes that are one hop away. */
 			tempHistoryOfDataPackets.put(interestID, curPacket.getNoOfHops());
 		}
 		else {
-			
+		
 			tempHistoryOfDataPackets = new HashMap <IDEntry, Integer> (curPacket.getHistoryOfDataPackets());
-			/* Create history information related to this hop taken by the Data packet */			
+			/* Create history information related to this hop taken by the Data packet */	
 			/* Add history information into the historyCache, which will be part of cache entry. */
 			
 			if (tempHistoryOfDataPackets.containsKey(interestID)) {
@@ -315,49 +318,81 @@ public class CCNRouter extends SimulationProcess {
 		}	
 		
 		/* The following code is used to flood data packets over all the interfaces in PIT entry for this object */
-		Iterator<PITEntry> itr = pitEntries.iterator();		
+		Iterator<PITEntry> itr = pitEntries.iterator();	
+		boolean currDataPacketSatisfied = false;
 		
-		while(itr.hasNext()) {
+		while(itr.hasNext()) {			
+			
 			PITEntry rid = itr.next();
 			
 			/* We shouldn't flood the data packet to same node where it came from */
 			if(rid.getoutgoingInterface() != curPacket.getPrevHop()/*I changed this from getRouterID()*/) {
-				
+			
 				Packets clonePac = (Packets) curPacket.clone();
 				
 				/* In the following 'if' statement, we "create" data packets for all those PIT entries which are also satisfied other than the one
 				 * associated with the current data packets' interest id */
 				if (clonePac.getRefPacketId() != rid.getRefPacketId()) {
-
+				 
+					
 					clonePac.setRefPacketId(rid.getRefPacketId());
 					clonePac.setOriginNode(getRouterId());
 					
 					clonePac.setCurNode(-1);
 					clonePac.setPrevHop(-1);
 					clonePac.setNoOfHops(0);
-					clonePac.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);		
+					clonePac.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);	
 					
 					clonePac.setExpirationCount(rid.getNumOfTimesExpired());
 					clonePac.setPrimaryInterestId(rid.getPrimaryInterestID());
 					clonePac.setParentInterestId(rid.getRefPacketId());
 					clonePac.setHistoryOfDataPackets(tempHistoryOfDataPackets);
 					
-					clonePac.setDataPacketId(Packets.getCurrentDataPacketId());
-					Packets.incCurrentDataPacketId();					
+					clonePac.setCreatedAt(rid.getInterestCreatedAt());
+					clonePac.setTimeoutAt(rid.getInterestTimeoutAt());
+					clonePac.setProcessingDelayAtNode(rid.getInterestProcessingDelayAtNode() + (SimulationController.CurrentTime() - rid.getCreatedAtTime()));
+					clonePac.setProcessingDelaySoFar(rid.getInterestProcessingDelaySoFar());
+					clonePac.setTransmissionDelaySoFar(rid.getInterestTransmissionDelaySoFar());
 					
-					Packets.dumpStatistics(clonePac, "CRTDPRDA", curPacket);	
+					clonePac.setDataPacketId(Packets.getCurrentDataPacketId());
+					Packets.incCurrentDataPacketId();	
+					
+					Packets.dumpStatistics(clonePac, "CRTDPRDA", curPacket);
+					sendPacket(clonePac, rid.getoutgoingInterface());
 				}
-				
-				sendPacket(clonePac, rid.getoutgoingInterface());				
+				else {
+					currDataPacketSatisfied = true;
+					sendPacket(clonePac, rid.getoutgoingInterface());
+				}				
 			}
-		}		
+		}	
+		
+
+	/*	We are not destroying the source data packet even when its PIT entry is being consumed. What happens is the following:
+		
+		1. The new retransmitted interest packet has created the PIT entry leaving the same interface in the PIT entry that would be used by its 
+		predecessors (earlier retransmitted or the original request).
+		2. When a data packet responding to an earlier retransmitted request or original request arrives, it creates a new data packet (CRTDPRDA)
+		according to the entry created into it by the new retransmitted packet. This is normal and correct behavior.
+		3. However, the data packet (responding to an earlier retransmitted request or original arrives) does not get terminated or 
+		destroyed in the trace. It does not create a problem but it would be nice to terminate it.
+		
+		We loop through the PIT entries, and if our current data packet is satisfied, then we do not terminate it. Otherwise, we terminated this
+		data packet in the trace. 
+	*/
+		if (!currDataPacketSatisfied) {
+			curPacket.finished(SupressionTypes.SUPRESSION_NO_PIT_ENTRY_ORIGDPKT);
+		}
+		
+		//List<PITEntry> pitEntriesPrint = pit.get(pitIndex);	
+		//this.printPITEntry(pitEntriesPrint, curPacket, "");
 		
 		/* Now remove the entry */ 
-		pit.remove(pitIndex);			
+		pit.remove(pitIndex);	
 		
 		/* The following swapping before entering into the Global cache is because of a more logical entry relevant to "(PCKSTATUS:CRTDPRD)" 
 		 * in the trace file 
-		 * */		
+		 * */	
 		
 		/* add the data packet into my global cache */
 		//log.info("Adding to global cache");
@@ -373,15 +408,12 @@ public class CCNRouter extends SimulationProcess {
 		 * Check cache, and print value in file */
 		
 		/* Cache is a Map <Integer, Packet> object, hence, we do not have to check for duplicate values */
-		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
-			
+		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {		
 			Packets data_packet = getDataPacketfromCache(dataObject);
-			
-			if (data_packet != null) {
-				
-				printDebugStatus("There is already a cache entry in the cache for InterestID " + curPacket.getPrimaryInterestId());		
-			}
-			
+		
+			if (data_packet != null) {		
+				printDebugStatus("There is already a cache entry in the cache for InterestID " + curPacket.getPrimaryInterestId());	
+			}			
 			getGlobalCache().addToCache(tempGlobalCacheEntry);	
 		}
 		
@@ -392,18 +424,18 @@ public class CCNRouter extends SimulationProcess {
 		 * 3. However, if FIB entry is null, then we will add the new FIB entry
 		 * */
 		if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
-			
+		
 			//printFIB(forwardingTable, curPacket, "FIB before entering any value");
 			
 			if (curPacket.isSourceObjectCopy()) {
-						
+			
 				if (forwardingTable.get(curPacket.getPacketId()) != null) {
-					
+				
 					try {
-	
+					
 						/* The following code will print to the file whenever a FIB entry is changed because of hop count */
 						if (getForwardingTableEntry(curPacket.getPacketId()).getHops() > curPacket.getTotalHops()) {
-							
+						
 							/* The following four lines of code are part of the core code performing the entry into the FIB in case there is a change of 
 							 * hop count 
 							 * */
@@ -412,7 +444,7 @@ public class CCNRouter extends SimulationProcess {
 							temp.setHops(curPacket.getTotalHops());
 							
 							getForwardingTable().put(curPacket.getPacketId(), temp);	
-							//printFIB(forwardingTable, curPacket, "FIB after updating hop count value");						
+							//printFIB(forwardingTable, curPacket, "FIB after updating hop count value");	
 						}
 					}
 					catch (Exception e) {}
@@ -444,14 +476,14 @@ public class CCNRouter extends SimulationProcess {
 	 * 4. 	Remove stalled entries from the PIT table (always perform this operation before accessing PIT).
 	 * 5. 	Check the PIT for a match - PIT index that satisfies the object and segment being requested.
 	 * 6A.	PIT index exists, then add outgoing interface into PIT entries. Suppress interest packet. 
-	 * 		NOTE: Do not enter duplicate interface numbers.
+	 * 	NOTE: Do not enter duplicate interface numbers.
 	 * 6B.	PIT does not exist, then create a PIT index and add outgoing interface into the corresponding PIT entry.
 	 * 7.	Lookup FIB for a matching entry corresponding to the object.
 	 * 8A.	FIB match, then send packet over the interface without flooding.	
 	 * 8B.	FIB not found, then flood packet over all interfaces.
 	 *  */
 	public void interestPacketsHandler(Packets curPacket) {
-		
+	
 		/* The following code is to suppress the interest packets that have already been served. 
 		 * 
 		 * Array of Bitsets: when their is no segmentation, the length of the bitset is 1; while
@@ -459,7 +491,7 @@ public class CCNRouter extends SimulationProcess {
 		 * of segments possible for each Interest Id. This implementation can handle variable number
 		 * of segments per object  
 		 * 
-		 * */		
+		 * */	
 		
 		if(interestServedBitArray[curPacket.getPacketId()] != null) {
 			if (interestServedBitArray[curPacket.getPacketId()].get(curPacket.getSegmentId())) {
@@ -478,17 +510,17 @@ public class CCNRouter extends SimulationProcess {
 		/* The following code is called when the interest is satisfied from: (a) the Local Storage, which means, the object originally 
 		 * resides on this CCNRouter; or (b) the Global Cache also known as the content store of CCN */
 		
-		IDEntry dataObject = new IDEntry (curPacket.getRefPacketId(), curPacket.getSegmentId());		
+		IDEntry dataObject = new IDEntry (curPacket.getRefPacketId(), curPacket.getSegmentId());	
 		Packets data_packet = getDataPacketfromCache(dataObject);
 		
 		/* If object is located, reply with a data packet containing the object */
 		if(data_packet != null) {
-			
+		
 			/* This just a reality-check code. This value is printed towards the end of the simulation */
 			if (curPacket.getNoOfHops() == 0) {
-				countLocalHits++;				
+				countLocalHits++;	
 			}
-			
+		
 			Packets clonePac = (Packets) data_packet.clone();
 			clonePac.setRefPacketId(curPacket.getSourcePacketId());
 			clonePac.setSegmentId(curPacket.getSegmentId());
@@ -501,6 +533,12 @@ public class CCNRouter extends SimulationProcess {
 			clonePac.setExpirationCount(curPacket.getExpirationCount());
 			clonePac.setParentInterestId(curPacket.getPacketId());
 			
+			clonePac.setCreatedAt(curPacket.getCreatedAt());
+			clonePac.setTimeoutAt(curPacket.getTimeoutAt());
+			clonePac.setProcessingDelayAtNode(curPacket.getProcessingDelayAtNode());
+			clonePac.setProcessingDelaySoFar(curPacket.getProcessingDelaySoFar());
+			clonePac.setTransmissionDelaySoFar(curPacket.getTransmissionDelaySoFar());
+			
 			/* This creates a unique Id for each data packet sent */
 			clonePac.setDataPacketId(Packets.getCurrentDataPacketId());
 			Packets.incCurrentDataPacketId();	
@@ -510,35 +548,36 @@ public class CCNRouter extends SimulationProcess {
 			
 			/* Create a data packet in reply of the interest packet, and place it in the trace file */
 			Packets.dumpStatistics(clonePac, "CRTDPRD");	
-							
+			
 			sendPacket(clonePac, curPacket.getPrevHop());
 			
 			data_packet.setRefPacketId(-1);
-			data_packet.setSegmentId(0);			
-
+			data_packet.setSegmentId(0);	
+		
 			return;
 		}
 		
-		/* Remove stall entries from PIT table before adding a PIT Entry */				
-		IDEntry pitIndex = new IDEntry (dataObject); 		
-			
+		/* Remove stall entries from PIT table before adding a PIT Entry */	
+		IDEntry pitIndex = new IDEntry (dataObject); 	
+		
 		if (pit.containsKey(pitIndex)) {
-			
+		
 			/* Retrieve the PIT entries corresponding to the data packet (packet id & segment id)*/
-			List<PITEntry> pitEntries = pit.get(pitIndex);						
+			List<PITEntry> pitEntries = pit.get(pitIndex);	
 			if (pitEntries != null) {
-				
+			
 				/* Iterate over the PIT entries, and check for timeout condition. If anyone of the entry (interface)
 				 * has timed out, then all pit entries along with the pit index are remove from the PIT */
 				
 				boolean removePITIndex = false;
 				
-				Iterator<PITEntry> stalledPITEntries = pitEntries.iterator();				
-				ArrayList <Packets> tempCollectionExpiredPackets = new ArrayList <Packets> (10);				
+				Iterator<PITEntry> stalledPITEntries = pitEntries.iterator();	
+				ArrayList <Packets> tempCollectionExpiredPackets = new ArrayList <Packets> (10);	
 				
 				while(stalledPITEntries.hasNext()) {
+				
+					PITEntry current = stalledPITEntries.next();	
 					
-					PITEntry current = stalledPITEntries.next();					
 					if ((SimulationProcess.CurrentTime() - current.getExpirationTime()) >= 0) {
 						removePITIndex = true;
 					}
@@ -558,8 +597,8 @@ public class CCNRouter extends SimulationProcess {
 					clonePac.setPrimaryInterestId(current.getPrimaryInterestID());
 					clonePac.setParentInterestId(-1);
 					
-					tempCollectionExpiredPackets.add(clonePac);								
-				}		
+					tempCollectionExpiredPackets.add(clonePac);	
+				}	
 				
 				/* If any one of the entries expires, the following code will suppress the cloned packets with "PIT Expiration"
 				 * labels. The PIT index and the corresponding PIT entries will be removed from the PIT*/
@@ -568,44 +607,55 @@ public class CCNRouter extends SimulationProcess {
 						tempCollectionExpiredPackets.get(i).finished(SupressionTypes.PIT_EXPIRATION);
 					
 					pit.remove(pitIndex);
-				}						
-			}		
+				}	
+			}	
 		}
 		
 		List<PITEntry> pitEntries = pit.get(pitIndex);	
 		
 		/* I have seen this index, and need to append the outgoing interface in the PITEntry list. 
 		 * Further, I need to suppress this packet */
-		if (pit.containsKey(pitIndex)) {
-			
-			/* If I already have this outgoing interface, then I do not add this to the PITEntry list*/
+		if (pit.containsKey(pitIndex)) {		
+					
+		/* If I already have this outgoing interface, then I do not add this to the PITEntry list*/
 			if(!pitEntries.contains(new PITEntry(curPacket.getPrevHop())))/*!containsPITEntry(pitEntries,curPacket.getPrevHop())*/ {
-				
-				pitEntries.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), curPacket.getPrimaryInterestId(), 
-						SimulationController.CurrentTime(), SimulationController.CurrentTime() + calculateTimeOutValue(routerId).get(0), 
-						curPacket.getExpirationCount()));
-			}				
-
-			/* Suppress the packet */
-			curPacket.finished(SupressionTypes.SUPRESSION_FLOODING_PIT_HIT);			
-			return;			
-		}
-		/* I have not seen this PIT index. Create PIT index and corresponding PIT entry in the PIT. Add the outgoing interface in the PITEntry list. Send the packet forward */
-		else {
 			
+				pitEntries.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), curPacket.getPrimaryInterestId(), 
+				SimulationController.CurrentTime(), SimulationController.CurrentTime() + calculateTimeOutValue(routerId).get(0), 
+				curPacket.getExpirationCount(), curPacket.getCreatedAt(), curPacket.getTimeoutAt(), curPacket.getProcessingDelayAtNode(),
+				curPacket.getProcessingDelaySoFar(), curPacket.getTransmissionDelaySoFar()));
+				
+				/* Suppress the packet as we do not have an entry in the PIT pertaining to this interface */
+				curPacket.finished(SupressionTypes.PIT_HIT);	
+			}
+			else {
+				/* Suppress the packet in the PIT as it already has an entry with the same interface */
+				curPacket.finished(SupressionTypes.REDUNDANT_PIT_HIT);
+			}		
+			
+			return;	
+		}
+		/* I have not seen this PIT index. Create PIT index and corresponding PIT entry in the PIT. 
+		 * Add the outgoing interface in the PITEntry list. Send the packet forward */
+		else {
+		
 			List<PITEntry> newPITEntry = new ArrayList<PITEntry>();
 			newPITEntry.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), curPacket.getPrimaryInterestId(), 
-					SimulationController.CurrentTime(), SimulationController.CurrentTime() + calculateTimeOutValue(routerId).get(0), 
-					curPacket.getExpirationCount()));
+			SimulationController.CurrentTime(), SimulationController.CurrentTime() + calculateTimeOutValue(routerId).get(0), 
+			curPacket.getExpirationCount(), curPacket.getCreatedAt(), curPacket.getTimeoutAt(), curPacket.getProcessingDelayAtNode(),
+			curPacket.getProcessingDelaySoFar(), curPacket.getTransmissionDelaySoFar()));
 			
 			pit.put(pitIndex, newPITEntry);	
-		}		
+		}	
+		
+		//List<PITEntry> pitEntriesPrint = pit.get(pitIndex);	
+		//this.printPITEntry(pitEntriesPrint, curPacket, "");
 		
 		/* If we have a FIB match, then we will not flood the packet. We will simply help it along the FIB entry. If not then
 		 * we will flood the packet 
 		 * */
 		if (SimulationTypes.SIMULATION_FIB == SimulationController.getFibAvailability()) {
-			
+		
 			FIBEntry rid = getForwardingTableEntry(curPacket.getRefPacketId());
 			
 			if(rid != null) {
@@ -618,56 +668,62 @@ public class CCNRouter extends SimulationProcess {
 				 * packet before we sent. The only addition is that we have placed the cause of flooding suppression within the packet. "
 				 *  */
 				Packets clonePac = (Packets) curPacket.clone();
-				clonePac.setCauseOfSupr(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);
+				clonePac.setCauseOfSupr(SupressionTypes.FIB_HIT);
 				
 				sendPacket(clonePac, rid.getDestinationNode());
 				
 				/* There is no point in finishing the packet as it will continue along the FIB path. Finished should be used 
 				 * when a packet is terminated at that point. 
 				 * */
-				//curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);			
+				//curPacket.finished(SupressionTypes.SUPPRESS_FLOODING_FIB_HIT);	
 			}
 			/* IF we do not have FIB match, then we flood the interest packet*/
 			else {
 				curPacket.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
-				floodInterestPacket(curPacket);			
+				floodInterestPacket(curPacket);	
 			}	
 		}
 		/* If we do not have a FIB, then we flood the interest packet every time */
 		else {
 			curPacket.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
-			floodInterestPacket(curPacket);			
+			floodInterestPacket(curPacket);	
 		}	
 	}
 	
 	/**/
 	
 	public static ArrayList <Double> calculateTimeOutValue (int routerID) {
-		
+	
 		/* When calculateTimeOutValue is called, then this object will be returned containing the PIT and Interest
 		 * Packet timeouts. The order will be PIT and Interest Packet timeouts*/
-		ArrayList <Double> pitInterestPktTO = new ArrayList <Double> (2);			
+		ArrayList <Double> pitInterestPktTO = new ArrayList <Double> (2);	
 		
+		long largestQueueSize = 0;
 		double pitTO = 0.0;
 		double intPktTO = 0.0;
-		double weightMean = 0.0;		
-		double leeway = (CCNRouter.getProcDelay() + TransmitPackets.getTransDelay()) * 5;
+		double weightMean = 0.0;	
+		double leeway = (CCNRouter.getProcDelay() + TransmitPackets.getTransDelay()) * 5;		
 		
-		for(int i=0; i<Grid.getGridSize(); i++) {
+		for(int i = 0; i < Grid.getGridSize(); i++) {
 			weightMean = weightMean + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() * SimulationController.ratioDCToAllEdges.get(i);
+			if (largestQueueSize < Grid.getRouter(i).getPacketsQ().packetsInCCNQueue()) {
+				largestQueueSize = Grid.getRouter(i).getPacketsQ().packetsInCCNQueue();
+			}
+			//System.out.println("Largest value: " + largestQueueSize);
 		}
+		//System.out.println("Final, largest value: " + largestQueueSize);
 		
 		/* PIT timeout is set just before a packet is transmitted, hence, we do need to add the delay of the actual queue one-way */
 		pitTO = Math.ceil (((CCNRouter.getProcDelay() + TransmitPackets.getTransDelay()) * 2) * SimulationController.getEccentricCentrality()
-				+ leeway 
-				+ (weightMean * 0.4 * SimulationController.getEccentricCentrality()) 
-				+ (Grid.getRouter(routerID).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay()));		
+		+ leeway 
+		+ (/*weightMean*/ largestQueueSize * 0.4 * (SimulationController.getEccentricCentrality() - 0.5)) 
+		+ (Grid.getRouter(routerID).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay()));	
 		
 		intPktTO = Math.ceil (((CCNRouter.getProcDelay() + TransmitPackets.getTransDelay()) * 2) * SimulationController.getEccentricCentrality()
-				+ leeway + leeway
-				+ (weightMean * 0.4 * SimulationController.getEccentricCentrality()) 
-				+ (Grid.getRouter(routerID).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay() * 2) 
-				+ SimulationController.getRetransNuance());
+		+ leeway + leeway
+		+ (/*weightMean*/ largestQueueSize * 0.4 * (SimulationController.getEccentricCentrality() - 0.5)) 
+		+ (Grid.getRouter(routerID).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay() * 2) 
+		+ SimulationController.getRetransNuance());
 		
 		pitInterestPktTO.add(pitTO);
 		pitInterestPktTO.add(intPktTO);
@@ -677,35 +733,40 @@ public class CCNRouter extends SimulationProcess {
 	
 	/* Prints the current PIT entries corresponding to a particular PIT index */
 	public void printPITEntry (List<PITEntry> checkPITEntry, Packets curPacket, String status) {
-		
+	
 		try {
-			
-			Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_PITEntry.txt",true));
-			fs1.write("\nStatus : " + status+ "\n");
-			fs1.write("Current Node : " + getRouterId() + "\n");
-			fs1.write("ObjectID : " + curPacket.getRefPacketId() + "\n");	
 		
+			Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_PITEntry.txt",true));
+			//fs1.write("\nStatus : " + status+ "\n");
+			fs1.write("\n" + SimulationProcess.CurrentTime() + "\t");
+			fs1.write("" + getRouterId() + ": (");
+			
+			if (PacketTypes.PACKET_TYPE_INTEREST == curPacket.getPacketType()) {
+				fs1.write("" + curPacket.getRefPacketId() + ", 1) -> ");
+			}
+			else {
+				fs1.write("" + curPacket.getPacketId() + ", 1) -> ");
+			}
+			
 			if (checkPITEntry != null) {
 				Iterator<PITEntry> itr = checkPITEntry.iterator();	
 				int count = 0;
-				
+			
 				while(itr.hasNext()) {
-					
+			
 					count ++;
-					
+			
 					PITEntry rid = itr.next();
-					
-						fs1.write("\nEntry : " + count + "\n");
-						fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");
-						fs1.write("Current Node : " + getRouterId() + "\n");
-						fs1.write("PacketID : " + curPacket.getPacketId() + "\n");
-						fs1.write("ObjectID : " + curPacket.getRefPacketId() + "\n");				
-						fs1.write("Outgoing Interface is: " + rid.getoutgoingInterface() + "\n");
-						fs1.write("InterestID: " + rid.getRefPacketId() + "\n");
-						fs1.write("Timestamp: " + rid.getCreatedAtTime() + "\n" + "\n" + "\n" + "\n");														
-					}	
-				}
-		
+			
+					fs1.write("[OG_Int, " + rid.getoutgoingInterface() + ";");
+					fs1.write("RefPktID, " + rid.getRefPacketId() + ";");
+					fs1.write("PriIntID, " + rid.getPrimaryInterestID() + ";");
+					fs1.write("CRTDTime, " + rid.getCreatedAtTime() + ";");
+					fs1.write("ExpTime, " + rid.getExpirationTime() + ";");
+					fs1.write("NumTimesExp, " + rid.getNumOfTimesExpired() + "]\t");
+				}	
+			}
+			
 			fs1.close();
 		}
 		catch (IOException e){}	
@@ -713,9 +774,9 @@ public class CCNRouter extends SimulationProcess {
 	
 	/* Prints the history of a cache entry */
 	public void printCacheObjectHistory (Map<IDEntry, Integer> historyOfObject, Packets curPacket, String status) {
-		
+	
 		try {
-			
+		
 			Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_CacheObjectHistoryEntry.txt",true));
 			fs1.write("\nStatus : " + status+ "\n");
 			fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
@@ -723,36 +784,35 @@ public class CCNRouter extends SimulationProcess {
 			fs1.write("InterestID : " + curPacket.getPacketId() + "\n");
 			fs1.write("Primary InterestID : " + curPacket.getPrimaryInterestId() + "\n");
 			fs1.write("History of ObjectID : " + curPacket.getRefPacketId() + "\n");	
-		
+			
 			if (historyOfObject != null) {
-				
+			
 				int count = 0;
 				
 				for (Map.Entry<IDEntry, Integer> entry : historyOfObject.entrySet()) {	
-					
+				
 					count ++;
 					
 					//System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-								
+					
 					fs1.write("\nEntry : " + count + "\n");
 					fs1.write("InterestID: " + entry.getKey().getID() + "\n");
-					fs1.write("Number of Hops Counts: " + entry.getValue() + "\n\n");																		
+					fs1.write("Number of Hops Counts: " + entry.getValue() + "\n\n");	
 				}	
 				
 				fs1.write("\n" + "\n" + "\n" + "\n");	
 			}
-		
-		fs1.close();
-		
+			
+			fs1.close();		
 		}
 		catch (IOException e){}	
 	}
 	
 	/* Prints the FIB entries */
 	public void printFIB (Map<Integer, FIBEntry> fib, Packets curPacket, String status) {
-		
+	
 		try {
-			
+		
 			Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_FIB.txt",true));
 			//fs1.write("\nStatus : " + status+ "\n");
 			//fs1.write("Time: " + SimulationProcess.CurrentTime() + "\n");	
@@ -763,39 +823,39 @@ public class CCNRouter extends SimulationProcess {
 			//fs1.write("Primary InterestID : " + curPacket.getPrimaryInterestId() + "\n");
 			//fs1.write("ObjectID : " + curPacket.getPacketId() + "\n");
 			//fs1.write("No of Hops : " + curPacket.getNoOfHops() + "\n\n");
-					
+			
 			if (fib != null) {
-				
-				int count = 0;
-				
-				fs1.write("Entry\tObjectID\tInterface\t#Hops\n");
+			
+			int count = 0;
+			
+			fs1.write("Entry\tObjectID\tInterface\t#Hops\n");
+			
 				for (Map.Entry<Integer, FIBEntry> entry : fib.entrySet()) {	
-					
+				
 					count ++;
 					
 					fs1.write(count + "\t\t" + entry.getKey().intValue() + "\t\t\t" + entry.getValue().getDestinationNode() + "\t\t\t"
-							+ entry.getValue().getHops() + "\n");																						
+					+ entry.getValue().getHops() + "\n");	
 				}	
 				
 				fs1.write("\n" + "\n" + "\n");	
 			}
-		
-		fs1.close();
-		
+			
+			fs1.close();		
 		}
 		catch (IOException e){}	
 	}
 	
 	/* Prints the history of a cache entry */
 	public void printDebugStatus (String status) {
-		
+	
 		try {
-			
+		
 			Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_Debug.txt",true));
 			fs1.write("Current Time: " + SimulationProcess.CurrentTime());
 			fs1.write(" Status: " + status+ "\n");
 			fs1.close();
-			
+		
 		}
 		catch (IOException e){}
 	}
@@ -807,7 +867,7 @@ public class CCNRouter extends SimulationProcess {
 	 */
 	/* Searches FIBs (InterestPacketHander() comment: Function 7) */
 	private FIBEntry getForwardingTableEntry(Integer packetId) {
-		
+	
 		return forwardingTable.get(packetId);
 	}
 	
@@ -832,28 +892,26 @@ public class CCNRouter extends SimulationProcess {
 		 * assumption is that all segments will be present so it is useless to
 		 * explicitly store all of them
 		 */
-
+	
 		IDEntry localDataObject = new IDEntry(dataObject.getID(), 0);
-
+	
 		Packets packet = localStorage.get(localDataObject);
-
+	
 		if (packet != null) {
 			if (!packet.isSourceObjectCopy()) {
-				System.out
-						.println("According to packet entry, this object should have been retrieved from Global Cache");
+				System.out.println("According to packet entry, this object should have been retrieved from Global Cache");
 			}
+		
 			return packet;
 		}
-
-		if (SimulationTypes.SIMULATION_CACHE == SimulationController
-				.getCacheAvailability()) {
-
+	
+		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
+	
 			packet = globalCache.get(dataObject);
-
+	
 			if (packet != null) {
 				if (packet.isSourceObjectCopy()) {
-					System.out
-							.println("According to packet entry, this object should have been retrieved from Local Cache");
+					System.out.println("According to packet entry, this object should have been retrieved from Local Cache");
 				}
 				return packet;
 			}
@@ -866,23 +924,23 @@ public class CCNRouter extends SimulationProcess {
 	 * @param curPacket Packet to be flooded.
 	 */
 	public void floodInterestPacket(Packets curPacket) {
-		
+	
 		LinkedHashSet<HashMap<Integer, Integer>> adjList= Grid.getAdjacencyList(getRouterId());
 		Iterator<HashMap<Integer,Integer>> itr = adjList.iterator();
 		//log.info("Flooding the packet to {");
-
+	
 		/* Getting the previous node of the packet so as not to flood to same node */ 
 		int srcNode = curPacket.getPrevHop(); 
 		
 		/* The following code is used to send packets to all the neighbors of a node */
 		while(itr.hasNext()) {
-			
+		
 			HashMap<Integer,Integer> adjNode = (HashMap<Integer, Integer>) itr.next();
 			Integer nodeId = adjNode.keySet().iterator().next();
 			
 			 /* We shouldn't flood the interest packet to same node where it came from */
 			if(nodeId != srcNode) {
-				
+			
 				Packets pacToadd = (Packets)curPacket.clone();
 				sendPacket(pacToadd, nodeId);
 			}
@@ -894,25 +952,9 @@ public class CCNRouter extends SimulationProcess {
 	 * It creates a new SimulationProcess TransmitPackets and adds transmission delay to it.
 	 */
 	public void sendPacket(Packets curPacket, final Integer nodeId) {
-		
+	
 		if(nodeId > -1) {
-			
-			/*
-			 * Enter the code of TimeOutProcess
-			 * 
-			 * 
-			 * */
-			/* If this interest packet is originating from this node, and is a retransmission then we add it into the TimeOutQueue */
-			//if (curPacket.getPrevHop() < 0 && curPacket.getExpirationCount() >= 1) {
-				
-				//ArrayList<Double> timeoutValue = CCNRouter.calculateTimeOutValue(SimulationController.timeOutQueue.peek().getNodeID());
-				//double tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
-				
-				//SimulationController.timeOutQueue.add(new TimeOutFields(curPacket.getPrimaryInterestId(), curPacket.getPacketId(),
-						//curPacket.getSegmentId(), curPacket.getRefPacketId(), 
-						//curPacket.getOriginNode(), curPacket.getExpirationCount(), tempTimeOutValue, false));
-			//}
-			
+		
 			/* setting the source id as my Id before flooding it to my good neighbors */
 			curPacket.setPrevHop(getRouterId()); 
 			curPacket.incrHops();
@@ -938,87 +980,140 @@ public class CCNRouter extends SimulationProcess {
 			}
 		}
 		else {
-			
-			/* TODO: Implementation a termination condition that is based on the percentage of objects that have received.
-			 *   The if-conditions comparing "countObjectsReceived" and getMaxSimulatedPackets() needs to be changed. 
-			 *   Instead of the latter, we need to place 0.9 value. While for the former, we need to calculate what 
-			 *   percentage of the total objects has been received.
-			 *  */
-			
+		
 			Map<IDEntry, Integer> tempHistoryOfDataPackets = curPacket.getHistoryOfDataPackets();
 			IDEntry interestID = new IDEntry (curPacket.getPrimaryInterestId(), curPacket.getSegmentId());
 			
 			if (tempHistoryOfDataPackets != null && tempHistoryOfDataPackets.containsKey(interestID)) {
-				
+			
 				Integer numberOfHops = tempHistoryOfDataPackets.get(interestID);
 				int totalNumberOfUsefulHops = numberOfHops.intValue() + curPacket.getNoOfHops();
 				
-				curPacket.setUsefulNoOfHops(totalNumberOfUsefulHops);				
+				curPacket.setUsefulNoOfHops(totalNumberOfUsefulHops);	
 			}
 			else {
+			
+				curPacket.setUsefulNoOfHops(curPacket.getNoOfHops());	
+			}	
+			
+			/*try {				
 				
-				curPacket.setUsefulNoOfHops(curPacket.getNoOfHops());					
-			}			
+				Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_TimeOutQueue.txt",true));
+				fs1.write("\n(Data object found, now we delete the associated entries in TimeOutQueue)\n");
+				
+				for ( Iterator<TimeOutFields> tempIteratedTimeOutQueue = SimulationController.timeOutQueue.iterator(); 
+						tempIteratedTimeOutQueue.hasNext(); ) {
 					
-			curPacket.finished(SupressionTypes.SUPRESSION_DEST_NODE);
-			//log.info("Packet Destined to my node,so suppressing");
-			
-			/* Reality check values. These are printed towards the termination of simulation. */
-			int numberOfHops = curPacket.getNoOfHops();
-			
-			switch (numberOfHops) {
-			  case 0: 
-			    hops0++;
-			    break;
-			  case 1: 
-				  hops1++;
-			    break;
-			  case 2: 
-				  hops2++;
-			    break;
-			  case 3: 
-				  hops3++;
-			    break;
-			  case 4: 
-				  hops4++;
-			    break;
-			  case 5: 
-				  hops5++;
-			    break;
-			  case 6: 
-				  hops6++;
-			    break;
-			  case 7: 
-				  hops7++;
-			    break;
-			  default: 
-				  hops8Plus++;
+					TimeOutFields tempTimeOutQueue = tempIteratedTimeOutQueue.next();					
+					
+					fs1.write("" + SimulationProcess.CurrentTime() + "\t");								
+					
+					fs1.write("[TOV, " + tempTimeOutQueue.getTimeOutValue() + ";");
+					fs1.write(" PriIntID, " +tempTimeOutQueue.getPrimaryInterestID() + ";");
+					fs1.write(" IntID, " + tempTimeOutQueue.getInterestID() + ";");
+					fs1.write(" SegID, " + tempTimeOutQueue.getSegmentID() + ";");
+					fs1.write(" ObjID, " + tempTimeOutQueue.getObjectID() + ";");
+					fs1.write(" NodeID, " + tempTimeOutQueue.getNodeID() + ";");
+					fs1.write(" RecedObj, " + tempTimeOutQueue.getReceivedDataObject() + ";");
+					fs1.write(" InfID, " + tempTimeOutQueue.getInterfaceID() + ";");
+					fs1.write(" NumTimesExp, " + tempTimeOutQueue.getExpirationCount() + "]\t");	
+					fs1.write("\n");								 
+				}					
+				
+				//fs1.close();
 			}
-			
-			countDataPacketsReceived++;
-
+			catch (IOException e){}	*/	
+				
+			boolean dataPacketReceived = false;
+				
 			/* When a data packet has reached its destination, we search the TimeOutQueue to find out the corresponding interest packet. 
 			 * We turn the receivedDataObject variable to true so that it does not retransmit */
-			Iterator<TimeOutFields> listedTimeOutFields = SimulationController.timeOutQueue.iterator();	
+			Iterator<TimeOutFields> listedTimeOutFields = SimulationController.timeOutQueue.iterator();
+			
 			while(listedTimeOutFields.hasNext()) {
-				
+			
 				TimeOutFields tof = listedTimeOutFields.next();
-								
-				if(tof.getInterestID() == curPacket.getRefPacketId() && tof.getSegmentID() == curPacket.getSegmentId() && tof.getObjectID() == curPacket.getPacketId() && tof.getNodeID() == this.getRouterId()) {
-					tof.setReceivedDataObject(true);
-					break;
+			
+				if(tof.getPrimaryInterestID() == curPacket.getPrimaryInterestId() && tof.getSegmentID() == curPacket.getSegmentId() && tof.getObjectID() == curPacket.getPacketId() && tof.getNodeID() == this.getRouterId()) {
+					
+					listedTimeOutFields.remove();
+					dataPacketReceived = true;					
+				}				
+			}
+			
+			if (dataPacketReceived) {
+				curPacket.finished(SupressionTypes.SUPRESSION_DEST_NODE);
+				countDataPacketsReceived++;
+			}
+			else {
+				curPacket.finished(SupressionTypes.SUPRESSION_ALREADY_SERVED);				
+			}
+			
+			/*try {
+				
+				Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_TimeOutQueue.txt",true));
+				fs1.write("\n(Data object found, after deleting the associated entries in TimeOutQueue)\n");
+				
+				for ( Iterator<TimeOutFields> tempIteratedTimeOutQueue = SimulationController.timeOutQueue.iterator(); 
+						tempIteratedTimeOutQueue.hasNext(); ) {
+					
+					TimeOutFields tempTimeOutQueue = tempIteratedTimeOutQueue.next();
+					
+					fs1.write("" + SimulationProcess.CurrentTime() + "\t");								
+					
+					fs1.write("[TOV, " + tempTimeOutQueue.getTimeOutValue() + ";");
+					fs1.write(" PriIntID, " +tempTimeOutQueue.getPrimaryInterestID() + ";");
+					fs1.write(" IntID, " + tempTimeOutQueue.getInterestID() + ";");
+					fs1.write(" SegID, " + tempTimeOutQueue.getSegmentID() + ";");
+					fs1.write(" ObjID, " + tempTimeOutQueue.getObjectID() + ";");
+					fs1.write(" NodeID, " + tempTimeOutQueue.getNodeID() + ";");
+					fs1.write(" RecedObj, " + tempTimeOutQueue.getReceivedDataObject() + ";");
+					fs1.write(" InfID, " + tempTimeOutQueue.getInterfaceID() + ";");
+					fs1.write(" NumTimesExp, " + tempTimeOutQueue.getExpirationCount() + "]\t");	
+					fs1.write("\n");	
+				}					
+				
+				fs1.close();
+			}
+			catch (IOException e){}	*/
+			
+			try {
+				if (SimulationController.timeOutQueue.size() >= 1) {
+					if (SimulationController.CurrentTime() - SimulationController.timeOutQueue.peek().getTimeOutValue() <= 0) {
+						/*try {
+							
+							Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_TimeOutQueue.txt",true));
+							//fs1.write("\nStatus : " + status+ "\n");																	
+															
+							fs1.write("Condition (2nd element in queue)" + SimulationController.CurrentTime() + " - " + SimulationController.timeOutQueue.peek().getTimeOutValue() + "<= 0");										
+							fs1.write("\n");
+							fs1.write("\n");
+							fs1.close();
+						}
+						catch (IOException e){} */						
+						SimulationController.top.ReActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
+					}
 				}
-			}			
+				else {
+					SimulationController.top.Cancel();
+				}
+			} 
+			catch (SimulationException e) {
+				e.printStackTrace();
+			} 
+			catch (RestartException e) {
+				e.printStackTrace();
+			}	
 		}
 	}
 	
 	@Override
 	/* I am not sure if this function is even needed. Moreover, the two functions following it seem unnecessary */
 	public void Activate() {
-		
+	
 		if (!getPacketsQ().isEmpty() && !Processing()) {
-			
-			try {				
+	
+			try {	
 				super.Activate();
 			}
 			catch (SimulationException e) {
@@ -1029,7 +1124,7 @@ public class CCNRouter extends SimulationProcess {
 			}
 		}
 		//else
-			//log.info("Not activating "+getPacketsQ().isEmpty()+Processing());
+		//log.info("Not activating "+getPacketsQ().isEmpty()+Processing());
 	}	
 	
 	public boolean Processing () {
@@ -1038,16 +1133,16 @@ public class CCNRouter extends SimulationProcess {
 	
 	@Override
 	public String toString() {
-		
+	
 		String str;
 		if (SimulationTypes.SIMULATION_CACHE == SimulationController.getCacheAvailability()) {
 			str = "CCNRouter\n{ Id:"+getRouterId()+ " \n"+ getPacketsQ().toString()+"\n PIT:"+getPIT().toString()+"\n ForwardingTable"+
 			getForwardingTable().toString()+"\nGlobalCache:"+getGlobalCache().toString()+"\nLocalCache:"+getLocalStorage().toString()+"}\n";
-		
+	
 		}
 		else {
 			str = "CCNRouter\n{ Id:"+getRouterId()+ " \n"+ getPacketsQ().toString()+"\n PIT:"+getPIT().toString()+"\n ForwardingTable"+
-					getForwardingTable().toString() +"\nLocalCache:"+getLocalStorage().toString()+"}\n";
+			getForwardingTable().toString() +"\nLocalCache:"+getLocalStorage().toString()+"}\n";
 		}
 		return str;
 	}
@@ -1069,7 +1164,7 @@ public class CCNRouter extends SimulationProcess {
 	}
 	
 	public boolean isPresentInPit(Integer packetId) {
-		
+	
 		if(pit.containsKey(packetId))
 			return true;
 		else
@@ -1077,7 +1172,7 @@ public class CCNRouter extends SimulationProcess {
 	}
 	
 	public boolean isPresentInQueue(Packets packet) {
-		
+	
 	    if(packetsQ.contains(packet))
 	    	return true;
 	    else
@@ -1124,7 +1219,7 @@ public class CCNRouter extends SimulationProcess {
 	}
 
 	public int getLogCounter() {
-		
+	
 		logCounter=logCounter+1;
 		return logCounter;
 	}
@@ -1140,8 +1235,7 @@ public class CCNRouter extends SimulationProcess {
 	public static void setProcDelay(double procDelay) {
 		CCNRouter.procDelay = procDelay;
 	}
-
-
+	
 	public int getDefaultInterface() {
 		return defaultInterface;
 	}

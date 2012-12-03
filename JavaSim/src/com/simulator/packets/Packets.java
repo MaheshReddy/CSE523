@@ -1,6 +1,7 @@
 package com.simulator.packets;
 
 
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,9 +16,11 @@ import com.simulator.ccn.IDEntry;
 import com.simulator.controller.SimulationController;
 import com.simulator.enums.PacketTypes;
 import com.simulator.enums.SupressionTypes;
+import com.simulator.topology.Grid;
 
 
 import arjuna.JavaSim.Simulation.*;
+import com.simulator.ccn.*;
 
 /* The following class is the Packet class which records information of each individual packet. Notice that it is not a 
  * SimulationProcess, but a simple class. It serves to three important tasks: 
@@ -144,6 +147,12 @@ public class Packets implements Cloneable {
 	/* It will hold the history of which interest packet has contributed in fetching in this object to this point */
 	private Map<IDEntry, Integer> historyOfDataPackets = null;
 	
+	private double timeoutAt;	
+	private double createdAt;
+	private double processingDelayAtNode;
+	private double processingDelaySoFar;	
+	private double transmissionDelaySoFar;	
+	
 	public int getDataPacketId() {
 		return dataPacketId;
 	}
@@ -256,6 +265,23 @@ public class Packets implements Cloneable {
 				else
 					str.format(" 0");
 			}
+			else {				
+				str.format(" -1 -1 -1");
+			}
+						
+			str.format(" %2.4f", curPacket.getCreatedAt());			
+			str.format(" %2.4f", curPacket.getTimeoutAt());
+			
+			if (curPacket.getCurNode() < 0) {
+				str.format(" %d", Grid.getRouter(curPacket.getOriginNode()).getPacketsQ().packetsInCCNQueue());
+			}
+			else {
+				str.format(" %d", Grid.getRouter(curPacket.getCurNode()).getPacketsQ().packetsInCCNQueue());
+			}
+						
+			str.format(" %2.4f", curPacket.getProcessingDelayAtNode());
+			str.format(" %2.4f", curPacket.getProcessingDelaySoFar());
+			str.format(" %2.4f", curPacket.getTransmissionDelaySoFar());			
 
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
@@ -325,6 +351,14 @@ public class Packets implements Cloneable {
 				str.format(" 1");
 			else
 				str.format(" 0");
+			
+			str.format(" %2.4f", curPacket.getCreatedAt());			
+			str.format(" %2.4f", curPacket.getTimeoutAt());
+			
+			str.format(" %d", Grid.getRouter(curPacket.getOriginNode()).getPacketsQ().packetsInCCNQueue());
+			str.format(" %2.4f", curPacket.getProcessingDelayAtNode());
+			str.format(" %2.4f", curPacket.getProcessingDelaySoFar());
+			str.format(" %2.4f", curPacket.getTransmissionDelaySoFar());
 	
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
@@ -605,6 +639,46 @@ public class Packets implements Cloneable {
 	
 	public void incrTotalHops() {
 		setTotalHops(getTotalHops()+1);
+	}
+
+	public double getTimeoutAt() {
+		return timeoutAt;
+	}
+
+	public void setTimeoutAt(double timeoutAt) {
+		this.timeoutAt = timeoutAt;
+	}
+
+	public double getProcessingDelaySoFar() {
+		return processingDelaySoFar;
+	}
+
+	public void setProcessingDelaySoFar(double processingDelaySoFar) {
+		this.processingDelaySoFar = processingDelaySoFar;
+	}
+
+	public double getTransmissionDelaySoFar() {
+		return transmissionDelaySoFar;
+	}
+
+	public void setTransmissionDelaySoFar(double transmissionDelaySoFar) {
+		this.transmissionDelaySoFar = transmissionDelaySoFar;
+	}
+
+	public double getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(double createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public double getProcessingDelayAtNode() {
+		return processingDelayAtNode;
+	}
+
+	public void setProcessingDelayAtNode(double processingDelayAtNode) {
+		this.processingDelayAtNode = processingDelayAtNode;
 	}
 	
 };

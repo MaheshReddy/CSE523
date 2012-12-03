@@ -28,6 +28,8 @@ public class TimeOutFields {
 	 * packet has been received */
 	private boolean receivedDataObject;
 	
+	private int interfaceID;
+	
 	public TimeOutFields(){
 		
 		primaryInterestID = 0;
@@ -38,9 +40,11 @@ public class TimeOutFields {
 		expirationCount = -1;
 		timeOutValue = -1.0;
 		receivedDataObject = false;
+		interfaceID = 0;
 	}
 	
-	public TimeOutFields(int tempPrimaryIntID, int tempIntID, int tempSegID, int tempObjectID, int tempNodeID, int tempExpirationCount, double tempTimeOutValue, boolean tempReceivedDataObject){
+	public TimeOutFields(int tempPrimaryIntID, int tempIntID, int tempSegID, int tempObjectID, int tempNodeID, int tempExpirationCount, double tempTimeOutValue, boolean tempReceivedDataObject,
+			int tempInterfaceID){
 		
 		primaryInterestID = tempPrimaryIntID;
 		interestID = tempIntID;
@@ -50,6 +54,7 @@ public class TimeOutFields {
 		expirationCount = tempExpirationCount;
 		timeOutValue = tempTimeOutValue;
 		receivedDataObject = tempReceivedDataObject;
+		interfaceID = tempInterfaceID;
 	}
 	
 	public boolean equals(Object o) {
@@ -63,7 +68,18 @@ public class TimeOutFields {
 	    return pn.interestID == interestID &&
 	           pn.segmentID == segmentID;
 	}
-	
+		
+	public int compare(TimeOutFields to1, TimeOutFields to2) {
+		if (to1.getTimeOutValue() < to2.getTimeOutValue()) {
+    		return -1;
+    	}
+    	else if (to1.getTimeOutValue() > to2.getTimeOutValue()) {
+    		return 1;
+    	}
+    	else {
+    		return 0;
+    	}
+    }
 	public int hashCode() {
 		
 		int hash = 7;
@@ -136,5 +152,13 @@ public class TimeOutFields {
 
 	public void setExpirationCount(int expirationCount) {
 		this.expirationCount = expirationCount;
+	}
+
+	public int getInterfaceID() {
+		return interfaceID;
+	}
+
+	public void setInterfaceID(int interfaceID) {
+		this.interfaceID = interfaceID;
 	}
 }

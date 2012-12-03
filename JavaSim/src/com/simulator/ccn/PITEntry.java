@@ -9,6 +9,11 @@ public class PITEntry {
 	private double expirationTime;
 	private int primaryInterestID;
 	private int numOfTimesExpired;
+	private double interestCreatedAt;
+	private double interestTimeoutAt;
+	private double interestProcessingDelayAtNode;
+	private double interestProcessingDelaySoFar;	
+	private double interestTransmissionDelaySoFar;
 	
 	public PITEntry () {
 		
@@ -18,6 +23,12 @@ public class PITEntry {
 		refPacketId = -1;
 		primaryInterestID = -1;		
 		numOfTimesExpired = -1;
+		interestCreatedAt = -1;
+		interestTimeoutAt = -1;
+		interestProcessingDelayAtNode = -1;
+		interestProcessingDelaySoFar = -1;
+		interestTransmissionDelaySoFar = -1;
+		
 	}
 	
 	
@@ -29,6 +40,11 @@ public class PITEntry {
 		refPacketId = -1;
 		primaryInterestID = -1;		
 		numOfTimesExpired = -1;
+		interestCreatedAt = -1;
+		interestTimeoutAt = -1;
+		interestProcessingDelayAtNode = -1;
+		interestProcessingDelaySoFar = -1;
+		interestTransmissionDelaySoFar = -1;
 	}
 	
 	public PITEntry (int tempInt, double tempTime) {
@@ -38,7 +54,8 @@ public class PITEntry {
 	}
 	
 	public PITEntry (int tempInt, int tempPacketId, int tempPrimaryInterestID, double tempTime, double tempExpirationTime, 
-			int tempNumOfTimesExpired) {
+			int tempNumOfTimesExpired, double tempInterestCreatedAt, double tempInterestTimeoutAt, double tempInterestProcessingDelayAtNode,
+			double tempInterestProcessingDelaySoFar, double tempInterestTransmissionDelaySoFar) {
 		
 		outgoingInterface = tempInt;
 		refPacketId = tempPacketId;
@@ -46,6 +63,11 @@ public class PITEntry {
 		createdAtTime = tempTime;
 		expirationTime = tempExpirationTime;
 		numOfTimesExpired = tempNumOfTimesExpired;
+		interestCreatedAt = tempInterestCreatedAt;
+		interestTimeoutAt = tempInterestTimeoutAt;
+		interestProcessingDelayAtNode = tempInterestProcessingDelayAtNode;
+		interestProcessingDelaySoFar = tempInterestProcessingDelaySoFar;
+		interestTransmissionDelaySoFar = tempInterestTransmissionDelaySoFar;
 	}
 	
 	public boolean equals(Object o) {
@@ -123,5 +145,57 @@ public class PITEntry {
 
 	public void setExpirationTime(double expirationTime) {
 		this.expirationTime = expirationTime;
+	}
+
+
+	public double getInterestCreatedAt() {
+		return interestCreatedAt;
+	}
+
+
+	public void setInterestCreatedAt(double interestCreatedAt) {
+		this.interestCreatedAt = interestCreatedAt;
+	}
+
+
+	public double getInterestTimeoutAt() {
+		return interestTimeoutAt;
+	}
+
+
+	public void setInterestTimeoutAt(double interestTimeoutAt) {
+		this.interestTimeoutAt = interestTimeoutAt;
+	}
+
+
+	public double getInterestProcessingDelayAtNode() {
+		return interestProcessingDelayAtNode;
+	}
+
+
+	public void setInterestProcessingDelayAtNode(
+			double interestProcessingDelayAtNode) {
+		this.interestProcessingDelayAtNode = interestProcessingDelayAtNode;
+	}
+
+
+	public double getInterestProcessingDelaySoFar() {
+		return interestProcessingDelaySoFar;
+	}
+
+
+	public void setInterestProcessingDelaySoFar(double interestProcessingDelaySoFar) {
+		this.interestProcessingDelaySoFar = interestProcessingDelaySoFar;
+	}
+
+
+	public double getInterestTransmissionDelaySoFar() {
+		return interestTransmissionDelaySoFar;
+	}
+
+
+	public void setInterestTransmissionDelaySoFar(
+			double interestTransmissionDelaySoFar) {
+		this.interestTransmissionDelaySoFar = interestTransmissionDelaySoFar;
 	}			
 }

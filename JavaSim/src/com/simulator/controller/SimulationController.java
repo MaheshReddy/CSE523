@@ -172,8 +172,6 @@ import java.util.Properties;
 		
 		try {
 			
-			//log.info("Starting Simulation -- Config\n Grid Size:"+Grid.getGridSize());
-			
 			/*
 			 * Arrivals object is created along with setting of the frequency with which it will be reinvoked again, and again ..
 			 * Moreover, the first interest packet is created. 
@@ -181,7 +179,7 @@ import java.util.Properties;
 			Arrivals A = new Arrivals();
 			
 			/* If Cache and FIB trace is required, then we create the CacheFIBTrace process which is invoked intermittently to print
-			 * the sizes of all caches and fibs.*/
+			 * the sizes of all caches and FIBs.*/
 			if (SimulationController.getCacheFibTrace() == SimulationTypes.SIMULATION_CACHE_FIB_TRACE_ON) {
 				CacheFIBTrace B = new CacheFIBTrace ();
 				B.ActivateAt(1.0);
@@ -206,10 +204,16 @@ import java.util.Properties;
 			
 			while(!Arrivals.isArrivalStatus())	{
 		
-				System.out.println("Total Interest Packets Generated (retranmission inclusive): " + Packets.getCurrentPacketId());
-				System.out.println("Retransmissed Interest Packets: " + TimeOutProcess.retranmissionPacketCount);
-				System.out.println("New Interest Packets Generated: " + Arrivals.countInterestPackets);
-				System.out.println("Number of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
+				Writer consoleWriter = new BufferedWriter(new FileWriter(Packets.getDataDumpFile()+ "_console",true));
+				
+				consoleWriter.write("\n\nCurrent time: " + SimulationController.CurrentTime());
+				consoleWriter.write("\nTotal Interest Packets Generated (retranmission inclusive): " + Packets.getCurrentPacketId());
+				consoleWriter.write("\nRetransmissed Interest Packets: " + TimeOutProcess.retranmissionPacketCount);
+				consoleWriter.write("\nNew Interest Packets Generated: " + Arrivals.countInterestPackets);
+				consoleWriter.write("\nNumber of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
+				consoleWriter.write("\nTimeOutQueue Size" + SimulationController.timeOutQueue.size());
+				
+				consoleWriter.close();
 				
 				Writer queueSizeWriter = new BufferedWriter(new FileWriter(Packets.getDataDumpFile()+ "_queue-sizes",true));
 				
@@ -221,10 +225,7 @@ import java.util.Properties;
 				for(int i=0; i<Grid.getGridSize(); i++) {
 					
 					str.format("%d\t", Grid.getRouter(i).getPacketsQ().packetsInCCNQueue());
-					//queueSizeWriter.write("" + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + "\t");	
-					//System.out.print("" + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + "\t");
 					avgQueueSizes = avgQueueSizes + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue();
-					//queueSizeWriter.write("hello");
 				}
 				
 				avgQueueSizes = avgQueueSizes / (double) Grid.getGridSize();
@@ -238,33 +239,29 @@ import java.util.Properties;
 			/* The following code insures that the TimeOutQueue is empty before the simulation is terminated */
 			while(true) {
 				
-				Writer queueSizeWriter = new BufferedWriter(new FileWriter(Packets.getDataDumpFile()+ "_timeoutQueueEmpty",true));
+				Writer consoleWriter = new BufferedWriter(new FileWriter(Packets.getDataDumpFile()+ "_console",true));
 				
-				queueSizeWriter.write("\n\nCurrent time: " + SimulationController.CurrentTime());
-				queueSizeWriter.write("\nNumber of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
-				queueSizeWriter.write("\nTimeOutQueue Size" + SimulationController.timeOutQueue.size());
+				consoleWriter.write("\n\nCurrent time: " + SimulationController.CurrentTime());
+				consoleWriter.write("\nTotal Interest Packets Generated (retranmission inclusive): " + Packets.getCurrentPacketId());
+				consoleWriter.write("\nRetransmissed Interest Packets: " + TimeOutProcess.retranmissionPacketCount);
+				consoleWriter.write("\nNew Interest Packets Generated: " + Arrivals.countInterestPackets);
+				consoleWriter.write("\nNumber of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
+				consoleWriter.write("\nTimeOutQueue Size" + SimulationController.timeOutQueue.size());
 				
 				if (SimulationController.timeOutQueue.size() > 0) {				
 					
-					queueSizeWriter.write("\nFirst interest packet on Queue (PrimaryInterestID)" + SimulationController.timeOutQueue.peek().getPrimaryInterestID());
-					queueSizeWriter.write("\nFirst interest packet on Queue (NodeID)" + SimulationController.timeOutQueue.peek().getNodeID());
-					queueSizeWriter.write("\nFirst interest packet on Queue (TimeOutValue)" + SimulationController.timeOutQueue.peek().getTimeOutValue());
-					queueSizeWriter.write("\nFirst interest packet on Queue (InterestID)" + SimulationController.timeOutQueue.peek().getInterestID());
-					queueSizeWriter.write("\nFirst interest packet on Queue (ObjectID)" + SimulationController.timeOutQueue.peek().getObjectID());
-					queueSizeWriter.write("\nFirst interest packet on Queue (ReceivedObject)" + SimulationController.timeOutQueue.peek().getReceivedDataObject() + "\n");
+					consoleWriter.write("\n\nFirst interest packet on Queue (PrimaryInterestID)" + SimulationController.timeOutQueue.peek().getPrimaryInterestID());
+					consoleWriter.write("\nFirst interest packet on Queue (NodeID)" + SimulationController.timeOutQueue.peek().getNodeID());
+					consoleWriter.write("\nFirst interest packet on Queue (TimeOutValue)" + SimulationController.timeOutQueue.peek().getTimeOutValue());
+					consoleWriter.write("\nFirst interest packet on Queue (InterestID)" + SimulationController.timeOutQueue.peek().getInterestID());
+					consoleWriter.write("\nFirst interest packet on Queue (ObjectID)" + SimulationController.timeOutQueue.peek().getObjectID());
+					consoleWriter.write("\nFirst interest packet on Queue (ReceivedObject)" + SimulationController.timeOutQueue.peek().getReceivedDataObject() + "\n");
 				
 				}
-				//System.out.println("\nCurrent time: " + SimulationController.CurrentTime());
-				//System.out.println("Number of Data Packets Received: " + CCNRouter.countDataPacketsReceived);
-				//System.out.println("TimeOutQueue Size" + SimulationController.timeOutQueue.size());
-				//System.out.println("First interest packet on Queue (PrimaryInterestID)" + SimulationController.timeOutQueue.peek().getPrimaryInterestID());
-				//System.out.println("First interest packet on Queue (NodeID)" + SimulationController.timeOutQueue.peek().getNodeID());
-				//System.out.println("First interest packet on Queue (TimeOutValue)" + SimulationController.timeOutQueue.peek().getTimeOutValue());
-				//System.out.println("First interest packet on Queue (InterestID)" + SimulationController.timeOutQueue.peek().getInterestID());
-				//System.out.println("First interest packet on Queue (ObjectID)" + SimulationController.timeOutQueue.peek().getObjectID());
-				//System.out.println("First interest packet on Queue (ReceivedObject)" + SimulationController.timeOutQueue.peek().getReceivedDataObject() + "\n");
 				
-				queueSizeWriter.close();
+				System.out.println("First interest packet on Queue (ReceivedObject)" + SimulationController.timeOutQueue.peek().getReceivedDataObject() + "\n");
+				
+				consoleWriter.close();
 				
 				boolean terminate = true;
 				
@@ -292,7 +289,7 @@ import java.util.Properties;
 				}
 
 				System.out.println("Supposedly, this loop should not execute more than once only when the timeOutQueue will" +
-						"be empty, will the code reach this point\n");
+						" be empty, will the code reach this point\n");
 				
 				System.out.println("TimeOutQueue " + SimulationController.timeOutQueue.size());
 				
@@ -509,15 +506,16 @@ import java.util.Properties;
 
 	public static void setRetransNuance (double tempNuance) {
 		retransNuance = tempNuance;
-	}
-	
+	}	
 
 	public static int getEccentricCentrality() {
 		return eccentricCentrality;
 	}
+	
 	public static void setEccentricCentrality(int eccentricCentrality) {
 		SimulationController.eccentricCentrality = eccentricCentrality;
 	}
+	
 	public static void main (String[] args) {
 
 		SimulationController ctrl;

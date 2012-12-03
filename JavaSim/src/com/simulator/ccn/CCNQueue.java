@@ -1,11 +1,6 @@
 package com.simulator.ccn;
-import java.util.BitSet;
 import java.util.LinkedList;
 //import org.apache.log4j.Logger;
-
-import com.simulator.distributions.Arrivals;
-import com.simulator.distributions.PacketDistributions;
-import com.simulator.enums.SupressionTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 
@@ -45,6 +40,8 @@ public class CCNQueue {
 		/* To maintain current queue size */
 		PacketssInCCNQueue++;
 			 		
+		packet.setProcessingDelayAtNode(Grid.getRouter(packet.getCurNode()).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay());
+		
 		/* We need to record packet is sent into the queue 
 		 * Packets.dumpStatistics(packet);
 		 * */

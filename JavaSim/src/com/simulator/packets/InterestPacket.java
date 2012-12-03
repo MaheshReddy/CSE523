@@ -3,6 +3,8 @@ package com.simulator.packets;
 
 //import org.apache.log4j.Logger;
 
+import arjuna.JavaSim.Simulation.SimulationProcess;
+
 import com.simulator.ccn.CCNQueue;
 import com.simulator.ccn.CCNRouter;
 import com.simulator.enums.PacketTypes;
@@ -64,6 +66,11 @@ public class InterestPacket extends Packets implements Cloneable{
 		setParentInterestId(-1);		
 		setExpirationCount(0);	
 		
+		setTimeoutAt(0.0);
+		setTransmissionDelaySoFar(0.0);
+		setProcessingDelaySoFar(0.0);
+		setCreatedAt(SimulationProcess.CurrentTime());	
+		setProcessingDelayAtNode(Grid.getRouter(nodeId).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay());
 		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());
 	}
 

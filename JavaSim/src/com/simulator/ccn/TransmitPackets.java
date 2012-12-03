@@ -27,6 +27,15 @@ public class TransmitPackets extends SimulationProcess {
 	public void run() {
 		
 		//log.info("Sending packet id:"+curPacket.getPacketId()+"Srcnode:"+curPacket.getCurNode()+" DstNode:"+dstNode.getRouterId());
+		/* Updating the processing time so far */
+		double processingSoFar = curPacket.getProcessingDelaySoFar();
+		processingSoFar = processingSoFar + curPacket.getProcessingDelayAtNode();
+		curPacket.setProcessingDelaySoFar(processingSoFar);
+		
+		double transmittingSoFar = curPacket.getTransmissionDelaySoFar();
+		transmittingSoFar = transmittingSoFar + getTransDelay();
+		curPacket.setTransmissionDelaySoFar(transmittingSoFar);
+		
 		dstNode.getPacketsQ().addLast(curPacket);
 
 		this.terminate();		

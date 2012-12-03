@@ -1,12 +1,18 @@
 package com.simulator.distributions;
 import arjuna.JavaSim.Simulation.*;
 import arjuna.JavaSim.Distributions.*;
+
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.ArrayList;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Writer;
 
 //import org.apache.log4j.Logger;
 
@@ -237,11 +243,42 @@ public class Arrivals extends SimulationProcess {
 							//SimulationController.getRetransNuance(); 
 					
 					ArrayList<Double> timeoutValue = CCNRouter.calculateTimeOutValue(srcNode);
-					double tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
+					double tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);					
 					
 					SimulationController.timeOutQueue.add(new TimeOutFields(firstPacket.getPrimaryInterestId(), firstPacket.getPacketId(), firstPacket.getSegmentId(), 
 							firstPacket.getRefPacketId(), firstPacket.getOriginNode(), firstPacket.getExpirationCount(), 
-							tempTimeOutValue, false));
+							tempTimeOutValue, false, firstPacket.getPrevHop()));
+					
+					firstPacket.setTimeoutAt(tempTimeOutValue);		
+					
+					/*try {
+						
+						Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_TimeOutQueue.txt",true));
+						fs1.write("\n(New) \n");
+						
+						for ( Iterator<TimeOutFields> tempIteratedTimeOutQueue = SimulationController.timeOutQueue.iterator(); 
+								tempIteratedTimeOutQueue.hasNext(); ) {
+							
+							TimeOutFields tempTimeOutQueue = tempIteratedTimeOutQueue.next();
+							
+							fs1.write("" + SimulationProcess.CurrentTime() + "\t");								
+							
+							fs1.write("[TOV, " + tempTimeOutQueue.getTimeOutValue() + ";");
+							fs1.write(" PriIntID, " +tempTimeOutQueue.getPrimaryInterestID() + ";");
+							fs1.write(" IntID, " + tempTimeOutQueue.getInterestID() + ";");
+							fs1.write(" SegID, " + tempTimeOutQueue.getSegmentID() + ";");
+							fs1.write(" ObjID, " + tempTimeOutQueue.getObjectID() + ";");
+							fs1.write(" NodeID, " + tempTimeOutQueue.getNodeID() + ";");
+							fs1.write(" RecedObj, " + tempTimeOutQueue.getReceivedDataObject() + ";");
+							fs1.write(" InfID, " + tempTimeOutQueue.getInterfaceID() + ";");
+							fs1.write(" NumTimesExp, " + tempTimeOutQueue.getExpirationCount() + "]\t");	
+							fs1.write("\n");	
+						}
+						
+						//fs1.write("\n");
+						fs1.close();
+					}
+					catch (IOException e){}	*/
 					
 					/* In case the TimeOutProcess is idle or suspended state, we need to reactivate it. This process will be in this state only
 					 * when TimeOutQueue has one element (the one we just entered) 
@@ -249,6 +286,9 @@ public class Arrivals extends SimulationProcess {
 					try {
 						if (SimulationController.timeOutQueue.size() == 1 && SimulationController.top.idle()) {
 							SimulationController.top.ActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
+						}
+						else if (SimulationController.timeOutQueue.size() >= 1) {
+							SimulationController.top.ReActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
 						}
 					} 
 					catch (SimulationException e) {
@@ -297,11 +337,17 @@ public class Arrivals extends SimulationProcess {
 							
 							SimulationController.timeOutQueue.add(new TimeOutFields(otherPackets.getPrimaryInterestId(), otherPackets.getPacketId(), 
 									otherPackets.getSegmentId(), otherPackets.getRefPacketId(), otherPackets.getOriginNode(), 
-									otherPackets.getExpirationCount(), tempTimeOutValue, false));
+									otherPackets.getExpirationCount(), tempTimeOutValue, false, otherPackets.getPrevHop()));
+							
+							otherPackets.setTimeoutAt(tempTimeOutValue);
+							otherPackets.setProcessingDelayAtNode(Grid.getRouter(otherPackets.getCurNode()).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay());
 							
 							try {
 								if (SimulationController.timeOutQueue.size() == 1 && SimulationController.top.idle()) {
 									SimulationController.top.ActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
+								}
+								else if (SimulationController.timeOutQueue.size() >= 1) {
+									SimulationController.top.ReActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
 								}
 							} 
 							catch (SimulationException e) {
