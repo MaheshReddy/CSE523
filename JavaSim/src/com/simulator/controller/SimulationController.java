@@ -325,16 +325,6 @@ import java.util.Properties;
 			}			
 			
 			
-			System.out.println("New PIT Entries created:" + sumOfNewPITCreated);
-			System.out.println("Updated PIT Entries suppressed:" + sumOfUpdatedPITCreated);
-			System.out.println("Duplicate PIT Entries suppressed:" + sumOfDupPITSuppressed);
-			System.out.println("All PIT Entries consumed:" + sumOfPITConsumed);
-			System.out.println("Useful PIT Entries consumed:" + sumOfPITConsumedUseful);
-			System.out.println("Already served:" + sumSuppAlreadyServed);
-			System.out.println("Expiration at all nodes is:" + sumAll);
-			System.out.println("PIT expiration (During simulation):" + sumPITExpiration);
-			System.out.println("All PIT expiration:" + (sumPITExpiration + sumAll));
-			
 			Writer simulationLevelValues = new BufferedWriter(new FileWriter(Packets.getDataDumpFile()+ "_simulation-level_values",true));
 			
 			simulationLevelValues.write("" + sumOfNewPITCreated + "\t" + sumOfUpdatedPITCreated + "\t" + sumOfDupPITSuppressed

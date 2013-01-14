@@ -43,9 +43,9 @@ public class TimeOutProcess extends SimulationProcess {
 			double tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
 			int expirationCount = SimulationController.timeOutQueue.peek().getExpirationCount() + 1;
 			
-			System.out.println("\nPrimaryInterestID " + SimulationController.timeOutQueue.peek().getPrimaryInterestID());
-			System.out.println("SegmentID " + SimulationController.timeOutQueue.peek().getSegmentID());
-			System.out.println("SegmentID TO " + timedOutPacket.getSegmentId());
+			//System.out.println("\nPrimaryInterestID " + SimulationController.timeOutQueue.peek().getPrimaryInterestID());
+			//System.out.println("SegmentID " + SimulationController.timeOutQueue.peek().getSegmentID());
+			//System.out.println("SegmentID TO " + timedOutPacket.getSegmentId());
 			//Grid.getRouter(SimulationController.timeOutQueue.peek().getNodeID()).decDefaultInterface();
 				
 			timedOutPacket.setRefPacketId(SimulationController.timeOutQueue.peek().getObjectID());
