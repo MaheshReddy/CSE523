@@ -18,7 +18,9 @@ import java.io.Writer;
 
 import com.simulator.ccn.CCNRouter;
 import com.simulator.controller.SimulationController;
+import com.simulator.enums.PacketTypes;
 import com.simulator.enums.SimulationTypes;
+import com.simulator.enums.SupressionTypes;
 import com.simulator.packets.InterestPacket;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
@@ -63,8 +65,10 @@ public class Arrivals extends SimulationProcess {
 
 	public Arrivals () {
 		
-		//InterArrivalTime = new ExponentialStream(loadImpact, 0, 3063366117L, 3003062878L);
 		InterArrivalTime = new ExponentialStream(loadImpact);
+		//1. InterArrivalTime = new ExponentialStream(loadImpact, 0, 3063366117L, 3003062878L);		
+		//2. InterArrivalTime = new ExponentialStream(loadImpact, 0, 3212929035L, 3062587883L);		
+		//3. InterArrivalTime = new ExponentialStream (loadImpact, 0, 2564030728L, 2563438702L);
 		
 		gridSize = Grid.getGridSize();
 		
@@ -75,10 +79,15 @@ public class Arrivals extends SimulationProcess {
 		/* At present, we are using seeds for testing purposes. However, eventually, we will remove them in the production 
 		 * mode. 
 		 * */
-		//packetIdGenerator = new Random(3008370503L);
-		//nodeSelecter = new Random(3009377119L);
+		
 		packetIdGenerator = new Random(5);
-		nodeSelecter = new Random(3);		
+		nodeSelecter = new Random(3);
+		
+		//packetIdGenerator = new Random(3008370503L);
+		//1. nodeSelecter = new Random(3009377119L);
+		//2. nodeSelecter = new Random(3008370503L);
+		//3. nodeSelecter = new Random(6316810450L);
+				
     }
 
 	/* This method is revoked intermittently to create interest packets */
@@ -101,16 +110,16 @@ public class Arrivals extends SimulationProcess {
 			int objectSize = 0;
 			int srcNode = 0;
 			
-			boolean generateInterestPacket = true;
+			/*boolean generateInterestPacket = true;
 			
 			for(int i=0; i<Grid.getGridSize(); i++) {				
 				
 				if (Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() > maxQueueSize) {					
 					generateInterestPacket = false;					
 				}				
-			}
+			}*/
 			
-			if (generateInterestPacket) {
+			if (areQueuesControlled()) {
 				
 				/* This 'if' conditions stops the arrival class from generating anymore interest packets when the total number of 
 				 * interest packets has reached
@@ -199,7 +208,9 @@ public class Arrivals extends SimulationProcess {
 								
 								String [] words = line.split("\\s+");
 								objectID = Integer.parseInt(words[1]);
-								objectSize = (int) PacketDistributions.size[objectID];							
+								objectSize = (int) PacketDistributions.size[objectID];	
+								//System.out.println ("Data object " + objectID + " has size " + (int) PacketDistributions.size[objectID]);
+								
 							}
 							else{
 								
@@ -245,11 +256,38 @@ public class Arrivals extends SimulationProcess {
 					ArrayList<Double> timeoutValue = CCNRouter.calculateTimeOutValue(srcNode);
 					double tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);					
 					
-					SimulationController.timeOutQueue.add(new TimeOutFields(firstPacket.getPrimaryInterestId(), firstPacket.getPacketId(), firstPacket.getSegmentId(), 
-							firstPacket.getRefPacketId(), firstPacket.getOriginNode(), firstPacket.getExpirationCount(), 
-							tempTimeOutValue, false, firstPacket.getPrevHop()));
+					SimulationController.timeOutQueue.add(new TimeOutFields(firstPacket.getPrimaryInterestId(), firstPacket.getPacketId(), 
+							firstPacket.getSegmentId(),firstPacket.getRefPacketId(), firstPacket.getOriginNode(), 
+							firstPacket.getExpirationCount(), tempTimeOutValue, false, firstPacket.getPrevHop()));
 					
-					firstPacket.setTimeoutAt(tempTimeOutValue);		
+					/*long sumOfPacketsInQueues = 0;
+					try {
+						
+						Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_IntPktTOHist.txt",true));
+						//fs1.write("\nStatus : " + status+ "\n");
+						fs1.write(firstPacket.getPrimaryInterestId() + "\t");
+						fs1.write(firstPacket.getPacketId() + "\t");
+						fs1.write(srcNode + "\t");
+						fs1.write("C\t");
+						fs1.write(SimulationProcess.CurrentTime() + "\t");
+						fs1.write(tempTimeOutValue + "\t");
+						
+						
+						for(int i = 0; i < Grid.getGridSize(); i++) {			
+							if (!firstPacket.sourceBasedRouting.contains(Grid.getRouter(i))) {
+								fs1.write(Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + "(" + i + ") ");
+								sumOfPacketsInQueues = sumOfPacketsInQueues + Grid.getRouter(i).getPacketsQ().packetsInCCNQueue();
+							}							
+						}
+						
+						fs1.write("\n");
+						fs1.close();
+					}
+					catch (IOException e){}*/	
+					
+					firstPacket.setTimeoutAt(tempTimeOutValue);	
+					firstPacket.setPitTimeoutAt(SimulationController.CurrentTime() + timeoutValue.get(0));
+					firstPacket.setProcessingDelayAtNode(Grid.getRouter(firstPacket.getCurNode()).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay());
 					
 					/*try {
 						
@@ -308,57 +346,85 @@ public class Arrivals extends SimulationProcess {
 					
 					if (numberOfIntPacks >= 2) {
 					
-						for (int i = 2; i <= (int)numberOfIntPacks; i++) {
-							/* The following statement will randomly choose a source node for the interest packet */
-							Grid.getRouter(srcNode).decDefaultInterface();
-					    	InterestPacket otherPackets = (InterestPacket) firstPacket.clone();
-					    	otherPackets.setSegmentId(i);  	
-					    	otherPackets.setCurNode(-1);
-					    	otherPackets.setPrevHop(Grid.getRouter(srcNode).getDefaultInterface());
+						int i = 2;
+						
+						while (true) {
+						
+							try {				
+								Hold(InterArrivalTime.getNumber());
+							}	    
+							catch (SimulationException e) {}			
+							catch (RestartException e) {}			
+						    catch (IOException e) {}
 							
-							/* 
-							 * The following code records the creation of the interest packet 
-							 * */			
-							Packets.dumpStatistics(otherPackets, "CREATED");			
+							if (areQueuesControlled()) {								
 							
-							/* The following statement moves the program control the Packet class, where this interest packet is added into
-							 * the source nodes queue 
-							 */			
-							otherPackets.activate();
-							
-							/* The TimeOutValue of subsequent segmented interest packets should have a larger time out by the processing delay as they
-							 * will wait in queue behind the previous segmented packet (untested idea as of 9/10/2012)
-							 * */
-							//tempTimeOutValue = SimulationController.CurrentTime() + SimulationController.getPitTimeOut() + 
-									//SimulationController.getRetransNuance() + CCNRouter.getProcDelay() * (i -1);
-							
-							timeoutValue = CCNRouter.calculateTimeOutValue(srcNode);
-							tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
-							
-							SimulationController.timeOutQueue.add(new TimeOutFields(otherPackets.getPrimaryInterestId(), otherPackets.getPacketId(), 
-									otherPackets.getSegmentId(), otherPackets.getRefPacketId(), otherPackets.getOriginNode(), 
-									otherPackets.getExpirationCount(), tempTimeOutValue, false, otherPackets.getPrevHop()));
-							
-							otherPackets.setTimeoutAt(tempTimeOutValue);
-							otherPackets.setProcessingDelayAtNode(Grid.getRouter(otherPackets.getCurNode()).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay());
-							
-							try {
-								if (SimulationController.timeOutQueue.size() == 1 && SimulationController.top.idle()) {
-									SimulationController.top.ActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
+								if (i > (int)numberOfIntPacks)
+									break;																
+								
+								/* The following statement will randomly choose a source node for the interest packet */
+								Grid.getRouter(srcNode).decDefaultInterface();
+						    	InterestPacket otherPackets = (InterestPacket) firstPacket.clone();
+						    	otherPackets.setSegmentId(i);  	
+						    	otherPackets.setCurNode(-1);
+						    	otherPackets.setPrevHop(Grid.getRouter(srcNode).getDefaultInterface());
+						    	otherPackets.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
+						    	otherPackets.setHistoryOfDataPackets(null);
+						    	otherPackets.setNoOfHops(0);
+						    	
+						    	otherPackets.setTimeoutAt(0.0);
+						    	otherPackets. setTransmissionDelaySoFar(0.0);
+						    	otherPackets.setProcessingDelayAtNode(0.0);
+						    	otherPackets.setProcessingDelaySoFar(0.0);
+						    	
+						    	otherPackets.setCreatedAt(SimulationProcess.CurrentTime());	
+						    	otherPackets.setProcessingDelayAtNode(Grid.getRouter(srcNode).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay());
+								
+								/* 
+								 * The following code records the creation of the interest packet 
+								 * */			
+								Packets.dumpStatistics(otherPackets, "CREATED");			
+								
+								/* The following statement moves the program control the Packet class, where this interest packet is added into
+								 * the source nodes queue 
+								 */			
+								otherPackets.activate();
+								
+								/* The TimeOutValue of subsequent segmented interest packets should have a larger time out by the processing delay as they
+								 * will wait in queue behind the previous segmented packet (untested idea as of 9/10/2012)
+								 * */
+								//tempTimeOutValue = SimulationController.CurrentTime() + SimulationController.getPitTimeOut() + 
+										//SimulationController.getRetransNuance() + CCNRouter.getProcDelay() * (i -1);
+								
+								timeoutValue = CCNRouter.calculateTimeOutValue(srcNode);
+								tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
+								
+								SimulationController.timeOutQueue.add(new TimeOutFields(otherPackets.getPrimaryInterestId(), otherPackets.getPacketId(), 
+										otherPackets.getSegmentId(), otherPackets.getRefPacketId(), otherPackets.getOriginNode(), 
+										otherPackets.getExpirationCount(), tempTimeOutValue, false, otherPackets.getPrevHop()));
+								
+								otherPackets.setTimeoutAt(tempTimeOutValue);								
+																
+								try {
+									if (SimulationController.timeOutQueue.size() == 1 && SimulationController.top.idle()) {
+										SimulationController.top.ActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
+									}
+									else if (SimulationController.timeOutQueue.size() >= 1) {
+										SimulationController.top.ReActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
+									}
+								} 
+								catch (SimulationException e) {
+									 //TODO Auto-generated catch block
+									e.printStackTrace();
+								} 
+								catch (RestartException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
 								}
-								else if (SimulationController.timeOutQueue.size() >= 1) {
-									SimulationController.top.ReActivateAt(SimulationController.timeOutQueue.peek().getTimeOutValue(), false);
-								}
-							} 
-							catch (SimulationException e) {
-								 //TODO Auto-generated catch block
-								e.printStackTrace();
-							} 
-							catch (RestartException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								
+								i++;
 							}
-					    }
+						}
 					}			
 					//log.info("Packet generated ");
 				}				
@@ -416,5 +482,16 @@ public class Arrivals extends SimulationProcess {
 
 	public static void setMaxQueueSize(int maxQueueSize) {
 		Arrivals.maxQueueSize = maxQueueSize;
+	}
+	
+	public static boolean areQueuesControlled () {
+		
+		for(int i=0; i<Grid.getGridSize(); i++) {				
+			
+			if (Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() > maxQueueSize) {					
+				return false;					
+			}				
+		}
+		return true;
 	}
 };

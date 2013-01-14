@@ -3,6 +3,7 @@ package com.simulator.controller;
 //import org.apache.log4j.Logger;
 
 
+import com.simulator.ccn.PITEntry;
 import com.simulator.ccn.TimeOutProcess;
 import com.simulator.ccn.TimeOutFields;
 
@@ -19,6 +20,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import java.util.Comparator;
 import java.util.Formatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import arjuna.JavaSim.Simulation.*;
 
@@ -76,6 +78,15 @@ import java.util.Properties;
 	
 
 	public static Writer fs = null;
+	
+	public static long sumOfPITConsumed = 0;
+	public static long sumOfPITConsumedUseful = 0;
+	public static long sumOfNewPITCreated = 0;
+	public static long sumOfUpdatedPITCreated = 0;
+	public static long sumOfDupPITSuppressed = 0;
+	public static long sumSuppAlreadyServed = 0;
+	public static long sumPITExpiration = 0;
+	
 	
 	
     /**
@@ -257,9 +268,7 @@ import java.util.Properties;
 					consoleWriter.write("\nFirst interest packet on Queue (ObjectID)" + SimulationController.timeOutQueue.peek().getObjectID());
 					consoleWriter.write("\nFirst interest packet on Queue (ReceivedObject)" + SimulationController.timeOutQueue.peek().getReceivedDataObject() + "\n");
 				
-				}
-				
-				System.out.println("First interest packet on Queue (ReceivedObject)" + SimulationController.timeOutQueue.peek().getReceivedDataObject() + "\n");
+				}				
 				
 				consoleWriter.close();
 				
@@ -300,10 +309,40 @@ import java.util.Properties;
 					break;				
 			}
 			
+			int sumAll = 0;
 			for(int i=0;i<Grid.getGridSize();i++) {
 			
-				Grid.getRouter(i).printFIB(Grid.getRouter(i).getForwardingTable(), null, null);				
-			}
+				Grid.getRouter(i).printFIB(Grid.getRouter(i).getForwardingTable(), null, null);	
+				Grid.getRouter(i).getPIT();
+				
+				int sum = 0;
+				for (List<PITEntry> value : (Grid.getRouter(i).getPIT()).values()) {
+					sum = sum + value.size();
+				}
+				
+				System.out.println("Expiration Values at Node " + i + " is: "+ sum);				
+				sumAll = sumAll + sum;				
+			}			
+			
+			
+			System.out.println("New PIT Entries created:" + sumOfNewPITCreated);
+			System.out.println("Updated PIT Entries suppressed:" + sumOfUpdatedPITCreated);
+			System.out.println("Duplicate PIT Entries suppressed:" + sumOfDupPITSuppressed);
+			System.out.println("All PIT Entries consumed:" + sumOfPITConsumed);
+			System.out.println("Useful PIT Entries consumed:" + sumOfPITConsumedUseful);
+			System.out.println("Already served:" + sumSuppAlreadyServed);
+			System.out.println("Expiration at all nodes is:" + sumAll);
+			System.out.println("PIT expiration (During simulation):" + sumPITExpiration);
+			System.out.println("All PIT expiration:" + (sumPITExpiration + sumAll));
+			
+			Writer simulationLevelValues = new BufferedWriter(new FileWriter(Packets.getDataDumpFile()+ "_simulation-level_values",true));
+			
+			simulationLevelValues.write("" + sumOfNewPITCreated + "\t" + sumOfUpdatedPITCreated + "\t" + sumOfDupPITSuppressed
+										+ "\t" + sumOfPITConsumed + "\t" + sumOfPITConsumedUseful + "\t" + sumAll
+										+ "\t" + sumPITExpiration + "\t" + (sumPITExpiration + sumAll));
+			
+			simulationLevelValues.close();
+			
 			
 			/* Stops the simulation */
 			Scheduler.stopSimulation();

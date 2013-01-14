@@ -235,6 +235,7 @@ public class PacketDistributions {
 			
 			if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_ON) {
 				size [count1] = (long)pack.getSizeOfPacket();
+				System.out.println ("Data object " + count + " has size " + size [count1]);
 			}
 			else if (SimulationController.getObjectSegmentation() == SimulationTypes.SIMULATION_SEG_OFF) {
 				size [count1] = Arrivals.getSegmentSize();

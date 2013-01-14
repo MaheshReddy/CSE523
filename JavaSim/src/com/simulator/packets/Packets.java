@@ -22,6 +22,8 @@ import com.simulator.topology.Grid;
 import arjuna.JavaSim.Simulation.*;
 import com.simulator.ccn.*;
 
+import java.util.Stack;
+
 /* The following class is the Packet class which records information of each individual packet. Notice that it is not a 
  * SimulationProcess, but a simple class. It serves to three important tasks: 
  * (1) adds newly created interest packets into the queue of requesting nodes; 
@@ -144,14 +146,20 @@ public class Packets implements Cloneable {
 	
 	private boolean sourceObjectCopy;
 	
+	private boolean satisfiedViaPIT;
+	
 	/* It will hold the history of which interest packet has contributed in fetching in this object to this point */
 	private Map<IDEntry, Integer> historyOfDataPackets = null;
 	
-	private double timeoutAt;	
+	private double timeoutAt;
+	private double pitTimeoutAt;
 	private double createdAt;
 	private double processingDelayAtNode;
 	private double processingDelaySoFar;	
 	private double transmissionDelaySoFar;	
+	
+	public Stack <Integer> sourceBasedRouting = null;
+	private long actualTotalQueueCount = 0;
 	
 	public int getDataPacketId() {
 		return dataPacketId;
@@ -177,7 +185,10 @@ public class Packets implements Cloneable {
 	public Packets(Packets pac)	{}
 
 	
-	public Packets(){}
+	public Packets(){
+		
+		sourceBasedRouting = new Stack <Integer> ();
+	}
 	/**
 	 *  Activates packet. It performs necessary action on the packet. Depending on the packet type.
 	 *  @author contra
@@ -281,7 +292,12 @@ public class Packets implements Cloneable {
 						
 			str.format(" %2.4f", curPacket.getProcessingDelayAtNode());
 			str.format(" %2.4f", curPacket.getProcessingDelaySoFar());
-			str.format(" %2.4f", curPacket.getTransmissionDelaySoFar());			
+			str.format(" %2.4f", curPacket.getTransmissionDelaySoFar());
+			
+			if(curPacket.isSatisfiedViaPIT())
+				str.format(" 1");
+			else
+				str.format(" 0");
 
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
@@ -359,6 +375,11 @@ public class Packets implements Cloneable {
 			str.format(" %2.4f", curPacket.getProcessingDelayAtNode());
 			str.format(" %2.4f", curPacket.getProcessingDelaySoFar());
 			str.format(" %2.4f", curPacket.getTransmissionDelaySoFar());
+			
+			if(curPacket.isSatisfiedViaPIT())
+				str.format(" 1");
+			else
+				str.format(" 0");
 	
 			str.format("\n");
 			SimulationController.fs.write(str.toString());
@@ -629,6 +650,14 @@ public class Packets implements Cloneable {
 		this.sourceObjectCopy = sourceObjectCopy;
 	}
 
+	public boolean isSatisfiedViaPIT() {
+		return satisfiedViaPIT;
+	}
+
+	public void setSatisfiedViaPIT(boolean satisfiedViaPIT) {
+		this.satisfiedViaPIT = satisfiedViaPIT;
+	}
+
 	public int getTotalHops() {
 		return totalHops;
 	}
@@ -680,5 +709,23 @@ public class Packets implements Cloneable {
 	public void setProcessingDelayAtNode(double processingDelayAtNode) {
 		this.processingDelayAtNode = processingDelayAtNode;
 	}
+
+	public long getActualTotalQueueCount() {
+		return actualTotalQueueCount;
+	}
+
+	public void setActualTotalQueueCount(long actualTotalQueueCount) {
+		this.actualTotalQueueCount = actualTotalQueueCount;
+	}
+
+	public double getPitTimeoutAt() {
+		return pitTimeoutAt;
+	}
+
+	public void setPitTimeoutAt(double pitTimeoutAt) {
+		this.pitTimeoutAt = pitTimeoutAt;
+	}
+
+
 	
 };

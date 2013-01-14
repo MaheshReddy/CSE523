@@ -47,6 +47,7 @@ public class DataPacket extends Packets implements Cloneable {
 		setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);
 		this.setHistoryOfDataPackets(null);
 		setSourceObjectCopy(true);
+		setSatisfiedViaPIT(false);
 		setTotalHops(0);
 		//log.info("node id = "+nodeId+" packet id ="+ getPacketId());		
 	}

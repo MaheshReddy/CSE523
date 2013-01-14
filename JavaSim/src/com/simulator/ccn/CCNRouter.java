@@ -229,15 +229,17 @@ public class CCNRouter extends SimulationProcess {
 		
 		/* Remove stall entries from PIT table before checking for a valid PIT Entry */	
 		List<PITEntry> pitEntries = pit.get(pitIndex);	
-		
+				
 		if (pit.containsKey(pitIndex)) {	
 			if (pitEntries != null) {
 			
+				
+				
 				/* Retrieve the PIT entries corresponding to the data packet (packet id & segment id)*/
 				Iterator<PITEntry> stalledPITEntries = pitEntries.iterator();
 				boolean removePITIndex = false;
 				
-				ArrayList <Packets> tempCollectionExpiredPackets = new ArrayList <Packets> (10);	
+				ArrayList <Packets> tempCollectionExpiredPackets = new ArrayList <Packets> ();	
 				
 				/* Iterate over the PIT entries, and check for timeout condition. If anyone of the entry (interface)
 				 * has timed out, then all pit entries along with the pit index are remove from the PIT */
@@ -265,13 +267,16 @@ public class CCNRouter extends SimulationProcess {
 					clonePac.setParentInterestId(-1);	
 					
 					tempCollectionExpiredPackets.add(clonePac);	
+					
 				}	
 				
 				/* If any one of the entries expires, the following code will suppress the cloned packets with "PIT_Expiration"
 				 * labels. The PIT index and the corresponding PIT entries will be removed from the PIT */
 				if (removePITIndex) {
-					for (int i = 0; i < tempCollectionExpiredPackets.size(); i++)
+					for (int i = 0; i < tempCollectionExpiredPackets.size(); i++) {
 						tempCollectionExpiredPackets.get(i).finished(SupressionTypes.PIT_EXPIRATION);
+						SimulationController.sumPITExpiration = SimulationController.sumPITExpiration + 1;
+					}
 					
 					pit.remove(pitIndex);
 					curPacket.finished(SupressionTypes.SUPRESSION_NO_PIT_INDEX_DUE_PIT_EXPIRATION);
@@ -282,8 +287,8 @@ public class CCNRouter extends SimulationProcess {
 		}	
 		else 
 		/* I havn't seen this packet so discard it. This scenario could also occur because of PIT expiration due to an Interest packet
-		 * processed in the interestPacketHandler(). Hence, due not confuse the above suppression type which is definitely executed when 
-		 * an PIT entry for the data packet has expired when it was being processed. */
+		 * processed in the interestPacketHandler(), and the PIT entry is purged of expired entries. Hence, due not confuse the above suppression 
+		 * type which is definitely executed when an PIT entry for the data packet has expired when it was being processed. */
 		{	
 			curPacket.finished(SupressionTypes.SUPRESSION_NO_PIT_INDEX);
 			return;	
@@ -321,19 +326,35 @@ public class CCNRouter extends SimulationProcess {
 		Iterator<PITEntry> itr = pitEntries.iterator();	
 		boolean currDataPacketSatisfied = false;
 		
+		/* We count all entries within a list of entries, including the ones to which we might not send data (such as
+		 * the if condition of not sending data back to the node from which it came). Notice that we do not count
+		 * the some entries which are expired (above PIT expiration), as they are accounted in the expired count. */
+		SimulationController.sumOfPITConsumed = SimulationController.sumOfPITConsumed + pitEntries.size();
+		
 		while(itr.hasNext()) {			
 			
 			PITEntry rid = itr.next();
 			
+			/*TODO*/
+			/*  
+			 * 1. Find PINTID
+			 * 2. Find NODEID that has this particular PINTID
+			 * 3. PRINT PIT of the node
+			 * 4. Print the history of the PINTID
+			 * */
+			
 			/* We shouldn't flood the data packet to same node where it came from */
 			if(rid.getoutgoingInterface() != curPacket.getPrevHop()/*I changed this from getRouterID()*/) {
+				
+				SimulationController.sumOfPITConsumedUseful = SimulationController.sumOfPITConsumedUseful + 1;
+				
+				//SimulationController.sumOfPITConsumed = SimulationController.sumOfPITConsumed + 1;
 			
 				Packets clonePac = (Packets) curPacket.clone();
 				
 				/* In the following 'if' statement, we "create" data packets for all those PIT entries which are also satisfied other than the one
 				 * associated with the current data packets' interest id */
-				if (clonePac.getRefPacketId() != rid.getRefPacketId()) {
-				 
+				if (clonePac.getRefPacketId() != rid.getRefPacketId()) {				 
 					
 					clonePac.setRefPacketId(rid.getRefPacketId());
 					clonePac.setOriginNode(getRouterId());
@@ -341,6 +362,7 @@ public class CCNRouter extends SimulationProcess {
 					clonePac.setCurNode(-1);
 					clonePac.setPrevHop(-1);
 					clonePac.setNoOfHops(0);
+					clonePac.setSatisfiedViaPIT(true);
 					clonePac.setCauseOfSupr(SupressionTypes.SUPRESSION_NOT_APPLICABLE);	
 					
 					clonePac.setExpirationCount(rid.getNumOfTimesExpired());
@@ -367,7 +389,6 @@ public class CCNRouter extends SimulationProcess {
 			}
 		}	
 		
-
 	/*	We are not destroying the source data packet even when its PIT entry is being consumed. What happens is the following:
 		
 		1. The new retransmitted interest packet has created the PIT entry leaving the same interface in the PIT entry that would be used by its 
@@ -402,6 +423,7 @@ public class CCNRouter extends SimulationProcess {
 		tempGlobalCacheEntry.setCurNode(-1); 
 		tempGlobalCacheEntry.setPrevHop(-1);
 		tempGlobalCacheEntry.setSourceObjectCopy(false);
+		tempGlobalCacheEntry.setSatisfiedViaPIT(false);
 		tempGlobalCacheEntry.setHistoryOfDataPackets(tempHistoryOfDataPackets);
 		
 		/* Flag that the cache was filled, when it should not have been.
@@ -496,6 +518,7 @@ public class CCNRouter extends SimulationProcess {
 		if(interestServedBitArray[curPacket.getPacketId()] != null) {
 			if (interestServedBitArray[curPacket.getPacketId()].get(curPacket.getSegmentId())) {
 				curPacket.finished(SupressionTypes.SUPRESSION_ALREADY_SERVED);
+				SimulationController.sumSuppAlreadyServed = SimulationController.sumSuppAlreadyServed + 1;				
 				//log.info("Already served interest packet "+ curPacket.getPacketId() + " with segment ID " + curPacket.getSegmentId());
 				return;
 			}
@@ -542,7 +565,7 @@ public class CCNRouter extends SimulationProcess {
 			/* This creates a unique Id for each data packet sent */
 			clonePac.setDataPacketId(Packets.getCurrentDataPacketId());
 			Packets.incCurrentDataPacketId();	
-			
+			 
 			/* Terminate the current packet. Move this to the start of this if-statement */
 			curPacket.finished(SupressionTypes.SUPRESSION_SENT_DATA_PACKET);
 			
@@ -572,7 +595,9 @@ public class CCNRouter extends SimulationProcess {
 				boolean removePITIndex = false;
 				
 				Iterator<PITEntry> stalledPITEntries = pitEntries.iterator();	
-				ArrayList <Packets> tempCollectionExpiredPackets = new ArrayList <Packets> (10);	
+				ArrayList <Packets> tempCollectionExpiredPackets = new ArrayList <Packets> ();	
+				
+				
 				
 				while(stalledPITEntries.hasNext()) {
 				
@@ -589,7 +614,7 @@ public class CCNRouter extends SimulationProcess {
 					clonePac.setSegmentId(dataObject.getSegmentID());
 					clonePac.setPrevHop(-1);
 					clonePac.setOriginNode(-1);
-					clonePac.setNoOfHops(-1);
+					clonePac.setNoOfHops(current.getHopCount());
 					clonePac.setCauseOfSupr(SupressionTypes.PIT_EXPIRATION);
 					clonePac.setLocality(false);
 					
@@ -598,15 +623,20 @@ public class CCNRouter extends SimulationProcess {
 					clonePac.setParentInterestId(-1);
 					
 					tempCollectionExpiredPackets.add(clonePac);	
+					
+						
 				}	
 				
 				/* If any one of the entries expires, the following code will suppress the cloned packets with "PIT Expiration"
 				 * labels. The PIT index and the corresponding PIT entries will be removed from the PIT*/
 				if (removePITIndex) {
-					for (int i = 0; i < tempCollectionExpiredPackets.size(); i++)
+					for (int i = 0; i < tempCollectionExpiredPackets.size(); i++) {
 						tempCollectionExpiredPackets.get(i).finished(SupressionTypes.PIT_EXPIRATION);
+						SimulationController.sumPITExpiration = SimulationController.sumPITExpiration + 1;
+					}
 					
 					pit.remove(pitIndex);
+					//SimulationController.sumPITExpiration = SimulationController.sumPITExpiration + 1;
 				}	
 			}	
 		}
@@ -621,16 +651,19 @@ public class CCNRouter extends SimulationProcess {
 			if(!pitEntries.contains(new PITEntry(curPacket.getPrevHop())))/*!containsPITEntry(pitEntries,curPacket.getPrevHop())*/ {
 			
 				pitEntries.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), curPacket.getPrimaryInterestId(), 
-				SimulationController.CurrentTime(), SimulationController.CurrentTime() + calculateTimeOutValue(routerId).get(0), 
-				curPacket.getExpirationCount(), curPacket.getCreatedAt(), curPacket.getTimeoutAt(), curPacket.getProcessingDelayAtNode(),
-				curPacket.getProcessingDelaySoFar(), curPacket.getTransmissionDelaySoFar()));
+				SimulationController.CurrentTime(), curPacket.getPitTimeoutAt(), curPacket.getExpirationCount(), curPacket.getCreatedAt(), 
+				curPacket.getTimeoutAt(), curPacket.getProcessingDelayAtNode(), curPacket.getProcessingDelaySoFar(), 
+				curPacket.getTransmissionDelaySoFar(), false, curPacket.getNoOfHops()));
 				
-				/* Suppress the packet as we do not have an entry in the PIT pertaining to this interface */
+				/* Suppress the packet. Add entry as we do not have an entry in the PIT pertaining to this interface */
 				curPacket.finished(SupressionTypes.PIT_HIT);	
+				
+				SimulationController.sumOfUpdatedPITCreated = SimulationController.sumOfUpdatedPITCreated + 1;				
 			}
 			else {
 				/* Suppress the packet in the PIT as it already has an entry with the same interface */
 				curPacket.finished(SupressionTypes.REDUNDANT_PIT_HIT);
+				SimulationController.sumOfDupPITSuppressed = SimulationController.sumOfDupPITSuppressed + 1;
 			}		
 			
 			return;	
@@ -641,11 +674,13 @@ public class CCNRouter extends SimulationProcess {
 		
 			List<PITEntry> newPITEntry = new ArrayList<PITEntry>();
 			newPITEntry.add(new PITEntry (curPacket.getPrevHop(), curPacket.getPacketId(), curPacket.getPrimaryInterestId(), 
-			SimulationController.CurrentTime(), SimulationController.CurrentTime() + calculateTimeOutValue(routerId).get(0), 
-			curPacket.getExpirationCount(), curPacket.getCreatedAt(), curPacket.getTimeoutAt(), curPacket.getProcessingDelayAtNode(),
-			curPacket.getProcessingDelaySoFar(), curPacket.getTransmissionDelaySoFar()));
+			SimulationController.CurrentTime(), curPacket.getPitTimeoutAt(),curPacket.getExpirationCount(), curPacket.getCreatedAt(), 
+			curPacket.getTimeoutAt(), curPacket.getProcessingDelayAtNode(), curPacket.getProcessingDelaySoFar(), 
+			curPacket.getTransmissionDelaySoFar(), true, curPacket.getNoOfHops()));		
 			
 			pit.put(pitIndex, newPITEntry);	
+			
+			SimulationController.sumOfNewPITCreated = SimulationController.sumOfNewPITCreated + 1;
 		}	
 		
 		//List<PITEntry> pitEntriesPrint = pit.get(pitIndex);	
@@ -750,11 +785,8 @@ public class CCNRouter extends SimulationProcess {
 			
 			if (checkPITEntry != null) {
 				Iterator<PITEntry> itr = checkPITEntry.iterator();	
-				int count = 0;
 			
 				while(itr.hasNext()) {
-			
-					count ++;
 			
 					PITEntry rid = itr.next();
 			

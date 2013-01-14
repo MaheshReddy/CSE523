@@ -1,13 +1,20 @@
 package com.simulator.ccn;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.LinkedList;
+
 //import org.apache.log4j.Logger;
+import arjuna.JavaSim.Simulation.SimulationProcess;
+
+import com.simulator.enums.PacketTypes;
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 
 /*
  * This class manages the CCN routers queue
  */
-
 public class CCNQueue {
     
 	//private static final Logger log = Logger.getLogger(CCNQueue.class);
@@ -32,8 +39,12 @@ public class CCNQueue {
 	public void addLast(Packets packet) {	
 		
 		/* Updating the current node of the packet */
-		packet.setCurNode(getNodeId()); 
-			
+		packet.setCurNode(getNodeId());
+		
+		if (packet.getPacketType() == PacketTypes.PACKET_TYPE_INTEREST) {		
+			packet.sourceBasedRouting.push(getNodeId());
+		}
+				
 		/* Add packet at the end of the neighboring nodes queue */
 		queue.addLast(packet);
 			

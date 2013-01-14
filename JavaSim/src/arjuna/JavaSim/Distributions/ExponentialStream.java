@@ -57,7 +57,7 @@ public ExponentialStream (double m, int StreamSelect,
       */
     
 public double getNumber () throws IOException, ArithmeticException
-    {
+  	{
 	return -Mean*Math.log(Uniform());
     }
 

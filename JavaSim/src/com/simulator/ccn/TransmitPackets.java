@@ -2,6 +2,11 @@ package com.simulator.ccn;
 
 //import org.apache.log4j.Logger;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+
 import com.simulator.packets.Packets;
 import com.simulator.topology.Grid;
 
@@ -35,6 +40,8 @@ public class TransmitPackets extends SimulationProcess {
 		double transmittingSoFar = curPacket.getTransmissionDelaySoFar();
 		transmittingSoFar = transmittingSoFar + getTransDelay();
 		curPacket.setTransmissionDelaySoFar(transmittingSoFar);
+		
+		
 		
 		dstNode.getPacketsQ().addLast(curPacket);
 

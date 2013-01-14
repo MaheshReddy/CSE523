@@ -14,6 +14,8 @@ public class PITEntry {
 	private double interestProcessingDelayAtNode;
 	private double interestProcessingDelaySoFar;	
 	private double interestTransmissionDelaySoFar;
+	private boolean pitEntryCreator;
+	private int hopCount;
 	
 	public PITEntry () {
 		
@@ -28,6 +30,8 @@ public class PITEntry {
 		interestProcessingDelayAtNode = -1;
 		interestProcessingDelaySoFar = -1;
 		interestTransmissionDelaySoFar = -1;
+		pitEntryCreator = false;
+		hopCount = -1;
 		
 	}
 	
@@ -45,6 +49,8 @@ public class PITEntry {
 		interestProcessingDelayAtNode = -1;
 		interestProcessingDelaySoFar = -1;
 		interestTransmissionDelaySoFar = -1;
+		pitEntryCreator = false;
+		hopCount = -1;
 	}
 	
 	public PITEntry (int tempInt, double tempTime) {
@@ -55,7 +61,7 @@ public class PITEntry {
 	
 	public PITEntry (int tempInt, int tempPacketId, int tempPrimaryInterestID, double tempTime, double tempExpirationTime, 
 			int tempNumOfTimesExpired, double tempInterestCreatedAt, double tempInterestTimeoutAt, double tempInterestProcessingDelayAtNode,
-			double tempInterestProcessingDelaySoFar, double tempInterestTransmissionDelaySoFar) {
+			double tempInterestProcessingDelaySoFar, double tempInterestTransmissionDelaySoFar, boolean tempPitEntryCreator, int tempHopCount) {
 		
 		outgoingInterface = tempInt;
 		refPacketId = tempPacketId;
@@ -68,6 +74,8 @@ public class PITEntry {
 		interestProcessingDelayAtNode = tempInterestProcessingDelayAtNode;
 		interestProcessingDelaySoFar = tempInterestProcessingDelaySoFar;
 		interestTransmissionDelaySoFar = tempInterestTransmissionDelaySoFar;
+		pitEntryCreator = tempPitEntryCreator;
+		hopCount = tempHopCount;
 	}
 	
 	public boolean equals(Object o) {
@@ -197,5 +205,25 @@ public class PITEntry {
 	public void setInterestTransmissionDelaySoFar(
 			double interestTransmissionDelaySoFar) {
 		this.interestTransmissionDelaySoFar = interestTransmissionDelaySoFar;
+	}
+
+
+	public boolean isPitEntryCreator() {
+		return pitEntryCreator;
+	}
+
+
+	public void setPitEntryCreator(boolean pitEntryCreator) {
+		this.pitEntryCreator = pitEntryCreator;
+	}
+
+
+	public int getHopCount() {
+		return hopCount;
+	}
+
+
+	public void setHopCount(int hopCount) {
+		this.hopCount = hopCount;
 	}			
 }

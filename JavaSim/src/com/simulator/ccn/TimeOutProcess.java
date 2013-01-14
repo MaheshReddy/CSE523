@@ -13,6 +13,7 @@ import com.simulator.controller.SimulationController;
 import com.simulator.distributions.Arrivals;
 import com.simulator.packets.InterestPacket;
 import com.simulator.packets.Packets;
+import com.simulator.topology.Grid;
 
 import arjuna.JavaSim.Simulation.*;;
 
@@ -30,17 +31,21 @@ public class TimeOutProcess extends SimulationProcess {
 	
 	public void run() {
 		
-		while (true) {
+		while (true) {		
 			
-			ArrayList<Double> timeoutValue = CCNRouter.calculateTimeOutValue(SimulationController.timeOutQueue.peek().getNodeID());
-					
-			double tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
-			int expirationCount = SimulationController.timeOutQueue.peek().getExpirationCount() + 1;
 			
 			/* Generate the Interest packet again */				
 			InterestPacket timedOutPacket = new InterestPacket(SimulationController.timeOutQueue.peek().getNodeID(),
-					SimulationController.timeOutQueue.peek().getSegmentID(), Arrivals.getInterestPacketSize());
+					Arrivals.getInterestPacketSize(), SimulationController.timeOutQueue.peek().getSegmentID());
 			
+			ArrayList<Double> timeoutValue = CCNRouter.calculateTimeOutValue(SimulationController.timeOutQueue.peek().getNodeID());
+			
+			double tempTimeOutValue = SimulationController.CurrentTime() + timeoutValue.get(1);
+			int expirationCount = SimulationController.timeOutQueue.peek().getExpirationCount() + 1;
+			
+			System.out.println("\nPrimaryInterestID " + SimulationController.timeOutQueue.peek().getPrimaryInterestID());
+			System.out.println("SegmentID " + SimulationController.timeOutQueue.peek().getSegmentID());
+			System.out.println("SegmentID TO " + timedOutPacket.getSegmentId());
 			//Grid.getRouter(SimulationController.timeOutQueue.peek().getNodeID()).decDefaultInterface();
 				
 			timedOutPacket.setRefPacketId(SimulationController.timeOutQueue.peek().getObjectID());
@@ -59,8 +64,32 @@ public class TimeOutProcess extends SimulationProcess {
 				SimulationController.timeOutQueue.peek().getSegmentID(), SimulationController.timeOutQueue.peek().getObjectID(), 
 				SimulationController.timeOutQueue.peek().getNodeID(), expirationCount, tempTimeOutValue, false, 
 				timedOutPacket.getPrevHop()));
-					
-			timedOutPacket.setTimeoutAt(tempTimeOutValue);					
+			/*		
+			try {
+				
+				Writer fs1 = new BufferedWriter(new FileWriter(Packets.getDataDumpFile() + "_IntPktTOHist.txt",true));
+				//fs1.write("\nStatus : " + status+ "\n");
+				fs1.write(timedOutPacket.getPrimaryInterestId() + "\t");
+				fs1.write(timedOutPacket.getPacketId() + "\t");
+				fs1.write(SimulationController.timeOutQueue.peek().getNodeID() + "\t");
+				fs1.write("RC\t");
+				fs1.write(SimulationProcess.CurrentTime() + "\t");
+				fs1.write(tempTimeOutValue + "\t");
+				
+				
+				for(int i = 0; i < Grid.getGridSize(); i++) {			
+					if (!timedOutPacket.sourceBasedRouting.contains(Grid.getRouter(i))) {
+						fs1.write(Grid.getRouter(i).getPacketsQ().packetsInCCNQueue() + "(" + i + ") ");
+					}							
+				}
+				fs1.write("\n");
+				
+				fs1.close();
+			}
+			catch (IOException e){}*/	
+			
+			timedOutPacket.setTimeoutAt(tempTimeOutValue);			
+			timedOutPacket.setPitTimeoutAt(SimulationController.CurrentTime() + timeoutValue.get(0));
 				
 			/*try {
 						
@@ -98,7 +127,9 @@ public class TimeOutProcess extends SimulationProcess {
 			retranmissionPacketCount++;
 						
 			Packets.dumpStatistics(timedOutPacket, "CRTEDTO");
-			timedOutPacket.activate();				
+			timedOutPacket.activate();	
+			
+			timedOutPacket.setProcessingDelayAtNode(Grid.getRouter(timedOutPacket.getCurNode()).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay());
 			//}
 			//else {
 					
