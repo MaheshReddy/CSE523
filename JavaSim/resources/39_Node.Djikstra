@@ -1,0 +1,3042 @@
+shortestPathTable[0][0] = 0;
+Path: [0]
+shortestPathTable[0][1] = 1;
+Path: [0, 1]
+shortestPathTable[0][2] = 2;
+Path: [0, 1, 2]
+shortestPathTable[0][3] = 3;
+Path: [0, 1, 7, 3]
+shortestPathTable[0][4] = 3;
+Path: [0, 6, 5, 4]
+shortestPathTable[0][5] = 2;
+Path: [0, 6, 5]
+shortestPathTable[0][6] = 1;
+Path: [0, 6]
+shortestPathTable[0][7] = 2;
+Path: [0, 1, 7]
+shortestPathTable[0][8] = 1;
+Path: [0, 8]
+shortestPathTable[0][9] = 1;
+Path: [0, 9]
+shortestPathTable[0][10] = 1;
+Path: [0, 10]
+shortestPathTable[0][11] = 1;
+Path: [0, 11]
+shortestPathTable[0][12] = 1;
+Path: [0, 12]
+shortestPathTable[0][13] = 1;
+Path: [0, 13]
+shortestPathTable[0][14] = 2;
+Path: [0, 1, 14]
+shortestPathTable[0][15] = 2;
+Path: [0, 1, 15]
+shortestPathTable[0][16] = 3;
+Path: [0, 1, 2, 16]
+shortestPathTable[0][17] = 3;
+Path: [0, 1, 2, 17]
+shortestPathTable[0][18] = 3;
+Path: [0, 1, 2, 18]
+shortestPathTable[0][19] = 3;
+Path: [0, 1, 2, 19]
+shortestPathTable[0][20] = 3;
+Path: [0, 1, 2, 20]
+shortestPathTable[0][21] = 4;
+Path: [0, 1, 7, 3, 21]
+shortestPathTable[0][22] = 4;
+Path: [0, 1, 7, 3, 22]
+shortestPathTable[0][23] = 4;
+Path: [0, 1, 7, 3, 23]
+shortestPathTable[0][24] = 4;
+Path: [0, 1, 7, 3, 24]
+shortestPathTable[0][25] = 4;
+Path: [0, 1, 7, 3, 25]
+shortestPathTable[0][26] = 4;
+Path: [0, 6, 5, 4, 26]
+shortestPathTable[0][27] = 4;
+Path: [0, 6, 5, 4, 27]
+shortestPathTable[0][28] = 4;
+Path: [0, 6, 5, 4, 28]
+shortestPathTable[0][29] = 3;
+Path: [0, 6, 5, 29]
+shortestPathTable[0][30] = 3;
+Path: [0, 6, 5, 30]
+shortestPathTable[0][31] = 3;
+Path: [0, 6, 5, 31]
+shortestPathTable[0][32] = 3;
+Path: [0, 6, 5, 32]
+shortestPathTable[0][33] = 3;
+Path: [0, 6, 5, 33]
+shortestPathTable[0][34] = 3;
+Path: [0, 6, 5, 34]
+shortestPathTable[0][35] = 3;
+Path: [0, 6, 5, 35]
+shortestPathTable[0][36] = 2;
+Path: [0, 6, 36]
+shortestPathTable[0][37] = 2;
+Path: [0, 6, 37]
+shortestPathTable[0][38] = 2;
+Path: [0, 6, 38]
+shortestPathTable[1][0] = 1;
+Path: [1, 0]
+shortestPathTable[1][1] = 0;
+Path: [1]
+shortestPathTable[1][2] = 1;
+Path: [1, 2]
+shortestPathTable[1][3] = 2;
+Path: [1, 2, 3]
+shortestPathTable[1][4] = 3;
+Path: [1, 7, 5, 4]
+shortestPathTable[1][5] = 2;
+Path: [1, 7, 5]
+shortestPathTable[1][6] = 2;
+Path: [1, 0, 6]
+shortestPathTable[1][7] = 1;
+Path: [1, 7]
+shortestPathTable[1][8] = 2;
+Path: [1, 0, 8]
+shortestPathTable[1][9] = 2;
+Path: [1, 0, 9]
+shortestPathTable[1][10] = 2;
+Path: [1, 0, 10]
+shortestPathTable[1][11] = 2;
+Path: [1, 0, 11]
+shortestPathTable[1][12] = 2;
+Path: [1, 0, 12]
+shortestPathTable[1][13] = 2;
+Path: [1, 0, 13]
+shortestPathTable[1][14] = 1;
+Path: [1, 14]
+shortestPathTable[1][15] = 1;
+Path: [1, 15]
+shortestPathTable[1][16] = 2;
+Path: [1, 2, 16]
+shortestPathTable[1][17] = 2;
+Path: [1, 2, 17]
+shortestPathTable[1][18] = 2;
+Path: [1, 2, 18]
+shortestPathTable[1][19] = 2;
+Path: [1, 2, 19]
+shortestPathTable[1][20] = 2;
+Path: [1, 2, 20]
+shortestPathTable[1][21] = 3;
+Path: [1, 2, 3, 21]
+shortestPathTable[1][22] = 3;
+Path: [1, 2, 3, 22]
+shortestPathTable[1][23] = 3;
+Path: [1, 2, 3, 23]
+shortestPathTable[1][24] = 3;
+Path: [1, 2, 3, 24]
+shortestPathTable[1][25] = 3;
+Path: [1, 2, 3, 25]
+shortestPathTable[1][26] = 4;
+Path: [1, 7, 5, 4, 26]
+shortestPathTable[1][27] = 4;
+Path: [1, 7, 5, 4, 27]
+shortestPathTable[1][28] = 4;
+Path: [1, 7, 5, 4, 28]
+shortestPathTable[1][29] = 3;
+Path: [1, 7, 5, 29]
+shortestPathTable[1][30] = 3;
+Path: [1, 7, 5, 30]
+shortestPathTable[1][31] = 3;
+Path: [1, 7, 5, 31]
+shortestPathTable[1][32] = 3;
+Path: [1, 7, 5, 32]
+shortestPathTable[1][33] = 3;
+Path: [1, 7, 5, 33]
+shortestPathTable[1][34] = 3;
+Path: [1, 7, 5, 34]
+shortestPathTable[1][35] = 3;
+Path: [1, 7, 5, 35]
+shortestPathTable[1][36] = 3;
+Path: [1, 0, 6, 36]
+shortestPathTable[1][37] = 3;
+Path: [1, 0, 6, 37]
+shortestPathTable[1][38] = 3;
+Path: [1, 0, 6, 38]
+shortestPathTable[2][0] = 2;
+Path: [2, 1, 0]
+shortestPathTable[2][1] = 1;
+Path: [2, 1]
+shortestPathTable[2][2] = 0;
+Path: [2]
+shortestPathTable[2][3] = 1;
+Path: [2, 3]
+shortestPathTable[2][4] = 2;
+Path: [2, 3, 4]
+shortestPathTable[2][5] = 3;
+Path: [2, 3, 4, 5]
+shortestPathTable[2][6] = 3;
+Path: [2, 1, 0, 6]
+shortestPathTable[2][7] = 2;
+Path: [2, 1, 7]
+shortestPathTable[2][8] = 3;
+Path: [2, 1, 0, 8]
+shortestPathTable[2][9] = 3;
+Path: [2, 1, 0, 9]
+shortestPathTable[2][10] = 3;
+Path: [2, 1, 0, 10]
+shortestPathTable[2][11] = 3;
+Path: [2, 1, 0, 11]
+shortestPathTable[2][12] = 3;
+Path: [2, 1, 0, 12]
+shortestPathTable[2][13] = 3;
+Path: [2, 1, 0, 13]
+shortestPathTable[2][14] = 2;
+Path: [2, 1, 14]
+shortestPathTable[2][15] = 2;
+Path: [2, 1, 15]
+shortestPathTable[2][16] = 1;
+Path: [2, 16]
+shortestPathTable[2][17] = 1;
+Path: [2, 17]
+shortestPathTable[2][18] = 1;
+Path: [2, 18]
+shortestPathTable[2][19] = 1;
+Path: [2, 19]
+shortestPathTable[2][20] = 1;
+Path: [2, 20]
+shortestPathTable[2][21] = 2;
+Path: [2, 3, 21]
+shortestPathTable[2][22] = 2;
+Path: [2, 3, 22]
+shortestPathTable[2][23] = 2;
+Path: [2, 3, 23]
+shortestPathTable[2][24] = 2;
+Path: [2, 3, 24]
+shortestPathTable[2][25] = 2;
+Path: [2, 3, 25]
+shortestPathTable[2][26] = 3;
+Path: [2, 3, 4, 26]
+shortestPathTable[2][27] = 3;
+Path: [2, 3, 4, 27]
+shortestPathTable[2][28] = 3;
+Path: [2, 3, 4, 28]
+shortestPathTable[2][29] = 4;
+Path: [2, 3, 4, 5, 29]
+shortestPathTable[2][30] = 4;
+Path: [2, 3, 4, 5, 30]
+shortestPathTable[2][31] = 4;
+Path: [2, 3, 4, 5, 31]
+shortestPathTable[2][32] = 4;
+Path: [2, 3, 4, 5, 32]
+shortestPathTable[2][33] = 4;
+Path: [2, 3, 4, 5, 33]
+shortestPathTable[2][34] = 4;
+Path: [2, 3, 4, 5, 34]
+shortestPathTable[2][35] = 4;
+Path: [2, 3, 4, 5, 35]
+shortestPathTable[2][36] = 4;
+Path: [2, 1, 0, 6, 36]
+shortestPathTable[2][37] = 4;
+Path: [2, 1, 0, 6, 37]
+shortestPathTable[2][38] = 4;
+Path: [2, 1, 0, 6, 38]
+shortestPathTable[3][0] = 3;
+Path: [3, 2, 1, 0]
+shortestPathTable[3][1] = 2;
+Path: [3, 2, 1]
+shortestPathTable[3][2] = 1;
+Path: [3, 2]
+shortestPathTable[3][3] = 0;
+Path: [3]
+shortestPathTable[3][4] = 1;
+Path: [3, 4]
+shortestPathTable[3][5] = 2;
+Path: [3, 4, 5]
+shortestPathTable[3][6] = 3;
+Path: [3, 4, 5, 6]
+shortestPathTable[3][7] = 1;
+Path: [3, 7]
+shortestPathTable[3][8] = 4;
+Path: [3, 2, 1, 0, 8]
+shortestPathTable[3][9] = 4;
+Path: [3, 2, 1, 0, 9]
+shortestPathTable[3][10] = 4;
+Path: [3, 2, 1, 0, 10]
+shortestPathTable[3][11] = 4;
+Path: [3, 2, 1, 0, 11]
+shortestPathTable[3][12] = 4;
+Path: [3, 2, 1, 0, 12]
+shortestPathTable[3][13] = 4;
+Path: [3, 2, 1, 0, 13]
+shortestPathTable[3][14] = 3;
+Path: [3, 2, 1, 14]
+shortestPathTable[3][15] = 3;
+Path: [3, 2, 1, 15]
+shortestPathTable[3][16] = 2;
+Path: [3, 2, 16]
+shortestPathTable[3][17] = 2;
+Path: [3, 2, 17]
+shortestPathTable[3][18] = 2;
+Path: [3, 2, 18]
+shortestPathTable[3][19] = 2;
+Path: [3, 2, 19]
+shortestPathTable[3][20] = 2;
+Path: [3, 2, 20]
+shortestPathTable[3][21] = 1;
+Path: [3, 21]
+shortestPathTable[3][22] = 1;
+Path: [3, 22]
+shortestPathTable[3][23] = 1;
+Path: [3, 23]
+shortestPathTable[3][24] = 1;
+Path: [3, 24]
+shortestPathTable[3][25] = 1;
+Path: [3, 25]
+shortestPathTable[3][26] = 2;
+Path: [3, 4, 26]
+shortestPathTable[3][27] = 2;
+Path: [3, 4, 27]
+shortestPathTable[3][28] = 2;
+Path: [3, 4, 28]
+shortestPathTable[3][29] = 3;
+Path: [3, 4, 5, 29]
+shortestPathTable[3][30] = 3;
+Path: [3, 4, 5, 30]
+shortestPathTable[3][31] = 3;
+Path: [3, 4, 5, 31]
+shortestPathTable[3][32] = 3;
+Path: [3, 4, 5, 32]
+shortestPathTable[3][33] = 3;
+Path: [3, 4, 5, 33]
+shortestPathTable[3][34] = 3;
+Path: [3, 4, 5, 34]
+shortestPathTable[3][35] = 3;
+Path: [3, 4, 5, 35]
+shortestPathTable[3][36] = 4;
+Path: [3, 4, 5, 6, 36]
+shortestPathTable[3][37] = 4;
+Path: [3, 4, 5, 6, 37]
+shortestPathTable[3][38] = 4;
+Path: [3, 4, 5, 6, 38]
+shortestPathTable[4][0] = 3;
+Path: [4, 5, 6, 0]
+shortestPathTable[4][1] = 3;
+Path: [4, 3, 2, 1]
+shortestPathTable[4][2] = 2;
+Path: [4, 3, 2]
+shortestPathTable[4][3] = 1;
+Path: [4, 3]
+shortestPathTable[4][4] = 0;
+Path: [4]
+shortestPathTable[4][5] = 1;
+Path: [4, 5]
+shortestPathTable[4][6] = 2;
+Path: [4, 5, 6]
+shortestPathTable[4][7] = 2;
+Path: [4, 3, 7]
+shortestPathTable[4][8] = 4;
+Path: [4, 5, 6, 0, 8]
+shortestPathTable[4][9] = 4;
+Path: [4, 5, 6, 0, 9]
+shortestPathTable[4][10] = 4;
+Path: [4, 5, 6, 0, 10]
+shortestPathTable[4][11] = 4;
+Path: [4, 5, 6, 0, 11]
+shortestPathTable[4][12] = 4;
+Path: [4, 5, 6, 0, 12]
+shortestPathTable[4][13] = 4;
+Path: [4, 5, 6, 0, 13]
+shortestPathTable[4][14] = 4;
+Path: [4, 3, 2, 1, 14]
+shortestPathTable[4][15] = 4;
+Path: [4, 3, 2, 1, 15]
+shortestPathTable[4][16] = 3;
+Path: [4, 3, 2, 16]
+shortestPathTable[4][17] = 3;
+Path: [4, 3, 2, 17]
+shortestPathTable[4][18] = 3;
+Path: [4, 3, 2, 18]
+shortestPathTable[4][19] = 3;
+Path: [4, 3, 2, 19]
+shortestPathTable[4][20] = 3;
+Path: [4, 3, 2, 20]
+shortestPathTable[4][21] = 2;
+Path: [4, 3, 21]
+shortestPathTable[4][22] = 2;
+Path: [4, 3, 22]
+shortestPathTable[4][23] = 2;
+Path: [4, 3, 23]
+shortestPathTable[4][24] = 2;
+Path: [4, 3, 24]
+shortestPathTable[4][25] = 2;
+Path: [4, 3, 25]
+shortestPathTable[4][26] = 1;
+Path: [4, 26]
+shortestPathTable[4][27] = 1;
+Path: [4, 27]
+shortestPathTable[4][28] = 1;
+Path: [4, 28]
+shortestPathTable[4][29] = 2;
+Path: [4, 5, 29]
+shortestPathTable[4][30] = 2;
+Path: [4, 5, 30]
+shortestPathTable[4][31] = 2;
+Path: [4, 5, 31]
+shortestPathTable[4][32] = 2;
+Path: [4, 5, 32]
+shortestPathTable[4][33] = 2;
+Path: [4, 5, 33]
+shortestPathTable[4][34] = 2;
+Path: [4, 5, 34]
+shortestPathTable[4][35] = 2;
+Path: [4, 5, 35]
+shortestPathTable[4][36] = 3;
+Path: [4, 5, 6, 36]
+shortestPathTable[4][37] = 3;
+Path: [4, 5, 6, 37]
+shortestPathTable[4][38] = 3;
+Path: [4, 5, 6, 38]
+shortestPathTable[5][0] = 2;
+Path: [5, 6, 0]
+shortestPathTable[5][1] = 2;
+Path: [5, 7, 1]
+shortestPathTable[5][2] = 3;
+Path: [5, 4, 3, 2]
+shortestPathTable[5][3] = 2;
+Path: [5, 4, 3]
+shortestPathTable[5][4] = 1;
+Path: [5, 4]
+shortestPathTable[5][5] = 0;
+Path: [5]
+shortestPathTable[5][6] = 1;
+Path: [5, 6]
+shortestPathTable[5][7] = 1;
+Path: [5, 7]
+shortestPathTable[5][8] = 3;
+Path: [5, 6, 0, 8]
+shortestPathTable[5][9] = 3;
+Path: [5, 6, 0, 9]
+shortestPathTable[5][10] = 3;
+Path: [5, 6, 0, 10]
+shortestPathTable[5][11] = 3;
+Path: [5, 6, 0, 11]
+shortestPathTable[5][12] = 3;
+Path: [5, 6, 0, 12]
+shortestPathTable[5][13] = 3;
+Path: [5, 6, 0, 13]
+shortestPathTable[5][14] = 3;
+Path: [5, 7, 1, 14]
+shortestPathTable[5][15] = 3;
+Path: [5, 7, 1, 15]
+shortestPathTable[5][16] = 4;
+Path: [5, 4, 3, 2, 16]
+shortestPathTable[5][17] = 4;
+Path: [5, 4, 3, 2, 17]
+shortestPathTable[5][18] = 4;
+Path: [5, 4, 3, 2, 18]
+shortestPathTable[5][19] = 4;
+Path: [5, 4, 3, 2, 19]
+shortestPathTable[5][20] = 4;
+Path: [5, 4, 3, 2, 20]
+shortestPathTable[5][21] = 3;
+Path: [5, 4, 3, 21]
+shortestPathTable[5][22] = 3;
+Path: [5, 4, 3, 22]
+shortestPathTable[5][23] = 3;
+Path: [5, 4, 3, 23]
+shortestPathTable[5][24] = 3;
+Path: [5, 4, 3, 24]
+shortestPathTable[5][25] = 3;
+Path: [5, 4, 3, 25]
+shortestPathTable[5][26] = 2;
+Path: [5, 4, 26]
+shortestPathTable[5][27] = 2;
+Path: [5, 4, 27]
+shortestPathTable[5][28] = 2;
+Path: [5, 4, 28]
+shortestPathTable[5][29] = 1;
+Path: [5, 29]
+shortestPathTable[5][30] = 1;
+Path: [5, 30]
+shortestPathTable[5][31] = 1;
+Path: [5, 31]
+shortestPathTable[5][32] = 1;
+Path: [5, 32]
+shortestPathTable[5][33] = 1;
+Path: [5, 33]
+shortestPathTable[5][34] = 1;
+Path: [5, 34]
+shortestPathTable[5][35] = 1;
+Path: [5, 35]
+shortestPathTable[5][36] = 2;
+Path: [5, 6, 36]
+shortestPathTable[5][37] = 2;
+Path: [5, 6, 37]
+shortestPathTable[5][38] = 2;
+Path: [5, 6, 38]
+shortestPathTable[6][0] = 1;
+Path: [6, 0]
+shortestPathTable[6][1] = 2;
+Path: [6, 0, 1]
+shortestPathTable[6][2] = 3;
+Path: [6, 0, 1, 2]
+shortestPathTable[6][3] = 3;
+Path: [6, 5, 4, 3]
+shortestPathTable[6][4] = 2;
+Path: [6, 5, 4]
+shortestPathTable[6][5] = 1;
+Path: [6, 5]
+shortestPathTable[6][6] = 0;
+Path: [6]
+shortestPathTable[6][7] = 2;
+Path: [6, 5, 7]
+shortestPathTable[6][8] = 2;
+Path: [6, 0, 8]
+shortestPathTable[6][9] = 2;
+Path: [6, 0, 9]
+shortestPathTable[6][10] = 2;
+Path: [6, 0, 10]
+shortestPathTable[6][11] = 2;
+Path: [6, 0, 11]
+shortestPathTable[6][12] = 2;
+Path: [6, 0, 12]
+shortestPathTable[6][13] = 2;
+Path: [6, 0, 13]
+shortestPathTable[6][14] = 3;
+Path: [6, 0, 1, 14]
+shortestPathTable[6][15] = 3;
+Path: [6, 0, 1, 15]
+shortestPathTable[6][16] = 4;
+Path: [6, 0, 1, 2, 16]
+shortestPathTable[6][17] = 4;
+Path: [6, 0, 1, 2, 17]
+shortestPathTable[6][18] = 4;
+Path: [6, 0, 1, 2, 18]
+shortestPathTable[6][19] = 4;
+Path: [6, 0, 1, 2, 19]
+shortestPathTable[6][20] = 4;
+Path: [6, 0, 1, 2, 20]
+shortestPathTable[6][21] = 4;
+Path: [6, 5, 4, 3, 21]
+shortestPathTable[6][22] = 4;
+Path: [6, 5, 4, 3, 22]
+shortestPathTable[6][23] = 4;
+Path: [6, 5, 4, 3, 23]
+shortestPathTable[6][24] = 4;
+Path: [6, 5, 4, 3, 24]
+shortestPathTable[6][25] = 4;
+Path: [6, 5, 4, 3, 25]
+shortestPathTable[6][26] = 3;
+Path: [6, 5, 4, 26]
+shortestPathTable[6][27] = 3;
+Path: [6, 5, 4, 27]
+shortestPathTable[6][28] = 3;
+Path: [6, 5, 4, 28]
+shortestPathTable[6][29] = 2;
+Path: [6, 5, 29]
+shortestPathTable[6][30] = 2;
+Path: [6, 5, 30]
+shortestPathTable[6][31] = 2;
+Path: [6, 5, 31]
+shortestPathTable[6][32] = 2;
+Path: [6, 5, 32]
+shortestPathTable[6][33] = 2;
+Path: [6, 5, 33]
+shortestPathTable[6][34] = 2;
+Path: [6, 5, 34]
+shortestPathTable[6][35] = 2;
+Path: [6, 5, 35]
+shortestPathTable[6][36] = 1;
+Path: [6, 36]
+shortestPathTable[6][37] = 1;
+Path: [6, 37]
+shortestPathTable[6][38] = 1;
+Path: [6, 38]
+shortestPathTable[7][0] = 2;
+Path: [7, 1, 0]
+shortestPathTable[7][1] = 1;
+Path: [7, 1]
+shortestPathTable[7][2] = 2;
+Path: [7, 1, 2]
+shortestPathTable[7][3] = 1;
+Path: [7, 3]
+shortestPathTable[7][4] = 2;
+Path: [7, 5, 4]
+shortestPathTable[7][5] = 1;
+Path: [7, 5]
+shortestPathTable[7][6] = 2;
+Path: [7, 5, 6]
+shortestPathTable[7][7] = 0;
+Path: [7]
+shortestPathTable[7][8] = 3;
+Path: [7, 1, 0, 8]
+shortestPathTable[7][9] = 3;
+Path: [7, 1, 0, 9]
+shortestPathTable[7][10] = 3;
+Path: [7, 1, 0, 10]
+shortestPathTable[7][11] = 3;
+Path: [7, 1, 0, 11]
+shortestPathTable[7][12] = 3;
+Path: [7, 1, 0, 12]
+shortestPathTable[7][13] = 3;
+Path: [7, 1, 0, 13]
+shortestPathTable[7][14] = 2;
+Path: [7, 1, 14]
+shortestPathTable[7][15] = 2;
+Path: [7, 1, 15]
+shortestPathTable[7][16] = 3;
+Path: [7, 1, 2, 16]
+shortestPathTable[7][17] = 3;
+Path: [7, 1, 2, 17]
+shortestPathTable[7][18] = 3;
+Path: [7, 1, 2, 18]
+shortestPathTable[7][19] = 3;
+Path: [7, 1, 2, 19]
+shortestPathTable[7][20] = 3;
+Path: [7, 1, 2, 20]
+shortestPathTable[7][21] = 2;
+Path: [7, 3, 21]
+shortestPathTable[7][22] = 2;
+Path: [7, 3, 22]
+shortestPathTable[7][23] = 2;
+Path: [7, 3, 23]
+shortestPathTable[7][24] = 2;
+Path: [7, 3, 24]
+shortestPathTable[7][25] = 2;
+Path: [7, 3, 25]
+shortestPathTable[7][26] = 3;
+Path: [7, 5, 4, 26]
+shortestPathTable[7][27] = 3;
+Path: [7, 5, 4, 27]
+shortestPathTable[7][28] = 3;
+Path: [7, 5, 4, 28]
+shortestPathTable[7][29] = 2;
+Path: [7, 5, 29]
+shortestPathTable[7][30] = 2;
+Path: [7, 5, 30]
+shortestPathTable[7][31] = 2;
+Path: [7, 5, 31]
+shortestPathTable[7][32] = 2;
+Path: [7, 5, 32]
+shortestPathTable[7][33] = 2;
+Path: [7, 5, 33]
+shortestPathTable[7][34] = 2;
+Path: [7, 5, 34]
+shortestPathTable[7][35] = 2;
+Path: [7, 5, 35]
+shortestPathTable[7][36] = 3;
+Path: [7, 5, 6, 36]
+shortestPathTable[7][37] = 3;
+Path: [7, 5, 6, 37]
+shortestPathTable[7][38] = 3;
+Path: [7, 5, 6, 38]
+shortestPathTable[8][0] = 1;
+Path: [8, 0]
+shortestPathTable[8][1] = 2;
+Path: [8, 0, 1]
+shortestPathTable[8][2] = 3;
+Path: [8, 0, 1, 2]
+shortestPathTable[8][3] = 4;
+Path: [8, 0, 1, 7, 3]
+shortestPathTable[8][4] = 4;
+Path: [8, 0, 6, 5, 4]
+shortestPathTable[8][5] = 3;
+Path: [8, 0, 6, 5]
+shortestPathTable[8][6] = 2;
+Path: [8, 0, 6]
+shortestPathTable[8][7] = 3;
+Path: [8, 0, 1, 7]
+shortestPathTable[8][8] = 0;
+Path: [8]
+shortestPathTable[8][9] = 2;
+Path: [8, 0, 9]
+shortestPathTable[8][10] = 2;
+Path: [8, 0, 10]
+shortestPathTable[8][11] = 2;
+Path: [8, 0, 11]
+shortestPathTable[8][12] = 2;
+Path: [8, 0, 12]
+shortestPathTable[8][13] = 2;
+Path: [8, 0, 13]
+shortestPathTable[8][14] = 3;
+Path: [8, 0, 1, 14]
+shortestPathTable[8][15] = 3;
+Path: [8, 0, 1, 15]
+shortestPathTable[8][16] = 4;
+Path: [8, 0, 1, 2, 16]
+shortestPathTable[8][17] = 4;
+Path: [8, 0, 1, 2, 17]
+shortestPathTable[8][18] = 4;
+Path: [8, 0, 1, 2, 18]
+shortestPathTable[8][19] = 4;
+Path: [8, 0, 1, 2, 19]
+shortestPathTable[8][20] = 4;
+Path: [8, 0, 1, 2, 20]
+shortestPathTable[8][21] = 5;
+Path: [8, 0, 1, 7, 3, 21]
+shortestPathTable[8][22] = 5;
+Path: [8, 0, 1, 7, 3, 22]
+shortestPathTable[8][23] = 5;
+Path: [8, 0, 1, 7, 3, 23]
+shortestPathTable[8][24] = 5;
+Path: [8, 0, 1, 7, 3, 24]
+shortestPathTable[8][25] = 5;
+Path: [8, 0, 1, 7, 3, 25]
+shortestPathTable[8][26] = 5;
+Path: [8, 0, 6, 5, 4, 26]
+shortestPathTable[8][27] = 5;
+Path: [8, 0, 6, 5, 4, 27]
+shortestPathTable[8][28] = 5;
+Path: [8, 0, 6, 5, 4, 28]
+shortestPathTable[8][29] = 4;
+Path: [8, 0, 6, 5, 29]
+shortestPathTable[8][30] = 4;
+Path: [8, 0, 6, 5, 30]
+shortestPathTable[8][31] = 4;
+Path: [8, 0, 6, 5, 31]
+shortestPathTable[8][32] = 4;
+Path: [8, 0, 6, 5, 32]
+shortestPathTable[8][33] = 4;
+Path: [8, 0, 6, 5, 33]
+shortestPathTable[8][34] = 4;
+Path: [8, 0, 6, 5, 34]
+shortestPathTable[8][35] = 4;
+Path: [8, 0, 6, 5, 35]
+shortestPathTable[8][36] = 3;
+Path: [8, 0, 6, 36]
+shortestPathTable[8][37] = 3;
+Path: [8, 0, 6, 37]
+shortestPathTable[8][38] = 3;
+Path: [8, 0, 6, 38]
+shortestPathTable[9][0] = 1;
+Path: [9, 0]
+shortestPathTable[9][1] = 2;
+Path: [9, 0, 1]
+shortestPathTable[9][2] = 3;
+Path: [9, 0, 1, 2]
+shortestPathTable[9][3] = 4;
+Path: [9, 0, 1, 7, 3]
+shortestPathTable[9][4] = 4;
+Path: [9, 0, 6, 5, 4]
+shortestPathTable[9][5] = 3;
+Path: [9, 0, 6, 5]
+shortestPathTable[9][6] = 2;
+Path: [9, 0, 6]
+shortestPathTable[9][7] = 3;
+Path: [9, 0, 1, 7]
+shortestPathTable[9][8] = 2;
+Path: [9, 0, 8]
+shortestPathTable[9][9] = 0;
+Path: [9]
+shortestPathTable[9][10] = 2;
+Path: [9, 0, 10]
+shortestPathTable[9][11] = 2;
+Path: [9, 0, 11]
+shortestPathTable[9][12] = 2;
+Path: [9, 0, 12]
+shortestPathTable[9][13] = 2;
+Path: [9, 0, 13]
+shortestPathTable[9][14] = 3;
+Path: [9, 0, 1, 14]
+shortestPathTable[9][15] = 3;
+Path: [9, 0, 1, 15]
+shortestPathTable[9][16] = 4;
+Path: [9, 0, 1, 2, 16]
+shortestPathTable[9][17] = 4;
+Path: [9, 0, 1, 2, 17]
+shortestPathTable[9][18] = 4;
+Path: [9, 0, 1, 2, 18]
+shortestPathTable[9][19] = 4;
+Path: [9, 0, 1, 2, 19]
+shortestPathTable[9][20] = 4;
+Path: [9, 0, 1, 2, 20]
+shortestPathTable[9][21] = 5;
+Path: [9, 0, 1, 7, 3, 21]
+shortestPathTable[9][22] = 5;
+Path: [9, 0, 1, 7, 3, 22]
+shortestPathTable[9][23] = 5;
+Path: [9, 0, 1, 7, 3, 23]
+shortestPathTable[9][24] = 5;
+Path: [9, 0, 1, 7, 3, 24]
+shortestPathTable[9][25] = 5;
+Path: [9, 0, 1, 7, 3, 25]
+shortestPathTable[9][26] = 5;
+Path: [9, 0, 6, 5, 4, 26]
+shortestPathTable[9][27] = 5;
+Path: [9, 0, 6, 5, 4, 27]
+shortestPathTable[9][28] = 5;
+Path: [9, 0, 6, 5, 4, 28]
+shortestPathTable[9][29] = 4;
+Path: [9, 0, 6, 5, 29]
+shortestPathTable[9][30] = 4;
+Path: [9, 0, 6, 5, 30]
+shortestPathTable[9][31] = 4;
+Path: [9, 0, 6, 5, 31]
+shortestPathTable[9][32] = 4;
+Path: [9, 0, 6, 5, 32]
+shortestPathTable[9][33] = 4;
+Path: [9, 0, 6, 5, 33]
+shortestPathTable[9][34] = 4;
+Path: [9, 0, 6, 5, 34]
+shortestPathTable[9][35] = 4;
+Path: [9, 0, 6, 5, 35]
+shortestPathTable[9][36] = 3;
+Path: [9, 0, 6, 36]
+shortestPathTable[9][37] = 3;
+Path: [9, 0, 6, 37]
+shortestPathTable[9][38] = 3;
+Path: [9, 0, 6, 38]
+shortestPathTable[10][0] = 1;
+Path: [10, 0]
+shortestPathTable[10][1] = 2;
+Path: [10, 0, 1]
+shortestPathTable[10][2] = 3;
+Path: [10, 0, 1, 2]
+shortestPathTable[10][3] = 4;
+Path: [10, 0, 1, 7, 3]
+shortestPathTable[10][4] = 4;
+Path: [10, 0, 6, 5, 4]
+shortestPathTable[10][5] = 3;
+Path: [10, 0, 6, 5]
+shortestPathTable[10][6] = 2;
+Path: [10, 0, 6]
+shortestPathTable[10][7] = 3;
+Path: [10, 0, 1, 7]
+shortestPathTable[10][8] = 2;
+Path: [10, 0, 8]
+shortestPathTable[10][9] = 2;
+Path: [10, 0, 9]
+shortestPathTable[10][10] = 0;
+Path: [10]
+shortestPathTable[10][11] = 2;
+Path: [10, 0, 11]
+shortestPathTable[10][12] = 2;
+Path: [10, 0, 12]
+shortestPathTable[10][13] = 2;
+Path: [10, 0, 13]
+shortestPathTable[10][14] = 3;
+Path: [10, 0, 1, 14]
+shortestPathTable[10][15] = 3;
+Path: [10, 0, 1, 15]
+shortestPathTable[10][16] = 4;
+Path: [10, 0, 1, 2, 16]
+shortestPathTable[10][17] = 4;
+Path: [10, 0, 1, 2, 17]
+shortestPathTable[10][18] = 4;
+Path: [10, 0, 1, 2, 18]
+shortestPathTable[10][19] = 4;
+Path: [10, 0, 1, 2, 19]
+shortestPathTable[10][20] = 4;
+Path: [10, 0, 1, 2, 20]
+shortestPathTable[10][21] = 5;
+Path: [10, 0, 1, 7, 3, 21]
+shortestPathTable[10][22] = 5;
+Path: [10, 0, 1, 7, 3, 22]
+shortestPathTable[10][23] = 5;
+Path: [10, 0, 1, 7, 3, 23]
+shortestPathTable[10][24] = 5;
+Path: [10, 0, 1, 7, 3, 24]
+shortestPathTable[10][25] = 5;
+Path: [10, 0, 1, 7, 3, 25]
+shortestPathTable[10][26] = 5;
+Path: [10, 0, 6, 5, 4, 26]
+shortestPathTable[10][27] = 5;
+Path: [10, 0, 6, 5, 4, 27]
+shortestPathTable[10][28] = 5;
+Path: [10, 0, 6, 5, 4, 28]
+shortestPathTable[10][29] = 4;
+Path: [10, 0, 6, 5, 29]
+shortestPathTable[10][30] = 4;
+Path: [10, 0, 6, 5, 30]
+shortestPathTable[10][31] = 4;
+Path: [10, 0, 6, 5, 31]
+shortestPathTable[10][32] = 4;
+Path: [10, 0, 6, 5, 32]
+shortestPathTable[10][33] = 4;
+Path: [10, 0, 6, 5, 33]
+shortestPathTable[10][34] = 4;
+Path: [10, 0, 6, 5, 34]
+shortestPathTable[10][35] = 4;
+Path: [10, 0, 6, 5, 35]
+shortestPathTable[10][36] = 3;
+Path: [10, 0, 6, 36]
+shortestPathTable[10][37] = 3;
+Path: [10, 0, 6, 37]
+shortestPathTable[10][38] = 3;
+Path: [10, 0, 6, 38]
+shortestPathTable[11][0] = 1;
+Path: [11, 0]
+shortestPathTable[11][1] = 2;
+Path: [11, 0, 1]
+shortestPathTable[11][2] = 3;
+Path: [11, 0, 1, 2]
+shortestPathTable[11][3] = 4;
+Path: [11, 0, 1, 7, 3]
+shortestPathTable[11][4] = 4;
+Path: [11, 0, 6, 5, 4]
+shortestPathTable[11][5] = 3;
+Path: [11, 0, 6, 5]
+shortestPathTable[11][6] = 2;
+Path: [11, 0, 6]
+shortestPathTable[11][7] = 3;
+Path: [11, 0, 1, 7]
+shortestPathTable[11][8] = 2;
+Path: [11, 0, 8]
+shortestPathTable[11][9] = 2;
+Path: [11, 0, 9]
+shortestPathTable[11][10] = 2;
+Path: [11, 0, 10]
+shortestPathTable[11][11] = 0;
+Path: [11]
+shortestPathTable[11][12] = 2;
+Path: [11, 0, 12]
+shortestPathTable[11][13] = 2;
+Path: [11, 0, 13]
+shortestPathTable[11][14] = 3;
+Path: [11, 0, 1, 14]
+shortestPathTable[11][15] = 3;
+Path: [11, 0, 1, 15]
+shortestPathTable[11][16] = 4;
+Path: [11, 0, 1, 2, 16]
+shortestPathTable[11][17] = 4;
+Path: [11, 0, 1, 2, 17]
+shortestPathTable[11][18] = 4;
+Path: [11, 0, 1, 2, 18]
+shortestPathTable[11][19] = 4;
+Path: [11, 0, 1, 2, 19]
+shortestPathTable[11][20] = 4;
+Path: [11, 0, 1, 2, 20]
+shortestPathTable[11][21] = 5;
+Path: [11, 0, 1, 7, 3, 21]
+shortestPathTable[11][22] = 5;
+Path: [11, 0, 1, 7, 3, 22]
+shortestPathTable[11][23] = 5;
+Path: [11, 0, 1, 7, 3, 23]
+shortestPathTable[11][24] = 5;
+Path: [11, 0, 1, 7, 3, 24]
+shortestPathTable[11][25] = 5;
+Path: [11, 0, 1, 7, 3, 25]
+shortestPathTable[11][26] = 5;
+Path: [11, 0, 6, 5, 4, 26]
+shortestPathTable[11][27] = 5;
+Path: [11, 0, 6, 5, 4, 27]
+shortestPathTable[11][28] = 5;
+Path: [11, 0, 6, 5, 4, 28]
+shortestPathTable[11][29] = 4;
+Path: [11, 0, 6, 5, 29]
+shortestPathTable[11][30] = 4;
+Path: [11, 0, 6, 5, 30]
+shortestPathTable[11][31] = 4;
+Path: [11, 0, 6, 5, 31]
+shortestPathTable[11][32] = 4;
+Path: [11, 0, 6, 5, 32]
+shortestPathTable[11][33] = 4;
+Path: [11, 0, 6, 5, 33]
+shortestPathTable[11][34] = 4;
+Path: [11, 0, 6, 5, 34]
+shortestPathTable[11][35] = 4;
+Path: [11, 0, 6, 5, 35]
+shortestPathTable[11][36] = 3;
+Path: [11, 0, 6, 36]
+shortestPathTable[11][37] = 3;
+Path: [11, 0, 6, 37]
+shortestPathTable[11][38] = 3;
+Path: [11, 0, 6, 38]
+shortestPathTable[12][0] = 1;
+Path: [12, 0]
+shortestPathTable[12][1] = 2;
+Path: [12, 0, 1]
+shortestPathTable[12][2] = 3;
+Path: [12, 0, 1, 2]
+shortestPathTable[12][3] = 4;
+Path: [12, 0, 1, 7, 3]
+shortestPathTable[12][4] = 4;
+Path: [12, 0, 6, 5, 4]
+shortestPathTable[12][5] = 3;
+Path: [12, 0, 6, 5]
+shortestPathTable[12][6] = 2;
+Path: [12, 0, 6]
+shortestPathTable[12][7] = 3;
+Path: [12, 0, 1, 7]
+shortestPathTable[12][8] = 2;
+Path: [12, 0, 8]
+shortestPathTable[12][9] = 2;
+Path: [12, 0, 9]
+shortestPathTable[12][10] = 2;
+Path: [12, 0, 10]
+shortestPathTable[12][11] = 2;
+Path: [12, 0, 11]
+shortestPathTable[12][12] = 0;
+Path: [12]
+shortestPathTable[12][13] = 2;
+Path: [12, 0, 13]
+shortestPathTable[12][14] = 3;
+Path: [12, 0, 1, 14]
+shortestPathTable[12][15] = 3;
+Path: [12, 0, 1, 15]
+shortestPathTable[12][16] = 4;
+Path: [12, 0, 1, 2, 16]
+shortestPathTable[12][17] = 4;
+Path: [12, 0, 1, 2, 17]
+shortestPathTable[12][18] = 4;
+Path: [12, 0, 1, 2, 18]
+shortestPathTable[12][19] = 4;
+Path: [12, 0, 1, 2, 19]
+shortestPathTable[12][20] = 4;
+Path: [12, 0, 1, 2, 20]
+shortestPathTable[12][21] = 5;
+Path: [12, 0, 1, 7, 3, 21]
+shortestPathTable[12][22] = 5;
+Path: [12, 0, 1, 7, 3, 22]
+shortestPathTable[12][23] = 5;
+Path: [12, 0, 1, 7, 3, 23]
+shortestPathTable[12][24] = 5;
+Path: [12, 0, 1, 7, 3, 24]
+shortestPathTable[12][25] = 5;
+Path: [12, 0, 1, 7, 3, 25]
+shortestPathTable[12][26] = 5;
+Path: [12, 0, 6, 5, 4, 26]
+shortestPathTable[12][27] = 5;
+Path: [12, 0, 6, 5, 4, 27]
+shortestPathTable[12][28] = 5;
+Path: [12, 0, 6, 5, 4, 28]
+shortestPathTable[12][29] = 4;
+Path: [12, 0, 6, 5, 29]
+shortestPathTable[12][30] = 4;
+Path: [12, 0, 6, 5, 30]
+shortestPathTable[12][31] = 4;
+Path: [12, 0, 6, 5, 31]
+shortestPathTable[12][32] = 4;
+Path: [12, 0, 6, 5, 32]
+shortestPathTable[12][33] = 4;
+Path: [12, 0, 6, 5, 33]
+shortestPathTable[12][34] = 4;
+Path: [12, 0, 6, 5, 34]
+shortestPathTable[12][35] = 4;
+Path: [12, 0, 6, 5, 35]
+shortestPathTable[12][36] = 3;
+Path: [12, 0, 6, 36]
+shortestPathTable[12][37] = 3;
+Path: [12, 0, 6, 37]
+shortestPathTable[12][38] = 3;
+Path: [12, 0, 6, 38]
+shortestPathTable[13][0] = 1;
+Path: [13, 0]
+shortestPathTable[13][1] = 2;
+Path: [13, 0, 1]
+shortestPathTable[13][2] = 3;
+Path: [13, 0, 1, 2]
+shortestPathTable[13][3] = 4;
+Path: [13, 0, 1, 7, 3]
+shortestPathTable[13][4] = 4;
+Path: [13, 0, 6, 5, 4]
+shortestPathTable[13][5] = 3;
+Path: [13, 0, 6, 5]
+shortestPathTable[13][6] = 2;
+Path: [13, 0, 6]
+shortestPathTable[13][7] = 3;
+Path: [13, 0, 1, 7]
+shortestPathTable[13][8] = 2;
+Path: [13, 0, 8]
+shortestPathTable[13][9] = 2;
+Path: [13, 0, 9]
+shortestPathTable[13][10] = 2;
+Path: [13, 0, 10]
+shortestPathTable[13][11] = 2;
+Path: [13, 0, 11]
+shortestPathTable[13][12] = 2;
+Path: [13, 0, 12]
+shortestPathTable[13][13] = 0;
+Path: [13]
+shortestPathTable[13][14] = 3;
+Path: [13, 0, 1, 14]
+shortestPathTable[13][15] = 3;
+Path: [13, 0, 1, 15]
+shortestPathTable[13][16] = 4;
+Path: [13, 0, 1, 2, 16]
+shortestPathTable[13][17] = 4;
+Path: [13, 0, 1, 2, 17]
+shortestPathTable[13][18] = 4;
+Path: [13, 0, 1, 2, 18]
+shortestPathTable[13][19] = 4;
+Path: [13, 0, 1, 2, 19]
+shortestPathTable[13][20] = 4;
+Path: [13, 0, 1, 2, 20]
+shortestPathTable[13][21] = 5;
+Path: [13, 0, 1, 7, 3, 21]
+shortestPathTable[13][22] = 5;
+Path: [13, 0, 1, 7, 3, 22]
+shortestPathTable[13][23] = 5;
+Path: [13, 0, 1, 7, 3, 23]
+shortestPathTable[13][24] = 5;
+Path: [13, 0, 1, 7, 3, 24]
+shortestPathTable[13][25] = 5;
+Path: [13, 0, 1, 7, 3, 25]
+shortestPathTable[13][26] = 5;
+Path: [13, 0, 6, 5, 4, 26]
+shortestPathTable[13][27] = 5;
+Path: [13, 0, 6, 5, 4, 27]
+shortestPathTable[13][28] = 5;
+Path: [13, 0, 6, 5, 4, 28]
+shortestPathTable[13][29] = 4;
+Path: [13, 0, 6, 5, 29]
+shortestPathTable[13][30] = 4;
+Path: [13, 0, 6, 5, 30]
+shortestPathTable[13][31] = 4;
+Path: [13, 0, 6, 5, 31]
+shortestPathTable[13][32] = 4;
+Path: [13, 0, 6, 5, 32]
+shortestPathTable[13][33] = 4;
+Path: [13, 0, 6, 5, 33]
+shortestPathTable[13][34] = 4;
+Path: [13, 0, 6, 5, 34]
+shortestPathTable[13][35] = 4;
+Path: [13, 0, 6, 5, 35]
+shortestPathTable[13][36] = 3;
+Path: [13, 0, 6, 36]
+shortestPathTable[13][37] = 3;
+Path: [13, 0, 6, 37]
+shortestPathTable[13][38] = 3;
+Path: [13, 0, 6, 38]
+shortestPathTable[14][0] = 2;
+Path: [14, 1, 0]
+shortestPathTable[14][1] = 1;
+Path: [14, 1]
+shortestPathTable[14][2] = 2;
+Path: [14, 1, 2]
+shortestPathTable[14][3] = 3;
+Path: [14, 1, 2, 3]
+shortestPathTable[14][4] = 4;
+Path: [14, 1, 7, 5, 4]
+shortestPathTable[14][5] = 3;
+Path: [14, 1, 7, 5]
+shortestPathTable[14][6] = 3;
+Path: [14, 1, 0, 6]
+shortestPathTable[14][7] = 2;
+Path: [14, 1, 7]
+shortestPathTable[14][8] = 3;
+Path: [14, 1, 0, 8]
+shortestPathTable[14][9] = 3;
+Path: [14, 1, 0, 9]
+shortestPathTable[14][10] = 3;
+Path: [14, 1, 0, 10]
+shortestPathTable[14][11] = 3;
+Path: [14, 1, 0, 11]
+shortestPathTable[14][12] = 3;
+Path: [14, 1, 0, 12]
+shortestPathTable[14][13] = 3;
+Path: [14, 1, 0, 13]
+shortestPathTable[14][14] = 0;
+Path: [14]
+shortestPathTable[14][15] = 2;
+Path: [14, 1, 15]
+shortestPathTable[14][16] = 3;
+Path: [14, 1, 2, 16]
+shortestPathTable[14][17] = 3;
+Path: [14, 1, 2, 17]
+shortestPathTable[14][18] = 3;
+Path: [14, 1, 2, 18]
+shortestPathTable[14][19] = 3;
+Path: [14, 1, 2, 19]
+shortestPathTable[14][20] = 3;
+Path: [14, 1, 2, 20]
+shortestPathTable[14][21] = 4;
+Path: [14, 1, 2, 3, 21]
+shortestPathTable[14][22] = 4;
+Path: [14, 1, 2, 3, 22]
+shortestPathTable[14][23] = 4;
+Path: [14, 1, 2, 3, 23]
+shortestPathTable[14][24] = 4;
+Path: [14, 1, 2, 3, 24]
+shortestPathTable[14][25] = 4;
+Path: [14, 1, 2, 3, 25]
+shortestPathTable[14][26] = 5;
+Path: [14, 1, 7, 5, 4, 26]
+shortestPathTable[14][27] = 5;
+Path: [14, 1, 7, 5, 4, 27]
+shortestPathTable[14][28] = 5;
+Path: [14, 1, 7, 5, 4, 28]
+shortestPathTable[14][29] = 4;
+Path: [14, 1, 7, 5, 29]
+shortestPathTable[14][30] = 4;
+Path: [14, 1, 7, 5, 30]
+shortestPathTable[14][31] = 4;
+Path: [14, 1, 7, 5, 31]
+shortestPathTable[14][32] = 4;
+Path: [14, 1, 7, 5, 32]
+shortestPathTable[14][33] = 4;
+Path: [14, 1, 7, 5, 33]
+shortestPathTable[14][34] = 4;
+Path: [14, 1, 7, 5, 34]
+shortestPathTable[14][35] = 4;
+Path: [14, 1, 7, 5, 35]
+shortestPathTable[14][36] = 4;
+Path: [14, 1, 0, 6, 36]
+shortestPathTable[14][37] = 4;
+Path: [14, 1, 0, 6, 37]
+shortestPathTable[14][38] = 4;
+Path: [14, 1, 0, 6, 38]
+shortestPathTable[15][0] = 2;
+Path: [15, 1, 0]
+shortestPathTable[15][1] = 1;
+Path: [15, 1]
+shortestPathTable[15][2] = 2;
+Path: [15, 1, 2]
+shortestPathTable[15][3] = 3;
+Path: [15, 1, 2, 3]
+shortestPathTable[15][4] = 4;
+Path: [15, 1, 7, 5, 4]
+shortestPathTable[15][5] = 3;
+Path: [15, 1, 7, 5]
+shortestPathTable[15][6] = 3;
+Path: [15, 1, 0, 6]
+shortestPathTable[15][7] = 2;
+Path: [15, 1, 7]
+shortestPathTable[15][8] = 3;
+Path: [15, 1, 0, 8]
+shortestPathTable[15][9] = 3;
+Path: [15, 1, 0, 9]
+shortestPathTable[15][10] = 3;
+Path: [15, 1, 0, 10]
+shortestPathTable[15][11] = 3;
+Path: [15, 1, 0, 11]
+shortestPathTable[15][12] = 3;
+Path: [15, 1, 0, 12]
+shortestPathTable[15][13] = 3;
+Path: [15, 1, 0, 13]
+shortestPathTable[15][14] = 2;
+Path: [15, 1, 14]
+shortestPathTable[15][15] = 0;
+Path: [15]
+shortestPathTable[15][16] = 3;
+Path: [15, 1, 2, 16]
+shortestPathTable[15][17] = 3;
+Path: [15, 1, 2, 17]
+shortestPathTable[15][18] = 3;
+Path: [15, 1, 2, 18]
+shortestPathTable[15][19] = 3;
+Path: [15, 1, 2, 19]
+shortestPathTable[15][20] = 3;
+Path: [15, 1, 2, 20]
+shortestPathTable[15][21] = 4;
+Path: [15, 1, 2, 3, 21]
+shortestPathTable[15][22] = 4;
+Path: [15, 1, 2, 3, 22]
+shortestPathTable[15][23] = 4;
+Path: [15, 1, 2, 3, 23]
+shortestPathTable[15][24] = 4;
+Path: [15, 1, 2, 3, 24]
+shortestPathTable[15][25] = 4;
+Path: [15, 1, 2, 3, 25]
+shortestPathTable[15][26] = 5;
+Path: [15, 1, 7, 5, 4, 26]
+shortestPathTable[15][27] = 5;
+Path: [15, 1, 7, 5, 4, 27]
+shortestPathTable[15][28] = 5;
+Path: [15, 1, 7, 5, 4, 28]
+shortestPathTable[15][29] = 4;
+Path: [15, 1, 7, 5, 29]
+shortestPathTable[15][30] = 4;
+Path: [15, 1, 7, 5, 30]
+shortestPathTable[15][31] = 4;
+Path: [15, 1, 7, 5, 31]
+shortestPathTable[15][32] = 4;
+Path: [15, 1, 7, 5, 32]
+shortestPathTable[15][33] = 4;
+Path: [15, 1, 7, 5, 33]
+shortestPathTable[15][34] = 4;
+Path: [15, 1, 7, 5, 34]
+shortestPathTable[15][35] = 4;
+Path: [15, 1, 7, 5, 35]
+shortestPathTable[15][36] = 4;
+Path: [15, 1, 0, 6, 36]
+shortestPathTable[15][37] = 4;
+Path: [15, 1, 0, 6, 37]
+shortestPathTable[15][38] = 4;
+Path: [15, 1, 0, 6, 38]
+shortestPathTable[16][0] = 3;
+Path: [16, 2, 1, 0]
+shortestPathTable[16][1] = 2;
+Path: [16, 2, 1]
+shortestPathTable[16][2] = 1;
+Path: [16, 2]
+shortestPathTable[16][3] = 2;
+Path: [16, 2, 3]
+shortestPathTable[16][4] = 3;
+Path: [16, 2, 3, 4]
+shortestPathTable[16][5] = 4;
+Path: [16, 2, 3, 4, 5]
+shortestPathTable[16][6] = 4;
+Path: [16, 2, 1, 0, 6]
+shortestPathTable[16][7] = 3;
+Path: [16, 2, 1, 7]
+shortestPathTable[16][8] = 4;
+Path: [16, 2, 1, 0, 8]
+shortestPathTable[16][9] = 4;
+Path: [16, 2, 1, 0, 9]
+shortestPathTable[16][10] = 4;
+Path: [16, 2, 1, 0, 10]
+shortestPathTable[16][11] = 4;
+Path: [16, 2, 1, 0, 11]
+shortestPathTable[16][12] = 4;
+Path: [16, 2, 1, 0, 12]
+shortestPathTable[16][13] = 4;
+Path: [16, 2, 1, 0, 13]
+shortestPathTable[16][14] = 3;
+Path: [16, 2, 1, 14]
+shortestPathTable[16][15] = 3;
+Path: [16, 2, 1, 15]
+shortestPathTable[16][16] = 0;
+Path: [16]
+shortestPathTable[16][17] = 2;
+Path: [16, 2, 17]
+shortestPathTable[16][18] = 2;
+Path: [16, 2, 18]
+shortestPathTable[16][19] = 2;
+Path: [16, 2, 19]
+shortestPathTable[16][20] = 2;
+Path: [16, 2, 20]
+shortestPathTable[16][21] = 3;
+Path: [16, 2, 3, 21]
+shortestPathTable[16][22] = 3;
+Path: [16, 2, 3, 22]
+shortestPathTable[16][23] = 3;
+Path: [16, 2, 3, 23]
+shortestPathTable[16][24] = 3;
+Path: [16, 2, 3, 24]
+shortestPathTable[16][25] = 3;
+Path: [16, 2, 3, 25]
+shortestPathTable[16][26] = 4;
+Path: [16, 2, 3, 4, 26]
+shortestPathTable[16][27] = 4;
+Path: [16, 2, 3, 4, 27]
+shortestPathTable[16][28] = 4;
+Path: [16, 2, 3, 4, 28]
+shortestPathTable[16][29] = 5;
+Path: [16, 2, 3, 4, 5, 29]
+shortestPathTable[16][30] = 5;
+Path: [16, 2, 3, 4, 5, 30]
+shortestPathTable[16][31] = 5;
+Path: [16, 2, 3, 4, 5, 31]
+shortestPathTable[16][32] = 5;
+Path: [16, 2, 3, 4, 5, 32]
+shortestPathTable[16][33] = 5;
+Path: [16, 2, 3, 4, 5, 33]
+shortestPathTable[16][34] = 5;
+Path: [16, 2, 3, 4, 5, 34]
+shortestPathTable[16][35] = 5;
+Path: [16, 2, 3, 4, 5, 35]
+shortestPathTable[16][36] = 5;
+Path: [16, 2, 1, 0, 6, 36]
+shortestPathTable[16][37] = 5;
+Path: [16, 2, 1, 0, 6, 37]
+shortestPathTable[16][38] = 5;
+Path: [16, 2, 1, 0, 6, 38]
+shortestPathTable[17][0] = 3;
+Path: [17, 2, 1, 0]
+shortestPathTable[17][1] = 2;
+Path: [17, 2, 1]
+shortestPathTable[17][2] = 1;
+Path: [17, 2]
+shortestPathTable[17][3] = 2;
+Path: [17, 2, 3]
+shortestPathTable[17][4] = 3;
+Path: [17, 2, 3, 4]
+shortestPathTable[17][5] = 4;
+Path: [17, 2, 3, 4, 5]
+shortestPathTable[17][6] = 4;
+Path: [17, 2, 1, 0, 6]
+shortestPathTable[17][7] = 3;
+Path: [17, 2, 1, 7]
+shortestPathTable[17][8] = 4;
+Path: [17, 2, 1, 0, 8]
+shortestPathTable[17][9] = 4;
+Path: [17, 2, 1, 0, 9]
+shortestPathTable[17][10] = 4;
+Path: [17, 2, 1, 0, 10]
+shortestPathTable[17][11] = 4;
+Path: [17, 2, 1, 0, 11]
+shortestPathTable[17][12] = 4;
+Path: [17, 2, 1, 0, 12]
+shortestPathTable[17][13] = 4;
+Path: [17, 2, 1, 0, 13]
+shortestPathTable[17][14] = 3;
+Path: [17, 2, 1, 14]
+shortestPathTable[17][15] = 3;
+Path: [17, 2, 1, 15]
+shortestPathTable[17][16] = 2;
+Path: [17, 2, 16]
+shortestPathTable[17][17] = 0;
+Path: [17]
+shortestPathTable[17][18] = 2;
+Path: [17, 2, 18]
+shortestPathTable[17][19] = 2;
+Path: [17, 2, 19]
+shortestPathTable[17][20] = 2;
+Path: [17, 2, 20]
+shortestPathTable[17][21] = 3;
+Path: [17, 2, 3, 21]
+shortestPathTable[17][22] = 3;
+Path: [17, 2, 3, 22]
+shortestPathTable[17][23] = 3;
+Path: [17, 2, 3, 23]
+shortestPathTable[17][24] = 3;
+Path: [17, 2, 3, 24]
+shortestPathTable[17][25] = 3;
+Path: [17, 2, 3, 25]
+shortestPathTable[17][26] = 4;
+Path: [17, 2, 3, 4, 26]
+shortestPathTable[17][27] = 4;
+Path: [17, 2, 3, 4, 27]
+shortestPathTable[17][28] = 4;
+Path: [17, 2, 3, 4, 28]
+shortestPathTable[17][29] = 5;
+Path: [17, 2, 3, 4, 5, 29]
+shortestPathTable[17][30] = 5;
+Path: [17, 2, 3, 4, 5, 30]
+shortestPathTable[17][31] = 5;
+Path: [17, 2, 3, 4, 5, 31]
+shortestPathTable[17][32] = 5;
+Path: [17, 2, 3, 4, 5, 32]
+shortestPathTable[17][33] = 5;
+Path: [17, 2, 3, 4, 5, 33]
+shortestPathTable[17][34] = 5;
+Path: [17, 2, 3, 4, 5, 34]
+shortestPathTable[17][35] = 5;
+Path: [17, 2, 3, 4, 5, 35]
+shortestPathTable[17][36] = 5;
+Path: [17, 2, 1, 0, 6, 36]
+shortestPathTable[17][37] = 5;
+Path: [17, 2, 1, 0, 6, 37]
+shortestPathTable[17][38] = 5;
+Path: [17, 2, 1, 0, 6, 38]
+shortestPathTable[18][0] = 3;
+Path: [18, 2, 1, 0]
+shortestPathTable[18][1] = 2;
+Path: [18, 2, 1]
+shortestPathTable[18][2] = 1;
+Path: [18, 2]
+shortestPathTable[18][3] = 2;
+Path: [18, 2, 3]
+shortestPathTable[18][4] = 3;
+Path: [18, 2, 3, 4]
+shortestPathTable[18][5] = 4;
+Path: [18, 2, 3, 4, 5]
+shortestPathTable[18][6] = 4;
+Path: [18, 2, 1, 0, 6]
+shortestPathTable[18][7] = 3;
+Path: [18, 2, 1, 7]
+shortestPathTable[18][8] = 4;
+Path: [18, 2, 1, 0, 8]
+shortestPathTable[18][9] = 4;
+Path: [18, 2, 1, 0, 9]
+shortestPathTable[18][10] = 4;
+Path: [18, 2, 1, 0, 10]
+shortestPathTable[18][11] = 4;
+Path: [18, 2, 1, 0, 11]
+shortestPathTable[18][12] = 4;
+Path: [18, 2, 1, 0, 12]
+shortestPathTable[18][13] = 4;
+Path: [18, 2, 1, 0, 13]
+shortestPathTable[18][14] = 3;
+Path: [18, 2, 1, 14]
+shortestPathTable[18][15] = 3;
+Path: [18, 2, 1, 15]
+shortestPathTable[18][16] = 2;
+Path: [18, 2, 16]
+shortestPathTable[18][17] = 2;
+Path: [18, 2, 17]
+shortestPathTable[18][18] = 0;
+Path: [18]
+shortestPathTable[18][19] = 2;
+Path: [18, 2, 19]
+shortestPathTable[18][20] = 2;
+Path: [18, 2, 20]
+shortestPathTable[18][21] = 3;
+Path: [18, 2, 3, 21]
+shortestPathTable[18][22] = 3;
+Path: [18, 2, 3, 22]
+shortestPathTable[18][23] = 3;
+Path: [18, 2, 3, 23]
+shortestPathTable[18][24] = 3;
+Path: [18, 2, 3, 24]
+shortestPathTable[18][25] = 3;
+Path: [18, 2, 3, 25]
+shortestPathTable[18][26] = 4;
+Path: [18, 2, 3, 4, 26]
+shortestPathTable[18][27] = 4;
+Path: [18, 2, 3, 4, 27]
+shortestPathTable[18][28] = 4;
+Path: [18, 2, 3, 4, 28]
+shortestPathTable[18][29] = 5;
+Path: [18, 2, 3, 4, 5, 29]
+shortestPathTable[18][30] = 5;
+Path: [18, 2, 3, 4, 5, 30]
+shortestPathTable[18][31] = 5;
+Path: [18, 2, 3, 4, 5, 31]
+shortestPathTable[18][32] = 5;
+Path: [18, 2, 3, 4, 5, 32]
+shortestPathTable[18][33] = 5;
+Path: [18, 2, 3, 4, 5, 33]
+shortestPathTable[18][34] = 5;
+Path: [18, 2, 3, 4, 5, 34]
+shortestPathTable[18][35] = 5;
+Path: [18, 2, 3, 4, 5, 35]
+shortestPathTable[18][36] = 5;
+Path: [18, 2, 1, 0, 6, 36]
+shortestPathTable[18][37] = 5;
+Path: [18, 2, 1, 0, 6, 37]
+shortestPathTable[18][38] = 5;
+Path: [18, 2, 1, 0, 6, 38]
+shortestPathTable[19][0] = 3;
+Path: [19, 2, 1, 0]
+shortestPathTable[19][1] = 2;
+Path: [19, 2, 1]
+shortestPathTable[19][2] = 1;
+Path: [19, 2]
+shortestPathTable[19][3] = 2;
+Path: [19, 2, 3]
+shortestPathTable[19][4] = 3;
+Path: [19, 2, 3, 4]
+shortestPathTable[19][5] = 4;
+Path: [19, 2, 3, 4, 5]
+shortestPathTable[19][6] = 4;
+Path: [19, 2, 1, 0, 6]
+shortestPathTable[19][7] = 3;
+Path: [19, 2, 1, 7]
+shortestPathTable[19][8] = 4;
+Path: [19, 2, 1, 0, 8]
+shortestPathTable[19][9] = 4;
+Path: [19, 2, 1, 0, 9]
+shortestPathTable[19][10] = 4;
+Path: [19, 2, 1, 0, 10]
+shortestPathTable[19][11] = 4;
+Path: [19, 2, 1, 0, 11]
+shortestPathTable[19][12] = 4;
+Path: [19, 2, 1, 0, 12]
+shortestPathTable[19][13] = 4;
+Path: [19, 2, 1, 0, 13]
+shortestPathTable[19][14] = 3;
+Path: [19, 2, 1, 14]
+shortestPathTable[19][15] = 3;
+Path: [19, 2, 1, 15]
+shortestPathTable[19][16] = 2;
+Path: [19, 2, 16]
+shortestPathTable[19][17] = 2;
+Path: [19, 2, 17]
+shortestPathTable[19][18] = 2;
+Path: [19, 2, 18]
+shortestPathTable[19][19] = 0;
+Path: [19]
+shortestPathTable[19][20] = 2;
+Path: [19, 2, 20]
+shortestPathTable[19][21] = 3;
+Path: [19, 2, 3, 21]
+shortestPathTable[19][22] = 3;
+Path: [19, 2, 3, 22]
+shortestPathTable[19][23] = 3;
+Path: [19, 2, 3, 23]
+shortestPathTable[19][24] = 3;
+Path: [19, 2, 3, 24]
+shortestPathTable[19][25] = 3;
+Path: [19, 2, 3, 25]
+shortestPathTable[19][26] = 4;
+Path: [19, 2, 3, 4, 26]
+shortestPathTable[19][27] = 4;
+Path: [19, 2, 3, 4, 27]
+shortestPathTable[19][28] = 4;
+Path: [19, 2, 3, 4, 28]
+shortestPathTable[19][29] = 5;
+Path: [19, 2, 3, 4, 5, 29]
+shortestPathTable[19][30] = 5;
+Path: [19, 2, 3, 4, 5, 30]
+shortestPathTable[19][31] = 5;
+Path: [19, 2, 3, 4, 5, 31]
+shortestPathTable[19][32] = 5;
+Path: [19, 2, 3, 4, 5, 32]
+shortestPathTable[19][33] = 5;
+Path: [19, 2, 3, 4, 5, 33]
+shortestPathTable[19][34] = 5;
+Path: [19, 2, 3, 4, 5, 34]
+shortestPathTable[19][35] = 5;
+Path: [19, 2, 3, 4, 5, 35]
+shortestPathTable[19][36] = 5;
+Path: [19, 2, 1, 0, 6, 36]
+shortestPathTable[19][37] = 5;
+Path: [19, 2, 1, 0, 6, 37]
+shortestPathTable[19][38] = 5;
+Path: [19, 2, 1, 0, 6, 38]
+shortestPathTable[20][0] = 3;
+Path: [20, 2, 1, 0]
+shortestPathTable[20][1] = 2;
+Path: [20, 2, 1]
+shortestPathTable[20][2] = 1;
+Path: [20, 2]
+shortestPathTable[20][3] = 2;
+Path: [20, 2, 3]
+shortestPathTable[20][4] = 3;
+Path: [20, 2, 3, 4]
+shortestPathTable[20][5] = 4;
+Path: [20, 2, 3, 4, 5]
+shortestPathTable[20][6] = 4;
+Path: [20, 2, 1, 0, 6]
+shortestPathTable[20][7] = 3;
+Path: [20, 2, 1, 7]
+shortestPathTable[20][8] = 4;
+Path: [20, 2, 1, 0, 8]
+shortestPathTable[20][9] = 4;
+Path: [20, 2, 1, 0, 9]
+shortestPathTable[20][10] = 4;
+Path: [20, 2, 1, 0, 10]
+shortestPathTable[20][11] = 4;
+Path: [20, 2, 1, 0, 11]
+shortestPathTable[20][12] = 4;
+Path: [20, 2, 1, 0, 12]
+shortestPathTable[20][13] = 4;
+Path: [20, 2, 1, 0, 13]
+shortestPathTable[20][14] = 3;
+Path: [20, 2, 1, 14]
+shortestPathTable[20][15] = 3;
+Path: [20, 2, 1, 15]
+shortestPathTable[20][16] = 2;
+Path: [20, 2, 16]
+shortestPathTable[20][17] = 2;
+Path: [20, 2, 17]
+shortestPathTable[20][18] = 2;
+Path: [20, 2, 18]
+shortestPathTable[20][19] = 2;
+Path: [20, 2, 19]
+shortestPathTable[20][20] = 0;
+Path: [20]
+shortestPathTable[20][21] = 3;
+Path: [20, 2, 3, 21]
+shortestPathTable[20][22] = 3;
+Path: [20, 2, 3, 22]
+shortestPathTable[20][23] = 3;
+Path: [20, 2, 3, 23]
+shortestPathTable[20][24] = 3;
+Path: [20, 2, 3, 24]
+shortestPathTable[20][25] = 3;
+Path: [20, 2, 3, 25]
+shortestPathTable[20][26] = 4;
+Path: [20, 2, 3, 4, 26]
+shortestPathTable[20][27] = 4;
+Path: [20, 2, 3, 4, 27]
+shortestPathTable[20][28] = 4;
+Path: [20, 2, 3, 4, 28]
+shortestPathTable[20][29] = 5;
+Path: [20, 2, 3, 4, 5, 29]
+shortestPathTable[20][30] = 5;
+Path: [20, 2, 3, 4, 5, 30]
+shortestPathTable[20][31] = 5;
+Path: [20, 2, 3, 4, 5, 31]
+shortestPathTable[20][32] = 5;
+Path: [20, 2, 3, 4, 5, 32]
+shortestPathTable[20][33] = 5;
+Path: [20, 2, 3, 4, 5, 33]
+shortestPathTable[20][34] = 5;
+Path: [20, 2, 3, 4, 5, 34]
+shortestPathTable[20][35] = 5;
+Path: [20, 2, 3, 4, 5, 35]
+shortestPathTable[20][36] = 5;
+Path: [20, 2, 1, 0, 6, 36]
+shortestPathTable[20][37] = 5;
+Path: [20, 2, 1, 0, 6, 37]
+shortestPathTable[20][38] = 5;
+Path: [20, 2, 1, 0, 6, 38]
+shortestPathTable[21][0] = 4;
+Path: [21, 3, 2, 1, 0]
+shortestPathTable[21][1] = 3;
+Path: [21, 3, 2, 1]
+shortestPathTable[21][2] = 2;
+Path: [21, 3, 2]
+shortestPathTable[21][3] = 1;
+Path: [21, 3]
+shortestPathTable[21][4] = 2;
+Path: [21, 3, 4]
+shortestPathTable[21][5] = 3;
+Path: [21, 3, 4, 5]
+shortestPathTable[21][6] = 4;
+Path: [21, 3, 4, 5, 6]
+shortestPathTable[21][7] = 2;
+Path: [21, 3, 7]
+shortestPathTable[21][8] = 5;
+Path: [21, 3, 2, 1, 0, 8]
+shortestPathTable[21][9] = 5;
+Path: [21, 3, 2, 1, 0, 9]
+shortestPathTable[21][10] = 5;
+Path: [21, 3, 2, 1, 0, 10]
+shortestPathTable[21][11] = 5;
+Path: [21, 3, 2, 1, 0, 11]
+shortestPathTable[21][12] = 5;
+Path: [21, 3, 2, 1, 0, 12]
+shortestPathTable[21][13] = 5;
+Path: [21, 3, 2, 1, 0, 13]
+shortestPathTable[21][14] = 4;
+Path: [21, 3, 2, 1, 14]
+shortestPathTable[21][15] = 4;
+Path: [21, 3, 2, 1, 15]
+shortestPathTable[21][16] = 3;
+Path: [21, 3, 2, 16]
+shortestPathTable[21][17] = 3;
+Path: [21, 3, 2, 17]
+shortestPathTable[21][18] = 3;
+Path: [21, 3, 2, 18]
+shortestPathTable[21][19] = 3;
+Path: [21, 3, 2, 19]
+shortestPathTable[21][20] = 3;
+Path: [21, 3, 2, 20]
+shortestPathTable[21][21] = 0;
+Path: [21]
+shortestPathTable[21][22] = 2;
+Path: [21, 3, 22]
+shortestPathTable[21][23] = 2;
+Path: [21, 3, 23]
+shortestPathTable[21][24] = 2;
+Path: [21, 3, 24]
+shortestPathTable[21][25] = 2;
+Path: [21, 3, 25]
+shortestPathTable[21][26] = 3;
+Path: [21, 3, 4, 26]
+shortestPathTable[21][27] = 3;
+Path: [21, 3, 4, 27]
+shortestPathTable[21][28] = 3;
+Path: [21, 3, 4, 28]
+shortestPathTable[21][29] = 4;
+Path: [21, 3, 4, 5, 29]
+shortestPathTable[21][30] = 4;
+Path: [21, 3, 4, 5, 30]
+shortestPathTable[21][31] = 4;
+Path: [21, 3, 4, 5, 31]
+shortestPathTable[21][32] = 4;
+Path: [21, 3, 4, 5, 32]
+shortestPathTable[21][33] = 4;
+Path: [21, 3, 4, 5, 33]
+shortestPathTable[21][34] = 4;
+Path: [21, 3, 4, 5, 34]
+shortestPathTable[21][35] = 4;
+Path: [21, 3, 4, 5, 35]
+shortestPathTable[21][36] = 5;
+Path: [21, 3, 4, 5, 6, 36]
+shortestPathTable[21][37] = 5;
+Path: [21, 3, 4, 5, 6, 37]
+shortestPathTable[21][38] = 5;
+Path: [21, 3, 4, 5, 6, 38]
+shortestPathTable[22][0] = 4;
+Path: [22, 3, 2, 1, 0]
+shortestPathTable[22][1] = 3;
+Path: [22, 3, 2, 1]
+shortestPathTable[22][2] = 2;
+Path: [22, 3, 2]
+shortestPathTable[22][3] = 1;
+Path: [22, 3]
+shortestPathTable[22][4] = 2;
+Path: [22, 3, 4]
+shortestPathTable[22][5] = 3;
+Path: [22, 3, 4, 5]
+shortestPathTable[22][6] = 4;
+Path: [22, 3, 4, 5, 6]
+shortestPathTable[22][7] = 2;
+Path: [22, 3, 7]
+shortestPathTable[22][8] = 5;
+Path: [22, 3, 2, 1, 0, 8]
+shortestPathTable[22][9] = 5;
+Path: [22, 3, 2, 1, 0, 9]
+shortestPathTable[22][10] = 5;
+Path: [22, 3, 2, 1, 0, 10]
+shortestPathTable[22][11] = 5;
+Path: [22, 3, 2, 1, 0, 11]
+shortestPathTable[22][12] = 5;
+Path: [22, 3, 2, 1, 0, 12]
+shortestPathTable[22][13] = 5;
+Path: [22, 3, 2, 1, 0, 13]
+shortestPathTable[22][14] = 4;
+Path: [22, 3, 2, 1, 14]
+shortestPathTable[22][15] = 4;
+Path: [22, 3, 2, 1, 15]
+shortestPathTable[22][16] = 3;
+Path: [22, 3, 2, 16]
+shortestPathTable[22][17] = 3;
+Path: [22, 3, 2, 17]
+shortestPathTable[22][18] = 3;
+Path: [22, 3, 2, 18]
+shortestPathTable[22][19] = 3;
+Path: [22, 3, 2, 19]
+shortestPathTable[22][20] = 3;
+Path: [22, 3, 2, 20]
+shortestPathTable[22][21] = 2;
+Path: [22, 3, 21]
+shortestPathTable[22][22] = 0;
+Path: [22]
+shortestPathTable[22][23] = 2;
+Path: [22, 3, 23]
+shortestPathTable[22][24] = 2;
+Path: [22, 3, 24]
+shortestPathTable[22][25] = 2;
+Path: [22, 3, 25]
+shortestPathTable[22][26] = 3;
+Path: [22, 3, 4, 26]
+shortestPathTable[22][27] = 3;
+Path: [22, 3, 4, 27]
+shortestPathTable[22][28] = 3;
+Path: [22, 3, 4, 28]
+shortestPathTable[22][29] = 4;
+Path: [22, 3, 4, 5, 29]
+shortestPathTable[22][30] = 4;
+Path: [22, 3, 4, 5, 30]
+shortestPathTable[22][31] = 4;
+Path: [22, 3, 4, 5, 31]
+shortestPathTable[22][32] = 4;
+Path: [22, 3, 4, 5, 32]
+shortestPathTable[22][33] = 4;
+Path: [22, 3, 4, 5, 33]
+shortestPathTable[22][34] = 4;
+Path: [22, 3, 4, 5, 34]
+shortestPathTable[22][35] = 4;
+Path: [22, 3, 4, 5, 35]
+shortestPathTable[22][36] = 5;
+Path: [22, 3, 4, 5, 6, 36]
+shortestPathTable[22][37] = 5;
+Path: [22, 3, 4, 5, 6, 37]
+shortestPathTable[22][38] = 5;
+Path: [22, 3, 4, 5, 6, 38]
+shortestPathTable[23][0] = 4;
+Path: [23, 3, 2, 1, 0]
+shortestPathTable[23][1] = 3;
+Path: [23, 3, 2, 1]
+shortestPathTable[23][2] = 2;
+Path: [23, 3, 2]
+shortestPathTable[23][3] = 1;
+Path: [23, 3]
+shortestPathTable[23][4] = 2;
+Path: [23, 3, 4]
+shortestPathTable[23][5] = 3;
+Path: [23, 3, 4, 5]
+shortestPathTable[23][6] = 4;
+Path: [23, 3, 4, 5, 6]
+shortestPathTable[23][7] = 2;
+Path: [23, 3, 7]
+shortestPathTable[23][8] = 5;
+Path: [23, 3, 2, 1, 0, 8]
+shortestPathTable[23][9] = 5;
+Path: [23, 3, 2, 1, 0, 9]
+shortestPathTable[23][10] = 5;
+Path: [23, 3, 2, 1, 0, 10]
+shortestPathTable[23][11] = 5;
+Path: [23, 3, 2, 1, 0, 11]
+shortestPathTable[23][12] = 5;
+Path: [23, 3, 2, 1, 0, 12]
+shortestPathTable[23][13] = 5;
+Path: [23, 3, 2, 1, 0, 13]
+shortestPathTable[23][14] = 4;
+Path: [23, 3, 2, 1, 14]
+shortestPathTable[23][15] = 4;
+Path: [23, 3, 2, 1, 15]
+shortestPathTable[23][16] = 3;
+Path: [23, 3, 2, 16]
+shortestPathTable[23][17] = 3;
+Path: [23, 3, 2, 17]
+shortestPathTable[23][18] = 3;
+Path: [23, 3, 2, 18]
+shortestPathTable[23][19] = 3;
+Path: [23, 3, 2, 19]
+shortestPathTable[23][20] = 3;
+Path: [23, 3, 2, 20]
+shortestPathTable[23][21] = 2;
+Path: [23, 3, 21]
+shortestPathTable[23][22] = 2;
+Path: [23, 3, 22]
+shortestPathTable[23][23] = 0;
+Path: [23]
+shortestPathTable[23][24] = 2;
+Path: [23, 3, 24]
+shortestPathTable[23][25] = 2;
+Path: [23, 3, 25]
+shortestPathTable[23][26] = 3;
+Path: [23, 3, 4, 26]
+shortestPathTable[23][27] = 3;
+Path: [23, 3, 4, 27]
+shortestPathTable[23][28] = 3;
+Path: [23, 3, 4, 28]
+shortestPathTable[23][29] = 4;
+Path: [23, 3, 4, 5, 29]
+shortestPathTable[23][30] = 4;
+Path: [23, 3, 4, 5, 30]
+shortestPathTable[23][31] = 4;
+Path: [23, 3, 4, 5, 31]
+shortestPathTable[23][32] = 4;
+Path: [23, 3, 4, 5, 32]
+shortestPathTable[23][33] = 4;
+Path: [23, 3, 4, 5, 33]
+shortestPathTable[23][34] = 4;
+Path: [23, 3, 4, 5, 34]
+shortestPathTable[23][35] = 4;
+Path: [23, 3, 4, 5, 35]
+shortestPathTable[23][36] = 5;
+Path: [23, 3, 4, 5, 6, 36]
+shortestPathTable[23][37] = 5;
+Path: [23, 3, 4, 5, 6, 37]
+shortestPathTable[23][38] = 5;
+Path: [23, 3, 4, 5, 6, 38]
+shortestPathTable[24][0] = 4;
+Path: [24, 3, 2, 1, 0]
+shortestPathTable[24][1] = 3;
+Path: [24, 3, 2, 1]
+shortestPathTable[24][2] = 2;
+Path: [24, 3, 2]
+shortestPathTable[24][3] = 1;
+Path: [24, 3]
+shortestPathTable[24][4] = 2;
+Path: [24, 3, 4]
+shortestPathTable[24][5] = 3;
+Path: [24, 3, 4, 5]
+shortestPathTable[24][6] = 4;
+Path: [24, 3, 4, 5, 6]
+shortestPathTable[24][7] = 2;
+Path: [24, 3, 7]
+shortestPathTable[24][8] = 5;
+Path: [24, 3, 2, 1, 0, 8]
+shortestPathTable[24][9] = 5;
+Path: [24, 3, 2, 1, 0, 9]
+shortestPathTable[24][10] = 5;
+Path: [24, 3, 2, 1, 0, 10]
+shortestPathTable[24][11] = 5;
+Path: [24, 3, 2, 1, 0, 11]
+shortestPathTable[24][12] = 5;
+Path: [24, 3, 2, 1, 0, 12]
+shortestPathTable[24][13] = 5;
+Path: [24, 3, 2, 1, 0, 13]
+shortestPathTable[24][14] = 4;
+Path: [24, 3, 2, 1, 14]
+shortestPathTable[24][15] = 4;
+Path: [24, 3, 2, 1, 15]
+shortestPathTable[24][16] = 3;
+Path: [24, 3, 2, 16]
+shortestPathTable[24][17] = 3;
+Path: [24, 3, 2, 17]
+shortestPathTable[24][18] = 3;
+Path: [24, 3, 2, 18]
+shortestPathTable[24][19] = 3;
+Path: [24, 3, 2, 19]
+shortestPathTable[24][20] = 3;
+Path: [24, 3, 2, 20]
+shortestPathTable[24][21] = 2;
+Path: [24, 3, 21]
+shortestPathTable[24][22] = 2;
+Path: [24, 3, 22]
+shortestPathTable[24][23] = 2;
+Path: [24, 3, 23]
+shortestPathTable[24][24] = 0;
+Path: [24]
+shortestPathTable[24][25] = 2;
+Path: [24, 3, 25]
+shortestPathTable[24][26] = 3;
+Path: [24, 3, 4, 26]
+shortestPathTable[24][27] = 3;
+Path: [24, 3, 4, 27]
+shortestPathTable[24][28] = 3;
+Path: [24, 3, 4, 28]
+shortestPathTable[24][29] = 4;
+Path: [24, 3, 4, 5, 29]
+shortestPathTable[24][30] = 4;
+Path: [24, 3, 4, 5, 30]
+shortestPathTable[24][31] = 4;
+Path: [24, 3, 4, 5, 31]
+shortestPathTable[24][32] = 4;
+Path: [24, 3, 4, 5, 32]
+shortestPathTable[24][33] = 4;
+Path: [24, 3, 4, 5, 33]
+shortestPathTable[24][34] = 4;
+Path: [24, 3, 4, 5, 34]
+shortestPathTable[24][35] = 4;
+Path: [24, 3, 4, 5, 35]
+shortestPathTable[24][36] = 5;
+Path: [24, 3, 4, 5, 6, 36]
+shortestPathTable[24][37] = 5;
+Path: [24, 3, 4, 5, 6, 37]
+shortestPathTable[24][38] = 5;
+Path: [24, 3, 4, 5, 6, 38]
+shortestPathTable[25][0] = 4;
+Path: [25, 3, 2, 1, 0]
+shortestPathTable[25][1] = 3;
+Path: [25, 3, 2, 1]
+shortestPathTable[25][2] = 2;
+Path: [25, 3, 2]
+shortestPathTable[25][3] = 1;
+Path: [25, 3]
+shortestPathTable[25][4] = 2;
+Path: [25, 3, 4]
+shortestPathTable[25][5] = 3;
+Path: [25, 3, 4, 5]
+shortestPathTable[25][6] = 4;
+Path: [25, 3, 4, 5, 6]
+shortestPathTable[25][7] = 2;
+Path: [25, 3, 7]
+shortestPathTable[25][8] = 5;
+Path: [25, 3, 2, 1, 0, 8]
+shortestPathTable[25][9] = 5;
+Path: [25, 3, 2, 1, 0, 9]
+shortestPathTable[25][10] = 5;
+Path: [25, 3, 2, 1, 0, 10]
+shortestPathTable[25][11] = 5;
+Path: [25, 3, 2, 1, 0, 11]
+shortestPathTable[25][12] = 5;
+Path: [25, 3, 2, 1, 0, 12]
+shortestPathTable[25][13] = 5;
+Path: [25, 3, 2, 1, 0, 13]
+shortestPathTable[25][14] = 4;
+Path: [25, 3, 2, 1, 14]
+shortestPathTable[25][15] = 4;
+Path: [25, 3, 2, 1, 15]
+shortestPathTable[25][16] = 3;
+Path: [25, 3, 2, 16]
+shortestPathTable[25][17] = 3;
+Path: [25, 3, 2, 17]
+shortestPathTable[25][18] = 3;
+Path: [25, 3, 2, 18]
+shortestPathTable[25][19] = 3;
+Path: [25, 3, 2, 19]
+shortestPathTable[25][20] = 3;
+Path: [25, 3, 2, 20]
+shortestPathTable[25][21] = 2;
+Path: [25, 3, 21]
+shortestPathTable[25][22] = 2;
+Path: [25, 3, 22]
+shortestPathTable[25][23] = 2;
+Path: [25, 3, 23]
+shortestPathTable[25][24] = 2;
+Path: [25, 3, 24]
+shortestPathTable[25][25] = 0;
+Path: [25]
+shortestPathTable[25][26] = 3;
+Path: [25, 3, 4, 26]
+shortestPathTable[25][27] = 3;
+Path: [25, 3, 4, 27]
+shortestPathTable[25][28] = 3;
+Path: [25, 3, 4, 28]
+shortestPathTable[25][29] = 4;
+Path: [25, 3, 4, 5, 29]
+shortestPathTable[25][30] = 4;
+Path: [25, 3, 4, 5, 30]
+shortestPathTable[25][31] = 4;
+Path: [25, 3, 4, 5, 31]
+shortestPathTable[25][32] = 4;
+Path: [25, 3, 4, 5, 32]
+shortestPathTable[25][33] = 4;
+Path: [25, 3, 4, 5, 33]
+shortestPathTable[25][34] = 4;
+Path: [25, 3, 4, 5, 34]
+shortestPathTable[25][35] = 4;
+Path: [25, 3, 4, 5, 35]
+shortestPathTable[25][36] = 5;
+Path: [25, 3, 4, 5, 6, 36]
+shortestPathTable[25][37] = 5;
+Path: [25, 3, 4, 5, 6, 37]
+shortestPathTable[25][38] = 5;
+Path: [25, 3, 4, 5, 6, 38]
+shortestPathTable[26][0] = 4;
+Path: [26, 4, 5, 6, 0]
+shortestPathTable[26][1] = 4;
+Path: [26, 4, 3, 2, 1]
+shortestPathTable[26][2] = 3;
+Path: [26, 4, 3, 2]
+shortestPathTable[26][3] = 2;
+Path: [26, 4, 3]
+shortestPathTable[26][4] = 1;
+Path: [26, 4]
+shortestPathTable[26][5] = 2;
+Path: [26, 4, 5]
+shortestPathTable[26][6] = 3;
+Path: [26, 4, 5, 6]
+shortestPathTable[26][7] = 3;
+Path: [26, 4, 3, 7]
+shortestPathTable[26][8] = 5;
+Path: [26, 4, 5, 6, 0, 8]
+shortestPathTable[26][9] = 5;
+Path: [26, 4, 5, 6, 0, 9]
+shortestPathTable[26][10] = 5;
+Path: [26, 4, 5, 6, 0, 10]
+shortestPathTable[26][11] = 5;
+Path: [26, 4, 5, 6, 0, 11]
+shortestPathTable[26][12] = 5;
+Path: [26, 4, 5, 6, 0, 12]
+shortestPathTable[26][13] = 5;
+Path: [26, 4, 5, 6, 0, 13]
+shortestPathTable[26][14] = 5;
+Path: [26, 4, 3, 2, 1, 14]
+shortestPathTable[26][15] = 5;
+Path: [26, 4, 3, 2, 1, 15]
+shortestPathTable[26][16] = 4;
+Path: [26, 4, 3, 2, 16]
+shortestPathTable[26][17] = 4;
+Path: [26, 4, 3, 2, 17]
+shortestPathTable[26][18] = 4;
+Path: [26, 4, 3, 2, 18]
+shortestPathTable[26][19] = 4;
+Path: [26, 4, 3, 2, 19]
+shortestPathTable[26][20] = 4;
+Path: [26, 4, 3, 2, 20]
+shortestPathTable[26][21] = 3;
+Path: [26, 4, 3, 21]
+shortestPathTable[26][22] = 3;
+Path: [26, 4, 3, 22]
+shortestPathTable[26][23] = 3;
+Path: [26, 4, 3, 23]
+shortestPathTable[26][24] = 3;
+Path: [26, 4, 3, 24]
+shortestPathTable[26][25] = 3;
+Path: [26, 4, 3, 25]
+shortestPathTable[26][26] = 0;
+Path: [26]
+shortestPathTable[26][27] = 2;
+Path: [26, 4, 27]
+shortestPathTable[26][28] = 2;
+Path: [26, 4, 28]
+shortestPathTable[26][29] = 3;
+Path: [26, 4, 5, 29]
+shortestPathTable[26][30] = 3;
+Path: [26, 4, 5, 30]
+shortestPathTable[26][31] = 3;
+Path: [26, 4, 5, 31]
+shortestPathTable[26][32] = 3;
+Path: [26, 4, 5, 32]
+shortestPathTable[26][33] = 3;
+Path: [26, 4, 5, 33]
+shortestPathTable[26][34] = 3;
+Path: [26, 4, 5, 34]
+shortestPathTable[26][35] = 3;
+Path: [26, 4, 5, 35]
+shortestPathTable[26][36] = 4;
+Path: [26, 4, 5, 6, 36]
+shortestPathTable[26][37] = 4;
+Path: [26, 4, 5, 6, 37]
+shortestPathTable[26][38] = 4;
+Path: [26, 4, 5, 6, 38]
+shortestPathTable[27][0] = 4;
+Path: [27, 4, 5, 6, 0]
+shortestPathTable[27][1] = 4;
+Path: [27, 4, 3, 2, 1]
+shortestPathTable[27][2] = 3;
+Path: [27, 4, 3, 2]
+shortestPathTable[27][3] = 2;
+Path: [27, 4, 3]
+shortestPathTable[27][4] = 1;
+Path: [27, 4]
+shortestPathTable[27][5] = 2;
+Path: [27, 4, 5]
+shortestPathTable[27][6] = 3;
+Path: [27, 4, 5, 6]
+shortestPathTable[27][7] = 3;
+Path: [27, 4, 3, 7]
+shortestPathTable[27][8] = 5;
+Path: [27, 4, 5, 6, 0, 8]
+shortestPathTable[27][9] = 5;
+Path: [27, 4, 5, 6, 0, 9]
+shortestPathTable[27][10] = 5;
+Path: [27, 4, 5, 6, 0, 10]
+shortestPathTable[27][11] = 5;
+Path: [27, 4, 5, 6, 0, 11]
+shortestPathTable[27][12] = 5;
+Path: [27, 4, 5, 6, 0, 12]
+shortestPathTable[27][13] = 5;
+Path: [27, 4, 5, 6, 0, 13]
+shortestPathTable[27][14] = 5;
+Path: [27, 4, 3, 2, 1, 14]
+shortestPathTable[27][15] = 5;
+Path: [27, 4, 3, 2, 1, 15]
+shortestPathTable[27][16] = 4;
+Path: [27, 4, 3, 2, 16]
+shortestPathTable[27][17] = 4;
+Path: [27, 4, 3, 2, 17]
+shortestPathTable[27][18] = 4;
+Path: [27, 4, 3, 2, 18]
+shortestPathTable[27][19] = 4;
+Path: [27, 4, 3, 2, 19]
+shortestPathTable[27][20] = 4;
+Path: [27, 4, 3, 2, 20]
+shortestPathTable[27][21] = 3;
+Path: [27, 4, 3, 21]
+shortestPathTable[27][22] = 3;
+Path: [27, 4, 3, 22]
+shortestPathTable[27][23] = 3;
+Path: [27, 4, 3, 23]
+shortestPathTable[27][24] = 3;
+Path: [27, 4, 3, 24]
+shortestPathTable[27][25] = 3;
+Path: [27, 4, 3, 25]
+shortestPathTable[27][26] = 2;
+Path: [27, 4, 26]
+shortestPathTable[27][27] = 0;
+Path: [27]
+shortestPathTable[27][28] = 2;
+Path: [27, 4, 28]
+shortestPathTable[27][29] = 3;
+Path: [27, 4, 5, 29]
+shortestPathTable[27][30] = 3;
+Path: [27, 4, 5, 30]
+shortestPathTable[27][31] = 3;
+Path: [27, 4, 5, 31]
+shortestPathTable[27][32] = 3;
+Path: [27, 4, 5, 32]
+shortestPathTable[27][33] = 3;
+Path: [27, 4, 5, 33]
+shortestPathTable[27][34] = 3;
+Path: [27, 4, 5, 34]
+shortestPathTable[27][35] = 3;
+Path: [27, 4, 5, 35]
+shortestPathTable[27][36] = 4;
+Path: [27, 4, 5, 6, 36]
+shortestPathTable[27][37] = 4;
+Path: [27, 4, 5, 6, 37]
+shortestPathTable[27][38] = 4;
+Path: [27, 4, 5, 6, 38]
+shortestPathTable[28][0] = 4;
+Path: [28, 4, 5, 6, 0]
+shortestPathTable[28][1] = 4;
+Path: [28, 4, 3, 2, 1]
+shortestPathTable[28][2] = 3;
+Path: [28, 4, 3, 2]
+shortestPathTable[28][3] = 2;
+Path: [28, 4, 3]
+shortestPathTable[28][4] = 1;
+Path: [28, 4]
+shortestPathTable[28][5] = 2;
+Path: [28, 4, 5]
+shortestPathTable[28][6] = 3;
+Path: [28, 4, 5, 6]
+shortestPathTable[28][7] = 3;
+Path: [28, 4, 3, 7]
+shortestPathTable[28][8] = 5;
+Path: [28, 4, 5, 6, 0, 8]
+shortestPathTable[28][9] = 5;
+Path: [28, 4, 5, 6, 0, 9]
+shortestPathTable[28][10] = 5;
+Path: [28, 4, 5, 6, 0, 10]
+shortestPathTable[28][11] = 5;
+Path: [28, 4, 5, 6, 0, 11]
+shortestPathTable[28][12] = 5;
+Path: [28, 4, 5, 6, 0, 12]
+shortestPathTable[28][13] = 5;
+Path: [28, 4, 5, 6, 0, 13]
+shortestPathTable[28][14] = 5;
+Path: [28, 4, 3, 2, 1, 14]
+shortestPathTable[28][15] = 5;
+Path: [28, 4, 3, 2, 1, 15]
+shortestPathTable[28][16] = 4;
+Path: [28, 4, 3, 2, 16]
+shortestPathTable[28][17] = 4;
+Path: [28, 4, 3, 2, 17]
+shortestPathTable[28][18] = 4;
+Path: [28, 4, 3, 2, 18]
+shortestPathTable[28][19] = 4;
+Path: [28, 4, 3, 2, 19]
+shortestPathTable[28][20] = 4;
+Path: [28, 4, 3, 2, 20]
+shortestPathTable[28][21] = 3;
+Path: [28, 4, 3, 21]
+shortestPathTable[28][22] = 3;
+Path: [28, 4, 3, 22]
+shortestPathTable[28][23] = 3;
+Path: [28, 4, 3, 23]
+shortestPathTable[28][24] = 3;
+Path: [28, 4, 3, 24]
+shortestPathTable[28][25] = 3;
+Path: [28, 4, 3, 25]
+shortestPathTable[28][26] = 2;
+Path: [28, 4, 26]
+shortestPathTable[28][27] = 2;
+Path: [28, 4, 27]
+shortestPathTable[28][28] = 0;
+Path: [28]
+shortestPathTable[28][29] = 3;
+Path: [28, 4, 5, 29]
+shortestPathTable[28][30] = 3;
+Path: [28, 4, 5, 30]
+shortestPathTable[28][31] = 3;
+Path: [28, 4, 5, 31]
+shortestPathTable[28][32] = 3;
+Path: [28, 4, 5, 32]
+shortestPathTable[28][33] = 3;
+Path: [28, 4, 5, 33]
+shortestPathTable[28][34] = 3;
+Path: [28, 4, 5, 34]
+shortestPathTable[28][35] = 3;
+Path: [28, 4, 5, 35]
+shortestPathTable[28][36] = 4;
+Path: [28, 4, 5, 6, 36]
+shortestPathTable[28][37] = 4;
+Path: [28, 4, 5, 6, 37]
+shortestPathTable[28][38] = 4;
+Path: [28, 4, 5, 6, 38]
+shortestPathTable[29][0] = 3;
+Path: [29, 5, 6, 0]
+shortestPathTable[29][1] = 3;
+Path: [29, 5, 7, 1]
+shortestPathTable[29][2] = 4;
+Path: [29, 5, 4, 3, 2]
+shortestPathTable[29][3] = 3;
+Path: [29, 5, 4, 3]
+shortestPathTable[29][4] = 2;
+Path: [29, 5, 4]
+shortestPathTable[29][5] = 1;
+Path: [29, 5]
+shortestPathTable[29][6] = 2;
+Path: [29, 5, 6]
+shortestPathTable[29][7] = 2;
+Path: [29, 5, 7]
+shortestPathTable[29][8] = 4;
+Path: [29, 5, 6, 0, 8]
+shortestPathTable[29][9] = 4;
+Path: [29, 5, 6, 0, 9]
+shortestPathTable[29][10] = 4;
+Path: [29, 5, 6, 0, 10]
+shortestPathTable[29][11] = 4;
+Path: [29, 5, 6, 0, 11]
+shortestPathTable[29][12] = 4;
+Path: [29, 5, 6, 0, 12]
+shortestPathTable[29][13] = 4;
+Path: [29, 5, 6, 0, 13]
+shortestPathTable[29][14] = 4;
+Path: [29, 5, 7, 1, 14]
+shortestPathTable[29][15] = 4;
+Path: [29, 5, 7, 1, 15]
+shortestPathTable[29][16] = 5;
+Path: [29, 5, 4, 3, 2, 16]
+shortestPathTable[29][17] = 5;
+Path: [29, 5, 4, 3, 2, 17]
+shortestPathTable[29][18] = 5;
+Path: [29, 5, 4, 3, 2, 18]
+shortestPathTable[29][19] = 5;
+Path: [29, 5, 4, 3, 2, 19]
+shortestPathTable[29][20] = 5;
+Path: [29, 5, 4, 3, 2, 20]
+shortestPathTable[29][21] = 4;
+Path: [29, 5, 4, 3, 21]
+shortestPathTable[29][22] = 4;
+Path: [29, 5, 4, 3, 22]
+shortestPathTable[29][23] = 4;
+Path: [29, 5, 4, 3, 23]
+shortestPathTable[29][24] = 4;
+Path: [29, 5, 4, 3, 24]
+shortestPathTable[29][25] = 4;
+Path: [29, 5, 4, 3, 25]
+shortestPathTable[29][26] = 3;
+Path: [29, 5, 4, 26]
+shortestPathTable[29][27] = 3;
+Path: [29, 5, 4, 27]
+shortestPathTable[29][28] = 3;
+Path: [29, 5, 4, 28]
+shortestPathTable[29][29] = 0;
+Path: [29]
+shortestPathTable[29][30] = 2;
+Path: [29, 5, 30]
+shortestPathTable[29][31] = 2;
+Path: [29, 5, 31]
+shortestPathTable[29][32] = 2;
+Path: [29, 5, 32]
+shortestPathTable[29][33] = 2;
+Path: [29, 5, 33]
+shortestPathTable[29][34] = 2;
+Path: [29, 5, 34]
+shortestPathTable[29][35] = 2;
+Path: [29, 5, 35]
+shortestPathTable[29][36] = 3;
+Path: [29, 5, 6, 36]
+shortestPathTable[29][37] = 3;
+Path: [29, 5, 6, 37]
+shortestPathTable[29][38] = 3;
+Path: [29, 5, 6, 38]
+shortestPathTable[30][0] = 3;
+Path: [30, 5, 6, 0]
+shortestPathTable[30][1] = 3;
+Path: [30, 5, 7, 1]
+shortestPathTable[30][2] = 4;
+Path: [30, 5, 4, 3, 2]
+shortestPathTable[30][3] = 3;
+Path: [30, 5, 4, 3]
+shortestPathTable[30][4] = 2;
+Path: [30, 5, 4]
+shortestPathTable[30][5] = 1;
+Path: [30, 5]
+shortestPathTable[30][6] = 2;
+Path: [30, 5, 6]
+shortestPathTable[30][7] = 2;
+Path: [30, 5, 7]
+shortestPathTable[30][8] = 4;
+Path: [30, 5, 6, 0, 8]
+shortestPathTable[30][9] = 4;
+Path: [30, 5, 6, 0, 9]
+shortestPathTable[30][10] = 4;
+Path: [30, 5, 6, 0, 10]
+shortestPathTable[30][11] = 4;
+Path: [30, 5, 6, 0, 11]
+shortestPathTable[30][12] = 4;
+Path: [30, 5, 6, 0, 12]
+shortestPathTable[30][13] = 4;
+Path: [30, 5, 6, 0, 13]
+shortestPathTable[30][14] = 4;
+Path: [30, 5, 7, 1, 14]
+shortestPathTable[30][15] = 4;
+Path: [30, 5, 7, 1, 15]
+shortestPathTable[30][16] = 5;
+Path: [30, 5, 4, 3, 2, 16]
+shortestPathTable[30][17] = 5;
+Path: [30, 5, 4, 3, 2, 17]
+shortestPathTable[30][18] = 5;
+Path: [30, 5, 4, 3, 2, 18]
+shortestPathTable[30][19] = 5;
+Path: [30, 5, 4, 3, 2, 19]
+shortestPathTable[30][20] = 5;
+Path: [30, 5, 4, 3, 2, 20]
+shortestPathTable[30][21] = 4;
+Path: [30, 5, 4, 3, 21]
+shortestPathTable[30][22] = 4;
+Path: [30, 5, 4, 3, 22]
+shortestPathTable[30][23] = 4;
+Path: [30, 5, 4, 3, 23]
+shortestPathTable[30][24] = 4;
+Path: [30, 5, 4, 3, 24]
+shortestPathTable[30][25] = 4;
+Path: [30, 5, 4, 3, 25]
+shortestPathTable[30][26] = 3;
+Path: [30, 5, 4, 26]
+shortestPathTable[30][27] = 3;
+Path: [30, 5, 4, 27]
+shortestPathTable[30][28] = 3;
+Path: [30, 5, 4, 28]
+shortestPathTable[30][29] = 2;
+Path: [30, 5, 29]
+shortestPathTable[30][30] = 0;
+Path: [30]
+shortestPathTable[30][31] = 2;
+Path: [30, 5, 31]
+shortestPathTable[30][32] = 2;
+Path: [30, 5, 32]
+shortestPathTable[30][33] = 2;
+Path: [30, 5, 33]
+shortestPathTable[30][34] = 2;
+Path: [30, 5, 34]
+shortestPathTable[30][35] = 2;
+Path: [30, 5, 35]
+shortestPathTable[30][36] = 3;
+Path: [30, 5, 6, 36]
+shortestPathTable[30][37] = 3;
+Path: [30, 5, 6, 37]
+shortestPathTable[30][38] = 3;
+Path: [30, 5, 6, 38]
+shortestPathTable[31][0] = 3;
+Path: [31, 5, 6, 0]
+shortestPathTable[31][1] = 3;
+Path: [31, 5, 7, 1]
+shortestPathTable[31][2] = 4;
+Path: [31, 5, 4, 3, 2]
+shortestPathTable[31][3] = 3;
+Path: [31, 5, 4, 3]
+shortestPathTable[31][4] = 2;
+Path: [31, 5, 4]
+shortestPathTable[31][5] = 1;
+Path: [31, 5]
+shortestPathTable[31][6] = 2;
+Path: [31, 5, 6]
+shortestPathTable[31][7] = 2;
+Path: [31, 5, 7]
+shortestPathTable[31][8] = 4;
+Path: [31, 5, 6, 0, 8]
+shortestPathTable[31][9] = 4;
+Path: [31, 5, 6, 0, 9]
+shortestPathTable[31][10] = 4;
+Path: [31, 5, 6, 0, 10]
+shortestPathTable[31][11] = 4;
+Path: [31, 5, 6, 0, 11]
+shortestPathTable[31][12] = 4;
+Path: [31, 5, 6, 0, 12]
+shortestPathTable[31][13] = 4;
+Path: [31, 5, 6, 0, 13]
+shortestPathTable[31][14] = 4;
+Path: [31, 5, 7, 1, 14]
+shortestPathTable[31][15] = 4;
+Path: [31, 5, 7, 1, 15]
+shortestPathTable[31][16] = 5;
+Path: [31, 5, 4, 3, 2, 16]
+shortestPathTable[31][17] = 5;
+Path: [31, 5, 4, 3, 2, 17]
+shortestPathTable[31][18] = 5;
+Path: [31, 5, 4, 3, 2, 18]
+shortestPathTable[31][19] = 5;
+Path: [31, 5, 4, 3, 2, 19]
+shortestPathTable[31][20] = 5;
+Path: [31, 5, 4, 3, 2, 20]
+shortestPathTable[31][21] = 4;
+Path: [31, 5, 4, 3, 21]
+shortestPathTable[31][22] = 4;
+Path: [31, 5, 4, 3, 22]
+shortestPathTable[31][23] = 4;
+Path: [31, 5, 4, 3, 23]
+shortestPathTable[31][24] = 4;
+Path: [31, 5, 4, 3, 24]
+shortestPathTable[31][25] = 4;
+Path: [31, 5, 4, 3, 25]
+shortestPathTable[31][26] = 3;
+Path: [31, 5, 4, 26]
+shortestPathTable[31][27] = 3;
+Path: [31, 5, 4, 27]
+shortestPathTable[31][28] = 3;
+Path: [31, 5, 4, 28]
+shortestPathTable[31][29] = 2;
+Path: [31, 5, 29]
+shortestPathTable[31][30] = 2;
+Path: [31, 5, 30]
+shortestPathTable[31][31] = 0;
+Path: [31]
+shortestPathTable[31][32] = 2;
+Path: [31, 5, 32]
+shortestPathTable[31][33] = 2;
+Path: [31, 5, 33]
+shortestPathTable[31][34] = 2;
+Path: [31, 5, 34]
+shortestPathTable[31][35] = 2;
+Path: [31, 5, 35]
+shortestPathTable[31][36] = 3;
+Path: [31, 5, 6, 36]
+shortestPathTable[31][37] = 3;
+Path: [31, 5, 6, 37]
+shortestPathTable[31][38] = 3;
+Path: [31, 5, 6, 38]
+shortestPathTable[32][0] = 3;
+Path: [32, 5, 6, 0]
+shortestPathTable[32][1] = 3;
+Path: [32, 5, 7, 1]
+shortestPathTable[32][2] = 4;
+Path: [32, 5, 4, 3, 2]
+shortestPathTable[32][3] = 3;
+Path: [32, 5, 4, 3]
+shortestPathTable[32][4] = 2;
+Path: [32, 5, 4]
+shortestPathTable[32][5] = 1;
+Path: [32, 5]
+shortestPathTable[32][6] = 2;
+Path: [32, 5, 6]
+shortestPathTable[32][7] = 2;
+Path: [32, 5, 7]
+shortestPathTable[32][8] = 4;
+Path: [32, 5, 6, 0, 8]
+shortestPathTable[32][9] = 4;
+Path: [32, 5, 6, 0, 9]
+shortestPathTable[32][10] = 4;
+Path: [32, 5, 6, 0, 10]
+shortestPathTable[32][11] = 4;
+Path: [32, 5, 6, 0, 11]
+shortestPathTable[32][12] = 4;
+Path: [32, 5, 6, 0, 12]
+shortestPathTable[32][13] = 4;
+Path: [32, 5, 6, 0, 13]
+shortestPathTable[32][14] = 4;
+Path: [32, 5, 7, 1, 14]
+shortestPathTable[32][15] = 4;
+Path: [32, 5, 7, 1, 15]
+shortestPathTable[32][16] = 5;
+Path: [32, 5, 4, 3, 2, 16]
+shortestPathTable[32][17] = 5;
+Path: [32, 5, 4, 3, 2, 17]
+shortestPathTable[32][18] = 5;
+Path: [32, 5, 4, 3, 2, 18]
+shortestPathTable[32][19] = 5;
+Path: [32, 5, 4, 3, 2, 19]
+shortestPathTable[32][20] = 5;
+Path: [32, 5, 4, 3, 2, 20]
+shortestPathTable[32][21] = 4;
+Path: [32, 5, 4, 3, 21]
+shortestPathTable[32][22] = 4;
+Path: [32, 5, 4, 3, 22]
+shortestPathTable[32][23] = 4;
+Path: [32, 5, 4, 3, 23]
+shortestPathTable[32][24] = 4;
+Path: [32, 5, 4, 3, 24]
+shortestPathTable[32][25] = 4;
+Path: [32, 5, 4, 3, 25]
+shortestPathTable[32][26] = 3;
+Path: [32, 5, 4, 26]
+shortestPathTable[32][27] = 3;
+Path: [32, 5, 4, 27]
+shortestPathTable[32][28] = 3;
+Path: [32, 5, 4, 28]
+shortestPathTable[32][29] = 2;
+Path: [32, 5, 29]
+shortestPathTable[32][30] = 2;
+Path: [32, 5, 30]
+shortestPathTable[32][31] = 2;
+Path: [32, 5, 31]
+shortestPathTable[32][32] = 0;
+Path: [32]
+shortestPathTable[32][33] = 2;
+Path: [32, 5, 33]
+shortestPathTable[32][34] = 2;
+Path: [32, 5, 34]
+shortestPathTable[32][35] = 2;
+Path: [32, 5, 35]
+shortestPathTable[32][36] = 3;
+Path: [32, 5, 6, 36]
+shortestPathTable[32][37] = 3;
+Path: [32, 5, 6, 37]
+shortestPathTable[32][38] = 3;
+Path: [32, 5, 6, 38]
+shortestPathTable[33][0] = 3;
+Path: [33, 5, 6, 0]
+shortestPathTable[33][1] = 3;
+Path: [33, 5, 7, 1]
+shortestPathTable[33][2] = 4;
+Path: [33, 5, 4, 3, 2]
+shortestPathTable[33][3] = 3;
+Path: [33, 5, 4, 3]
+shortestPathTable[33][4] = 2;
+Path: [33, 5, 4]
+shortestPathTable[33][5] = 1;
+Path: [33, 5]
+shortestPathTable[33][6] = 2;
+Path: [33, 5, 6]
+shortestPathTable[33][7] = 2;
+Path: [33, 5, 7]
+shortestPathTable[33][8] = 4;
+Path: [33, 5, 6, 0, 8]
+shortestPathTable[33][9] = 4;
+Path: [33, 5, 6, 0, 9]
+shortestPathTable[33][10] = 4;
+Path: [33, 5, 6, 0, 10]
+shortestPathTable[33][11] = 4;
+Path: [33, 5, 6, 0, 11]
+shortestPathTable[33][12] = 4;
+Path: [33, 5, 6, 0, 12]
+shortestPathTable[33][13] = 4;
+Path: [33, 5, 6, 0, 13]
+shortestPathTable[33][14] = 4;
+Path: [33, 5, 7, 1, 14]
+shortestPathTable[33][15] = 4;
+Path: [33, 5, 7, 1, 15]
+shortestPathTable[33][16] = 5;
+Path: [33, 5, 4, 3, 2, 16]
+shortestPathTable[33][17] = 5;
+Path: [33, 5, 4, 3, 2, 17]
+shortestPathTable[33][18] = 5;
+Path: [33, 5, 4, 3, 2, 18]
+shortestPathTable[33][19] = 5;
+Path: [33, 5, 4, 3, 2, 19]
+shortestPathTable[33][20] = 5;
+Path: [33, 5, 4, 3, 2, 20]
+shortestPathTable[33][21] = 4;
+Path: [33, 5, 4, 3, 21]
+shortestPathTable[33][22] = 4;
+Path: [33, 5, 4, 3, 22]
+shortestPathTable[33][23] = 4;
+Path: [33, 5, 4, 3, 23]
+shortestPathTable[33][24] = 4;
+Path: [33, 5, 4, 3, 24]
+shortestPathTable[33][25] = 4;
+Path: [33, 5, 4, 3, 25]
+shortestPathTable[33][26] = 3;
+Path: [33, 5, 4, 26]
+shortestPathTable[33][27] = 3;
+Path: [33, 5, 4, 27]
+shortestPathTable[33][28] = 3;
+Path: [33, 5, 4, 28]
+shortestPathTable[33][29] = 2;
+Path: [33, 5, 29]
+shortestPathTable[33][30] = 2;
+Path: [33, 5, 30]
+shortestPathTable[33][31] = 2;
+Path: [33, 5, 31]
+shortestPathTable[33][32] = 2;
+Path: [33, 5, 32]
+shortestPathTable[33][33] = 0;
+Path: [33]
+shortestPathTable[33][34] = 2;
+Path: [33, 5, 34]
+shortestPathTable[33][35] = 2;
+Path: [33, 5, 35]
+shortestPathTable[33][36] = 3;
+Path: [33, 5, 6, 36]
+shortestPathTable[33][37] = 3;
+Path: [33, 5, 6, 37]
+shortestPathTable[33][38] = 3;
+Path: [33, 5, 6, 38]
+shortestPathTable[34][0] = 3;
+Path: [34, 5, 6, 0]
+shortestPathTable[34][1] = 3;
+Path: [34, 5, 7, 1]
+shortestPathTable[34][2] = 4;
+Path: [34, 5, 4, 3, 2]
+shortestPathTable[34][3] = 3;
+Path: [34, 5, 4, 3]
+shortestPathTable[34][4] = 2;
+Path: [34, 5, 4]
+shortestPathTable[34][5] = 1;
+Path: [34, 5]
+shortestPathTable[34][6] = 2;
+Path: [34, 5, 6]
+shortestPathTable[34][7] = 2;
+Path: [34, 5, 7]
+shortestPathTable[34][8] = 4;
+Path: [34, 5, 6, 0, 8]
+shortestPathTable[34][9] = 4;
+Path: [34, 5, 6, 0, 9]
+shortestPathTable[34][10] = 4;
+Path: [34, 5, 6, 0, 10]
+shortestPathTable[34][11] = 4;
+Path: [34, 5, 6, 0, 11]
+shortestPathTable[34][12] = 4;
+Path: [34, 5, 6, 0, 12]
+shortestPathTable[34][13] = 4;
+Path: [34, 5, 6, 0, 13]
+shortestPathTable[34][14] = 4;
+Path: [34, 5, 7, 1, 14]
+shortestPathTable[34][15] = 4;
+Path: [34, 5, 7, 1, 15]
+shortestPathTable[34][16] = 5;
+Path: [34, 5, 4, 3, 2, 16]
+shortestPathTable[34][17] = 5;
+Path: [34, 5, 4, 3, 2, 17]
+shortestPathTable[34][18] = 5;
+Path: [34, 5, 4, 3, 2, 18]
+shortestPathTable[34][19] = 5;
+Path: [34, 5, 4, 3, 2, 19]
+shortestPathTable[34][20] = 5;
+Path: [34, 5, 4, 3, 2, 20]
+shortestPathTable[34][21] = 4;
+Path: [34, 5, 4, 3, 21]
+shortestPathTable[34][22] = 4;
+Path: [34, 5, 4, 3, 22]
+shortestPathTable[34][23] = 4;
+Path: [34, 5, 4, 3, 23]
+shortestPathTable[34][24] = 4;
+Path: [34, 5, 4, 3, 24]
+shortestPathTable[34][25] = 4;
+Path: [34, 5, 4, 3, 25]
+shortestPathTable[34][26] = 3;
+Path: [34, 5, 4, 26]
+shortestPathTable[34][27] = 3;
+Path: [34, 5, 4, 27]
+shortestPathTable[34][28] = 3;
+Path: [34, 5, 4, 28]
+shortestPathTable[34][29] = 2;
+Path: [34, 5, 29]
+shortestPathTable[34][30] = 2;
+Path: [34, 5, 30]
+shortestPathTable[34][31] = 2;
+Path: [34, 5, 31]
+shortestPathTable[34][32] = 2;
+Path: [34, 5, 32]
+shortestPathTable[34][33] = 2;
+Path: [34, 5, 33]
+shortestPathTable[34][34] = 0;
+Path: [34]
+shortestPathTable[34][35] = 2;
+Path: [34, 5, 35]
+shortestPathTable[34][36] = 3;
+Path: [34, 5, 6, 36]
+shortestPathTable[34][37] = 3;
+Path: [34, 5, 6, 37]
+shortestPathTable[34][38] = 3;
+Path: [34, 5, 6, 38]
+shortestPathTable[35][0] = 3;
+Path: [35, 5, 6, 0]
+shortestPathTable[35][1] = 3;
+Path: [35, 5, 7, 1]
+shortestPathTable[35][2] = 4;
+Path: [35, 5, 4, 3, 2]
+shortestPathTable[35][3] = 3;
+Path: [35, 5, 4, 3]
+shortestPathTable[35][4] = 2;
+Path: [35, 5, 4]
+shortestPathTable[35][5] = 1;
+Path: [35, 5]
+shortestPathTable[35][6] = 2;
+Path: [35, 5, 6]
+shortestPathTable[35][7] = 2;
+Path: [35, 5, 7]
+shortestPathTable[35][8] = 4;
+Path: [35, 5, 6, 0, 8]
+shortestPathTable[35][9] = 4;
+Path: [35, 5, 6, 0, 9]
+shortestPathTable[35][10] = 4;
+Path: [35, 5, 6, 0, 10]
+shortestPathTable[35][11] = 4;
+Path: [35, 5, 6, 0, 11]
+shortestPathTable[35][12] = 4;
+Path: [35, 5, 6, 0, 12]
+shortestPathTable[35][13] = 4;
+Path: [35, 5, 6, 0, 13]
+shortestPathTable[35][14] = 4;
+Path: [35, 5, 7, 1, 14]
+shortestPathTable[35][15] = 4;
+Path: [35, 5, 7, 1, 15]
+shortestPathTable[35][16] = 5;
+Path: [35, 5, 4, 3, 2, 16]
+shortestPathTable[35][17] = 5;
+Path: [35, 5, 4, 3, 2, 17]
+shortestPathTable[35][18] = 5;
+Path: [35, 5, 4, 3, 2, 18]
+shortestPathTable[35][19] = 5;
+Path: [35, 5, 4, 3, 2, 19]
+shortestPathTable[35][20] = 5;
+Path: [35, 5, 4, 3, 2, 20]
+shortestPathTable[35][21] = 4;
+Path: [35, 5, 4, 3, 21]
+shortestPathTable[35][22] = 4;
+Path: [35, 5, 4, 3, 22]
+shortestPathTable[35][23] = 4;
+Path: [35, 5, 4, 3, 23]
+shortestPathTable[35][24] = 4;
+Path: [35, 5, 4, 3, 24]
+shortestPathTable[35][25] = 4;
+Path: [35, 5, 4, 3, 25]
+shortestPathTable[35][26] = 3;
+Path: [35, 5, 4, 26]
+shortestPathTable[35][27] = 3;
+Path: [35, 5, 4, 27]
+shortestPathTable[35][28] = 3;
+Path: [35, 5, 4, 28]
+shortestPathTable[35][29] = 2;
+Path: [35, 5, 29]
+shortestPathTable[35][30] = 2;
+Path: [35, 5, 30]
+shortestPathTable[35][31] = 2;
+Path: [35, 5, 31]
+shortestPathTable[35][32] = 2;
+Path: [35, 5, 32]
+shortestPathTable[35][33] = 2;
+Path: [35, 5, 33]
+shortestPathTable[35][34] = 2;
+Path: [35, 5, 34]
+shortestPathTable[35][35] = 0;
+Path: [35]
+shortestPathTable[35][36] = 3;
+Path: [35, 5, 6, 36]
+shortestPathTable[35][37] = 3;
+Path: [35, 5, 6, 37]
+shortestPathTable[35][38] = 3;
+Path: [35, 5, 6, 38]
+shortestPathTable[36][0] = 2;
+Path: [36, 6, 0]
+shortestPathTable[36][1] = 3;
+Path: [36, 6, 0, 1]
+shortestPathTable[36][2] = 4;
+Path: [36, 6, 0, 1, 2]
+shortestPathTable[36][3] = 4;
+Path: [36, 6, 5, 4, 3]
+shortestPathTable[36][4] = 3;
+Path: [36, 6, 5, 4]
+shortestPathTable[36][5] = 2;
+Path: [36, 6, 5]
+shortestPathTable[36][6] = 1;
+Path: [36, 6]
+shortestPathTable[36][7] = 3;
+Path: [36, 6, 5, 7]
+shortestPathTable[36][8] = 3;
+Path: [36, 6, 0, 8]
+shortestPathTable[36][9] = 3;
+Path: [36, 6, 0, 9]
+shortestPathTable[36][10] = 3;
+Path: [36, 6, 0, 10]
+shortestPathTable[36][11] = 3;
+Path: [36, 6, 0, 11]
+shortestPathTable[36][12] = 3;
+Path: [36, 6, 0, 12]
+shortestPathTable[36][13] = 3;
+Path: [36, 6, 0, 13]
+shortestPathTable[36][14] = 4;
+Path: [36, 6, 0, 1, 14]
+shortestPathTable[36][15] = 4;
+Path: [36, 6, 0, 1, 15]
+shortestPathTable[36][16] = 5;
+Path: [36, 6, 0, 1, 2, 16]
+shortestPathTable[36][17] = 5;
+Path: [36, 6, 0, 1, 2, 17]
+shortestPathTable[36][18] = 5;
+Path: [36, 6, 0, 1, 2, 18]
+shortestPathTable[36][19] = 5;
+Path: [36, 6, 0, 1, 2, 19]
+shortestPathTable[36][20] = 5;
+Path: [36, 6, 0, 1, 2, 20]
+shortestPathTable[36][21] = 5;
+Path: [36, 6, 5, 4, 3, 21]
+shortestPathTable[36][22] = 5;
+Path: [36, 6, 5, 4, 3, 22]
+shortestPathTable[36][23] = 5;
+Path: [36, 6, 5, 4, 3, 23]
+shortestPathTable[36][24] = 5;
+Path: [36, 6, 5, 4, 3, 24]
+shortestPathTable[36][25] = 5;
+Path: [36, 6, 5, 4, 3, 25]
+shortestPathTable[36][26] = 4;
+Path: [36, 6, 5, 4, 26]
+shortestPathTable[36][27] = 4;
+Path: [36, 6, 5, 4, 27]
+shortestPathTable[36][28] = 4;
+Path: [36, 6, 5, 4, 28]
+shortestPathTable[36][29] = 3;
+Path: [36, 6, 5, 29]
+shortestPathTable[36][30] = 3;
+Path: [36, 6, 5, 30]
+shortestPathTable[36][31] = 3;
+Path: [36, 6, 5, 31]
+shortestPathTable[36][32] = 3;
+Path: [36, 6, 5, 32]
+shortestPathTable[36][33] = 3;
+Path: [36, 6, 5, 33]
+shortestPathTable[36][34] = 3;
+Path: [36, 6, 5, 34]
+shortestPathTable[36][35] = 3;
+Path: [36, 6, 5, 35]
+shortestPathTable[36][36] = 0;
+Path: [36]
+shortestPathTable[36][37] = 2;
+Path: [36, 6, 37]
+shortestPathTable[36][38] = 2;
+Path: [36, 6, 38]
+shortestPathTable[37][0] = 2;
+Path: [37, 6, 0]
+shortestPathTable[37][1] = 3;
+Path: [37, 6, 0, 1]
+shortestPathTable[37][2] = 4;
+Path: [37, 6, 0, 1, 2]
+shortestPathTable[37][3] = 4;
+Path: [37, 6, 5, 4, 3]
+shortestPathTable[37][4] = 3;
+Path: [37, 6, 5, 4]
+shortestPathTable[37][5] = 2;
+Path: [37, 6, 5]
+shortestPathTable[37][6] = 1;
+Path: [37, 6]
+shortestPathTable[37][7] = 3;
+Path: [37, 6, 5, 7]
+shortestPathTable[37][8] = 3;
+Path: [37, 6, 0, 8]
+shortestPathTable[37][9] = 3;
+Path: [37, 6, 0, 9]
+shortestPathTable[37][10] = 3;
+Path: [37, 6, 0, 10]
+shortestPathTable[37][11] = 3;
+Path: [37, 6, 0, 11]
+shortestPathTable[37][12] = 3;
+Path: [37, 6, 0, 12]
+shortestPathTable[37][13] = 3;
+Path: [37, 6, 0, 13]
+shortestPathTable[37][14] = 4;
+Path: [37, 6, 0, 1, 14]
+shortestPathTable[37][15] = 4;
+Path: [37, 6, 0, 1, 15]
+shortestPathTable[37][16] = 5;
+Path: [37, 6, 0, 1, 2, 16]
+shortestPathTable[37][17] = 5;
+Path: [37, 6, 0, 1, 2, 17]
+shortestPathTable[37][18] = 5;
+Path: [37, 6, 0, 1, 2, 18]
+shortestPathTable[37][19] = 5;
+Path: [37, 6, 0, 1, 2, 19]
+shortestPathTable[37][20] = 5;
+Path: [37, 6, 0, 1, 2, 20]
+shortestPathTable[37][21] = 5;
+Path: [37, 6, 5, 4, 3, 21]
+shortestPathTable[37][22] = 5;
+Path: [37, 6, 5, 4, 3, 22]
+shortestPathTable[37][23] = 5;
+Path: [37, 6, 5, 4, 3, 23]
+shortestPathTable[37][24] = 5;
+Path: [37, 6, 5, 4, 3, 24]
+shortestPathTable[37][25] = 5;
+Path: [37, 6, 5, 4, 3, 25]
+shortestPathTable[37][26] = 4;
+Path: [37, 6, 5, 4, 26]
+shortestPathTable[37][27] = 4;
+Path: [37, 6, 5, 4, 27]
+shortestPathTable[37][28] = 4;
+Path: [37, 6, 5, 4, 28]
+shortestPathTable[37][29] = 3;
+Path: [37, 6, 5, 29]
+shortestPathTable[37][30] = 3;
+Path: [37, 6, 5, 30]
+shortestPathTable[37][31] = 3;
+Path: [37, 6, 5, 31]
+shortestPathTable[37][32] = 3;
+Path: [37, 6, 5, 32]
+shortestPathTable[37][33] = 3;
+Path: [37, 6, 5, 33]
+shortestPathTable[37][34] = 3;
+Path: [37, 6, 5, 34]
+shortestPathTable[37][35] = 3;
+Path: [37, 6, 5, 35]
+shortestPathTable[37][36] = 2;
+Path: [37, 6, 36]
+shortestPathTable[37][37] = 0;
+Path: [37]
+shortestPathTable[37][38] = 2;
+Path: [37, 6, 38]
+shortestPathTable[38][0] = 2;
+Path: [38, 6, 0]
+shortestPathTable[38][1] = 3;
+Path: [38, 6, 0, 1]
+shortestPathTable[38][2] = 4;
+Path: [38, 6, 0, 1, 2]
+shortestPathTable[38][3] = 4;
+Path: [38, 6, 5, 4, 3]
+shortestPathTable[38][4] = 3;
+Path: [38, 6, 5, 4]
+shortestPathTable[38][5] = 2;
+Path: [38, 6, 5]
+shortestPathTable[38][6] = 1;
+Path: [38, 6]
+shortestPathTable[38][7] = 3;
+Path: [38, 6, 5, 7]
+shortestPathTable[38][8] = 3;
+Path: [38, 6, 0, 8]
+shortestPathTable[38][9] = 3;
+Path: [38, 6, 0, 9]
+shortestPathTable[38][10] = 3;
+Path: [38, 6, 0, 10]
+shortestPathTable[38][11] = 3;
+Path: [38, 6, 0, 11]
+shortestPathTable[38][12] = 3;
+Path: [38, 6, 0, 12]
+shortestPathTable[38][13] = 3;
+Path: [38, 6, 0, 13]
+shortestPathTable[38][14] = 4;
+Path: [38, 6, 0, 1, 14]
+shortestPathTable[38][15] = 4;
+Path: [38, 6, 0, 1, 15]
+shortestPathTable[38][16] = 5;
+Path: [38, 6, 0, 1, 2, 16]
+shortestPathTable[38][17] = 5;
+Path: [38, 6, 0, 1, 2, 17]
+shortestPathTable[38][18] = 5;
+Path: [38, 6, 0, 1, 2, 18]
+shortestPathTable[38][19] = 5;
+Path: [38, 6, 0, 1, 2, 19]
+shortestPathTable[38][20] = 5;
+Path: [38, 6, 0, 1, 2, 20]
+shortestPathTable[38][21] = 5;
+Path: [38, 6, 5, 4, 3, 21]
+shortestPathTable[38][22] = 5;
+Path: [38, 6, 5, 4, 3, 22]
+shortestPathTable[38][23] = 5;
+Path: [38, 6, 5, 4, 3, 23]
+shortestPathTable[38][24] = 5;
+Path: [38, 6, 5, 4, 3, 24]
+shortestPathTable[38][25] = 5;
+Path: [38, 6, 5, 4, 3, 25]
+shortestPathTable[38][26] = 4;
+Path: [38, 6, 5, 4, 26]
+shortestPathTable[38][27] = 4;
+Path: [38, 6, 5, 4, 27]
+shortestPathTable[38][28] = 4;
+Path: [38, 6, 5, 4, 28]
+shortestPathTable[38][29] = 3;
+Path: [38, 6, 5, 29]
+shortestPathTable[38][30] = 3;
+Path: [38, 6, 5, 30]
+shortestPathTable[38][31] = 3;
+Path: [38, 6, 5, 31]
+shortestPathTable[38][32] = 3;
+Path: [38, 6, 5, 32]
+shortestPathTable[38][33] = 3;
+Path: [38, 6, 5, 33]
+shortestPathTable[38][34] = 3;
+Path: [38, 6, 5, 34]
+shortestPathTable[38][35] = 3;
+Path: [38, 6, 5, 35]
+shortestPathTable[38][36] = 2;
+Path: [38, 6, 36]
+shortestPathTable[38][37] = 2;
+Path: [38, 6, 37]
+shortestPathTable[38][38] = 0;
+Path: [38]
