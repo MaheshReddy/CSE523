@@ -373,12 +373,11 @@ public class Arrivals extends SimulationProcess {
 						    	otherPackets.setNoOfHops(0);
 						    	
 						    	otherPackets.setTimeoutAt(0.0);
-						    	otherPackets. setTransmissionDelaySoFar(0.0);
+						    	otherPackets.setTransmissionDelaySoFar(0.0);
 						    	otherPackets.setProcessingDelayAtNode(0.0);
 						    	otherPackets.setProcessingDelaySoFar(0.0);
 						    	
-						    	otherPackets.setCreatedAt(SimulationProcess.CurrentTime());	
-						    	otherPackets.setProcessingDelayAtNode(Grid.getRouter(srcNode).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay());
+						    	otherPackets.setCreatedAt(SimulationProcess.CurrentTime());							    	
 								
 								/* 
 								 * The following code records the creation of the interest packet 
@@ -403,7 +402,9 @@ public class Arrivals extends SimulationProcess {
 										otherPackets.getSegmentId(), otherPackets.getRefPacketId(), otherPackets.getOriginNode(), 
 										otherPackets.getExpirationCount(), tempTimeOutValue, false, otherPackets.getPrevHop()));
 								
-								otherPackets.setTimeoutAt(tempTimeOutValue);								
+								otherPackets.setTimeoutAt(tempTimeOutValue);		
+								otherPackets.setProcessingDelayAtNode(Grid.getRouter(srcNode).getPacketsQ().packetsInCCNQueue() * CCNRouter.getProcDelay());
+								otherPackets.setPitTimeoutAt(SimulationController.CurrentTime() + timeoutValue.get(0));
 																
 								try {
 									if (SimulationController.timeOutQueue.size() == 1 && SimulationController.top.idle()) {
