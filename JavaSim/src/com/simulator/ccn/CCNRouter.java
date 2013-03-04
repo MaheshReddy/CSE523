@@ -162,7 +162,8 @@ public class CCNRouter extends SimulationProcess {
 				 * "Hold(getProcDelay())" represents the processing delay for a packet before the result of that
 				 *  processing is reflected in the methods "interestpackethandler()" and "datapackethandler()"
 				 */
-				
+				/*TODO*/
+				/* Add 0.1 into running counter for each node. */
 				try	{
 					Hold(getProcDelay());
 				} 
